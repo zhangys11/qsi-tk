@@ -1,0 +1,13 @@
+flask
+pyDRMetrics
+scikit-learn
+matplotlib
+numpy
+PyWavelets
+statsmodels
+pyNNRW
+pyCLAMs
+wCLAMs
+pyDRMetrics
+wDRMetrics
+cs1

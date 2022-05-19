@@ -1,0 +1,9 @@
+Column Meanings: Raman shift / wavenumber (cm-1). Range: 250~2339
+Each row is one sample. 
+Total 15 sampless
+
+* Data Source: Compressed Milk Tablet Candy, with Calcium and Vitamin A,D additives
+* Source: Heilongjiang Province, China.
+-------------------------
+Internal Source ID 734b
+Edit date: Jan 13, 2020

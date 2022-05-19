@@ -1,0 +1,2 @@
+7344.txt - Raman spectroscopic profiling dataset of 8-year Gujing Tribute vintage liquors. 
+The dataset contains 310 samples. Each sample has 2088 Raman wavenumbers, ranging from 251 to 2338 cm-1.
