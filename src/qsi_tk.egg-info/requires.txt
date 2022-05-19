@@ -1,0 +1,9 @@
+scikit-learn
+matplotlib
+numpy
+PyWavelets
+statsmodels
+pyNNRW
+pyCLAMs
+pyDRMetrics
+cs1

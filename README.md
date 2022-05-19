@@ -1,10 +1,10 @@
-# qsi
+# qsi-tk
 
- Data science toolkit from Quality-Safety research Institute (QSI)
+ Data science toolkit (TK) from Quality-Safety research Institute (QSI)
 
 # Installation
 
-> pip install qsi
+> pip install qsi-tk
 
 # Contents
 

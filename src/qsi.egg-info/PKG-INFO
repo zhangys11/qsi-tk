@@ -1,11 +1,11 @@
 Metadata-Version: 2.1
-Name: qi
+Name: QSI
 Version: 0.0.2
-Summary: Data science toolkit from Quality-safety research Institute (QI)
-Home-page: https://github.com/zhangys11/qi
+Summary: Data science toolkit from Quality-Safety research Institute (QSI)
+Home-page: https://github.com/zhangys11/qsi
 Author: Yinsheng Zhang (Ph.D.)
 Author-email: oo@zju.edu.cn
-Project-URL: Bug Tracker, https://github.com/zhangys11/qi/issues
+Project-URL: Bug Tracker, https://github.com/zhangys11/qsi/issues
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)
 Classifier: Operating System :: OS Independent
@@ -14,13 +14,13 @@ Requires-Python: >=3.6
 Description-Content-Type: text/markdown
 License-File: LICENCE
 
-# qi
+# qsi
 
- Data science toolkit from Quality-safety research Institute (QI)
+ Data science toolkit from Quality-Safety research Institute (QSI)
 
 # Installation
 
-> pip install qi
+> pip install qsi
 
 # Contents
 

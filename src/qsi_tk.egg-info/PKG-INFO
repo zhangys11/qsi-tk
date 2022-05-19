@@ -1,0 +1,29 @@
+Metadata-Version: 2.1
+Name: qsi-tk
+Version: 0.0.1
+Summary: Data science toolkit (TK) from Quality-Safety research Institute (QSI)
+Home-page: https://github.com/zhangys11/qsi-tk
+Author: Yinsheng Zhang (Ph.D.)
+Author-email: oo@zju.edu.cn
+Project-URL: Bug Tracker, https://github.com/zhangys11/qsi-tk/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENCE
+
+# qsi
+
+ Data science toolkit from Quality-Safety research Institute (QSI)
+
+# Installation
+
+> pip install qsi
+
+# Contents
+
+io
+cs
+dr
