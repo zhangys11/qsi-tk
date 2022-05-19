@@ -1,0 +1,29 @@
+Metadata-Version: 2.1
+Name: qi
+Version: 0.0.2
+Summary: Data science toolkit from Quality-safety research Institute (QI)
+Home-page: https://github.com/zhangys11/qi
+Author: Yinsheng Zhang (Ph.D.)
+Author-email: oo@zju.edu.cn
+Project-URL: Bug Tracker, https://github.com/zhangys11/qi/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENCE
+
+# qi
+
+ Data science toolkit from Quality-safety research Institute (QI)
+
+# Installation
+
+> pip install qi
+
+# Contents
+
+io
+cs
+dr
