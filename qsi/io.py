@@ -19,7 +19,7 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
 'vintage': ('7344.txt','\t', False,'7344 desc.txt'),
 'vintage_c2': ('7344_C03.csv',',',True,'7344_C03 desc.txt'),
 'beimu': ('754a_C2S_Beimu.txt',',', True,'754a_C2S_Beimu desc.txt'),
-'shihu': ('754b_C2S_Shihu',',',True,'754b_C2S_Shihu desc.txt'),
+'shihu': ('754b_C2S_Shihu.txt',',',True,'754b_C2S_Shihu desc.txt'),
 'huangqi_rm': ('7044X_RAMAN.csv',',', True,'7044X_RAMAN desc.txt'),
 'huangqi_uv': ('7143X_UV.csv',',',True,'7143X_UV desc.txt'),}
 

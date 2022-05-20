@@ -18,7 +18,7 @@ qsi/data/7143X_UV.csv
 qsi/data/7341_C1 desc.txt
 qsi/data/7341_C1.csv
 qsi/data/7341_C2 desc.txt
-qsi/data/7341_C2.txt
+qsi/data/7341_C2.csv
 qsi/data/7344 desc.txt
 qsi/data/7344.txt
 qsi/data/7344_C03 desc.txt
