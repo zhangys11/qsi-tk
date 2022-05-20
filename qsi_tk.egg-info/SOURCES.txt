@@ -1,0 +1,46 @@
+MANIFEST.in
+README.md
+pyproject.toml
+setup.py
+qsi/__init__.py
+qsi/cs.py
+qsi/io.py
+qsi/cla/__init__.py
+qsi/cla/ensemble.py
+qsi/cla/metrics.py
+qsi/data/7044X_RAMAN desc.txt
+qsi/data/7044X_RAMAN.csv
+qsi/data/7143X_UV desc.txt
+qsi/data/7143X_UV.csv
+qsi/data/7341_C1 desc.txt
+qsi/data/7341_C1.csv
+qsi/data/7341_C2 desc.txt
+qsi/data/7341_C2.txt
+qsi/data/7344 desc.txt
+qsi/data/7344.txt
+qsi/data/7344_C03 desc.txt
+qsi/data/7344_C03.csv
+qsi/data/734b desc.txt
+qsi/data/734b.csv
+qsi/data/754a_C2S_Beimu desc.txt
+qsi/data/754a_C2S_Beimu.txt
+qsi/data/754b_C2S_Shihu desc.txt
+qsi/data/754b_C2S_Shihu.txt
+qsi/data/B3 desc.txt
+qsi/data/B3.csv
+qsi/data/__init__.py
+qsi/dr/__init__.py
+qsi/dr/metrics.py
+qsi/dr/mf.py
+qsi/vis/__init__.py
+qsi/vis/feature_importance.py
+qsi/vis/plotComponents1D.py
+qsi/vis/plotComponents2D.py
+qsi/vis/plotComponents3D.py
+qsi/vis/plt2base64.py
+qsi/vis/unsupervised_dimension_reductions.py
+qsi_tk.egg-info/PKG-INFO
+qsi_tk.egg-info/SOURCES.txt
+qsi_tk.egg-info/dependency_links.txt
+qsi_tk.egg-info/requires.txt
+qsi_tk.egg-info/top_level.txt

@@ -1,0 +1,39 @@
+Data Set ID: 754a 川贝母、浙贝母拉曼光谱
+
+["川贝母","浙贝母"] 90 samples per class
+
+COLLECTION AND PROCESSING INFORMATION
+Title: Position X =-12643 Y = 6208, Signal to noise ratio =24.6
+Collected: Wed Mar 23 14:18:22 2022 (GMT+08:00)
+Filename: C:\my documents\omnic\GFJ\20220323\chuanbeimu9 23-3-2022 14-9-54.CSV
+Comments: 
+Custom info 1: 
+Custom info 2: 
+DATA DESCRIPTION
+ Number of points: 1682
+ X-axis: Raman shift (cm-1)
+ Y-axis: Raman intensity
+ First X value: 49.6820
+ Last X value: 3291.4346
+ Raman laser frequency: 12738.9932
+ Data spacing: 1.928467
+DATA COLLECTION INFORMATION
+ Exposure time: 0.1429 sec
+ Number of exposures: 600
+ Number of background exposures: 600
+SPECTROMETER DESCRIPTION
+ Spectrometer: DXR Raman Microscope
+ Bench serial number: AXX1916142
+ Laser: 785 nm
+ Laser serial number: BAB1910322
+ Laser power level: 19.0 mW
+ Filter: 785 nm
+ Filter serial number: BAL1910361
+ Grating: 400 lines/mm
+ Grating serial number: BAC1910373
+ Spectrograph aperture: 50 µm pinhole
+ Camera at temperature
+
+
+1，川贝母，一般产于西部海拔较高的地区，采挖困难，数量少，甚至有野生的，所以价格较贵。 
+2，浙贝母，由于人工栽培，产量较大，药材来源丰富，所以价格低廉。浙贝母价格相当于川贝母的十分之一左右。

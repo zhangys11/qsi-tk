@@ -1,2 +1,2 @@
 include MANIFEST.in
-recursive-include src/qsi/data *
+recursive-include qsi/data *

@@ -1,0 +1,22 @@
+Raman spectra of radix astragali (astragalus root, 黄芪, Huang-qi). 
+
+Raman spectra
+  X meaning: Raman shift /wavenumber
+  X range: 100 ~ 4278 cm-1
+  Dimensions: 2090
+  Resolution: 2cm-1 
+
+Radix astragali is a widely used medicinal herb in traditional Chinese medicine (TCM). The major chemical components of radix astragali include polysaccharides, saponins, alkaloids, flavonoids, and various mineral elements. It is often used to treat diabetes and cardiovascular diseases.
+
+All Radix Astragali samples were obtained from Simcere Company Limited (China); the origins of these samples were：
+
+label = 0: Inner Mongolia (North China), 
+label = 1: Sichuan (Southwest China), 
+label = 2: Shanxi (Northwest China), 
+label = 3: Gansu (Northwest China).
+
+Among these regions, Inner Mongolia, Shanxi, and Gansu are traditional daodi regions.
+-----------------------------------
+If you use this dataset, reference this article: 
+[1] Spectroscopic Profiling-based Geographic Herb Identification by Neural Network with Random Weights [J]. Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy, 2022, doi: 10.1016/j.saa.2022.121348
+

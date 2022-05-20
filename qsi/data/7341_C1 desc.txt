@@ -1,0 +1,10 @@
+Column Meanings: Raman shift / wavenumber (cm-1). Range: 250~2339
+Each row is one sample.
+
+* Data Source: Stage 4 (4-7 years) formula milk powder
+* Provider: Beingmate Baby & Child Food Co., Ltd
+* Procedures: Take a proper amount of milk powder into a separate small hole in the 96-well plate. Then, the sample is directly irradiated by a laser Raman spectrometer. The laser power is 250mW, 350mW, 450mW, the integration time is 50s, the spectrum range is 250~2 339cm-1, and the spectral resolution is 1cm-1.
+
+-------------------------
+Internal Source ID 7341
+Edit date: Jan 13, 2020

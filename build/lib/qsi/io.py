@@ -1,4 +1,5 @@
 import os
+import os.path
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,12 +12,16 @@ from sqlalchemy import false
 from .vis import *
 DATA_FOLDER = os.path.dirname(os.path.realpath(__file__)) + "/data/"
 
-DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.csv'),
-'s3_formula': ('B3.csv', ',', False ,'B3 desc.csv'),
-'s4_formula_c2': ('7341_C2.txt', ',', True ,'7341_C2 desc.csv'),
+DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
+'s3_formula': ('B3.csv', ',', False ,'B3 desc.txt'),
+'s4_formula_c2': ('7341_C2.txt', ',', True ,'7341_C2 desc.txt'),
 'milk_tablet_candy': ('734b.csv',',', False,'734b desc.txt'),
 'vintage': ('7344.txt','\t', False,'7344 desc.txt'),
-'vintage_c2': ('7344_C03.csv',',',True,'7344_C03 desc.csv')}
+'vintage_c2': ('7344_C03.csv',',',True,'7344_C03 desc.txt'),
+'beimu': ('754a_C2S_Beimu.txt',',', True,'754a_C2S_Beimu desc.txt'),
+'shihu': ('754b_C2S_Shihu',',',True,'754b_C2S_Shihu desc.txt'),
+'huangqi_rm': ('7044X_RAMAN.csv',',', True,'7044X_RAMAN desc.txt'),
+'huangqi_uv': ('7143X_UV.csv',',',True,'7143X_UV desc.txt'),}
 
 def DataSetIdToPath(id):
     return DATASET_MAP[id]
@@ -26,9 +31,15 @@ def LoadDataSet(id):
     path, delimiter, has_y, path_desc = DataSetIdToPath(id)
     X, y, X_names = PeekDataset(DATA_FOLDER + path, delimiter, has_y)
     
-    f=open(DATA_FOLDER + path_desc,"r")
-    desc = f.read()
-    f.close()
+    if os.path.exists (DATA_FOLDER + path_desc):
+        f=open(DATA_FOLDER + path_desc, "r", encoding = 'UTF-8')
+        desc = f.read()
+        f.close()
+
+        print (desc)
+        
+    else:
+        desc = ''
     
     return X, y, X_names, desc
 
@@ -67,6 +78,7 @@ def ScatterPlot(X, y):
     pca = PCA(n_components=2) # keep the first 2 components
     X_pca = pca.fit_transform(X)
     plotComponents2D(X_pca, y)
+    plt.show()
 
 def Draw_Average (X, X_names):
 
@@ -132,7 +144,7 @@ def Draw_Class_Average (X, y, X_names, SD = 1, shift = 200):
 
 def PeekDataset(path,  delimiter = ',', has_y = True):
 
-    X, y, X_names = LoadDataset(path, delimiter=delimiter, has_y = True)
+    X, y, X_names = OpenDataset(path, delimiter=delimiter, has_y = True)
     
     if y is None:
         Draw_Average (X, X_names)

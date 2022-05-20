@@ -7,16 +7,17 @@ setup(
     name="qsi-tk",
     
     # Version number (initial):
-    version="0.0.2",
+    version="0.0.4",
     
     # Application author details:
     author="Yinsheng Zhang (Ph.D.)",
     author_email="oo@zju.edu.cn",
     
     # Packages
-    packages=["qsi"],
-    
-    package_dir={'qsi.dr': 'qsi/dr', 'qsi.cla': 'qsi/cla', 'qsi.vis': 'qsi/vis'},
+    packages=["qsi","qsi.dr","qsi.cla","qsi.vis"],    
+
+    # package_dir={'': 'qsi'},
+    # package_dir={'qsi.dr': 'src/qsi/dr', 'qsi.cla': 'src/qsi/cla', 'qsi.vis': 'src/qsi/vis'},
 
     # Include additional files into the package
     include_package_data=True,

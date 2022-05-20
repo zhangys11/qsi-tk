@@ -1,0 +1,83 @@
+Metadata-Version: 2.1
+Name: qsi-tk
+Version: 0.0.3
+Summary: Data science toolkit (TK) from Quality-Safety research Institute (QSI).
+Home-page: http://pypi.python.org/pypi/qsi_tk/
+Author: Yinsheng Zhang (Ph.D.)
+Author-email: oo@zju.edu.cn
+License: LICENSE.txt
+Description: # qsi-tk
+        
+         Data science toolkit (TK) from Quality-Safety research Institute (QSI)
+        
+        # Installation
+        
+        > pip install qsi-tk
+        
+        # Contents
+        
+        This package is a master library containing various previous packages published by our team.
+        
+        <table>
+            <tbody>
+                <tr>
+                    <td>module</td>
+                    <td>description</td>
+                    <td>standalone pypi package</td>
+                    <td>publication</td>
+                </tr>
+                <tr>
+                    <td>qsi.io</td>
+                    <td>File I/O, Dataset loading</td>
+                </tr>
+                <tr>
+                    <td>qsi.vis</td>
+                    <td>Plotting</td>
+                </tr>
+                <tr>
+                    <td>qsi.cs</td>
+                    <td>compressed sensing</td>
+                    <td>cs1</td>
+                    <td>Adaptive compressed sensing of Raman spectroscopic profiling data for discriminative tasks [J]. Talanta, SCI, IF 6.057. JCR Q1, 2020, doi: 10.1016/j.talanta.2019.120681</td>
+                </tr>
+                <tr>
+                    <td>qsi.fs</td>
+                    <td>feature selection</td>
+                </tr>
+                <tr>
+                    <td>qsi.dr</td>
+                    <td>qsi.dr.metrics</td>
+                    <td>Dimensionality Reduction (DR) quality metrics</td>
+                    <td>pyDRMetrics, wDRMetrics</td>
+                    <td>pyDRMetrics - A Python toolkit for dimensionality reduction quality assessment, Heliyon, Volume 7, Issue 2, 2021, e06199, ISSN 2405-8440, https://doi.org/10.1016/j.heliyon.2021.e06199.</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>qsi.dr.mf</td>
+                    <td>matrix-factorization based DR</td>
+                    <td>pyMFDR</td>
+                </tr>
+                <tr>
+                    <td>qsi.cla</td>
+                    <td>qsi.cla.metrics</td>
+                    <td>classifiability analysis</td>
+                    <td>pyCLAMs, wCLAMs</td>
+                    <td>A unified classifiability analysis framework based on meta-learner and its application in spectroscopic profiling data [J]. Applied Intelligence, SCI, IF 5.086. JCR Q1, 2021, doi: 10.1007/s10489-021-02810-8<br /> pyCLAMs: An integrated Python toolkit for classifiability analysis [J]. SoftwareX, SCI, IF 1.959, 2022, doi: 10.1016/j.softx.2022.101007</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>qsi.cla.ensemble</td>
+                    <td>homo-stacking, hetero-stacking, FSSE</td>
+                </tr>
+                <tr>
+                    <td>qsi.cla.nnrw</td>
+                    <td>neural networks with random weights</td>
+                    <td>pyNNRW</td>
+                    <td>Spectroscopic Profiling-based Geographic Herb Identification by Neural Network with Random Weights [J]. Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy, SCI, IF 4.098. JCR Q1, 2022, doi: 10.1016/j.saa.2022.121348</td>
+                </tr>
+                <tr>
+                </tr>
+            </tbody>
+        </table>
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
