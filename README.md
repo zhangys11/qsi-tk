@@ -14,26 +14,27 @@ This package is a master library containing various previous packages published 
     <tbody>
         <tr>
             <td>module</td>
+            <td>sub-module</td>
             <td>description</td>
             <td>standalone pypi package</td>
             <td>publication</td>
         </tr>
         <tr>
-            <td>qsi.io</td>
+            <td colspan = 2>qsi.io</td>
             <td>File I/O, Dataset loading</td>
         </tr>
         <tr>
-            <td>qsi.vis</td>
+            <td colspan = 2>qsi.vis</td>
             <td>Plotting</td>
         </tr>
         <tr>
-            <td>qsi.cs</td>
+            <td colspan = 2>qsi.cs</td>
             <td>compressed sensing</td>
             <td>cs1</td>
             <td>Adaptive compressed sensing of Raman spectroscopic profiling data for discriminative tasks [J]. Talanta, SCI, IF 6.057. JCR Q1, 2020, doi: 10.1016/j.talanta.2019.120681</td>
         </tr>
         <tr>
-            <td>qsi.fs</td>
+            <td colspan = 2>qsi.fs</td>
             <td>feature selection</td>
         </tr>
         <tr>
@@ -60,12 +61,18 @@ This package is a master library containing various previous packages published 
             <td></td>
             <td>qsi.cla.ensemble</td>
             <td>homo-stacking, hetero-stacking, FSSE</td>
+            <td rowspan = 3>pyNNRW</td>
+            <td rowspan = 3>Spectroscopic Profiling-based Geographic Herb Identification by Neural Network with Random Weights [J]. Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy, SCI, IF 4.098. JCR Q1, 2022, doi: 10.1016/j.saa.2022.121348</td>
         </tr>
         <tr>
+            <td></td>
+            <td>qsi.cla.kernel</td>
+            <td>kernel-NNRW</td>
+        </tr>
+        <tr>
+            <td></td>
             <td>qsi.cla.nnrw</td>
             <td>neural networks with random weights</td>
-            <td>pyNNRW</td>
-            <td>Spectroscopic Profiling-based Geographic Herb Identification by Neural Network with Random Weights [J]. Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy, SCI, IF 4.098. JCR Q1, 2022, doi: 10.1016/j.saa.2022.121348</td>
         </tr>
         <tr>
         </tr>

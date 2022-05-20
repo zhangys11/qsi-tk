@@ -7,7 +7,10 @@ qsi/cs.py
 qsi/io.py
 qsi/cla/__init__.py
 qsi/cla/ensemble.py
+qsi/cla/kernel.py
 qsi/cla/metrics.py
+qsi/data/1d_data.txt
+qsi/data/2d_data.txt
 qsi/data/7044X_RAMAN desc.txt
 qsi/data/7044X_RAMAN.csv
 qsi/data/7143X_UV desc.txt

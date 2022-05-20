@@ -14,7 +14,7 @@ DATA_FOLDER = os.path.dirname(os.path.realpath(__file__)) + "/data/"
 
 DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
 's3_formula': ('B3.csv', ',', False ,'B3 desc.txt'),
-'s4_formula_c2': ('7341_C2.txt', ',', True ,'7341_C2 desc.txt'),
+'s4_formula_c2': ('7341_C2.csv', ',', True ,'7341_C2 desc.txt'),
 'milk_tablet_candy': ('734b.csv',',', False,'734b desc.txt'),
 'vintage': ('7344.txt','\t', False,'7344 desc.txt'),
 'vintage_c2': ('7344_C03.csv',',',True,'7344_C03 desc.txt'),
