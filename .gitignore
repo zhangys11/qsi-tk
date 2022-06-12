@@ -1,2 +1,4 @@
-
+build/
+dist/
+qsi-tk.egg-info/
 *.pyc
