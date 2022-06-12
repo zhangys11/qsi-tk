@@ -7,7 +7,7 @@ setup(
     name="qsi-tk",
     
     # Version number (initial):
-    version="0.0.5",
+    version="0.0.6",
     
     # Application author details:
     author="Yinsheng Zhang (Ph.D.)",
@@ -50,7 +50,7 @@ setup(
     ],
 
     package_data={
-        "": ["*.txt", "*.csv"],
+        "": ["*.txt", "*.csv", "*.png", "*.jpg"],
     }
 )
 
