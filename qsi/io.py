@@ -25,6 +25,9 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
 'huangqi_uv': ('7143X_UV.csv',',',True,'7143X_UV desc.txt'),
 'cheese': ('Cheese_RAMAN.csv',',',True,'Cheese_RAMAN desc.txt'),}
 
+def get_available_datasets():
+    return list( DATASET_MAP.keys() )
+
 def DataSetIdToPath(id):
     return DATASET_MAP[id]
 
@@ -91,7 +94,7 @@ def Draw_Average (X, X_names):
     plt.plot(X_names, X.mean(axis = 0), "k", linewidth=1, label= 'averaged waveform $± 3\sigma$ (310 samples)') 
     plt.errorbar(X_names, X.mean(axis = 0), X.std(axis = 0)*3, 
                 color = "dodgerblue", linewidth=3, 
-                alpha=0.3)  # X.std(axis = 0)
+                alpha=0.1)  # X.std(axis = 0)
     plt.legend()
 
     plt.title(u'Averaged Spectrum')
@@ -167,8 +170,8 @@ def Draw_Class_Average (X, y, X_names, SD = 1, shift = 200):
 
 def PeekDataSet(path,  delimiter = ',', has_y = True):
 
-    X, y, X_names = OpenDataSet(path, delimiter=delimiter, has_y = True)
-    
+    X, y, X_names = OpenDataSet(path, delimiter=delimiter, has_y = has_y)
+
     if y is None:
         Draw_Average (X, X_names)
     else:

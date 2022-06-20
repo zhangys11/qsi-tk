@@ -14,12 +14,18 @@ def plotComponents2D(X, y, labels = None, use_markers = False, ax=None, legends 
     if (ax is None):
         fig, ax = plt.subplots()
         
-    i=0
+    if (y is None or len(y) == 0):
+        labels = [0] # only one class
     if (labels is None):
         labels = set(y)
-        
+
+    i=0        
+
     for label in labels:
-        cluster = X[np.where(y == label)]
+        if y is None or len(y) == 0:
+            cluster = X
+        else:
+            cluster = X[np.where(y == label)]
         # print(cluster.shape)
 
         if use_markers:
