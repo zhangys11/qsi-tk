@@ -8,9 +8,9 @@ import pylab, matplotlib
 from sklearn.linear_model import Lasso
 from sklearn.decomposition import PCA
 from sqlalchemy import false
-from .data import SMOTE
+from ..data import SMOTE
 
-from .vis import *
+from ..vis import *
 DATA_FOLDER = os.path.dirname(os.path.realpath(__file__)) + "/data/"
 
 DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
@@ -23,7 +23,8 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
 'shihu': ('754b_C2S_Shihu.txt',',',True,'754b_C2S_Shihu desc.txt'),
 'huangqi_rm': ('7044X_RAMAN.csv',',', True,'7044X_RAMAN desc.txt'),
 'huangqi_uv': ('7143X_UV.csv',',',True,'7143X_UV desc.txt'),
-'cheese': ('Cheese_RAMAN.csv',',',True,'Cheese_RAMAN desc.txt'),}
+'cheese': ('Cheese_RAMAN.csv',',',True,'Cheese_RAMAN desc.txt'),
+'huangjing': ('7a43.csv',',',True,'7a43 desc.txt'),}
 
 def get_available_datasets():
     return list( DATASET_MAP.keys() )
@@ -31,10 +32,10 @@ def get_available_datasets():
 def DataSetIdToPath(id):
     return DATASET_MAP[id]
 
-def LoadDataSet(id):
+def LoadDataSet(id, SD = 1, shift = 200):
     
     path, delimiter, has_y, path_desc = DataSetIdToPath(id)
-    X, y, X_names = PeekDataSet(DATA_FOLDER + path, delimiter, has_y)
+    X, y, X_names = PeekDataSet(DATA_FOLDER + path, delimiter, has_y, SD, shift)
     
     if os.path.exists (DATA_FOLDER + path_desc):
         f=open(DATA_FOLDER + path_desc, "r", encoding = 'UTF-8')
@@ -151,7 +152,7 @@ def Draw_Class_Average (X, y, X_names, SD = 1, shift = 200):
                         color = ["blue","red","green","orange"][c], 
                         linewidth=1, 
                         alpha=0.2,
-                        label= 'Class ' + str(c) + ' (' + str(len(yc)) + ' samples)' + ' mean ± 1 SD',
+                        label= 'Class ' + str(c) + ' (' + str(len(yc)) + ' samples)' + ' mean ± '+ str(SD) +' SD',
                         )  # X.std(axis = 0)
             plt.scatter(X_names, np.mean(Xc,axis=0).tolist() + c*shift, 
                     color = ["blue","red","green","orange"][c],
@@ -168,14 +169,14 @@ def Draw_Class_Average (X, y, X_names, SD = 1, shift = 200):
 
     matplotlib.rcParams.update({'font.size': 10})
 
-def PeekDataSet(path,  delimiter = ',', has_y = True):
+def PeekDataSet(path,  delimiter = ',', has_y = True, SD = 1, shift = 200):
 
     X, y, X_names = OpenDataSet(path, delimiter=delimiter, has_y = has_y)
 
     if y is None:
         Draw_Average (X, X_names)
     else:
-        Draw_Class_Average (X, y, X_names)
+        Draw_Class_Average (X, y, X_names, SD, shift)
 
     ScatterPlot(X, y)
     
@@ -212,3 +213,5 @@ def SaveDataSet(targe_path, X, y, X_names):
     df = pd.concat([dfY, dfX], axis=1)
     df = df.sort_values(by=['label'], ascending=True)
     df.to_csv(targe_path, index=False) # don't create the index column
+
+
