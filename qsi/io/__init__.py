@@ -11,7 +11,7 @@ from sqlalchemy import false
 from ..data import SMOTE
 
 from ..vis import *
-DATA_FOLDER = os.path.dirname(os.path.realpath(__file__)) + "/data/"
+DATA_FOLDER = os.path.dirname( os.path.dirname(os.path.realpath(__file__)) ) + "/data/"
 
 DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
 's3_formula': ('B3.csv', ',', False ,'B3 desc.txt'),
@@ -24,7 +24,9 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
 'huangqi_rm': ('7044X_RAMAN.csv',',', True,'7044X_RAMAN desc.txt'),
 'huangqi_uv': ('7143X_UV.csv',',',True,'7143X_UV desc.txt'),
 'cheese': ('Cheese_RAMAN.csv',',',True,'Cheese_RAMAN desc.txt'),
-'huangjing': ('7a43.csv',',',True,'7a43 desc.txt'),}
+'huangjing': ('7a43.csv',',',True,'7a43 desc.txt'),
+'chaihu': ('7a40.csv',',',True,'7a40 desc.txt'),
+'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv',',',True,'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt'),}
 
 def get_available_datasets():
     return list( DATASET_MAP.keys() )
