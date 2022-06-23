@@ -26,6 +26,7 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
 'cheese': ('Cheese_RAMAN.csv',',',True,'Cheese_RAMAN desc.txt'),
 'huangjing': ('7a43.csv',',',True,'7a43 desc.txt'),
 'chaihu': ('7a40.csv',',',True,'7a40 desc.txt'),
+'rice_cereal':('7741_rice_cereal_rm.csv',',',True,'7741_rice_cereal_rm desc.txt'),
 'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv',',',True,'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt'),}
 
 def get_available_datasets():
@@ -34,10 +35,10 @@ def get_available_datasets():
 def DataSetIdToPath(id):
     return DATASET_MAP[id]
 
-def LoadDataSet(id, SD = 1, shift = 200):
+def LoadDataSet(id, SD = 1, shift = 200, x_range = None):
     
     path, delimiter, has_y, path_desc = DataSetIdToPath(id)
-    X, y, X_names = PeekDataSet(DATA_FOLDER + path, delimiter, has_y, SD, shift)
+    X, y, X_names = PeekDataSet(DATA_FOLDER + path, delimiter, has_y, SD, shift, x_range)
     
     if os.path.exists (DATA_FOLDER + path_desc):
         f=open(DATA_FOLDER + path_desc, "r", encoding = 'UTF-8')
@@ -51,15 +52,17 @@ def LoadDataSet(id, SD = 1, shift = 200):
     
     return X, y, X_names, desc
 
-def OpenDataSet(path, delimiter = ',', has_y = True):
+def OpenDataSet(path, delimiter = ',', has_y = True, x_range = None):
     '''
     Parameters
     ----------
     has_y : boolean, whether there is y column, usually the 1st column.
+    x_range : [250,2000] or None. If none, all features are kept.
     '''
 
     # path = "github/data/754a_C2S_Beimu.txt"
     data = pd.read_csv(path, delimiter=delimiter) # ,header=None
+    # print('Total NAN: ', data.isnull().sum().sum(), '\n\n', data.isnull().sum().values)
 
     cols = data.shape[1]
 
@@ -79,6 +82,14 @@ def OpenDataSet(path, delimiter = ',', has_y = True):
         # use map(float, ) to convert the string list to float list
         X_names = list(map(float, data.columns.values)) # X_names = np.array(list(data)[1:])
 
+    if x_range is not None:
+        X = X[:,x_range]
+        X_names = np.array(X_names)[x_range].tolist()
+
+    cnt_nan = np.isnan (X).sum()
+    if cnt_nan > 0:
+        print('Found' + str(cnt_nan) + 'NaN elements in X. You may need to purge NaN.')
+
     return X, y, X_names
 
 def ScatterPlot(X, y):    
@@ -88,16 +99,21 @@ def ScatterPlot(X, y):
     plotComponents2D(X_pca, y)
     plt.show()
 
-def Draw_Average (X, X_names):
+def Draw_Average (X, X_names, SD = 1):
 
     matplotlib.rcParams.update({'font.size': 16})
 
     plt.figure(figsize = (20,5))
 
-    plt.plot(X_names, X.mean(axis = 0), "k", linewidth=1, label= 'averaged waveform $± 3\sigma$ (310 samples)') 
-    plt.errorbar(X_names, X.mean(axis = 0), X.std(axis = 0)*3, 
-                color = "dodgerblue", linewidth=3, 
-                alpha=0.1)  # X.std(axis = 0)
+    
+    if SD > 0:
+        plt.plot(X_names, X.mean(axis = 0), "k", linewidth=1, label= 'averaged waveform $± ' + str(SD) + '\sigma$ (' + str(len(X)) + ' samples)') 
+        plt.errorbar(X_names, X.mean(axis = 0), X.std(axis = 0)*SD, 
+                    color = "dodgerblue", linewidth=3, 
+                    alpha=0.1)  # X.std(axis = 0)
+    else:
+        plt.plot(X_names, X.mean(axis = 0), "k", linewidth=1, label= 'averaged waveform'+ ' (' + str(len(X)) + ' samples)') 
+        
     plt.legend()
 
     plt.title(u'Averaged Spectrum')
@@ -171,9 +187,9 @@ def Draw_Class_Average (X, y, X_names, SD = 1, shift = 200):
 
     matplotlib.rcParams.update({'font.size': 10})
 
-def PeekDataSet(path,  delimiter = ',', has_y = True, SD = 1, shift = 200):
+def PeekDataSet(path,  delimiter = ',', has_y = True, SD = 1, shift = 200, x_range = None):
 
-    X, y, X_names = OpenDataSet(path, delimiter=delimiter, has_y = has_y)
+    X, y, X_names = OpenDataSet(path, delimiter=delimiter, has_y = has_y, x_range = x_range)
 
     if y is None:
         Draw_Average (X, X_names)

@@ -1,0 +1,6 @@
+Data Set ID:婴幼儿米糊（Rice Cereal）拉曼光谱
+
+x：988, ..., 3400 cm-1
+y：["小皮 LittleFreddie","爱思贝 EARTH’S BEST"]
+
+
