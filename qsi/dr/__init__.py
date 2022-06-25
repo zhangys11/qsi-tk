@@ -11,8 +11,13 @@ import numpy as np
 from .metrics import calculate_recon_error, DRMetrics
 from IPython.core.display import HTML, display
 from sklearn.preprocessing import MinMaxScaler
+from ..cs import LDA # import LDA as a supervised DR alg
 
-def dct(x, K = None, flavor = 'fftpack'):
+def lda(X,y):
+    _,Z,_ = LDA(X,y,display = False)
+    return Z
+
+def dct(x, K = None, flavor = 'fftpack', display = True):
     '''
     Parameters
     ----------
@@ -68,23 +73,27 @@ def dct(x, K = None, flavor = 'fftpack'):
         plt.title ('MSE ~ K (kept DCT components)')
         plt.show()
 
+        return x_dst, x
+
     elif K >= 2:
 
-        plt.figure(figsize=(16,3))
-        plt.plot(x)
-        plt.title('original signal')
-        plt.show()
+        if display:
+            plt.figure(figsize=(16,3))
+            plt.plot(x)
+            plt.title('original signal')
+            plt.show()
 
         if flavor == 'cv2':
             x_dst = cv2.dct(x)
         else:
             x_dst = scipy.fftpack.dct(x, norm = 'ortho')
-        plt.figure(figsize=(16,3))
-        plt.plot(x_dst)
-        plt.title('DCT')
-        plt.show()
 
-        print(K ,' / ', len(x_dst), ' = ', K/len(x_dst))
+        if display:
+            plt.figure(figsize=(16,3))
+            plt.plot(x_dst)
+            plt.title('DCT')
+            plt.show()
+            print(K ,' / ', len(x_dst), ' = ', K/len(x_dst))
 
         x_dst[K:] = 0
 
@@ -93,13 +102,16 @@ def dct(x, K = None, flavor = 'fftpack'):
         else:
             x_dst_r = scipy.fftpack.idct(x_dst, norm = 'ortho')
 
-        plt.figure(figsize=(16,3))
-        plt.plot(x_dst_r)
-        plt.title('IDCT')
-        plt.show()
+        if display:
+            plt.figure(figsize=(16,3))
+            plt.plot(x_dst_r)
+            plt.title('IDCT')
+            plt.show()
+
+        return x_dst[:K], x_dst_r
 
 
-def dataset_dct_row_wise(X, K = 2, flavor = 'fftpack'):
+def dataset_dct_row_wise(X, K = 2, flavor = 'fftpack', verbose = True):
     '''
     Returns
     -------
@@ -112,25 +124,17 @@ def dataset_dct_row_wise(X, K = 2, flavor = 'fftpack'):
             XE = XE[:,:-1]            
 
     D = np.zeros(XE.shape)
+    Zdct = []
 
-    for i in tqdm(range(len(XE))):
-        x = XE[i]
-
-        if flavor == 'cv2':
-            x_dst = cv2.dct(x)
-        else:
-            x_dst = scipy.fftpack.dct(x, norm = 'ortho')
-
-        x_dst[K:] = 0
-
-        if flavor == 'cv2':
-            x_dst_r = cv2.idct(x_dst)
-        else:
-            x_dst_r = scipy.fftpack.idct(x_dst, norm = 'ortho')
-        
+    for i,x in enumerate(XE):
+        z, x_dst_r = dct(x, K = 2, display = False)
+        Zdct.append(z)
         D[i]= x_dst_r.flatten()
 
-    return calculate_recon_error(XE, D)
+    if verbose:
+        print('mse, ms, rmse = ', calculate_recon_error(XE, D))
+
+    return np.array(Zdct)
 
 
 def dataset_dct(X, tq = 0.99, flavor = 'fftpack'):

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from .unsupervised_dimension_reductions import *
 
 # plot the importance for all features
-def plot_feature_importance(feature_importances, title, row_size = 100, figsize=(12,2)):
+def plot_feature_importance(feature_importances, title, xtick_angle=None, xlabel = '', ylabel = '', row_size = 100, figsize=(12,2)):
     
     feature_importances = np.array(feature_importances)
 
@@ -21,14 +21,18 @@ def plot_feature_importance(feature_importances, title, row_size = 100, figsize=
         arr = feature_importances[i*ROW_SIZE: min(i*ROW_SIZE+ROW_SIZE - 1, feature_importances.size - 1)]
         s = ax.matshow(arr.reshape(1,-1), cmap=plt.cm.Blues)    
     
-
     # bar chart
     plt.figure(figsize=figsize)
     if title:
         plt.title(title + "\n" + 'importance marked by bar height')
     plt.bar(range(feature_importances.size), feature_importances, alpha=1.0, width=10)
-    plt.xticks([])
+    if xtick_angle is None:
+        plt.xticks([])
+    else:
+        plt.xticks(rotation = 90)
     plt.yticks([])
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
     plt.show()
 
 '''
@@ -38,8 +42,7 @@ def plot_important_features(feature_names, feature_importances, xlabel = '', yla
     assert len(feature_names) == len(feature_importances)
     plt.figure(figsize=figsize)
     plt.bar(feature_names.astype(str), feature_importances)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
+
     plt.xticks(rotation = 90)
     plt.title(title)
     plt.show()

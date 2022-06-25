@@ -9,6 +9,7 @@ from sklearn.linear_model import Lasso
 from sklearn.decomposition import PCA
 from sqlalchemy import false
 from ..data import SMOTE
+from . import pre
 
 from ..vis import *
 DATA_FOLDER = os.path.dirname( os.path.dirname(os.path.realpath(__file__)) ) + "/data/"
@@ -17,7 +18,9 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
 's3_formula': ('B3.csv', ',', False ,'B3 desc.txt'),
 's4_formula_c2': ('7341_C2.csv', ',', True ,'7341_C2 desc.txt'),
 'milk_tablet_candy': ('734b.csv',',', False,'734b desc.txt'),
+'yogurt': ('7346.csv',',', True,'7346 desc.txt'),
 'vintage': ('7344.txt','\t', False,'7344 desc.txt'),
+'vintage_spi': ('7345.csv',',', True,'7345 desc.txt'),
 'vintage_c2': ('7344_C03.csv',',',True,'7344_C03 desc.txt'),
 'beimu': ('754a_C2S_Beimu.txt',',', True,'754a_C2S_Beimu desc.txt'),
 'shihu': ('754b_C2S_Shihu.txt',',',True,'754b_C2S_Shihu desc.txt'),
@@ -32,14 +35,18 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
 def get_available_datasets():
     return list( DATASET_MAP.keys() )
 
-def DataSetIdToPath(id):
+def id_to_path(id):
     return DATASET_MAP[id]
 
-def LoadDataSet(id, SD = 1, shift = 200, x_range = None):
+def load_dataset(id, SD = 1, shift = 200, x_range = None, y_subset=None, display = True):
     
-    path, delimiter, has_y, path_desc = DataSetIdToPath(id)
-    X, y, X_names = PeekDataSet(DATA_FOLDER + path, delimiter, has_y, SD, shift, x_range)
-    
+    path, delimiter, has_y, path_desc = id_to_path(id)
+
+    if display:
+        X, y, X_names = peek_dataset(DATA_FOLDER + path, delimiter, has_y, SD, shift, x_range, y_subset)
+    else:
+        X, y, X_names = open_dataset(DATA_FOLDER + path, delimiter, has_y, x_range, y_subset)
+
     if os.path.exists (DATA_FOLDER + path_desc):
         f=open(DATA_FOLDER + path_desc, "r", encoding = 'UTF-8')
         desc = f.read()
@@ -52,7 +59,7 @@ def LoadDataSet(id, SD = 1, shift = 200, x_range = None):
     
     return X, y, X_names, desc
 
-def OpenDataSet(path, delimiter = ',', has_y = True, x_range = None):
+def open_dataset(path, delimiter = ',', has_y = True, x_range = None, y_subset=None):
     '''
     Parameters
     ----------
@@ -86,20 +93,33 @@ def OpenDataSet(path, delimiter = ',', has_y = True, x_range = None):
         X = X[:,x_range]
         X_names = np.array(X_names)[x_range].tolist()
 
+    if has_y and y_subset is not None:       
+        Xs = []
+        ys = []
+
+        for x,v in zip(X,y):
+            if v in y_subset:
+                Xs.append(x)
+                ys.append(y_subset.indexOf(v)) # map to natrual label series, 0,1,2,..
+
+        print('Use classes: ' + str(y_subset) + ', remapped to ' + list(range(len(y_subset))))
+        X = np.array(Xs)
+        y = np.array(ys)
+
     cnt_nan = np.isnan (X).sum()
     if cnt_nan > 0:
         print('Found' + str(cnt_nan) + 'NaN elements in X. You may need to purge NaN.')
 
     return X, y, X_names
 
-def ScatterPlot(X, y):    
+def scatter_plot(X, y):    
 
     pca = PCA(n_components=2) # keep the first 2 components
     X_pca = pca.fit_transform(X)
     plotComponents2D(X_pca, y)
     plt.show()
 
-def Draw_Average (X, X_names, SD = 1):
+def draw_average (X, X_names, SD = 1):
 
     matplotlib.rcParams.update({'font.size': 16})
 
@@ -126,27 +146,39 @@ def Draw_Average (X, X_names, SD = 1):
     matplotlib.rcParams.update({'font.size': 12})
 
 
-def Draw_All (X, X_names, titles = None):
+def draw_all (X, X_names, titles = None, bdr = False):
+    '''
+    bdr : baseline drift removal using Butterworth high-pass filter
+    '''
 
     matplotlib.rcParams.update({'font.size': 16})
 
     if titles is None:
         titles = range(len(X))
 
-    for x, title in zip(X, titles):
+    if bdr:
+        # Butterworth filter
+        X_bdr = pre.filter_dataset(X, nlc = 0.002, nhc = None)  # axis = 0 for vertically; axis = 1 for horizontally
+    else:
+        X_bdr = X
+
+    for x, xbdr, title in zip(X, X_bdr, titles):
 
         plt.figure(figsize = (20,5))
 
-        plt.plot(X_names, x, "k", linewidth=1)
+        plt.plot(X_names, x, linewidth=1, label='original signal')
+        if bdr:
+            plt.plot(X_names, xbdr, linewidth=1, label='baseline drift removal')
 
         plt.title(title)
         plt.yticks([])
+        plt.legend()
         plt.show()
 
     matplotlib.rcParams.update({'font.size': 12})
 
 
-def Draw_Class_Average (X, y, X_names, SD = 1, shift = 200):
+def draw_class_average (X, y, X_names, SD = 1, shift = 200):
     '''
     Parameter
     ---------
@@ -167,13 +199,13 @@ def Draw_Class_Average (X, y, X_names, SD = 1, shift = 200):
         
         else: # show +/- std errorbar
             plt.errorbar(X_names, Xc.mean(axis = 0) + shift*c, Xc.std(axis = 0)*SD, 
-                        color = ["blue","red","green","orange"][c], 
+                        # color = ["blue","red","green","orange"][c], 
                         linewidth=1, 
                         alpha=0.2,
                         label= 'Class ' + str(c) + ' (' + str(len(yc)) + ' samples)' + ' mean ± '+ str(SD) +' SD',
                         )  # X.std(axis = 0)
             plt.scatter(X_names, np.mean(Xc,axis=0).tolist() + c*shift, 
-                    color = ["blue","red","green","orange"][c],
+                    # color = ["blue","red","green","orange"][c],
                     s=1 
                     ) 
 
@@ -187,16 +219,16 @@ def Draw_Class_Average (X, y, X_names, SD = 1, shift = 200):
 
     matplotlib.rcParams.update({'font.size': 10})
 
-def PeekDataSet(path,  delimiter = ',', has_y = True, SD = 1, shift = 200, x_range = None):
+def peek_dataset(path,  delimiter = ',', has_y = True, SD = 1, shift = 200, x_range = None, y_subset = None):
 
-    X, y, X_names = OpenDataSet(path, delimiter=delimiter, has_y = has_y, x_range = x_range)
+    X, y, X_names = open_dataset(path, delimiter=delimiter, has_y = has_y, x_range = x_range, y_subset=y_subset)
 
     if y is None:
-        Draw_Average (X, X_names)
+        draw_average (X, X_names)
     else:
-        Draw_Class_Average (X, y, X_names, SD, shift)
+        draw_class_average (X, y, X_names, SD, shift)
 
-    ScatterPlot(X, y)
+    scatter_plot(X, y)
     
     return X, y, X_names
 
@@ -213,7 +245,7 @@ def Upsample(target_path, X, y, X_names, folds = 3, d = 0.5):
 
     SMOTE.expand_dataset(X, y, X_names, target_path, d, folds)
 
-def SaveDataSet(targe_path, X, y, X_names):
+def save_dataset(targe_path, X, y, X_names):
     '''
     Save X, y to a local csv file.
 
