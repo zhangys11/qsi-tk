@@ -1,0 +1,12 @@
+7341.csv - The data set in CSV (comma separated value) format.
+
+* Data Source: Stage 4 (4-C7 years) formula milk powder
+* Procedures: Take a proper amount of milk powder into a separate small hole in the 96-well plate. Then, the sample is directly irradiated by a laser Raman spectrometer. The laser power is 250mW, 350mW, 450mW, the integration time is 50s, the spectrum range is 250~2 339cm-1, and the spectral resolution is 1cm-1.
+
+The first column is 'label' (three brands). 
+The rest 2090 columns are the Raman wavenumbers. 
+Each row is a sample. 
+This data set can be used for brand classification. 
+--------------------
+If you use this data set, please add the reference: 
+[1] Adaptive compressed sensing of Raman spectroscopic profiling data for discriminative tasks [J]. Talanta, 2020, doi: 10.1016/j.talanta.2019.120681

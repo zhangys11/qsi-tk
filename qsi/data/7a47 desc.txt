@@ -1,0 +1,12 @@
+红杆、绿杆黄精（Polygonatum sibiricum Delar. ex Redoute of Red and Green Stem Type）。
+浙江金华莘畈乡。黄精根切片。
+
+类标签：
+0 - 红杆
+1 - 绿杆
+
+拉曼参数：
+波长：785nm
+激发功率：30mw
+曝光时间（Exposure time）：0.2s
+扫描次数（Number of exposures）：200次"

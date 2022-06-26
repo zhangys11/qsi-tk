@@ -12,8 +12,9 @@ from .dr import dataset_dct_row_wise
 from .dr import mf, lda
 from .fs import *
 from .cla import metrics
-from .cla import grid_search_svm_hyperparams, plot_svm_boundary, plot_wo_svm_boundary
+from .cla import grid_search_svm_hyperparams, plot_svm_boundary, plot_lr_boundary
 
+from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler,MinMaxScaler
 from sklearn.decomposition import PCA, SparsePCA, KernelPCA, TruncatedSVD
 from sklearn.manifold import TSNE, MDS
@@ -23,7 +24,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.svm import SVC # SVC(C=1.0, ...) 与 nuSVC(nu = 0.5, ...) 的区别：前者使用C～[0，inf），后者使用nu～(0,1]，惩罚性的解释不同，优化都可以使用GridSearch方法
 from scipy.signal import savgol_filter
 
-def analyze(id, x_range = None, y_subset=None, shift = 100):
+def analyze(id, x_range = None, y_subset=None, shift = 100, cla_feature_num = 10):
     '''
     id : dataset id or a full path
     '''
@@ -50,7 +51,7 @@ def analyze(id, x_range = None, y_subset=None, shift = 100):
     X_f = filter_dataset(X, nlc = 0.002, nhc = None)  # axis = 0 for vertically; axis = 1 for horizontally
     plt.figure(figsize = (40,10))
     plt.scatter(X_names, np.mean(X_f,axis=0).tolist()) 
-    plt.title(u'Averaged Spectrum After Butterworth Filter', fontsize=30)
+    plt.title(u'Averaged Spectrum After Butterworth Filter\nIf the filtered result is not good, you will need to finetune the Butterworth highpass filter cutoff freq.', fontsize=30)
     plt.show()
 
     display(HTML('<hr/><h3>特征缩放</h3>'))
@@ -64,6 +65,7 @@ def analyze(id, x_range = None, y_subset=None, shift = 100):
 
     mm_scaler = MinMaxScaler()
     X_mm_scaled = mm_scaler.fit_transform(X)
+    print('X_mm_scaled is rescaled to [0,1]. We use X_mm_scaled in the MFDR and feature selectioin section.')
 
     display(HTML('<hr/><h2>降维</h2>'))
     # Dimension Reduction & Visualization
@@ -128,7 +130,7 @@ LDA for two categories tries to maximize distance between group means, meanwhile
 { (\mu_1 - \mu_2)^2 } \over { s_1^2 + s_2^2 }')
     print('Risk of using LDA: Possible Warning - Variables are collinear. \n\
 LDA, like regression techniques involves computing a matrix inversion, which is inaccurate if the determinant is close to 0 (i.e. two or more variables are almost a linear combination of each other). \n\
-More importantly, it makes the estimated coefficients impossible to interpret. If an increase in X1 , say, is associated with an decrease in X2 and they both increase variable Y, every change in X1 will be compensated by a change in X2 and you will underestimate the effect of X1 on Y. In LDA, you would underestimate the effect of X1 on the classification. If all you care for is the classification per se, and that after training your model on half of the data and testing it on the other half you get 85-95%% accuracy I\'d say it is fine. ')
+More importantly, it makes the estimated coefficients impossible to interpret. If an increase in X1 , say, is associated with an decrease in X2 and they both increase variable Y, every change in X1 will be compensated by a change in X2 and you will underestimate the effect of X1 on Y. In LDA, you would underestimate the effect of X1 on the classification. If all you care for is the classification per se, and that after training your model on half of the data and testing it on the other half you get 85-95% accuracy I\'d say it is fine. ')
     display(HTML('<hr/>'))
 
     pls = PLSRegression(n_components=2, scale = True)
@@ -175,8 +177,11 @@ ADVANTAGES: Deal with multi-colinearity; Interpretation by data structure')
     display(HTML('<hr/>'))
 
     if len(set(y)) == 2:
-        display(HTML('<hr/><h2>可分性度量</h2>'))
-        display(HTML(metrics.get_html(X_enet,y)))
+        if cla_feature_num is None:
+            cla_feature_num = X_enet.shape[1] # use all selected features
+
+        display(HTML('<hr/><h2>可分性度量(top-'+ str(cla_feature_num) +' selected features)</h2>'))
+        display(HTML(metrics.get_html(X_enet[:,:cla_feature_num],y)))
     
     display(HTML('<hr/><h2>分类</h2><h3>超参数优化及模型选择 （SVM）</h3>'))
     
@@ -188,6 +193,22 @@ ADVANTAGES: Deal with multi-colinearity; Interpretation by data structure')
     X_enet_pca = PCA(n_components=2).fit_transform(X_enet)
     best_params, clf, _ = grid_search_svm_hyperparams(X_enet_pca, y, 0.2, tuned_parameters)
     plot_svm_boundary(X_enet_pca, y, clf)
+
+
+    display(HTML('<hr/><h3>线性分类（逻辑回归模型）</h3>'))
+    
+    lr = LogisticRegression(penalty='l2', 
+                        tol=0.0001, 
+                        C=1.0,                         
+                        class_weight=None, 
+                        solver='liblinear', # good for small dataset, but requires ovr for multi-class senarios
+                        max_iter=100, 
+                        multi_class='ovr', # one-vs-rest: a binary problem is fit for each label
+                        verbose=0,                        
+                        l1_ratio=None).fit(X_enet_pca, y)
+    
+    plot_lr_boundary(X_enet_pca, y, lr)
+
 
 def build_simple_pipeline(X, y, save_path = None):
     '''

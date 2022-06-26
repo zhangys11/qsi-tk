@@ -17,6 +17,7 @@ DATA_FOLDER = os.path.dirname( os.path.dirname(os.path.realpath(__file__)) ) + "
 DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
 's3_formula': ('B3.csv', ',', False ,'B3 desc.txt'),
 's4_formula_c2': ('7341_C2.csv', ',', True ,'7341_C2 desc.txt'),
+'s4_formula_c3': ('7341.csv', ',', True ,'7341 desc.txt'),
 'milk_tablet_candy': ('734b.csv',',', False,'734b desc.txt'),
 'yogurt': ('7346.csv',',', True,'7346 desc.txt'),
 'vintage': ('7344.txt','\t', False,'7344 desc.txt'),
@@ -28,7 +29,8 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
 'huangqi_uv': ('7143X_UV.csv',',',True,'7143X_UV desc.txt'),
 'cheese': ('Cheese_RAMAN.csv',',',True,'Cheese_RAMAN desc.txt'),
 'huangjing': ('7a43.csv',',',True,'7a43 desc.txt'),
-'chaihu': ('7a40.csv',',',True,'7a40 desc.txt'),
+'huangjing2': ('7a47.csv',',',True,'7a47 desc.txt'),
+'chaihu': ('7a41.csv',',',True,'7a41 desc.txt'),
 'rice_cereal':('7741_rice_cereal_rm.csv',',',True,'7741_rice_cereal_rm desc.txt'),
 'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv',',',True,'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt'),}
 
@@ -41,6 +43,7 @@ def id_to_path(id):
 def load_dataset(id, SD = 1, shift = 200, x_range = None, y_subset=None, display = True):
     
     path, delimiter, has_y, path_desc = id_to_path(id)
+    print('load dataset from', path)
 
     if display:
         X, y, X_names = peek_dataset(DATA_FOLDER + path, delimiter, has_y, SD, shift, x_range, y_subset)
@@ -100,9 +103,9 @@ def open_dataset(path, delimiter = ',', has_y = True, x_range = None, y_subset=N
         for x,v in zip(X,y):
             if v in y_subset:
                 Xs.append(x)
-                ys.append(y_subset.indexOf(v)) # map to natrual label series, 0,1,2,..
+                ys.append(y_subset.index(v)) # map to natrual label series, 0,1,2,..
 
-        print('Use classes: ' + str(y_subset) + ', remapped to ' + list(range(len(y_subset))))
+        print('Use classes: ' + str(y_subset) + ', remapped to ' + str(list(range(len(y_subset)))))
         X = np.array(Xs)
         y = np.array(ys)
 
@@ -146,7 +149,7 @@ def draw_average (X, X_names, SD = 1):
     matplotlib.rcParams.update({'font.size': 12})
 
 
-def draw_all (X, X_names, titles = None, bdr = False):
+def draw_all (X, y, X_names, titles = None, bdr = False):
     '''
     bdr : baseline drift removal using Butterworth high-pass filter
     '''
@@ -154,7 +157,12 @@ def draw_all (X, X_names, titles = None, bdr = False):
     matplotlib.rcParams.update({'font.size': 16})
 
     if titles is None:
-        titles = range(len(X))
+        titles = []
+        for idx, x in enumerate(X):
+            title = 'Sample ' + str(idx)
+            if y is not None:
+                title = title + ', Class ' + str(y[idx])
+            titles.append(title)
 
     if bdr:
         # Butterworth filter
@@ -166,7 +174,7 @@ def draw_all (X, X_names, titles = None, bdr = False):
 
         plt.figure(figsize = (20,5))
 
-        plt.plot(X_names, x, linewidth=1, label='original signal')
+        plt.plot(X_names, x, linewidth=1, label=title)
         if bdr:
             plt.plot(X_names, xbdr, linewidth=1, label='baseline drift removal')
 

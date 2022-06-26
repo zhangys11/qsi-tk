@@ -125,3 +125,16 @@ def diff_dataset(X):
     X_diff = np.diff(X)
     return X_diff
     
+def try_dataset_bdr(X, nlc_range = [0.002, 0.005, 0.01, 0.02]):
+    '''
+    Test a series of Butterworth low cutoff for baseline drift removal.
+    '''
+
+    for nlc in nlc_range:
+
+        # Butterworth filter
+        X_f = filter_dataset(X, nlc = nlc, nhc = None)  # axis = 0 for vertically; axis = 1 for horizontally
+        plt.figure(figsize = (40,10))
+        plt.plot(np.mean(X_f,axis=0).tolist()) 
+        plt.title(u'Averaged Spectrum After Butterworth Highpass Filter. cutoff = ' + str(nlc), fontsize=30)
+        plt.show()
