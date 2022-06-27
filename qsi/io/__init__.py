@@ -7,32 +7,36 @@ import matplotlib.cm as cm
 import pylab, matplotlib
 from sklearn.linear_model import Lasso
 from sklearn.decomposition import PCA
+from sklearn.cross_decomposition import PLSRegression
 from sqlalchemy import false
 from ..data import SMOTE
 from . import pre
+from ..dr import lda
 
 from ..vis import *
 DATA_FOLDER = os.path.dirname( os.path.dirname(os.path.realpath(__file__)) ) + "/data/"
 
-DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt'),
-'s3_formula': ('B3.csv', ',', False ,'B3 desc.txt'),
-'s4_formula_c2': ('7341_C2.csv', ',', True ,'7341_C2 desc.txt'),
-'s4_formula_c3': ('7341.csv', ',', True ,'7341 desc.txt'),
-'milk_tablet_candy': ('734b.csv',',', False,'734b desc.txt'),
-'yogurt': ('7346.csv',',', True,'7346 desc.txt'),
-'vintage': ('7344.txt','\t', False,'7344 desc.txt'),
-'vintage_spi': ('7345.csv',',', True,'7345 desc.txt'),
-'vintage_c2': ('7344_C03.csv',',',True,'7344_C03 desc.txt'),
-'beimu': ('754a_C2S_Beimu.txt',',', True,'754a_C2S_Beimu desc.txt'),
-'shihu': ('754b_C2S_Shihu.txt',',',True,'754b_C2S_Shihu desc.txt'),
-'huangqi_rm': ('7044X_RAMAN.csv',',', True,'7044X_RAMAN desc.txt'),
-'huangqi_uv': ('7143X_UV.csv',',',True,'7143X_UV desc.txt'),
-'cheese': ('Cheese_RAMAN.csv',',',True,'Cheese_RAMAN desc.txt'),
-'huangjing': ('7a43.csv',',',True,'7a43 desc.txt'),
-'huangjing2': ('7a47.csv',',',True,'7a47 desc.txt'),
-'chaihu': ('7a41.csv',',',True,'7a41 desc.txt'),
-'rice_cereal':('7741_rice_cereal_rm.csv',',',True,'7741_rice_cereal_rm desc.txt'),
-'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv',',',True,'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt'),}
+DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt', ['Stage 4 (4-7 years) formula']),
+'s3_formula': ('B3.csv', ',', False ,'B3 desc.txt', ['Stage 3 (12~36 months) infant formula']),
+'s4_formula_c2': ('7341_C2.csv', ',', True ,'7341_C2 desc.txt', ['Brand 1', 'Brand 2']),
+'s4_formula_c3': ('7341.csv', ',', True ,'7341 desc.txt', ['Brand 1', 'Brand 2', 'Brand 3']),
+'milk_tablet_candy': ('734b.csv',',', False,'734b desc.txt', None),
+'yogurt': ('7346.csv',',', True,'7346 desc.txt', ["YL","GM","WQ","MN"]),
+'vintage': ('7344.txt','\t', False,'7344 desc.txt', '8-year vintage'),
+'vintage_spi': ('7345.csv',',', True,'7345 desc.txt', ["5Y","8Y","16Y","26Y"]),
+'vintage_c2': ('7344_C03.csv',',',True,'7344_C03 desc.txt',["5Y","26Y"]),
+'beimu': ('754a_C2S_Beimu.txt',',', True,'754a_C2S_Beimu desc.txt',["Sichuan","Zhejiang"]),
+'shihu_c2': ('754b_C2S_Shihu.txt',',',True,'754b_C2S_Shihu desc.txt',['Yunnan','Zhejiang']),
+# 'shihu': ('754b.csv',',',True,'754b desc.txt',['Yunnan','Wenzhou','Panan1','Panan2']),
+'huangqi_rm': ('7044X_RAMAN.csv',',', True,'7044X_RAMAN desc.txt',['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu']),
+'huangqi_uv': ('7143X_UV.csv',',',True,'7143X_UV desc.txt',['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu']),
+'cheese': ('Cheese_RAMAN.csv',',',True,'Cheese_RAMAN desc.txt',['MK','SL','YL']),
+'huangjing': ('7a43.csv',',',True,'7a43 desc.txt',['Wild','Cultivated']),
+'huangjing2': ('7a47.csv',',',True,'7a47 desc.txt',['Red-Stem','Green-Stem']),
+'chaihu': ('7a41.csv',',',True,'7a41 desc.txt',['Wild','Cultivated','B. smithii Wolff','Gansu','Shanxi','vinegar Concocted','Terrestrosin D']),
+'rice_cereal':('7741_rice_cereal_rm.csv',',',True,'7741_rice_cereal_rm desc.txt', ['LF','EB']),
+'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv',',',True,'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt', ['inorganic','organic'])
+}
 
 def get_available_datasets():
     return list( DATASET_MAP.keys() )
@@ -42,11 +46,11 @@ def id_to_path(id):
 
 def load_dataset(id, SD = 1, shift = 200, x_range = None, y_subset=None, display = True):
     
-    path, delimiter, has_y, path_desc = id_to_path(id)
+    path, delimiter, has_y, path_desc, labels = id_to_path(id)
     print('load dataset from', path)
 
     if display:
-        X, y, X_names = peek_dataset(DATA_FOLDER + path, delimiter, has_y, SD, shift, x_range, y_subset)
+        X, y, X_names = peek_dataset(DATA_FOLDER + path, delimiter, has_y, labels, SD, shift, x_range, y_subset)
     else:
         X, y, X_names = open_dataset(DATA_FOLDER + path, delimiter, has_y, x_range, y_subset)
 
@@ -60,7 +64,7 @@ def load_dataset(id, SD = 1, shift = 200, x_range = None, y_subset=None, display
     else:
         desc = ''
     
-    return X, y, X_names, desc
+    return X, y, X_names, desc, labels
 
 def open_dataset(path, delimiter = ',', has_y = True, x_range = None, y_subset=None):
     '''
@@ -115,12 +119,27 @@ def open_dataset(path, delimiter = ',', has_y = True, x_range = None, y_subset=N
 
     return X, y, X_names
 
-def scatter_plot(X, y):    
+def scatter_plot(X, y, labels = None):    
 
     pca = PCA(n_components=2) # keep the first 2 components
     X_pca = pca.fit_transform(X)
-    plotComponents2D(X_pca, y)
+    plotComponents2D(X_pca, y, legends=labels)
+    plt.title('PCA')
     plt.show()
+
+    if y is not None:
+
+        X_lda = lda(X,y)
+        plotComponents2D(X_lda, y, legends = labels) # , tags = range(len(y)), ax = ax   
+        plt.title('LDA`')
+        plt.show()
+
+        pls = PLSRegression(n_components=2, scale = False)
+        X_pls = pls.fit(X, y).transform(X)
+        plotComponents2D(X_pls, y, legends = labels) # , tags = range(len(y)), ax = ax
+        # print('score = ', np.round(pls.score(X, y),3))
+        plt.title('PLS')
+        plt.show()
 
 def draw_average (X, X_names, SD = 1):
 
@@ -186,7 +205,7 @@ def draw_all (X, y, X_names, titles = None, bdr = False):
     matplotlib.rcParams.update({'font.size': 12})
 
 
-def draw_class_average (X, y, X_names, SD = 1, shift = 200):
+def draw_class_average (X, y, X_names, labels = None, SD = 1, shift = 200):
     '''
     Parameter
     ---------
@@ -198,9 +217,12 @@ def draw_class_average (X, y, X_names, SD = 1, shift = 200):
 
     plt.figure(figsize = (24,10))
 
-    for c in set(y):    
+    if labels is None:
+        labels = list( map(lambda s: 'Class ' + str(s), set(y)) )
+
+    for c, label in zip(set(y), labels):    
         Xc = X[y == c]
-        yc = y[y == c] 
+        yc = y[y == c]
 
         if SD == 0:
             plt.plot(X_names, np.mean(Xc,axis=0) + c*shift, label= 'Class ' + str(c) + ' (' + str(len(yc)) + ' samples)') 
@@ -210,7 +232,7 @@ def draw_class_average (X, y, X_names, SD = 1, shift = 200):
                         # color = ["blue","red","green","orange"][c], 
                         linewidth=1, 
                         alpha=0.2,
-                        label= 'Class ' + str(c) + ' (' + str(len(yc)) + ' samples)' + ' mean ± '+ str(SD) +' SD',
+                        label= label + ' (' + str(len(yc)) + ' samples)' + ' mean ± '+ str(SD) +' SD',
                         )  # X.std(axis = 0)
             plt.scatter(X_names, np.mean(Xc,axis=0).tolist() + c*shift, 
                     # color = ["blue","red","green","orange"][c],
@@ -227,16 +249,16 @@ def draw_class_average (X, y, X_names, SD = 1, shift = 200):
 
     matplotlib.rcParams.update({'font.size': 10})
 
-def peek_dataset(path,  delimiter = ',', has_y = True, SD = 1, shift = 200, x_range = None, y_subset = None):
+def peek_dataset(path,  delimiter = ',', has_y = True, labels = None, SD = 1, shift = 200, x_range = None, y_subset = None):
 
     X, y, X_names = open_dataset(path, delimiter=delimiter, has_y = has_y, x_range = x_range, y_subset=y_subset)
 
     if y is None:
         draw_average (X, X_names)
     else:
-        draw_class_average (X, y, X_names, SD, shift)
+        draw_class_average (X, y, X_names, labels, SD, shift)
 
-    scatter_plot(X, y)
+    scatter_plot(X, y, labels = labels)
     
     return X, y, X_names
 

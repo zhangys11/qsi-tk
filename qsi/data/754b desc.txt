@@ -1,0 +1,10 @@
+Data Set ID: 754b 铁皮石斛拉曼光谱
+
+["云南","温州","磐安(大晟)","磐安(方正)"]
+
+C1 - Yunan Province
+C2 - Wenzhou, Zhejiang Province
+C3 - Brand 1, Panan, Zhejiang Province
+C4 - Brand 2, Panan, Zhejiang Province
+
+建议选用 1010~2700 的有效波数段，两端存在波动过大或有NaN值的情况。

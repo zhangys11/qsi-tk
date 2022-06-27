@@ -1,7 +1,7 @@
 Column Meanings: Raman shift / wavenumber (cm-1)
 Each row is one sample.
 
-* Data Source: Period 3 (12~36 months) infant formula
+* Data Source: Stage 3 (12~36 months) infant formula
 * Provider: Beingmate Baby & Child Food Co., Ltd
 
 -------------------------

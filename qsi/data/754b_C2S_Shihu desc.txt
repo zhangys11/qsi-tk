@@ -3,4 +3,4 @@ Data Set ID: 754b 铁皮石斛拉曼光谱
 [云南，浙江温州]
 
 C1 - Yunan Province (112 samples)
-C2 - Zhejiang Province (120 samples)
+C2 - Wenzhou, Zhejiang Province (120 samples)

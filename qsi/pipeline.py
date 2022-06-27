@@ -30,8 +30,9 @@ def analyze(id, x_range = None, y_subset=None, shift = 100, cla_feature_num = 10
     '''
     display(HTML('<h2>数据加载</h2>'))
 
+    labels = None
     if (id in io.DATASET_MAP.keys()):
-        X, y, X_names, _ = io.load_dataset(id, x_range=x_range, y_subset=y_subset, shift = shift)
+        X, y, X_names, _, labels = io.load_dataset(id, x_range=x_range, y_subset=y_subset, shift = shift)
     elif os.path.exists(id):
         X, y, X_names, _ = io.open_dataset(id, x_range=x_range, y_subset=y_subset, shift = shift)
 
@@ -208,6 +209,8 @@ ADVANTAGES: Deal with multi-colinearity; Interpretation by data structure')
                         l1_ratio=None).fit(X_enet_pca, y)
     
     plot_lr_boundary(X_enet_pca, y, lr)
+
+    return X, y, X_names, labels # return the data for user future analysis
 
 
 def build_simple_pipeline(X, y, save_path = None):

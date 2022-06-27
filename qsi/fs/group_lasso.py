@@ -48,3 +48,41 @@ def plot_raman_prior():
     plt.yticks([])
     plt.xticks(range(500, 3001, 500))
     plt.show()
+
+def binning_op(xaxis, region, filter = 'rbf', SD = 1):
+    '''
+    xaxis : the entire x axis range, e.g., [0, 3000]
+    region : e.g., [100,200]
+    filter : can be 'rbf', 'sinc', 'logistic', 'uniform'. Uniform is just averaging filter.
+    SD : for rbf kernel, the region will lie inside +/-SD
+    
+    Return : op array. Has the length of xaxis.
+    '''
+    if filter == 'uniform':
+        op = np.ones(len(xaxis)) / len(xaxis)
+    # todo: others
+    return op
+
+
+def adaptive_binning(X, regions, filter = 'rbf'):
+    '''
+    Convert one data to binned features.
+    Break down the axis as sections. Each seection is an integral of the signal intensities in the region.
+    Integration can be done by radius basis function / sinc kernel, etc.
+
+    filter : Apply a filter operator to a continuous region. Can be 'rbf', 'sinc', 'logistic', 'uniform'. Uniform is just averaging filter.
+    '''
+
+    Fss = []
+    for x in X:
+
+        Fs = [] # the discrete features for one data sample
+        for region in regions:
+            op = binning_op([0, len(x)], region, filter)
+            F = (op*x).sum()
+            Fs.append(F)
+
+        Fss.append(Fs)
+
+    return np.array(Fss)
+
