@@ -1,7 +1,13 @@
 from sklearn.feature_selection import chi2, f_classif
-from ..vis import plot_feature_importance, unsupervised_dimension_reductions
+from ..vis import plotComponents2D, plot_feature_importance, unsupervised_dimension_reductions
 import numpy as np
+import matplotlib.pyplot as plt
+
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+from sklearn.cross_decomposition import PLSRegression
 from sklearn.linear_model import LassoCV, ElasticNetCV
+from scipy.fftpack import fft, dct
 
 def chisq_stats_fs(X, y, N = 30, display = True):
     '''
@@ -78,6 +84,147 @@ def elastic_net_fs (X, y, N = 30, display = True, verbose = True):
    
     return __fs__(X, np.abs(elastic_net.coef_), N, display)
     
+
+def nch_time_series_fs(X, fft_percentage = 0.05, dct_percentage = 0.1, conv_mask = [1,-2,1], display = True, y = None, labels = None):
+    '''
+    Multi-channel time series data feature selection. 
+    Suitable for e-nose and e-tongue signals.
+
+    与质谱、光谱不同，电子舌、电子鼻数据反应了各个传感器的时间响应特性。
+    我们需要设计特征集合，以反映这种随时间变换的动态特点（时间响应特性）。
+
+    提供的基础特征：
+
+        AUC(Area Under CurveA)，积分/面积
+        Max peak height (响应的最高峰值)
+        一阶导数的AUC、max、min
+        二阶导数的AUC、max、min
+        变换域中的低频特征，如FFT、DCT。考虑前5%的低频组分。
+        一维卷积核（sliding window, 1d conv kernel, e.g., Laplace mask)
+
+    X : input data. Should have shape (m,ch,n)
+    fft_percentage : default 0.05, means to keep the top 5% FFT components
+    dct_percentage : default 0.1, means to keep the top 10% DCT components.
+    conv_mask : convolution mask. default is 1D-laplacian mask [1,-2,1]
+
+    y, labels : only used in the visualization part. If you don't need visualizaiton, just pass None or ignore.
+
+    '''
+
+    LV = [] # concated long vector
+
+    FS1 = []
+    FS2 = []
+    FS3 = []
+    FS4 = []
+
+    for x in X:
+
+        fs1 = []
+        fs2 = []
+        fs3 = []
+        fs4 = []
+        LV.append(x.flatten().tolist())
+
+        for xx in x: 
+            
+            ch = xx # one sample's one channel   
+            
+            ###### Feature Set 1 #######
+            
+            fs1.append(ch.sum())
+            fs1.append(ch.max())
+            der = np.diff(ch)
+            fs1.append(der.sum())
+            fs1.append(der.max())
+            fs1.append(der.min())
+            der2 = np.diff(der)
+            fs1.append(der2.sum())
+            fs1.append(der2.max())
+            fs1.append(der2.min())
+            
+            # der3 = np.diff(der2) # adding 3-ord derivative doesn't improve classifiablity
+            # fs.append(der3.sum())
+            # fs.append(der3.max())
+            # fs.append(der3.min())
+            
+            
+            ###### Feature Set 2 #######
+            L = len(ch)
+
+            fft_arr = fft(ch).real [:round(L * fft_percentage)] # tne first 5% （this is a hyper-parameter） low-freq components
+            # plt.plot(fft_arr)
+            # plt.plot(dct_arr)
+            # plt.show()
+            fs2 = fs2 + fft_arr.tolist()        
+            
+            ###### Feature Set 3 #######
+            
+            dct_arr = dct(ch) [:round(L * dct_percentage)]
+            fs3 = fs3 + dct_arr.tolist()
+            
+            ###### Feature Set 4 #######
+            
+            conved = np.convolve(ch, conv_mask, 'valid')
+            # plt.plot(laplace) # not sparse at all
+            # plt.show()
+            fs4 = fs4 + conved.tolist()
+            
+        FS1.append(fs1)
+        FS2.append(fs2)
+        FS3.append(fs3)
+        FS4.append(fs4)
         
+    LV = np.array(LV)
+
+    FS_names = ['Concatenated Long Vector', 'Basic Descriptive Features', 
+            'FFT top-n Low-Frequency Components', 
+            'DCT top-n Low-Frequency Components',
+           '1D Convolution Kernel']
+
+    # return FS_names, [LV, FS1, FS2, FS3, FS4]
+
+    if display:
+
+        for name, FS in zip(FS_names, [LV, FS1, FS2, FS3, FS4]):
+        
+            ################ Feature Scaling ###############
+            
+            scaler = StandardScaler()
+            scaler.fit(FS)
+            FS = scaler.transform(FS)
+            
+            if y is None:
+
+                ################ PCA ####################
+                
+                pca = PCA(n_components=2, scale = False)
+                F_2d = pls.fit_transform(FS)
+
+                plotComponents2D(F_2d, legends = labels)            
+                plt.title(name + ' - PCA')
+
+            else:
+
+                ################ PLS ####################
+                
+                pls = PLSRegression(n_components=2, scale = False)
+                F_2d = pls.fit(FS, y).transform(FS)
+
+                # plt.figure(figsize = (20,15))
+                plotComponents2D(F_2d, y, legends = labels)            
+                title = name + ' - PLS'
+
+                # Returns the coefficient of determination R^2 of the prediction.
+                title = title + '\nR2 = ' + str( np.round(pls.score(FS, y),3) )
+
+                plt.title(title)
+
+            plt.show()
+
+        if y is not None:
+            print('About the PLS R2 core: \nThe score is the coefficient of determination of the prediction, defined as 1 - u/v, where u is the residual sum of squares ((y_true - y_pred)** 2).sum() and v is the total sum of squares ((y_true - y_true.mean()) ** 2).sum(). The best possible score is 1.0 and it can be negative (because the model can be arbitrarily worse). A constant model that always predicts the expected value of y, disregarding the input features, would get a score of 0.0.')
+        
+
 
     

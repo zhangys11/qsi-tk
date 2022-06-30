@@ -1,0 +1,101 @@
+202108 奶粉电子鼻 
+
+检测对象：
+dried whole milk powder（基粉）
+
+类标签： 
+y = 0 : 国产 china
+y = 1 : 国外 australia
+
+数据说明: 
+
+本数据已经进行了预处理（做了时间轴对齐处理）。
+由于原始的电子鼻的数据是多个通道的传感器阵列所产生的一个时间响应的曲线，每一个检测数据所产生的数据在响应时间(送样时刻)上面都不是对齐的，所以为了进行横向的比较，数据前段的波形为清洗阶段，应无视。中后段数据需要进行对齐alignment。我们试验了多种对齐的算法，一种是基于卡方相关性的，一种是基于phase correlation，一种是特征峰对齐。对比选择最优的对齐算法。对齐后截取相同长度的序列。 
+
+X的维度为(47, 14, 700)。47个样本，14个sensor通道（channel），时间轴上700个采样点。
+y的维度(47,)
+
+
+适用于该数据集的特征提取方法：
+
+与拉曼光谱和飞行时间质谱不同，电子鼻数据反映的是随时间变化的一个响应趋势，因此，我们更加关注的是曲线随时间变化的一些动态特征。为此，我们设计了多种特征提取的方法，并进行了对比。 第一种方法，我们直接将各个传感器通道的数据拼接成一个长的向量作为特征。这种方法相当于是没有做任何的特征提取，而是直接使用原始的特征。 第二种方法是提取原始的波形数据的一些数学特征或统计量，包括AUC曲线下面积，曲线的最高峰的高度，一阶导数的AUC，最大值和最小值，二阶导数的AUC，最大值和最小值。 第三种方法是对原始各个通道的波形进行频域转化，即进行fft变换。然后选取频域中的前5%的低频变量作为提取的特征 第四种方法与第三种方法类似，通过离散余弦变换dct，选取频域中的前10%的低频成分，作为提取的特征 第五种方法是采用卷积核，如拉普拉斯核(在图像处理中，二维laplace operator常用于edge detection)，与原始信号进行卷积运算，得到卷积核提取后的新的特征
+
+通过以上五种方法提取特征后，采用pls降维，观察可分性。发现后三种方法的可分性都非常高，在线性分类器上基本上达到了100%的分类准确率，明显优于原始特征。
+
+关键词：FFT, DCT, 一维卷积算子（如Laplace算子）
+
+参考文献：
+
+    Classification of E-Nose Aroma Data of Four Fruit Types by ABC-Based Neural Network
+    Type 	Journal Article
+    Author 	M. Adak
+    Author 	Nejat Yumusak
+    URL 	http://www.mdpi.com/1424-8220/16/3/304
+    Volume 	16
+    Issue 	3
+    Pages 	304
+    Publication 	Sensors
+    ISSN 	1424-8220
+    Date 	2016-02-27
+    Journal Abbr 	Sensors
+    DOI 	10.3390/s16030304
+    Accessed 	11/20/2021, 9:37:11 PM
+    Library Catalog 	DOI.org (Crossref)
+    Language 	en
+    Abstract 	Electronic nose technology is used in many areas, and frequently in the beverage industry for classiﬁcation and quality-control purposes. In this study, four different aroma data (strawberry, lemon, cherry, and melon) were obtained using a MOSES II electronic nose for the purpose of fruit classiﬁcation. To improve the performance of the classiﬁcation, the training phase of the neural network with two hidden layers was optimized using artiﬁcial bee colony algorithm (ABC), which is known to be successful in exploration. Test data were given to two different neural networks, each of which were trained separately with backpropagation (BP) and ABC, and average test performances were measured as 60% for the artiﬁcial neural network trained with BP and 76.39% for the artiﬁcial neural network trained with ABC. Training and test phases were repeated 30 times to obtain these average performance measurements. This level of performance shows that the artiﬁcial neural network trained with ABC is successful in classifying aroma data.
+    Date Added 	11/20/2021, 9:37:11 PM
+    Modified 	11/20/2021, 9:37:11 PM
+    Attachments
+
+        Adak and Yumusak - 2016 - Classification of E-Nose Aroma Data of Four Fruit .pdf
+
+    Electronic Nose Feature Extraction Methods: A Review
+    Type 	Journal Article
+    Author 	Jia Yan
+    Author 	Xiuzhen Guo
+    Author 	Shukai Duan
+    Author 	Pengfei Jia
+    Author 	Lidan Wang
+    Author 	Chao Peng
+    Author 	Songlin Zhang
+    URL 	http://www.mdpi.com/1424-8220/15/11/27804
+    Volume 	15
+    Issue 	11
+    Pages 	27804-27831
+    Publication 	Sensors
+    ISSN 	1424-8220
+    Date 	2015-11-02
+    Journal Abbr 	Sensors
+    DOI 	10.3390/s151127804
+    Accessed 	11/20/2021, 9:37:00 PM
+    Library Catalog 	DOI.org (Crossref)
+    Language 	en
+    Abstract 	Many research groups in academia and industry are focusing on the performance improvement of electronic nose (E-nose) systems mainly involving three optimizations, which are sensitive material selection and sensor array optimization, enhanced feature extraction methods and pattern recognition method selection. For a specific application, the feature extraction method is a basic part of these three optimizations and a key point in E-nose system performance improvement. The aim of a feature extraction method is to extract robust information from the sensor response with less redundancy to ensure the effectiveness of the subsequent pattern recognition algorithm. Many kinds of feature extraction methods have been used in E-nose applications, such as extraction from the original response curves, curve fitting parameters, transform domains, phase space (PS) and dynamic moments (DM), parallel factor analysis (PARAFAC), energy vector (EV), power density spectrum (PSD), window time slicing (WTS) and moving window time slicing (MWTS), moving window function capture (MWFC), etc. The object of this review is to provide a summary of the various feature extraction methods used in E-noses in recent years, as well as to give some suggestions and new inspiration to propose more effective feature extraction methods for the development of E-nose technology.
+    Short Title 	Electronic Nose Feature Extraction Methods
+    Date Added 	11/20/2021, 9:37:00 PM
+    Modified 	11/20/2021, 9:37:00 PM
+    Attachments
+
+        Yan et al. - 2015 - Electronic Nose Feature Extraction Methods A Revi.pdf
+
+    On the study of feature extraction methods for an electronic nose
+    Type 	Journal Article
+    Author 	Cosimo Distante
+    Author 	Marco Leo
+    Author 	Pietro Siciliano
+    Author 	Krishna C. Persaud
+    URL 	https://linkinghub.elsevier.com/retrieve/pii/S0925400502002472
+    Volume 	87
+    Issue 	2
+    Pages 	274-288
+    Publication 	Sensors and Actuators B: Chemical
+    ISSN 	09254005
+    Date 	12/2002
+    Journal Abbr 	Sensors and Actuators B: Chemical
+    DOI 	10.1016/S0925-4005(02)00247-2
+    Accessed 	11/20/2021, 9:37:08 PM
+    Library Catalog 	DOI.org (Crossref)
+    Language 	en
+    Abstract 	In this study, we analyzed the transient of microsensors based on tin oxide sol–gel thin ﬁlm. A novel method to this research ﬁeld for data analysis and discrimination among different volatile organic compounds is presented. Moreover; several feature extraction methods have been considered, both steady-state (fractional change, relative, difference and log) and transient (Fourier and wavelet descriptors, integral and derivatives) information. Feature extraction methods have been validated qualitatively (by using principal component analysis) and quantitatively on the classiﬁcation rate (by using a radial basis function neural network).
+    Date Added 	11/20/2021, 9:37:08 PM
+    Modified 	11/20/2021, 9:37:08 PM

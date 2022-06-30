@@ -5,6 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import pylab, matplotlib
+import os.path
+import pickle
 from sklearn.linear_model import Lasso
 from sklearn.decomposition import PCA
 from sklearn.cross_decomposition import PLSRegression
@@ -30,12 +32,15 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt', ['S
 # 'shihu': ('754b.csv',',',True,'754b desc.txt',['Yunnan','Wenzhou','Panan1','Panan2']),
 'huangqi_rm': ('7044X_RAMAN.csv',',', True,'7044X_RAMAN desc.txt',['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu']),
 'huangqi_uv': ('7143X_UV.csv',',',True,'7143X_UV desc.txt',['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu']),
+'huangqi_ims': ('704b_IMS.csv',',',True,'704b_IMS desc.txt',['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu']),
 'cheese': ('Cheese_RAMAN.csv',',',True,'Cheese_RAMAN desc.txt',['MK','SL','YL']),
 'huangjing': ('7a43.csv',',',True,'7a43 desc.txt',['Wild','Cultivated']),
 'huangjing2': ('7a47.csv',',',True,'7a47 desc.txt',['Red-Stem','Green-Stem']),
 'chaihu': ('7a41.csv',',',True,'7a41 desc.txt',['Wild','Cultivated','B. smithii Wolff','Gansu','Shanxi','vinegar Concocted','Terrestrosin D']),
 'rice_cereal':('7741_rice_cereal_rm.csv',',',True,'7741_rice_cereal_rm desc.txt', ['LF','EB']),
-'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv',',',True,'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt', ['inorganic','organic'])
+'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv',',',True,'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt', ['inorganic','organic']),
+'milkpowder_enose': ('7747.pkl',',',True,'7747 desc.txt', ['cn','au']),
+#'forsythia': ('7746.pkl',',',True,'7746 desc.txt', ["SX山西","HN河南","HB湖北","SHX陕西"]) # 该电子鼻数据未有效对齐
 }
 
 def get_available_datasets():
@@ -70,31 +75,50 @@ def open_dataset(path, delimiter = ',', has_y = True, x_range = None, y_subset=N
     '''
     Parameters
     ----------
+    path : if the file extension is pkl, will use pickle.load(), otherwise use pandas.read_csv()
     has_y : boolean, whether there is y column, usually the 1st column.
     x_range : [250,2000] or None. If none, all features are kept.
     '''
+    
+    ext = os.path.splitext(path)[1]
 
-    # path = "github/data/754a_C2S_Beimu.txt"
-    data = pd.read_csv(path, delimiter=delimiter) # ,header=None
-    # print('Total NAN: ', data.isnull().sum().sum(), '\n\n', data.isnull().sum().values)
+    if ext == '.pkl':
 
-    cols = data.shape[1]
+        with open(path, 'rb') as f:
 
-    if has_y:
+            ds = pickle.load(f)
+            X = ds['X']
 
-        # convert from pandas dataframe to numpy matrices
-        X = data.iloc[:,1:cols].values # .values[:,::10]
-        y = data.iloc[:,0].values.ravel() # first col is y label
-        # use map(float, ) to convert the string list to float list
-        X_names = list(map(float, data.columns.values[1:])) # list(map(float, data.columns.values[1:])) # X_names = np.array(list(data)[1:])
+            if has_y:
+                y = ds['y']
+            else:
+                y = None
+
+            X_names = ds['X_names']
 
     else:
 
-        X = data.values
-        y = None
+        # path = "github/data/754a_C2S_Beimu.txt"
+        data = pd.read_csv(path, delimiter=delimiter) # ,header=None
+        # print('Total NAN: ', data.isnull().sum().sum(), '\n\n', data.isnull().sum().values)
 
-        # use map(float, ) to convert the string list to float list
-        X_names = list(map(float, data.columns.values)) # X_names = np.array(list(data)[1:])
+        cols = data.shape[1]
+
+        if has_y:
+
+            # convert from pandas dataframe to numpy matrices
+            X = data.iloc[:,1:cols].values # .values[:,::10]
+            y = data.iloc[:,0].values.ravel() # first col is y label
+            # use map(float, ) to convert the string list to float list
+            X_names = list(map(float, data.columns.values[1:])) # list(map(float, data.columns.values[1:])) # X_names = np.array(list(data)[1:])
+
+        else:
+
+            X = data.values
+            y = None
+
+            # use map(float, ) to convert the string list to float list
+            X_names = list(map(float, data.columns.values)) # X_names = np.array(list(data)[1:])
 
     if x_range is not None:
         X = X[:,x_range]
@@ -253,16 +277,50 @@ def peek_dataset(path,  delimiter = ',', has_y = True, labels = None, SD = 1, sh
 
     X, y, X_names = open_dataset(path, delimiter=delimiter, has_y = has_y, x_range = x_range, y_subset=y_subset)
 
-    if y is None:
-        draw_average (X, X_names)
-    else:
-        draw_class_average (X, y, X_names, labels, SD, shift)
+    if len(X.shape) == 2:
 
-    scatter_plot(X, y, labels = labels)
+        if y is None:
+            draw_average (X, X_names)
+        else:
+            draw_class_average (X, y, X_names, labels, SD, shift)
+
+        scatter_plot(X, y, labels = labels)
     
+    elif len(X.shape) == 3: # enose/etongue
+
+        # Display one data sample in each category.
+
+        if labels is None:
+            labels = list( map(lambda s: 'Class ' + str(s), set(y)) )
+
+        matplotlib.rcParams.update({'font.size': 18})
+
+        for c, label in zip(set(y), labels):  
+            Xc = X[y == c]
+            yc = y[y == c]
+            
+            for sidx, x in enumerate(Xc):   
+            
+                plt.figure(figsize = (30,10)) 
+                #print(np.mean(Xc,axis=0).ravel().tolist()[0])
+
+                for idx, X_name in enumerate(X_names): # X_names is channels
+                    plt.plot(x[idx], label= X_name) 
+
+                plt.xlabel('time')
+                plt.ylabel('frequency difference')
+                plt.legend(fontsize=20)
+
+                plt.title(u'Sample ' + str(sidx) + ' in ' + str(label)) # first sample
+                plt.show()
+                
+                # break # only diplay 1st sample
+
+        matplotlib.rcParams.update({'font.size': 10})
+
     return X, y, X_names
 
-def Upsample(target_path, X, y, X_names, folds = 3, d = 0.5):
+def upsample(target_path, X, y, X_names, folds = 3, d = 0.5):
     '''
     Upsample a dataset by SMOTE.
 
@@ -277,21 +335,35 @@ def Upsample(target_path, X, y, X_names, folds = 3, d = 0.5):
 
 def save_dataset(targe_path, X, y, X_names):
     '''
-    Save X, y to a local csv file.
+    Save X, y to a local csv/pkl file.
+    When len(X.shape) > 2 (e.g., enose and etongue, must use pkl) 
 
     Parameters
     ----------
+    X , y : must be numpy arrays
     X_names : the labels for each X feature
     '''
 
-    dfX = pd.DataFrame(X)
-    dfX.columns = X_names
+    if len(X.shape) == 2: # can be saved as a tabular dataset
 
-    dfY = pd.DataFrame(y)
-    dfY.columns = ['label']
+        dfX = pd.DataFrame(X)
+        dfX.columns = X_names
 
-    df = pd.concat([dfY, dfX], axis=1)
-    df = df.sort_values(by=['label'], ascending=True)
-    df.to_csv(targe_path, index=False) # don't create the index column
+        dfY = pd.DataFrame(y)
+        dfY.columns = ['label']
 
+        df = pd.concat([dfY, dfX], axis=1)
+        df = df.sort_values(by=['label'], ascending=True)
+        df.to_csv(targe_path, index=False) # don't create the index column
 
+    else:
+
+        # create a dictionary
+        ds = {
+            "X": X,
+            "y": y,
+            "X_names": X_names
+        }
+        # save dictionary to pickle file
+        with open(targe_path, "wb") as f:
+            pickle.dump(ds, f)
