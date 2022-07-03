@@ -10,8 +10,7 @@ import pickle
 from sklearn.linear_model import Lasso
 from sklearn.decomposition import PCA
 from sklearn.cross_decomposition import PLSRegression
-from sqlalchemy import false
-from ..data import SMOTE
+from ..data import SMOTE,GAN
 from . import pre
 from ..dr import lda
 
@@ -41,6 +40,8 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt', ['S
 'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv',',',True,'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt', ['inorganic','organic']),
 'milkpowder_enose': ('7747.pkl',',',True,'7747 desc.txt', ['cn','au']),
 #'forsythia': ('7746.pkl',',',True,'7746 desc.txt', ["SX山西","HN河南","HB湖北","SHX陕西"]) # 该电子鼻数据未有效对齐
+'milkpowder_etongue': ('7744.pkl',',',True,'7744 desc.txt', ['cn','au']),
+'forsythia_etongue': ('7745.pkl',',',True,'7745 desc.txt', ["SX山西","HN河南","HB湖北","SHX陕西"]) # 该电子鼻数据未有效对齐
 }
 
 def get_available_datasets():
@@ -94,7 +95,10 @@ def open_dataset(path, delimiter = ',', has_y = True, x_range = None, y_subset=N
             else:
                 y = None
 
-            X_names = ds['X_names']
+            if 'X_names' not in ds or ds['X_names'] is None:
+                X_names = list(range(X.shape[1]))
+            else:    
+                X_names = ds['X_names']
 
     else:
 
@@ -308,7 +312,7 @@ def peek_dataset(path,  delimiter = ',', has_y = True, labels = None, SD = 1, sh
                     plt.plot(x[idx], label= X_name) 
 
                 plt.xlabel('time')
-                plt.ylabel('frequency difference')
+                # plt.ylabel('frequency difference') for enose or 'voltage' for etongue
                 plt.legend(fontsize=20)
 
                 plt.title(u'Sample ' + str(sidx) + ' in ' + str(label)) # first sample
@@ -320,18 +324,33 @@ def peek_dataset(path,  delimiter = ',', has_y = True, labels = None, SD = 1, sh
 
     return X, y, X_names
 
-def upsample(target_path, X, y, X_names, folds = 3, d = 0.5):
+def upsample(target_path, X, y, X_names, method = 'SMOTE', folds = 3, d = 0.5, 
+epochs = 10, batch_size = 100, cuda = True, display = False, verbose = True):
     '''
-    Upsample a dataset by SMOTE.
+    Upsample a dataset by SMOTE or GAN.
 
     Parameters
     ----------
     X_names : the labels for each X feature
     folds : expand to N folds
     d : sampling distance in SMOTE
+    epochs, batch_size, cuda : ctgan params
     '''
 
-    SMOTE.expand_dataset(X, y, X_names, target_path, d, folds)
+    if method == 'SMOTE':
+        Xn, yn = SMOTE.expand_dataset(X, y, X_names, target_path, d, folds)
+    elif method == 'GAN':
+        Xn, yn = GAN.expand_dataset(X, y, X_names, target_path, folds, epochs, batch_size, cuda, verbose)
+
+    if display:      
+
+        pca = PCA(n_components=2) # keep the first 2 components
+        X_pca = pca.fit_transform(Xn)
+        plotComponents2D(X_pca, yn)
+        plt.title('PCA of extended dataset')
+        plt.show()
+
+    return Xn, yn
 
 def save_dataset(targe_path, X, y, X_names):
     '''

@@ -1,0 +1,20 @@
+202108 奶粉电子舌 
+
+类标签：
+国产 vs. 国外
+
+电子舌数据量显著高于电子鼻，可以考虑压缩、降低精度或降采样。
+
+The original signal is very high dimensional (500000). 
+This is a preprocessed dataset after down sampling.
+
+--------------------------
+E-tongues and sensor-arrays
+
+Chemical substances showing the five basic taste qualities.
+Taste quality    Chemical substances
+Sour    Dissociated H+ from hydrochloric acid, acetic acid, citric acid, etc.
+Bitter    Quinine, caffeine, MgCl2, etc.
+Salty    Mainly NaCl
+Sweet    Sucrose, glucose, etc.
+Umami    Disodium inosinate (IMP) in meat and fish, disodium guanylate (GMP) in mushrooms, etc.

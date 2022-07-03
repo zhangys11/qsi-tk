@@ -1,0 +1,25 @@
+202105 连翘电子舌
+
+本数据用于中药材产地鉴别 herbal material habitat identification，样本量较少
+
+检测对象：
+中药材-连翘（forsythia）
+
+类标签： 
+["山西","河南","湖北","陕西"]
+
+电子舌数据量显著高于电子鼻，可以考虑压缩、降低精度或降采样。
+
+The original signal is very high dimensional (500000). 
+This is a preprocessed dataset after down sampling.
+
+--------------------------
+E-tongues and sensor-arrays
+
+Chemical substances showing the five basic taste qualities.
+Taste quality    Chemical substances
+Sour    Dissociated H+ from hydrochloric acid, acetic acid, citric acid, etc.
+Bitter    Quinine, caffeine, MgCl2, etc.
+Salty    Mainly NaCl
+Sweet    Sucrose, glucose, etc.
+Umami    Disodium inosinate (IMP) in meat and fish, disodium guanylate (GMP) in mushrooms, etc.

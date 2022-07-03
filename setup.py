@@ -7,7 +7,7 @@ setup(
     name="qsi-tk",
     
     # Version number (initial):
-    version="0.1.8",
+    version="0.1.9",
     
     # Application author details:
     author="Yinsheng Zhang (Ph.D.)",
@@ -46,7 +46,8 @@ setup(
         "wCLAMs",
         "pyDRMetrics",
         "wDRMetrics",
-        "cs1"
+        "cs1",
+        #"ctgan", "torch"
     ],
 
     package_data={
