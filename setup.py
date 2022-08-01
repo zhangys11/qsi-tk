@@ -47,7 +47,7 @@ setup(
         "pyDRMetrics",
         "wDRMetrics",
         "cs1",
-        #"ctgan", "torch"
+        "ctgan", # "torch"
     ],
 
     package_data={
