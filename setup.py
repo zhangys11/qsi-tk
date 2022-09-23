@@ -6,7 +6,7 @@ setup(
     # Application name:
     name="qsi-tk",
     
-    # Version number (initial):
+    # Version number:
     version="0.1.9",
     
     # Application author details:
@@ -35,7 +35,6 @@ setup(
     # Dependent packages (distributions)
     install_requires=[
         "flask",
-        "pyDRMetrics",
         "scikit-learn",
         "matplotlib",
         "numpy",
