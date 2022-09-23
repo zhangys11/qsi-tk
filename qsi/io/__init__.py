@@ -10,7 +10,7 @@ import pickle
 from sklearn.linear_model import Lasso
 from sklearn.decomposition import PCA
 from sklearn.cross_decomposition import PLSRegression
-from ..data import SMOTE,GAN
+from ..data import SMOTE, ctGAN
 from . import pre
 from ..dr import lda
 
@@ -327,7 +327,7 @@ def peek_dataset(path,  delimiter = ',', has_y = True, labels = None, SD = 1, sh
 def upsample(target_path, X, y, X_names, method = 'SMOTE', folds = 3, d = 0.5, 
 epochs = 10, batch_size = 100, cuda = True, display = False, verbose = True):
     '''
-    Upsample a dataset by SMOTE or GAN.
+    Upsample a dataset by SMOTE, GAN (todo), Gaussian (todo) or ctGAN.
 
     Parameters
     ----------
@@ -339,10 +339,10 @@ epochs = 10, batch_size = 100, cuda = True, display = False, verbose = True):
 
     if method == 'SMOTE':
         Xn, yn = SMOTE.expand_dataset(X, y, X_names, target_path, d, folds)
-    elif method == 'GAN':
-        Xn, yn = GAN.expand_dataset(X, y, X_names, target_path, folds, epochs, batch_size, cuda, verbose)
+    elif method == 'ctGAN':
+        Xn, yn = ctGAN.expand_dataset(X, y, X_names, target_path, folds, epochs, batch_size, cuda, verbose)
 
-    if display:      
+    if display:
 
         pca = PCA(n_components=2) # keep the first 2 components
         X_pca = pca.fit_transform(Xn)
