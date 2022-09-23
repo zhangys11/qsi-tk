@@ -4,7 +4,7 @@ import numpy as np
 from ctgan import CTGANSynthesizer
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
-from ..vis import plotComponents2D
+from ...vis import plotComponents2D
 import torch
 
 def expand_dataset(X, y, names, savepath, NX = 3, 
