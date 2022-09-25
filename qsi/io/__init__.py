@@ -43,7 +43,7 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt', ['S
 'yimi_rm': ('yimi_raman.csv',',',False,'yimi_raman desc.txt',['coix seed']),
 'hangbaiju_rm': ('hangbaiju_raman.csv',',',False,'hangbaiju_raman desc.txt', ['chrysanthemum morifolium']),
 'salt': ('7545.csv',',',True,'7545 desc.txt',["well salt", "sea salt"]),
-'chaihu_ms': ('chaihu_ms.csv',',',True,'chaihu_ms desc.txt',["wild","cultivated"])
+'chaihu_ms': ('7b43.csv',',',True,'7b43 desc.txt',["wild","cultivated"])
 }
 
 def get_available_datasets():
