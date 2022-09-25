@@ -21,7 +21,7 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt', ['S
 's4_formula_c3': ('7341.csv', ',', True ,'7341 desc.txt', ['Brand 1', 'Brand 2', 'Brand 3']),
 'milk_tablet_candy': ('734b.csv',',', False,'734b desc.txt', None),
 'yogurt': ('7346.csv',',', True,'7346 desc.txt', ["YL","GM","WQ","MN"]),
-'vintage': ('7344.txt','\t', False,'7344 desc.txt', '8-year vintage'),
+'vintage': ('7344.txt','\t', False,'7344 desc.txt', ['8-year vintage']),
 'vintage_spi': ('7345.csv',',', True,'7345 desc.txt', ["5Y","8Y","16Y","26Y"]),
 'vintage_c2': ('7344_C03.csv',',',True,'7344_C03 desc.txt',["5Y","26Y"]),
 'beimu': ('754a_C2S_Beimu.txt',',', True,'754a_C2S_Beimu desc.txt',["Sichuan","Zhejiang"]),
