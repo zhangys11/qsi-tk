@@ -33,17 +33,17 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt', ['S
 'cheese': ('Cheese_RAMAN.csv',',',True,'Cheese_RAMAN desc.txt',['MK','SL','YL']),
 'huangjing': ('7a43.csv',',',True,'7a43 desc.txt',['Wild','Cultivated']),
 'huangjing2': ('7a47.csv',',',True,'7a47 desc.txt',['Red-Stem','Green-Stem']),
-'chaihu': ('7a41.csv',',',True,'7a41 desc.txt',['Wild','Cultivated','B. smithii Wolff','Gansu','Shanxi','vinegar Concocted','Terrestrosin D']),
+'chaihu_rm': ('7a41.csv',',',True,'7a41 desc.txt',['Wild','Cultivated','B. smithii Wolff','Gansu','Shanxi','vinegar Concocted','Terrestrosin D']),
 'rice_cereal':('7741_rice_cereal_rm.csv',',',True,'7741_rice_cereal_rm desc.txt', ['LF','EB']),
 'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv',',',True,'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt', ['inorganic','organic']),
 'milkpowder_enose': ('7747.pkl',',',True,'7747 desc.txt', ['cn','au']),
 #'forsythia': ('7746.pkl',',',True,'7746 desc.txt', ["SX山西","HN河南","HB湖北","SHX陕西"]) # 该电子鼻数据未有效对齐
 'milkpowder_etongue': ('7744.pkl',',',True,'7744 desc.txt', ['cn','au']),
 'forsythia_etongue': ('7745.pkl',',',True,'7745 desc.txt', ["SX山西","HN河南","HB湖北","SHX陕西"]), # 该电子鼻数据未有效对齐
-'yimi_rm': ('yimi_raman.csv',',',False,'yimi_raman desc.txt','yimi raman spectrum'),
-'hangbaiju_rm': ('hangbaiju_raman.csv',',',False,'hangbaiju_raman desc.txt',' hangbaiju raman spectrum '),
-'SALT': ('7545 SALT.csv',',',True,'7545 SALT desc.txt',["井盐", "海盐"]),
-'chaihu_ms': ('chaihu_ms.csv',',',True,'chaihu_ms desc.txt',["野生","种植"])
+'yimi_rm': ('yimi_raman.csv',',',False,'yimi_raman desc.txt',['coix seed']),
+'hangbaiju_rm': ('hangbaiju_raman.csv',',',False,'hangbaiju_raman desc.txt', ['chrysanthemum morifolium']),
+'salt': ('7545.csv',',',True,'7545 desc.txt',["well salt", "sea salt"]),
+'chaihu_ms': ('chaihu_ms.csv',',',True,'chaihu_ms desc.txt',["wild","cultivated"])
 }
 
 def get_available_datasets():

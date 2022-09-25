@@ -1,0 +1,16 @@
+食盐拉曼光谱
+
+["jinzhihaiyan(zhongyan)：精制海盐（中盐集团）加碘盐",
+"shenjinkuangyan(zhongyan)：深井矿盐（中盐集团）加碘盐",
+"aozhoutianranhaiyan(huaiyan)：澳洲天然海盐（淮盐）未加碘",
+"aozhouxueyan(huaiyan)：澳洲雪盐（淮盐）未加碘"]
+
+We use the 2nd and 3rd classes. 1 - well salt (China), 2 - sea salt (Austrilia)
+
+仪器名称：  激光拉曼光谱  Laser Raman Spectrometer      
+生产厂家：  美国 Enwave Optronics U.S.A.                
+仪器型号：  Prott-ezRaman-d3        
+测试参数：  激光波长 785 nm
+           激光功率 450 mW Max模式 
+           CCD -85℃
+           积分时间30s
