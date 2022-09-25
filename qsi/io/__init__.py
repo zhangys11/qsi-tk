@@ -44,7 +44,8 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt', ['S
 'forsythia_etongue': ('7745.pkl',',',True,'7745 desc.txt', ["SX山西","HN河南","HB湖北","SHX陕西"]), # 该电子鼻数据未有效对齐
 'yimi_rm': ('yimi_raman.csv',',',False,'yimi_raman desc.txt','yimi raman spectrum'),
 'hangbaiju_rm': ('hangbaiju_raman.csv',',',False,'hangbaiju_raman desc.txt',' hangbaiju raman spectrum '),
-'SALT': ('7545 SALT.csv',',',True,'7545 SALT desc.txt',["井盐", "海盐"])
+'SALT': ('7545 SALT.csv',',',True,'7545 SALT desc.txt',["井盐", "海盐"]),
+'chaihu_ms': ('chaihu_ms.csv',',',True,'chaihu_ms desc.txt',["野生","种植"])
 }
 
 def get_available_datasets():
