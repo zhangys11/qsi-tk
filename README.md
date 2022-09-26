@@ -92,6 +92,11 @@ This package is a master library containing various previous packages published 
             <td>neural networks with random weights</td>
         </tr>
         <tr>
+            <td rowspan = 1>qsi.pipeline</td>
+            <td></td>
+            <td>General data analysis pipelines.</td>
+            <td></td>
+            <td></td>
         </tr>
     </tbody>
 </table>

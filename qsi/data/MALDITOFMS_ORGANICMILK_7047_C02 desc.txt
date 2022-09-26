@@ -9,5 +9,4 @@ MALDITOFMS_ORGANICMILK_7047_C02.csv
 
 --------------------
 If you use this data set, please add the reference: 
-[1] Matrix Factorization Based Dimensionality Reduction Algorithms - A Comparative Study on Spectroscopic Profiling Data [J]. Analytical Chemistry, 2022
-
+[1] Matrix Factorization Based Dimensionality Reduction Algorithms - A Comparative Study on Spectroscopic Profiling Data [J]. Analytical Chemistry, 2022, doi: 10.1021/acs.analchem.2c01922

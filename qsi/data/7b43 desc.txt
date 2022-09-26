@@ -1,4 +1,5 @@
 内蒙古野生与种植柴胡质谱
 Dataset Id: 7b43
+The 21th sample of class 1 is an outlier and we removed it.
 
 ['0 野生品种','1 种植品种']

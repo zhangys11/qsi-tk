@@ -7,14 +7,14 @@ setup(
     name="qsi-tk",
     
     # Version number:
-    version="0.2.0",
+    version="0.2.1",
     
     # Application author details:
     author="Yinsheng Zhang (Ph.D.)",
     author_email="oo@zju.edu.cn",
     
     # Packages
-    packages=["qsi","qsi.fs","qsi.dr","qsi.cla","qsi.vis","qsi.io"],    
+    packages=["qsi","qsi.fs","qsi.dr","qsi.cla","qsi.vis","qsi.io","qsi.io.aug"],    
 
     # package_dir={'': 'qsi'},
     # package_dir={'qsi.dr': 'src/qsi/dr', 'qsi.cla': 'src/qsi/cla', 'qsi.vis': 'src/qsi/vis'},
@@ -45,6 +45,7 @@ setup(
         "wCLAMs",
         "pyDRMetrics",
         "wDRMetrics",
+        "pyMFDR",
         "cs1",
         "ctgan", # "torch"
     ],

@@ -9,7 +9,8 @@ import os.path
 import pickle
 from sklearn.decomposition import PCA
 from sklearn.cross_decomposition import PLSRegression
-from . import aug, pre
+from . import pre
+from .aug import upsample
 from ..dr import lda
 
 from ..vis import *
@@ -143,6 +144,8 @@ def open_dataset(path, delimiter = ',', has_y = True, x_range = None, y_subset=N
         X = np.array(Xs)
         y = np.array(ys)
 
+    print('X.shape',X.shape, ' y.shape',y.shape)
+
     cnt_nan = np.isnan (X).sum()
     if cnt_nan > 0:
         print('Found' + str(cnt_nan) + 'NaN elements in X. You may need to purge NaN.')
@@ -157,7 +160,7 @@ def scatter_plot(X, y, labels = None):
     plt.title('PCA')
     plt.show()
 
-    if y is not None:
+    if y is not None and X.shape[1] < 6000: # for very-high dimensional data, lda/pls is very slow.
 
         X_lda = lda(X,y)
         plotComponents2D(X_lda, y, legends = labels) # , tags = range(len(y)), ax = ax   
@@ -197,9 +200,12 @@ def draw_average (X, X_names, SD = 1):
 
     matplotlib.rcParams.update({'font.size': 12})
 
-
-def draw_all (X, y, X_names, titles = None, bdr = False):
+def draw_samples (X, y, X_names, titles = None, bdr = False):
     '''
+    To draw the first K samples, call like this: draw_samples(X[:K], y[:K]...
+
+    Parameters
+    ----------    
     bdr : baseline drift removal using Butterworth high-pass filter
     '''
 
@@ -228,7 +234,7 @@ def draw_all (X, y, X_names, titles = None, bdr = False):
             plt.plot(X_names, xbdr, linewidth=1, label='baseline drift removal')
 
         plt.title(title)
-        plt.yticks([])
+        # plt.yticks([])
         plt.legend()
         plt.show()
 
@@ -326,11 +332,13 @@ def peek_dataset(path,  delimiter = ',', has_y = True, labels = None, SD = 1, sh
 
     return X, y, X_names
 
+'''
 def upsample(target_path, X, y, X_names, method = 'SMOTE', folds = 3, d = 0.5, 
 epochs = 10, batch_size = 100, cuda = True, display = False, verbose = True):
     
-    return aug.upsample(target_path, X, y, X_names, method, folds, d, 
+    return upsample(target_path, X, y, X_names, method, folds, d, 
 epochs, batch_size, cuda, display, verbose)
+'''
 
 def save_dataset(targe_path, X, y, X_names):
     '''
