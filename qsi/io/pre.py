@@ -7,6 +7,62 @@ from scipy.interpolate import interp1d
 from scipy.ndimage.interpolation import shift
 from statsmodels.tsa.stattools import ccovf
 
+################### binning & kernel & sliding window ###################
+def x_binning(X, X_names = None, target_dim = 0.1, flavor = 'max', display = False):
+    '''
+    For very high-dimensional data, such as TOF-MS, we split the features into several equal segments and do integral or max for each segment.
+    We can use this function as a down-sampling / DR algorithm.
+
+    Parameters
+    ----------
+    target_dim : if float, should range (0,1]. If integer, should not exceeds the original dim.
+    flavor : how do we condense each segment
+        'max' - take the maximum. 
+        'sum' / 'rect' / 'mean' - take the sum / integral / mean.
+        'tri' - triangle integral, use a mask e.g., [1,2,3,4,3,2,1]
+    display : whether show the 1st sample after processing
+
+
+    Return
+    ------
+    NX : the new dataset matrix. size is (m, target_dim)
+    NX_names : the corresponding X headers.
+
+    '''
+    
+    n = X.shape[1]
+    if target_dim < 1:
+        target_dim = int(target_dim * n)
+    if target_dim > n:
+        target_dim = n
+
+    NX = []
+    NX_names = []     
+    for idx, a in enumerate( np.array_split(X, target_dim, axis = 1) ):
+        if X_names is not None and len(X_names) == n:
+            NX_names.append( X_names[ int (a.shape[1] * (idx + 0.5)) ] ) # take the middle xlabel
+        
+        if flavor == 'max':
+            NCol = a.max(axis = 1)
+        elif flavor == 'tri':
+            mask = list( range(1, int (a.shape[1] / 2) + 1) ) + list( range(a.shape[1] - int (a.shape[1] / 2) + 1, 1, -1 ) )
+            NCol = a @ (np.array(mask).reshape(-1))
+        else: # sum / rect /mean
+            NCol = a.sum(axis = 1)
+        NX.append( NCol )
+        
+    NX = np.array(NX).T
+
+    if display:
+        plt.plot(NX_names, NX[0])
+        plt.title('New Sample #1')
+        plt.yticks([]) # we only care about y's relative values.
+        plt.show()
+
+    return NX, NX_names if len(NX_names) > 0 else None
+
+################### digital filters ######################
+
 def butter_highpass(cutoff, fs, order=5):
     nyq = 0.5 * fs
     normal_cutoff = cutoff / nyq

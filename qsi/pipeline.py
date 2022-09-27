@@ -24,7 +24,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.svm import SVC # SVC(C=1.0, ...) 与 nuSVC(nu = 0.5, ...) 的区别：前者使用C～[0，inf），后者使用nu～(0,1]，惩罚性的解释不同，优化都可以使用GridSearch方法
 from scipy.signal import savgol_filter
 
-def analyze(id, x_range = None, y_subset=None, shift = 100, cla_feature_num = 10):
+def analyze(id, x_range = None, y_subset=None, shift = 100, cla_feature_num = 10, pre=None, pre_param=None):
     '''
     A general and standard data analysis flow. Provides an overview for the target dataset.
     
@@ -32,6 +32,19 @@ def analyze(id, x_range = None, y_subset=None, shift = 100, cla_feature_num = 10
     ----------
     id : dataset id or a full path
     x_range, y_subset : select specific rows and cols for analysis, if you don't wish to use the entire dataset.
+    shift : interval between classes in the average wave plot
+    pre, pre_param : additional preprocessing (with params) applied, e.g. 'max_bin, 100'
+        pre = 'max(target_dim = pre_param)' : binning and take the maximum in each interval
+        pre = 'sum(target_dim = pre_param)' or 'rect(window_size = pre_param)' : 
+            binning and take the sum/mean in each interval, i.e., rectangle window
+        pre = 'tri(target_dim = pre_param)' : triangle window kernel.
+
+        pre = 'rbf(sigma = pre_param)' : applied a radial basis function kernel. Not implemented yet.
+        pre = 'z(sigma = pre_param)' : applied z (normal distribution PDF) kernel. Not implemented yet.
+        pre = 'trapezoidal(pre_param)' : trapezoid window kernel. Not implementated yet.
+        
+        pre = 'diff' : first-order op. We use io.pre.diff_dataset()
+        default is '' or None. 
     '''
     display(HTML('<h2>数据加载 Load Dataset</h2>'))
 
@@ -43,8 +56,22 @@ def analyze(id, x_range = None, y_subset=None, shift = 100, cla_feature_num = 10
     else:
         display(HTML('<h3>数据加载失败，请传入正确的id或文件路径。<br/>Load data failed. Please specific a correct dataset ID or file path.</h3>'))
 
-    display(HTML('<hr/><h2>预处理 Preprocessing </h2><h3>Savitzky-Golay Filter 滤波</h3>'))
+    display(HTML('<hr/><h2>预处理 Preprocessing </h2>'))
+    
+    if pre:
+        display(HTML('<h3>' + pre + '</h3>'))
+        if pre in ['max', 'sum', 'rect', 'tri', 'mean']:
+            X, X_names = io.pre.x_binning(X,X_names,target_dim=pre_param,flavor=pre)
+        elif pre == 'diff':
+            X = io.pre.diff_dataset(X)
+            X_names = X_names[1:] # pop the 1st x label, as diff reduces dim by 1
 
+        display(HTML('预处理后的维度：X.shape = ' + str(X.shape) +'<hr/>'))
+
+    
+    display(HTML('<h3>Savitzky-Golay Filter 滤波</h3>'))
+    display(HTML('<h4>此处仅做额外的预处理效果预览，并不叠加到后续分析中，需要用户自行判断使用。</br>This preprocessing effect is just for preview. Users should choose the algorithms on demand. </h4>'))
+    
     # Savgol filtering
     np.set_printoptions(precision=2)
     X_sg = savgol_filter(X, window_length = 9, polyorder = 3, axis = 1)  # axis = 0 for vertically; axis = 1 for horizontally
@@ -54,6 +81,7 @@ def analyze(id, x_range = None, y_subset=None, shift = 100, cla_feature_num = 10
     plt.show()
 
     display(HTML('<h3>高通滤波|消除基线漂移 Highpass Filter | Baseline Drift Removal</h3>'))
+    display(HTML('<h4>此处仅做额外的预处理效果预览，并不叠加到后续分析中，需要用户自行判断使用。</br>This preprocessing effect is just for preview. Users should choose the algorithms on demand. </h4>'))
 
     # Butterworth filter
     X_f = filter_dataset(X, nlc = 0.002, nhc = None)  # axis = 0 for vertically; axis = 1 for horizontally
@@ -115,6 +143,7 @@ def analyze(id, x_range = None, y_subset=None, shift = 100, cla_feature_num = 10
 
         X_mds = MDS(n_components=2).fit_transform(X_scaled)
         ax = plotComponents2D(X_mds, y)
+        ax.set_title('MDS')
         plt.show()
         print('MDS (Multidimensional scaling) is a simplification of kernel PCA, and can be extensible with alternate kernels. PCA selects influential dimensions by eigenanalysis of the N data points themselves, while MDS (Multidimensional Scaling) selects influential dimensions by eigenanalysis of the N2 data points of a pairwise distance matrix. This has the effect of highlighting the deviations from uniformity in the distribution. Reference manifold.ipynb')
         display(HTML('<hr/>'))
@@ -159,28 +188,28 @@ def analyze(id, x_range = None, y_subset=None, shift = 100, cla_feature_num = 10
     display(HTML('<hr/><h2>特征选择 Feature Selection</h2>'))
     X_names = np.array(X_names)
 
-    X_ch2,idx = chisq_stats_fs(X_mm_scaled, y)
+    X_ch2,idx = chisq_stats_fs(X_mm_scaled, y, X_names)
     ax = plotComponents2D(X_ch2[:,:2], y)
     ax.set_title('FS via Chi Square Stats')
     plt.show()
     print('Important Features:', X_names[idx])
     display(HTML('<hr/>'))
 
-    X_anova,idx = anova_stats_fs(X_mm_scaled, y)
+    X_anova,idx = anova_stats_fs(X_mm_scaled, y, X_names)
     ax = plotComponents2D(X_anova[:,:2], y)
     ax.set_title('FS via ANOVA F Stats')
     plt.show()
     print('Important Features:', X_names[idx])
     display(HTML('<hr/>'))
 
-    X_lasso,idx = lasso_fs(X_mm_scaled, y)
+    X_lasso,idx = lasso_fs(X_mm_scaled, y, X_names)
     ax = plotComponents2D(X_lasso[:,:2], y)
     ax.set_title('FS via LASSO')
     plt.show()
     print('Important Features:', X_names[idx])
     display(HTML('<hr/>'))
 
-    X_enet,idx = elastic_net_fs(X_mm_scaled, y)
+    X_enet,idx = elastic_net_fs(X_mm_scaled, y, X_names)
     ax = plotComponents2D(X_enet[:,:2], y)
     ax.set_title('FS via Elastic Net')
     plt.show()

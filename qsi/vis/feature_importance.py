@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from .unsupervised_dimension_reductions import *
 
 # plot the importance for all features
-def plot_feature_importance(feature_importances, title, xtick_angle=None, xlabel = '', ylabel = '', row_size = 100, figsize=(12,2)):
+def plot_feature_importance(feature_importances, feature_names, title, xtick_angle=None, xlabel = '', ylabel = '', row_size = 100, figsize=(12,2)):
     
     feature_importances = np.array(feature_importances)
 
@@ -25,7 +25,9 @@ def plot_feature_importance(feature_importances, title, xtick_angle=None, xlabel
     plt.figure(figsize=figsize)
     if title:
         plt.title(title + "\n" + 'importance marked by bar height')
-    plt.bar(range(feature_importances.size), feature_importances, alpha=1.0, width=10)
+    if feature_names is None or len(feature_names) <=0:
+        feature_names = range(feature_importances.size)
+    plt.bar(feature_names, feature_importances, alpha=.8) # , width=2
     if xtick_angle is None:
         plt.xticks([])
     else:
@@ -63,7 +65,7 @@ def visualize_important_features(X, y, coef, X_names = None, title = None, row_s
         print('Important features:', np.array(X_names)[biggest_fs])
     print('Important feature coefficents:', coef[biggest_fs])
     
-    plot_feature_importance(np.abs(coef), title, row_size = row_size)
+    plot_feature_importance(np.abs(coef), X_names, title, row_size = row_size)
     unsupervised_dimension_reductions(X_fs, y)
 
 

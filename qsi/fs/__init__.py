@@ -9,7 +9,7 @@ from sklearn.cross_decomposition import PLSRegression
 from sklearn.linear_model import LassoCV, ElasticNetCV
 from scipy.fftpack import fft, dct
 
-def chisq_stats_fs(X, y, N = 30, display = True):
+def chisq_stats_fs(X, y, X_names=None, N = 30, display = True):
     '''
     chi-squared stats
     This score can be used to select the n_features features with the highest values for the test chi-squared statistic from X, which must contain only non-negative features such as booleans or frequencies (e.g., term counts in document classification), relative to the classes.
@@ -17,9 +17,9 @@ def chisq_stats_fs(X, y, N = 30, display = True):
     '''
 
     c2,pval = chi2(X, y)
-    return __fs__(X, c2, N, display)
+    return __fs__(X, c2, X_names, N, display)
 
-def anova_stats_fs(X, y, N = 30, display = True):
+def anova_stats_fs(X, y, X_names=None, N = 30, display = True):
     '''
     An Analysis of Variance Test or an ANOVA is a generalization of the t-tests to more than 2 groups. Our null hypothesis states that there are equal means in the populations from which the groups of data were sampled. More succinctly:
         μ1=μ2=...=μn
@@ -28,27 +28,27 @@ def anova_stats_fs(X, y, N = 30, display = True):
     '''
 
     F,pval = f_classif(X, y)
-    return __fs__(X, F, N, display)
+    return __fs__(X, F, X_names, N, display)
 
-def __fs__(X, fi, N = 30, display = True):
+def __fs__(X, fi, X_names = None, N = 30, display = True):
     '''
     fi : feature importance
     N : how many features to be kept
     '''
 
     if display:
-        plot_feature_importance(fi, 'feature-wise chi2 values', xtick_angle=0)
+        plot_feature_importance(fi, X_names, 'feature-wise coefs/values', xtick_angle=0)
 
     idx = (np.argsort(fi)[-N:])[::-1]
     # idx = np.where(pval < 0.1)[0] # np.where(chi2 > 4.5)
     print('Important feature Number: ', len(idx))
 
-    X_chi2 = X[:,idx]
+    X_s = X[:,idx]
 
-    return X_chi2, idx
-    # X_chi2_dr = unsupervised_dimension_reductions(X_chi2, y)
+    return X_s, idx
+    # X_s_dr = unsupervised_dimension_reductions(X_s, y)
 
-def lasso_fs(X, y, N = 30, display = True, verbose = True):
+def lasso_fs(X, y, X_names=None,  N = 30, display = True, verbose = True):
 
     lasso = LassoCV(cv = 5)
     lasso.fit(X,y)
@@ -58,9 +58,9 @@ def lasso_fs(X, y, N = 30, display = True, verbose = True):
         print('LASSO alpha = ', lasso.alpha_)
         print('Non-zero feature coefficients:',N)
    
-    return __fs__(X, np.abs(lasso.coef_), N, display)
+    return __fs__(X, np.abs(lasso.coef_), X_names, N, display)
     
-def elastic_net_fs (X, y, N = 30, display = True, verbose = True):
+def elastic_net_fs (X, y, X_names=None, N = 30, display = True, verbose = True):
     '''
     Elastic Net vs LASSO
     --------------------
@@ -82,7 +82,7 @@ def elastic_net_fs (X, y, N = 30, display = True, verbose = True):
         print('alpha = ', elastic_net.alpha_, ', L1 ratio = ', elastic_net.l1_ratio_ )
         print('Non-zero feature coefficients:',N)
    
-    return __fs__(X, np.abs(elastic_net.coef_), N, display)
+    return __fs__(X, np.abs(elastic_net.coef_), X_names, N, display)
     
 
 def nch_time_series_fs(X, fft_percentage = 0.05, dct_percentage = 0.1, conv_mask = [1,-2,1], display = True, y = None, labels = None):
