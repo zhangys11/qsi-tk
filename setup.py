@@ -7,7 +7,7 @@ setup(
     name="qsi-tk",
     
     # Version number:
-    version="0.2.1",
+    version="0.2.2",
     
     # Application author details:
     author="Yinsheng Zhang (Ph.D.)",
@@ -56,4 +56,7 @@ setup(
 )
 
 # To Build and Publish (for developer only), 
+# Run: python -m pyc_wheel qsi_tk.whl  [optional]
+# Run: python -m build 
+# or
 # Run: python setup.py sdist bdist_wheel; twine upload dist/*

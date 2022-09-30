@@ -152,11 +152,16 @@ def open_dataset(path, delimiter = ',', has_y = True, x_range = None, y_subset=N
 
     return X, y, X_names
 
-def scatter_plot(X, y, labels = None):    
+def scatter_plot(X, y, labels = None, tags = None):    
+    '''
+    Parameters
+    ----------
+    tags - You may pass "list(range(len(X_pca))" to tags to identify outliers.
+    '''
 
     pca = PCA(n_components=2) # keep the first 2 components
     X_pca = pca.fit_transform(X)
-    plotComponents2D(X_pca, y, legends=labels)
+    plotComponents2D(X_pca, y, legends=labels, tags=tags)
     plt.title('PCA')
     plt.show()
 

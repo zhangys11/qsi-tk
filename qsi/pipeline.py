@@ -24,7 +24,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.svm import SVC # SVC(C=1.0, ...) 与 nuSVC(nu = 0.5, ...) 的区别：前者使用C～[0，inf），后者使用nu～(0,1]，惩罚性的解释不同，优化都可以使用GridSearch方法
 from scipy.signal import savgol_filter
 
-def analyze(id, x_range = None, y_subset=None, shift = 100, cla_feature_num = 10, pre=None, pre_param=None):
+def analyze(id, x_range = None, y_subset=None, shift = 100, pre=None, pre_param=None):
     '''
     A general and standard data analysis flow. Provides an overview for the target dataset.
     
@@ -68,6 +68,18 @@ def analyze(id, x_range = None, y_subset=None, shift = 100, cla_feature_num = 10
 
         display(HTML('预处理后的维度：X.shape = ' + str(X.shape) +'<hr/>'))
 
+    analyze_dataset(X, y, X_names)
+
+def analyze_dataset(X, y, X_names, cla_feature_num = 10):
+    '''
+    Parameters
+    ----------
+    X : preprocessed data matrix
+    cla_feature_num : how many features to use for classification
+    '''
+
+    if X_names is None or X_names == []:
+        X_names = list(range(X.shape[1]))
     
     display(HTML('<h3>Savitzky-Golay Filter 滤波</h3>'))
     display(HTML('<h4>此处仅做额外的预处理效果预览，并不叠加到后续分析中，需要用户自行判断使用。</br>This preprocessing effect is just for preview. Users should choose the algorithms on demand. </h4>'))
@@ -221,6 +233,7 @@ def analyze(id, x_range = None, y_subset=None, shift = 100, cla_feature_num = 10
             cla_feature_num = X_enet.shape[1] # use all selected features
 
         display(HTML('<hr/><h2>可分性度量 Classifiablity Analysis(top-'+ str(cla_feature_num) +' selected features)</h2>'))
+        display(HTML('若运行报错，请尝试安装R运行环境，并执行 install.packages("ECoL") '))
         display(HTML(metrics.get_html(X_enet[:,:cla_feature_num],y)))
     
     display(HTML('<hr/><h2>分类 Classification</h2><h3>超参数优化及模型选择 Hyper-parameter Optimization （SVM）</h3>'))
@@ -248,9 +261,6 @@ def analyze(id, x_range = None, y_subset=None, shift = 100, cla_feature_num = 10
                         l1_ratio=None).fit(X_enet_pca, y)
     
     plot_lr_boundary(X_enet_pca, y, lr)
-
-    return X, y, X_names, labels # return the data for user future analysis
-
 
 def build_simple_pipeline(X, y, save_path = None):
     '''

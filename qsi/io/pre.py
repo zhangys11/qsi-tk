@@ -7,7 +7,35 @@ from scipy.interpolate import interp1d
 from scipy.ndimage.interpolation import shift
 from statsmodels.tsa.stattools import ccovf
 
+############# row-wise normalization / scaling ##############
+
+def peak_normalize(X, target_max = 1000):
+    '''
+    Normalize each data / row by its highest peak. 
+    Typically used in TOF-MS data. 
+    rowvec_normalize() is more often used.
+    '''
+    NX = []
+    for x in X:
+        row_max = x.abs().max()
+        nx = x / row_max * target_max
+        NX.append(nx)
+    return np.array(NX)
+
+def rowvec_normalize(X, target_max = 1000):
+    '''
+    Normalize each data / row by the row vector magnitude.
+    Typically used in TOF-MS data.
+    '''
+    NX = []
+    for x in X:
+        v = np.linalg.norm(x)
+        nx = x / v * target_max
+        NX.append(nx)
+    return np.array(NX)
+
 ################### binning & kernel & sliding window ###################
+
 def x_binning(X, X_names = None, target_dim = 0.1, flavor = 'max', display = False):
     '''
     For very high-dimensional data, such as TOF-MS, we split the features into several equal segments and do integral or max for each segment.
