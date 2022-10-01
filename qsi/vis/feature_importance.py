@@ -9,7 +9,7 @@ def plot_feature_importance(feature_importances, feature_names, title, \
     feature_importances = np.array(feature_importances)
 
     if row_size is None: # use dynamic row size
-        row_size = round( len(feature_importances) / 5000 + 0.5) * 100
+        row_size = round( len(feature_importances) / 1000 + 0.5) * 20
 
     # matrix chart
     ROW_SIZE = row_size # math.ceil(feature_importances.size / 100) * 10     

@@ -138,7 +138,7 @@ def group_lasso(X_scaled, y, WIDTH, offset = 0, LAMBDA = 1, ALPHA = 0.5):
     
     return THETA #, biggest_gl_fs, X_gl_fs
 
-def group_lasso_cv(X_scaled, y, MAXF, WIDTHS, LAMBDAS, ALPHAS, cv_size = 0.2):
+def group_lasso_cv(X_scaled, y, MAXF, WIDTHS, LAMBDAS, ALPHAS, cv_size = 0.2, verbose = False):
     '''
     Optimize hyper-parameters by grid search.
 
@@ -157,10 +157,10 @@ def group_lasso_cv(X_scaled, y, MAXF, WIDTHS, LAMBDAS, ALPHAS, cv_size = 0.2):
     FSIS=[]
     THETAS = []
 
-    pbar = tqdm(total=np.sum(WIDTHS)*len(ALPHAS)*len(LAMBDAS))
+    pbar = tqdm(total=len(WIDTHS)*len(ALPHAS)*len(LAMBDAS)) # np.sum(WIDTHS)
     
     for w in WIDTHS:
-        for offset in range(w):
+        for offset in [int(w/2)]: # range(w)
             for alpha in ALPHAS:
                 for lam in LAMBDAS:
                     
@@ -169,7 +169,9 @@ def group_lasso_cv(X_scaled, y, MAXF, WIDTHS, LAMBDAS, ALPHAS, cv_size = 0.2):
                     
                     hparam = 'Window Size: ' + str(w) + ', offset = ' + str(offset) + ', alpha = ' + str(alpha) + ', lambda = ' + str(lam) 
                     HPARAMS.append(hparam)
-                    print('=== ' + hparam + ' ===')
+
+                    if verbose:
+                        print('=== ' + hparam + ' ===')
                     
                     THETA = group_lasso(train_X, train_y, 
                                     w, offset,
@@ -180,7 +182,9 @@ def group_lasso_cv(X_scaled, y, MAXF, WIDTHS, LAMBDAS, ALPHAS, cv_size = 0.2):
 
                     FSIS.append(list(biggest_gl_fs))
                     
-                    print('Selected Feature Indices: ', biggest_gl_fs)
+                    if verbose:
+                        print('Selected Feature Indices: ', biggest_gl_fs)
+
                     THETAS.append(THETA)
                                        
                     # No selected features
@@ -221,10 +225,10 @@ def select_features_from_group_lasso_cv(HPARAMS, FSIS, THETAS, SCORES, MAXF = 50
             IDX.append(idx)
             CAT_FS += FSIS[idx]
             FS_HPARAMS.append(HPARAMS[idx])
-            plt.plot(THETAS[idx] + idxx*0.03, label = str(HPARAMS[idx]))
+            plt.plot(THETAS[idx] + idxx*0.1, label = str(HPARAMS[idx]))
             idxx += 1
 
-    print('top-' + str(MAXF) + ' frequent features', Counter(CAT_FS).most_common(MAXF))
+    print('top-' + str(MAXF) + ' features and their frequencies: ', Counter(CAT_FS).most_common(MAXF))
 
     plt.yticks([])
     if (idxx <= 10):
@@ -235,4 +239,4 @@ def select_features_from_group_lasso_cv(HPARAMS, FSIS, THETAS, SCORES, MAXF = 50
     for f in Counter(CAT_FS).most_common(MAXF):
         COMMON_FSI.append(f[0])
                
-    return COMMON_FSI, FS_HPARAMS
+    return np.array(COMMON_FSI)

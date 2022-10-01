@@ -180,6 +180,8 @@ def analyze_dataset(X, y, X_names, cla_feature_num = 10):
         print('LDA is like PCA, but focuses on maximizing the seperatibility between categories. \
     LDA for two categories tries to maximize distance between group means, meanwhile minimize intra-group variances. \n\
     { (\mu_1 - \mu_2)^2 } \over { s_1^2 + s_2^2 }')
+        print('The model fits a Gaussian density to each class, assuming that all classes share the same covariance matrix.\n \
+            The fitted model can be used to reduce the dimensionality of the input by projecting it to the most discriminative directions.')
         print('Risk of using LDA: Possible Warning - Variables are collinear. \n\
     LDA, like regression techniques involves computing a matrix inversion, which is inaccurate if the determinant is close to 0 (i.e. two or more variables are almost a linear combination of each other). \n\
     More importantly, it makes the estimated coefficients impossible to interpret. If an increase in X1 , say, is associated with an decrease in X2 and they both increase variable Y, every change in X1 will be compensated by a change in X2 and you will underestimate the effect of X1 on Y. In LDA, you would underestimate the effect of X1 on the classification. If all you care for is the classification per se, and that after training your model on half of the data and testing it on the other half you get 85-95% accuracy I\'d say it is fine. ')
@@ -198,43 +200,16 @@ def analyze_dataset(X, y, X_names, cla_feature_num = 10):
 
 
     display(HTML('<hr/><h2>特征选择 Feature Selection</h2>'))
-    X_names = np.array(X_names)
-
-    X_ch2,idx = chisq_stats_fs(X_mm_scaled, y, X_names)
-    ax = plotComponents2D(X_ch2[:,:2], y)
-    ax.set_title('FS via Chi Square Stats')
-    plt.show()
-    print('Important Features:', X_names[idx])
-    display(HTML('<hr/>'))
-
-    X_anova,idx = anova_stats_fs(X_mm_scaled, y, X_names)
-    ax = plotComponents2D(X_anova[:,:2], y)
-    ax.set_title('FS via ANOVA F Stats')
-    plt.show()
-    print('Important Features:', X_names[idx])
-    display(HTML('<hr/>'))
-
-    X_lasso,idx = lasso_fs(X_mm_scaled, y, X_names)
-    ax = plotComponents2D(X_lasso[:,:2], y)
-    ax.set_title('FS via LASSO')
-    plt.show()
-    print('Important Features:', X_names[idx])
-    display(HTML('<hr/>'))
-
-    X_enet,idx = elastic_net_fs(X_mm_scaled, y, X_names)
-    ax = plotComponents2D(X_enet[:,:2], y)
-    ax.set_title('FS via Elastic Net')
-    plt.show()
-    print('Important Features:', X_names[idx])
-    display(HTML('<hr/>'))
+    
+    X_s = RUN_ALL_FS(X_mm_scaled, y, X_names, N = 30, output='adaptive lasso')['adaptive lasso']
 
     if len(set(y)) == 2:
         if cla_feature_num is None:
-            cla_feature_num = X_enet.shape[1] # use all selected features
+            cla_feature_num = X_s.shape[1] # use all selected features
 
         display(HTML('<hr/><h2>可分性度量 Classifiablity Analysis(top-'+ str(cla_feature_num) +' selected features)</h2>'))
         display(HTML('若运行报错，请尝试安装R运行环境，并执行 install.packages("ECoL") '))
-        display(HTML(metrics.get_html(X_enet[:,:cla_feature_num],y)))
+        display(HTML(metrics.get_html(X_s[:,:cla_feature_num],y)))
     
     display(HTML('<hr/><h2>分类 Classification</h2><h3>超参数优化及模型选择 Hyper-parameter Optimization （SVM）</h3>'))
     
@@ -243,9 +218,9 @@ def analyze_dataset(X, y, X_names, cla_feature_num = 10):
                         {'kernel': ['linear'], 'C': [0.01, 0.1, 1, 10, 100, 1000,10000,100000]}]
 
     print('Use elastic net selected features after PCA as input: ')
-    X_enet_pca = PCA(n_components=2).fit_transform(X_enet)
-    best_params, clf, _ = grid_search_svm_hyperparams(X_enet_pca, y, 0.2, tuned_parameters)
-    plot_svm_boundary(X_enet_pca, y, clf)
+    X_s_pca = PCA(n_components=2).fit_transform(X_s)
+    best_params, clf, _ = grid_search_svm_hyperparams(X_s_pca, y, 0.2, tuned_parameters)
+    plot_svm_boundary(X_s_pca, y, clf)
 
 
     display(HTML('<hr/><h3>线性分类（逻辑回归模型）Linear Classifier (Logistic Regression)</h3>'))
@@ -258,9 +233,9 @@ def analyze_dataset(X, y, X_names, cla_feature_num = 10):
                         max_iter=100, 
                         multi_class='ovr', # one-vs-rest: a binary problem is fit for each label
                         verbose=0,                        
-                        l1_ratio=None).fit(X_enet_pca, y)
+                        l1_ratio=None).fit(X_s_pca, y)
     
-    plot_lr_boundary(X_enet_pca, y, lr)
+    plot_lr_boundary(X_s_pca, y, lr)
 
 def build_simple_pipeline(X, y, save_path = None):
     '''

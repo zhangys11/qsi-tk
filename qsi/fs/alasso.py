@@ -141,6 +141,10 @@ def alasso_v2(X_scaled, y, LAMBDAS = np.logspace(-10, 0, 11), gamma = 1, display
 def alasso_v3(X_train, y_train, X_names = None, n_lasso_iterations = 10, LAMBDA = 0.1, tol = 0.001):
     '''
     Yet another alasso implementation.
+    
+    Reference
+    ---------
+    https://github.com/AaronNHorvitz/AdaptiveLASSO/blob/master/adaptive_LASSO.py
     '''
     # set checks
     higher  = float('inf')

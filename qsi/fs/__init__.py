@@ -12,6 +12,9 @@ from sklearn.feature_selection import mutual_info_classif
 
 from .alasso import *
 from .glasso import *
+from .aenet import *
+
+from IPython.core.display import HTML, display
 
 def __fs__(X, fi, X_names = None, N = 30, display = True):
     '''
@@ -37,7 +40,9 @@ def __fs__(X, fi, X_names = None, N = 30, display = True):
 
     X_s = X[:,idx]
     print('Important feature Number: ', len(idx))
-    print('Important feature Indices: ', idx)
+    print('Important features indices: ' , idx) 
+    if X_names is not None:
+        print('Important features names: ', X_names[idx])
     print('Top-'+str(len(idx))+' feature Importance: ', fi[idx])
 
     return X_s, idx, fi[idx]
@@ -124,15 +129,18 @@ def elastic_net_fs (X, y, X_names=None, N = 30, display = True, verbose = True):
 
     elastic_net = ElasticNetCV(cv = 5)
     elastic_net.fit(X,y)
-    N = np.count_nonzero(elastic_net.coef_)
+    NZ = np.count_nonzero(elastic_net.coef_)
 
     if verbose:
         print('alpha = ', elastic_net.alpha_, ', L1 ratio = ', elastic_net.l1_ratio_ )
-        print('Non-zero feature coefficients:',N)
+        print('Non-zero feature coefficients:',NZ)
+    
+    if N is None or N <=0 or N > NZ:
+        N = NZ
    
     return __fs__(X, np.abs(elastic_net.coef_), X_names, N, display)
     
-def alasso_fs(X, y, X_names=None, LAMBDA = 0.1, flavor = 3, N = 30, display = True, verbose = True):
+def alasso_fs(X, y, X_names=None, N = 30, LAMBDA = 0.1, flavor = 2, display = True, verbose = True):
     '''
     Adaptive lasso
 
@@ -154,10 +162,18 @@ def alasso_fs(X, y, X_names=None, LAMBDA = 0.1, flavor = 3, N = 30, display = Tr
         coef_ = theta_values[0]
     else: # flavor 3
         coef_ = alasso_v3(X, y, LAMBDA=LAMBDA)
+
+    NZ = np.count_nonzero(coef_)
+    
+    if verbose:
+        print('Non-zero feature coefficients:',NZ)
+    
+    if N is None or N <=0 or N > NZ:
+        N = NZ
    
     return __fs__(X, np.abs(coef_), X_names, N, display)
 
-def glasso_fs(X, y, X_names=None, WIDTH = 8, ALPHA = 0.5, LAMBDA = 0.1, N = 30, display = True, verbose = True):
+def glasso_fs(X, y, X_names=None, N = 30, WIDTH = 8, ALPHA = 0.5, LAMBDA = 0.1, display = True, verbose = True):
     '''
     Group lasso
 
@@ -167,18 +183,174 @@ def glasso_fs(X, y, X_names=None, WIDTH = 8, ALPHA = 0.5, LAMBDA = 0.1, N = 30, 
     ALPHA : adjust 
     LAMBDA : controls regularization / sparsity. The effect may vary for different flavors.
     '''
+
     THETAS = group_lasso(X, y, WIDTH=WIDTH, LAMBDA=LAMBDA, ALPHA=ALPHA)   
-    print(THETAS)
+    
+    NZ = np.count_nonzero(THETAS)
+    if verbose:
+        print('Non-zero feature coefficients:',NZ)
+    
+    if N is None or N <=0 or N > NZ:
+        N = NZ
+
     return __fs__(X, np.abs(THETAS), X_names, N, display)
 
-def glasso_cv_fs(X, y, X_names=None, N1=30, N2=30, \
-    WIDTHS=[2,4,8,16,32], LAMBDAS=[0.01,0.1,1,10], ALPHAS=[0,0.25, 0.5, 0.75,1], verbose = True):
-    HPARAMS, FSIS, THETAS, SCORES = group_lasso_cv(X, y, MAXF=N1, \
+def glasso_cv_fs(X, y, X_names=None, N=30, N2=None, \
+    WIDTHS=[2,8,32], LAMBDAS=[0.01,0.1,1], ALPHAS=[0,0.5,1], \
+    display = True):
+    '''
+    Parameters
+    ----------
+    N1 : tier-1 (glasso fs) features to be kept. 
+    N2 : tier-2 (select common features from multiple runs) features to be kept.
+    '''
+    HPARAMS, FSIS, THETAS, SCORES = group_lasso_cv(X, y, MAXF=N, \
         WIDTHS=WIDTHS, LAMBDAS=LAMBDAS, ALPHAS=ALPHAS, cv_size = 0.2)
-    COMMON_FSI, FS_HPARAMS = select_features_from_group_lasso_cv(HPARAMS, FSIS, THETAS, SCORES, MAXF = N2, THRESH = 1.0)
+    if N2 is None:
+        N2 = N
+    COMMON_FSI = select_features_from_group_lasso_cv(HPARAMS, FSIS, THETAS, SCORES, MAXF = N2, THRESH = 1.0)
+    return X[COMMON_FSI], COMMON_FSI, None
+
+def aenet_cv_fs(X, y, X_names=None, N = 30, display = True, verbose = True):
+    if (X.shape[1] > 5000):
+        print('Be patient. Your data is high-dimensional. It will take long time.')
+    aen = AdaptiveElasticNetCV().fit(X, y)
     if verbose:
-        print('best hparams = ', FS_HPARAMS)
-    return X[COMMON_FSI], COMMON_FSI
+        print('score =', aen.score(X, y))
+        print(aen.__dict__)
+
+    NZ = np.count_nonzero(aen.coef_)
+
+    if verbose:
+        print('Non-zero feature coefficients:',NZ)
+    
+    if N is None or N <=0 or N > NZ:
+        N = NZ
+
+    return __fs__(X, np.abs(aen.coef_), X_names, N, display)
+
+FS_DICT={
+    "pearsion-r": pearson_r_fs,
+    "info-gain / mutual information": mi_fs,
+    "chi-squared statistic": chisq_stats_fs,
+    "anova statistic": anova_stats_fs,
+    "lasso": lasso_fs,
+    "elastic net": elastic_net_fs,
+    "adaptive lasso": alasso_fs,
+    "group lasso": glasso_cv_fs,
+    # "group lasso cv": glasso_cv_fs,
+    "adaptive elastic net": aenet_cv_fs,
+}
+
+FS_DESC_DICT={
+    "pearson-r": '''
+    Two reasons why to prefer Pearson correlation when the relationship is close to linear.
+
+    Pearson r correlation is more efficient and faster.
+    The range of the correlation coefficient is [-1, 1], which reveal positive / negative correlations.
+    ''',    
+
+    "info-gain / mutual information": '''
+Information gain has been used in decision tree. For a specific feature, Information gain (IG) measures how much “information” a feature gives us about the class.
+
+𝐼𝐺(𝑌|𝑋)=𝐻(𝑌)−𝐻(𝑌|𝑋)
+
+IG/MI returns zero for independent variables and higher values the more dependence there is between the variables (can be used to rank features by their independence).
+In information theory, IG answers "if we transmit Y, how many bits can be saved if both sender and receiver know X?" Or "how much information of Y is implied in X?"
+
+Attribute/feature X with a high IG is a good split on Y.
+
+Pearson r only captures linear correlations, while information gain also captures non-linear correlations.
+    ''',
+
+    "chi-squared statistic": '''
+    This score can be used to select the n_features features with the highest values for the test chi-squared statistic from X, which must contain only non-negative features such as booleans or frequencies (e.g., term counts in document classification), relative to the classes.
+
+Recall that the chi-square test measures dependence between stochastic variables, so using this function “weeds out” the features that are the most likely to be independent of class and therefore irrelevant for classification.
+    
+    ''',
+
+    "anova statistic": "ANOVA F-value",
+
+    "elastic net": '''
+    LASSO系列基于L1-norm, 特征选择的稀疏性较强烈。ElasticNet(L1+L2) 更为"温和"。
+    Elastic net is "a doubly regularized technique which encourages grouping effect i.e. either selection or omission of the correlated variable together and is particularly useful when the number of covariates (p) is much larger than the number of observations (n). "
+    '''
+    ,
+    "adaptive lasso": '''
+    Reference: https://ricardocarvalho.ca/post/lasso/
+
+An oracle estimator selects the truly significant variables with probability tending to one. Asymptotically （渐进、逼近）, both subsets coincide.
+
+Idea: add some weights w that corrects the bias in lasso, to convert your regression estimator into an oracle, something that knows the truth about your dataset.
+    
+    Implementation (flavor 2): Get the initial W (coef) via ridge regression, then solve the weighted lasso. 
+    
+    MSE 随 𝜆 增加而变大, N 变小（特征选择效应、稀疏性加强）。You may try "qsi.fs.alasso.alasso_v2(X_scaled, y, LAMBDAS = np.logspace(-10, 0, 11))" to decide the best lambda.
+    ''',
+
+    "group lasso": '''
+    The group lasso regulariser is a well known method to achieve structured sparsity in machine learning and statistics.
+
+An extension of the group lasso regulariser is the sparse group lasso regulariser [2], which imposes both group-wise sparsity and coefficient-wise sparsity. This is done by combining the group lasso penalty with the traditional lasso penalty.
+
+Reference: /py/machine learning/source/19. Kernel/Group Lasso.ipynb
+
+This method implements the sparse group lasso, which is a linear combination between lasso and group lasso, so it provides solutions that are both between and within group sparse. 
+    
+    ''',
+    # "group lasso cv": glasso_cv_fs,
+    "adaptive elastic net": aenet_cv_fs,
+}
+
+def RUN_ALL_FS(X, y, X_names, labels=None, N = 30, output = None):
+    '''
+    Iterate all FS methods and apply to the target dataset.
+
+    Parameters
+    ----------
+    output : specify which FS result to output. Can be an FS name, 'all' or 'none'/None.
+
+    Return
+    ------
+    FS_OUTPUT : a dict of specified FS results.
+    '''
+
+    X_names = np.array(X_names)
+    FS_OUTPUT = {}
+
+    for key in FS_DICT:
+
+        if key == 'pearsion-r':
+            display(HTML('<h2>Univariate feature selection</h2><br/><p>Univariate feature selection examines each feature individually to determine the strength of the relationship of the feature with the response variable.</p><br/>'))
+        elif key == 'lasso':
+            display(HTML('<h2>Model based ranking</h2><br/><p>Use a machine learning method to build a discriminative model for the response variable using each individual feature, and measure the performance of each model.</p><br/>'))
+
+        display(HTML('<h3>' + key + '</h3><br/>'))
+        if key in FS_DESC_DICT:
+            display(HTML('<p>' + FS_DESC_DICT[key] + '</p><br/>'))
+
+        f = FS_DICT[key]
+        X_s, idx, fi = f(X, y, X_names, N = N, display = True)
+
+        ax = plotComponents2D(X_s[:,:2], y)
+        ax.set_title('Scatter Plot of Top-2 Selected Features')
+        plt.show()
+
+        X_s_dr = unsupervised_dimension_reductions(X_s, y, legends = labels)
+
+        if output == key:
+            FS_OUTPUT[key] = X_s
+        elif output == 'all':
+            FS_OUTPUT[key] = X_s
+        else:
+            pass
+
+        display(HTML('<hr/>'))
+
+    return FS_OUTPUT
+
+########### e-nose / e-tongue functions ###############
 
 def nch_time_series_fs(X, fft_percentage = 0.05, dct_percentage = 0.1, conv_mask = [1,-2,1], display = True, y = None, labels = None):
     '''

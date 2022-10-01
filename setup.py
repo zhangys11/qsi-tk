@@ -49,6 +49,7 @@ setup(
         "cs1",
         "ctgan", # "torch"
         "cvxpy",
+        "asgl",
     ],
 
     package_data={
