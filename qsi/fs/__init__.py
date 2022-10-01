@@ -8,6 +8,72 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.cross_decomposition import PLSRegression
 from sklearn.linear_model import LassoCV, ElasticNetCV
 from scipy.fftpack import fft, dct
+from sklearn.feature_selection import mutual_info_classif
+
+from .alasso import *
+from .glasso import *
+
+def __fs__(X, fi, X_names = None, N = 30, display = True):
+    '''
+    Feature selection based on some feature importance metric.
+
+    Parameters
+    ----------
+    fi : feature importance
+    N : how many features to be kept
+
+    Return
+    ------
+    X_s : top-N selected features
+    idx : top-N selected feature indices
+    fi : top-N feature importances (e.g., coef abs values)
+    '''
+
+    if display:        
+        plot_feature_importance(fi, X_names, 'feature-wise coefs/values', xtick_angle=0)
+
+    idx = (np.argsort(fi)[-N:])[::-1]
+    # idx = np.where(pval < 0.1)[0] # np.where(chi2 > 4.5)
+
+    X_s = X[:,idx]
+    print('Important feature Number: ', len(idx))
+    print('Important feature Indices: ', idx)
+    print('Top-'+str(len(idx))+' feature Importance: ', fi[idx])
+
+    return X_s, idx, fi[idx]
+    # X_s_dr = unsupervised_dimension_reductions(X_s, y)
+
+def pearson_r_fs(X, y, X_names=None, N = 30, display = True):
+    '''
+    The pearson r doesn't have a strong feature selection effect (not sparse).
+    We seldom use this method for fs. This is just for theoretical analysis.
+    '''
+    CM = np.corrcoef(np.hstack((X,np.array(y).reshape(-1,1))), rowvar=False) 
+    
+    if display:
+        plt.figure(figsize=(20,20))
+        plt.matshow(CM)
+        plt.title('Correlaton Coef Matrix between all the X and y.\ny is at the last row/col.')
+        plt.axis('off')
+        plt.show()
+
+    rs = np.abs(CM[-1,:-1]) # this the corrcoef abs between y and all xs
+    return __fs__(X, rs, X_names, N, display)
+
+def mi_fs(X, y, X_names=None, N = 30, display = True):
+    '''
+    info-gain / Mutual Information
+
+    Information gain has been used in decision tree. For a specific feature, Information gain (IG) measures how much “information” a feature gives us about the class.
+    𝐼𝐺(𝑌|𝑋)=𝐻(𝑌)−𝐻(𝑌|𝑋)
+    IG/MI returns zero for independent variables and higher values the more dependence there is between the variables (can be used to rank features by their independence).
+    In information theory, IG answers "if we transmit Y, how many bits can be saved if both sender and receiver know X?" Or "how much information of Y is implied in X?"
+    Attribute/feature X with a high IG is a good split on Y.
+    Pearson r only captures linear correlations, while information gain also captures non-linear correlations.
+    '''
+    # use mutual_info_regression if y is continous.
+    mi = mutual_info_classif(X, y, discrete_features=False)
+    return __fs__(X, mi, X_names, N, display)
 
 def chisq_stats_fs(X, y, X_names=None, N = 30, display = True):
     '''
@@ -29,24 +95,6 @@ def anova_stats_fs(X, y, X_names=None, N = 30, display = True):
 
     F,pval = f_classif(X, y)
     return __fs__(X, F, X_names, N, display)
-
-def __fs__(X, fi, X_names = None, N = 30, display = True):
-    '''
-    fi : feature importance
-    N : how many features to be kept
-    '''
-
-    if display:
-        plot_feature_importance(fi, X_names, 'feature-wise coefs/values', xtick_angle=0)
-
-    idx = (np.argsort(fi)[-N:])[::-1]
-    # idx = np.where(pval < 0.1)[0] # np.where(chi2 > 4.5)
-    print('Important feature Number: ', len(idx))
-
-    X_s = X[:,idx]
-
-    return X_s, idx
-    # X_s_dr = unsupervised_dimension_reductions(X_s, y)
 
 def lasso_fs(X, y, X_names=None,  N = 30, display = True, verbose = True):
 
@@ -84,6 +132,53 @@ def elastic_net_fs (X, y, X_names=None, N = 30, display = True, verbose = True):
    
     return __fs__(X, np.abs(elastic_net.coef_), X_names, N, display)
     
+def alasso_fs(X, y, X_names=None, LAMBDA = 0.1, flavor = 3, N = 30, display = True, verbose = True):
+    '''
+    Adaptive lasso
+
+    Parameters
+    ----------
+    LAMBDA : controls regularization / sparsity. The effect may vary for different flavors.
+    flavor : we provide 3 implementations. 
+        1 - alasso_v1
+        2 - alasso_v2
+        3 - alasso_v3
+    '''
+    if flavor == 1:
+        coef_ = alasso_v1(X, y, W = None, LAMBDA = LAMBDA)
+        if len(coef_) != X.shape[1]:
+            print('Error: returned coef dim differs from X. \nTry flavor 3.')
+            coef_ = alasso_v3(X, y, LAMBDA=LAMBDA)
+    elif flavor == 2:
+        _, theta_values, _, _ = alasso_v2(X, y, LAMBDAS = [LAMBDA], display=display)
+        coef_ = theta_values[0]
+    else: # flavor 3
+        coef_ = alasso_v3(X, y, LAMBDA=LAMBDA)
+   
+    return __fs__(X, np.abs(coef_), X_names, N, display)
+
+def glasso_fs(X, y, X_names=None, WIDTH = 8, ALPHA = 0.5, LAMBDA = 0.1, N = 30, display = True, verbose = True):
+    '''
+    Group lasso
+
+    Parameters
+    ----------
+    WIDTH : window size
+    ALPHA : adjust 
+    LAMBDA : controls regularization / sparsity. The effect may vary for different flavors.
+    '''
+    THETAS = group_lasso(X, y, WIDTH=WIDTH, LAMBDA=LAMBDA, ALPHA=ALPHA)   
+    print(THETAS)
+    return __fs__(X, np.abs(THETAS), X_names, N, display)
+
+def glasso_cv_fs(X, y, X_names=None, N1=30, N2=30, \
+    WIDTHS=[2,4,8,16,32], LAMBDAS=[0.01,0.1,1,10], ALPHAS=[0,0.25, 0.5, 0.75,1], verbose = True):
+    HPARAMS, FSIS, THETAS, SCORES = group_lasso_cv(X, y, MAXF=N1, \
+        WIDTHS=WIDTHS, LAMBDAS=LAMBDAS, ALPHAS=ALPHAS, cv_size = 0.2)
+    COMMON_FSI, FS_HPARAMS = select_features_from_group_lasso_cv(HPARAMS, FSIS, THETAS, SCORES, MAXF = N2, THRESH = 1.0)
+    if verbose:
+        print('best hparams = ', FS_HPARAMS)
+    return X[COMMON_FSI], COMMON_FSI
 
 def nch_time_series_fs(X, fft_percentage = 0.05, dct_percentage = 0.1, conv_mask = [1,-2,1], display = True, y = None, labels = None):
     '''

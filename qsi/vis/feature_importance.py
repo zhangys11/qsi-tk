@@ -3,9 +3,13 @@ import matplotlib.pyplot as plt
 from .unsupervised_dimension_reductions import *
 
 # plot the importance for all features
-def plot_feature_importance(feature_importances, feature_names, title, xtick_angle=None, xlabel = '', ylabel = '', row_size = 100, figsize=(12,2)):
+def plot_feature_importance(feature_importances, feature_names, title, \
+    xtick_angle=None, xlabel = '', ylabel = '', row_size = None, figsize=(12,2)):
     
     feature_importances = np.array(feature_importances)
+
+    if row_size is None: # use dynamic row size
+        row_size = round( len(feature_importances) / 5000 + 0.5) * 100
 
     # matrix chart
     ROW_SIZE = row_size # math.ceil(feature_importances.size / 100) * 10     
@@ -25,7 +29,7 @@ def plot_feature_importance(feature_importances, feature_names, title, xtick_ang
     plt.figure(figsize=figsize)
     if title:
         plt.title(title + "\n" + 'importance marked by bar height')
-    if feature_names is None or len(feature_names) <=0:
+    if feature_names is None:
         feature_names = range(feature_importances.size)
     plt.bar(feature_names, feature_importances, alpha=.8) # , width=2
     if xtick_angle is None:
