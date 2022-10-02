@@ -7,7 +7,7 @@ setup(
     name="qsi-tk",
     
     # Version number:
-    version="0.2.3",
+    version="0.2.4",
     
     # Application author details:
     author="Yinsheng Zhang (Ph.D.)",

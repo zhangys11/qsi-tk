@@ -4,7 +4,7 @@ from qsi.vis import *
 from collections import Counter
 
 def fsse_cv(X_scaled,y, X_names = None, N = 30, base_learner=ensemble.create_elmcv_instance, \
-    WIDTHS = [1, 2, 5, 10, 100], ALPHAS = [0.5,0.75,1.0], display = True, verbose = True):
+    WIDTHS = [1, 2, 10], ALPHAS = [0.5,0.75,1.0], display = True, verbose = True):
 
     '''
     Feature subspace based ensemble (FSSE)
@@ -29,19 +29,24 @@ def fsse_cv(X_scaled,y, X_names = None, N = 30, base_learner=ensemble.create_elm
         fsse.fit(X_scaled, y)
         acc = fsse.evaluate(X_scaled, y) # accuracy
 
-        biggest_fsse_fs, fs_importance = fsse.get_important_features()
+        _, fs_importance = fsse.get_important_features() 
+        # # there may be some redundant paddings for the last group
+        # valid_idx = np.where(biggest_fsse_fs < X_scaled.shape[1])
+        # biggest_fsse_fs = biggest_fsse_fs [ valid_idx ]
+        fs_importance = fs_importance[ :X_scaled.shape[1] ]
 
         if verbose:
             print('acc = ', acc)
-            print('meta_learner.l1_ratio_ = ', fsse.meta_learner.l1_ratio_)  
-            print('Non-zero feature coefficients:', len(biggest_fsse_fs))
+            print('meta_learner.l1_ratio_ = ', fsse.meta_learner.l1_ratio_) 
 
-        CAT_FS += biggest_fsse_fs
+        biggest_fsse_fs = (np.argsort(np.abs(fs_importance))[-N:])[::-1]
+
+        CAT_FS += list(biggest_fsse_fs)
         xfsse = X_scaled[:,biggest_fsse_fs] # 前N个系数 non-zero
         
         if display:
 
-            plot_feature_importance(np.abs(fs_importance), 'FSSE FS Result, GROUP SIZE = ' + str(SPLIT))
+            plot_feature_importance(np.abs(fs_importance), X_names, 'FSSE FS Result, GROUP SIZE = ' + str(SPLIT))
         
             plt.figure()
             xfsse_pca = PCA(n_components = 2).fit_transform(xfsse)

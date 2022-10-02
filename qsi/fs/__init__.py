@@ -15,7 +15,7 @@ from .glasso import *
 from .aenet import *
 from .fsse import *
 
-from IPython.core.display import HTML, display
+from IPython.display import HTML, display
 
 def __fs__(X, fi, X_names = None, N = 30, display = True):
     '''
@@ -276,9 +276,11 @@ def multitask_elastic_net_fs(X, y, X_names=None, N = 30, display = True, verbose
 
     return __fs__(X, np.abs(clf.coef_), X_names, N, display)
 
-def fsse_fs(X, y, X_names=None, N = 30, display = True, verbose = True):
+def fsse_fs(X, y, X_names=None, N = 30, base_learner=ensemble.create_elmcv_instance, \
+    WIDTHS = [1, 2, 10, 30], ALPHAS = [0.5,0.75,1.0], display = True, verbose = True):
     
-    idx = fsse_cv(X,y,X_names,N,display=display,verbose=verbose)
+    idx = fsse_cv(X,y,X_names,N, base_learner=base_learner, \
+    WIDTHS = WIDTHS, ALPHAS = ALPHAS, display=display,verbose=verbose)
     return X[idx], idx, None
 
 FS_DICT={
