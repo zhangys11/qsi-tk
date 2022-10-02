@@ -228,7 +228,7 @@ def select_features_from_group_lasso_cv(HPARAMS, FSIS, THETAS, SCORES, MAXF = 50
             plt.plot(THETAS[idx] + idxx*0.1, label = str(HPARAMS[idx]))
             idxx += 1
 
-    print('top-' + str(MAXF) + ' features and their frequencies: ', Counter(CAT_FS).most_common(MAXF))
+    print('top-' + str(MAXF) + ' common features and their frequencies: ', Counter(CAT_FS).most_common(MAXF))
 
     plt.yticks([])
     if (idxx <= 10):

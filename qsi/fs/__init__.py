@@ -13,6 +13,7 @@ from sklearn.feature_selection import mutual_info_classif
 from .alasso import *
 from .glasso import *
 from .aenet import *
+from .fsse import *
 
 from IPython.core.display import HTML, display
 
@@ -275,6 +276,11 @@ def multitask_elastic_net_fs(X, y, X_names=None, N = 30, display = True, verbose
 
     return __fs__(X, np.abs(clf.coef_), X_names, N, display)
 
+def fsse_fs(X, y, X_names=None, N = 30, display = True, verbose = True):
+    
+    idx = fsse_cv(X,y,X_names,N,display=display,verbose=verbose)
+    return X[idx], idx, None
+
 FS_DICT={
     "pearsion-r": pearson_r_fs,
     "info-gain / mutual information": mi_fs,
@@ -392,7 +398,7 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N = 30, output = None, multitask = Fa
         if key == 'pearsion-r':
             display(HTML('<h2>Univariate feature selection</h2><br/><p>Univariate feature selection examines each feature individually to determine the strength of the relationship of the feature with the response variable.</p><br/>'))
         elif key == 'lasso':
-            display(HTML('<hr/><h4>Generally speaking, univariate methods dont generate sparsity and have weak FS effect. </h4><hr/>'))
+            display(HTML('<h4>Generally speaking, univariate methods dont generate sparsity and have weak FS effect. </h4><hr/>'))
             display(HTML('<h2>Model based ranking</h2><br/><p>Use a machine learning method to build a discriminative model for the response variable using each individual feature, and measure the performance of each model.</p><br/>'))
 
         display(HTML('<h3>' + key + '</h3><br/>'))
