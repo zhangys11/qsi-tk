@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.cross_decomposition import PLSRegression
-from sklearn.linear_model import LassoCV, ElasticNetCV
+from sklearn.linear_model import LassoCV, ElasticNetCV, MultiTaskLassoCV, MultiTaskElasticNetCV
 from scipy.fftpack import fft, dct
 from sklearn.feature_selection import mutual_info_classif
 
@@ -209,7 +209,7 @@ def glasso_cv_fs(X, y, X_names=None, N=30, N2=None, \
     if N2 is None:
         N2 = N
     COMMON_FSI = select_features_from_group_lasso_cv(HPARAMS, FSIS, THETAS, SCORES, MAXF = N2, THRESH = 1.0)
-    return X[COMMON_FSI], COMMON_FSI, None
+    return X[:,COMMON_FSI], COMMON_FSI, None
 
 def aenet_cv_fs(X, y, X_names=None, N = 30, display = True, verbose = True):
     if (X.shape[1] > 5000):
@@ -217,7 +217,7 @@ def aenet_cv_fs(X, y, X_names=None, N = 30, display = True, verbose = True):
     aen = AdaptiveElasticNetCV().fit(X, y)
     if verbose:
         print('score =', aen.score(X, y))
-        print(aen.__dict__)
+        # print(aen.__dict__)
 
     NZ = np.count_nonzero(aen.coef_)
 
@@ -228,6 +228,52 @@ def aenet_cv_fs(X, y, X_names=None, N = 30, display = True, verbose = True):
         N = NZ
 
     return __fs__(X, np.abs(aen.coef_), X_names, N, display)
+
+def multitask_lasso_fs(X, y, X_names=None, N = 30, display = True, verbose = True):
+    '''
+    Parameters
+    ----------
+    y : should have shape [m, 2/3/4...]. Each col for one class labels. e.g., clf.fit([[0, 1], [1, 2], [2, 4]], [[0, 0], [1, 1], [2, 3]])
+    '''
+    if len(y.shape) != 2:
+        print('Error: y must have shape (m,K), each col for one class.')
+        print('Because y is single task, use lasso fs.')
+        return lasso_fs(X, y, X_names, N, display, verbose)
+
+    clf = MultiTaskLassoCV()
+    clf.fit(X, y)
+    
+    NZ = np.count_nonzero(clf.coef_)
+    if verbose:
+        print('Non-zero feature coefficients:',NZ)
+    
+    if N is None or N <=0 or N > NZ:
+        N = NZ
+
+    return __fs__(X, np.abs(clf.coef_), X_names, N, display)
+
+def multitask_elastic_net_fs(X, y, X_names=None, N = 30, display = True, verbose = True):
+    '''
+    Parameters
+    ----------
+    y : should have shape [m, 2/3/4...]. Each col for one class labels. e.g., clf.fit([[0, 1], [1, 2], [2, 4]], [[0, 0], [1, 1], [2, 3]])
+    '''
+    if len(y.shape) != 2:
+        print('Error: y must have shape (m,K), each col for one class.')
+        print('Because y is single task, use elastic net fs.')
+        return elastic_net_fs(X, y, X_names, N, display, verbose)
+
+    clf = MultiTaskElasticNetCV()
+    clf.fit(X, y)
+    
+    NZ = np.count_nonzero(clf.coef_)
+    if verbose:
+        print('Non-zero feature coefficients:',NZ)
+    
+    if N is None or N <=0 or N > NZ:
+        N = NZ
+
+    return __fs__(X, np.abs(clf.coef_), X_names, N, display)
 
 FS_DICT={
     "pearsion-r": pearson_r_fs,
@@ -240,6 +286,8 @@ FS_DICT={
     "group lasso": glasso_cv_fs,
     # "group lasso cv": glasso_cv_fs,
     "adaptive elastic net": aenet_cv_fs,
+    "multi-task lasso": multitask_lasso_fs,
+    "multi-task elastic net": multitask_elastic_net_fs,
 }
 
 FS_DESC_DICT={
@@ -299,17 +347,30 @@ Reference: /py/machine learning/source/19. Kernel/Group Lasso.ipynb
 This method implements the sparse group lasso, which is a linear combination between lasso and group lasso, so it provides solutions that are both between and within group sparse. 
     
     ''',
-    # "group lasso cv": glasso_cv_fs,
-    "adaptive elastic net": aenet_cv_fs,
+    "adaptive elastic net": '''
+    " The adaptive elastic-net combines the strengths of the quadratic regularization and the adaptively weighted lasso shrinkage. Under weak regularity conditions, we establish the oracle property of the adaptive elastic-net. We show by simulations that the adaptive elastic-net deals with the collinearity problem better than the other oracle-like methods, thus enjoying much improved finite sample performance."
+    ''',
+    "multi-task lasso": '''
+    The MultiTaskLasso is a linear model that estimates sparse coefficients for multiple regression problems jointly: y is a 2D array, of shape (n_samples, n_tasks). The constraint is that the selected features are the same for all the regression problems, also called tasks.
+
+    Multi-task Lasso model trained with L1/L2 mixed-norm as regularizer.
+
+    The optimization objective for Lasso is:''' + r"$ \
+    (1 / (2 * n_samples)) * ||Y - XW||^2_Fro + alpha * ||W||_21 \
+    Where: \
+    ||W||_21 = \sum_i \sqrt{\sum_j w_{ij}^2} $",
+
+    "multi-task elastic net": 'Multi-task elastic net model trained with L1/L2 mixed-norm as regularizer.'
 }
 
-def RUN_ALL_FS(X, y, X_names, labels=None, N = 30, output = None):
+def RUN_ALL_FS(X, y, X_names, labels=None, N = 30, output = None, multitask = False):
     '''
     Iterate all FS methods and apply to the target dataset.
 
     Parameters
     ----------
     output : specify which FS result to output. Can be an FS name, 'all' or 'none'/None.
+    multitask : whether run multi-task FS methods. Default is False, i.e., only run single-task FS methods.
 
     Return
     ------
@@ -321,9 +382,17 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N = 30, output = None):
 
     for key in FS_DICT:
 
+        if multitask and 'multi-task' in key:
+            pass
+        elif not multitask and 'multi-task' not in key:
+            pass
+        else:
+            continue # otherwise, skip this alg
+
         if key == 'pearsion-r':
             display(HTML('<h2>Univariate feature selection</h2><br/><p>Univariate feature selection examines each feature individually to determine the strength of the relationship of the feature with the response variable.</p><br/>'))
         elif key == 'lasso':
+            display(HTML('<hr/><h4>Generally speaking, univariate methods dont generate sparsity and have weak FS effect. </h4><hr/>'))
             display(HTML('<h2>Model based ranking</h2><br/><p>Use a machine learning method to build a discriminative model for the response variable using each individual feature, and measure the performance of each model.</p><br/>'))
 
         display(HTML('<h3>' + key + '</h3><br/>'))
