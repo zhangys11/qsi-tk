@@ -54,7 +54,14 @@ def id_to_path(id):
     return DATASET_MAP[id]
 
 def load_dataset(id, SD = 1, shift = 200, x_range = None, y_subset=None, display = True):
-    
+    '''
+    Load a built-in dataset.
+
+    Examples
+    --------
+    X, y, X_names, _, labels = io.load_dataset('milk_tablet_candy')
+    '''
+
     path, delimiter, has_y, path_desc, labels = id_to_path(id)
     print('load dataset from', path)
 
@@ -144,7 +151,10 @@ def open_dataset(path, delimiter = ',', has_y = True, x_range = None, y_subset=N
         X = np.array(Xs)
         y = np.array(ys)
 
-    print('X.shape',X.shape, ' y.shape',y.shape)
+    if has_y and y is not None:
+        print('X.shape',X.shape, ' y.shape',y.shape)
+    else:
+        print('X.shape',X.shape)
 
     cnt_nan = np.isnan (X).sum()
     if cnt_nan > 0:

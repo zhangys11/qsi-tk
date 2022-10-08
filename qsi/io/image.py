@@ -1,1 +1,4 @@
-from cs1.cs import get_img_data, img_dct, img_dft, img_dwt, dct_lossy_image_compression, dft_lossy_image_compression, Image_Sensing_n_Recovery
+import cs1
+assert( '__version__' in cs1.__dict__ and cs1.__version__ > '0.1.0')
+
+from cs1.domain.image import *

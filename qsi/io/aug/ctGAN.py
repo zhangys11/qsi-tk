@@ -1,11 +1,8 @@
 import random 
 import pandas as pd
 import numpy as np
-from ctgan import CTGANSynthesizer
+from ctgan import CTGAN # CTGANSynthesizer
 import matplotlib.pyplot as plt
-from sklearn.decomposition import PCA
-from ...vis import plotComponents2D
-import torch
 
 def expand_dataset(X, y, names, savepath, NX = 3, 
 epochs = 10, batch_size = 100, cuda = True, verbose = True):
@@ -25,7 +22,7 @@ epochs = 10, batch_size = 100, cuda = True, verbose = True):
         dfXc.columns = list(np.array(names, dtype='str')) # ctgan requires string list headers
         dfc = pd.concat([dfXc], axis=1)
         
-        ctgan = CTGANSynthesizer(epochs = epochs, batch_size = batch_size, cuda = cuda)
+        ctgan = CTGAN(epochs = epochs, batch_size = batch_size, cuda = cuda)
         ctgan.fit(dfc, dfXc.columns)
 
         if verbose:
