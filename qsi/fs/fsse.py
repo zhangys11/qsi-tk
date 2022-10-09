@@ -1,6 +1,6 @@
 from sklearn.decomposition import PCA
-from qsi.cla import ensemble
-from qsi.vis import *
+from ..cla import ensemble
+from ..vis import *
 from collections import Counter
 
 def fsse_cv(X_scaled,y, X_names = None, N = 30, base_learner=ensemble.create_elmcv_instance, \
@@ -55,10 +55,11 @@ def fsse_cv(X_scaled,y, X_names = None, N = 30, base_learner=ensemble.create_elm
             plt.show()
 
     COMMON_FSI = []
-    for f in Counter(CAT_FS).most_common(N):
+    commons = Counter(CAT_FS).most_common(N)
+    for f in commons:
         COMMON_FSI.append(f[0])
 
     if verbose:
-        print('top-' + str(N) + ' common features and their frequencies: ', Counter(CAT_FS).most_common(N))
+        print('top-' + str(N) + ' common features and their frequencies: ', commons)
 
     return np.array(COMMON_FSI)

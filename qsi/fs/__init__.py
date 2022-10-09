@@ -281,7 +281,11 @@ def fsse_fs(X, y, X_names=None, N = 30, base_learner=ensemble.create_elmcv_insta
     
     idx = fsse_cv(X,y,X_names,N, base_learner=base_learner, \
     WIDTHS = WIDTHS, ALPHAS = ALPHAS, display=display,verbose=verbose)
-    return X[idx], idx, None
+
+    if verbose:
+        print('Most important common features from fsse_cv(): ', idx)
+
+    return X[:,idx], idx, None
 
 FS_DICT={
     "pearsion-r": pearson_r_fs,

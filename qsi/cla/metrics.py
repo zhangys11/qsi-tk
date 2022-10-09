@@ -1,1 +1,1 @@
-from pyCLAMs.clams import *
+from clams import *
