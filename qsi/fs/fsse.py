@@ -44,6 +44,11 @@ def fsse_cv(X_scaled,y, X_names = None, N = 30, base_learner=ensemble.create_elm
         CAT_FS += list(biggest_fsse_fs)
         xfsse = X_scaled[:,biggest_fsse_fs] # 前N个系数 non-zero
         
+        if verbose:
+            print('Most important feature indices (WIDTH=' + str(SPLIT) + '): ', biggest_fsse_fs)
+            if X_names is not None and X_names != []:
+                print('Most important feature names (WIDTH=' + str(SPLIT) + '): ', np.array(X_names) [biggest_fsse_fs])
+
         if display:
 
             plot_feature_importance(np.abs(fs_importance), X_names, 'FSSE FS Result, GROUP SIZE = ' + str(SPLIT))

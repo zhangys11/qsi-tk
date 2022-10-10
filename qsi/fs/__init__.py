@@ -283,7 +283,9 @@ def fsse_fs(X, y, X_names=None, N = 30, base_learner=ensemble.create_elmcv_insta
     WIDTHS = WIDTHS, ALPHAS = ALPHAS, display=display,verbose=verbose)
 
     if verbose:
-        print('Most important common features from fsse_cv(): ', idx)
+        print('Most important common feature indices from fsse_cv( WIDTHS = ', WIDTHS , '): ', idx)
+        if X_names is not None and X_names != []:
+            print('Most important common feature names from fsse_cv( WIDTHS = ', WIDTHS , '): ', np.array(X_names)[idx])
 
     return X[:,idx], idx, None
 
