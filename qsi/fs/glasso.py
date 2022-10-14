@@ -194,6 +194,9 @@ def group_lasso_cv(X_scaled, y, MAXF, WIDTHS, LAMBDAS, ALPHAS, cv_size = 0.2, ve
                         reg = LinearRegression().fit(test_X[:,biggest_gl_fs], test_y)
                         score = reg.score(test_X[:,biggest_gl_fs], test_y)
                         SCORES.append(score)
+                    
+                    if verbose:
+                        print('R2 = ', SCORES[-1])
 
                     pbar.update(1)
                     

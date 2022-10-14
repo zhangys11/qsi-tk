@@ -3,6 +3,7 @@ from ..cla import ensemble
 from ..vis import *
 from collections import Counter
 
+
 def fsse_cv(X_scaled,y, X_names = None, N = 30, base_learner=ensemble.create_elmcv_instance, \
     WIDTHS = [1, 2, 10], ALPHAS = [0.5,0.75,1.0], display = True, verbose = True):
 
@@ -27,7 +28,7 @@ def fsse_cv(X_scaled,y, X_names = None, N = 30, base_learner=ensemble.create_elm
                     feature_split = SPLIT, 
                     meta_l1_ratios = ALPHAS) # use l1_ratio > 0.5 to get sparse results
         fsse.fit(X_scaled, y)
-        acc = fsse.evaluate(X_scaled, y) # accuracy
+        acc, r2 = fsse.evaluate(X_scaled, y)
 
         _, fs_importance = fsse.get_important_features() 
         # # there may be some redundant paddings for the last group
@@ -36,7 +37,8 @@ def fsse_cv(X_scaled,y, X_names = None, N = 30, base_learner=ensemble.create_elm
         fs_importance = fs_importance[ :X_scaled.shape[1] ]
 
         if verbose:
-            print('acc = ', acc)
+            print('acc = ', round(acc,3))
+            print('R2 = ', round(r2))
             print('meta_learner.l1_ratio_ = ', fsse.meta_learner.l1_ratio_) 
 
         biggest_fsse_fs = (np.argsort(np.abs(fs_importance))[-N:])[::-1]

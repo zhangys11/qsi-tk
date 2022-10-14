@@ -4,6 +4,8 @@ import pandas as pd
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import RidgeCV, Lasso, LassoCV
+from sklearn.metrics import r2_score
+from sklearn.preprocessing import scale
 import matplotlib.pyplot as plt
 # from unsupervised_dimension_reductions import *
 
@@ -53,12 +55,14 @@ def alasso_v1(X_scaled, y, W = None, LAMBDA = 1):
 
     return THETA #, biggest_al_fs, X_al_fs
 
-def alasso_v2(X_scaled, y, LAMBDAS = np.logspace(-10, 0, 11), gamma = 1, display = True, verbose = False):
+def alasso_v2(X_scaled, y, LAMBDAS = np.logspace(-10, 0, 11), gamma = 1, \
+    display = True, verbose = False):
     '''
     Adaptive Lasso Feature Selection: standard Ridge regression + ALASSO
 
     Parameters
     ----------
+    X_scaled : input data. Will be DEMEANED, as theta0 is neglected in this algorithm.
     gamma : 0.5, 1, or 2
 
     Return
@@ -79,6 +83,8 @@ def alasso_v2(X_scaled, y, LAMBDAS = np.logspace(-10, 0, 11), gamma = 1, display
 
     def mse(X, Y, theta):
         return (1.0 / X.shape[0]) * loss_fn(X, Y, theta).value
+
+    X_scaled = scale(X_scaled) # demean
 
     ridge = RidgeCV(cv = 5) # use ridge to get initial coef
     ridge.fit(X_scaled, y)
@@ -136,7 +142,14 @@ def alasso_v2(X_scaled, y, LAMBDAS = np.logspace(-10, 0, 11), gamma = 1, display
         plt.title("Non-zero Coefficients")
         plt.show()
 
-    return lambd_values, theta_values, train_errors, test_errors
+    best_index = np.argmin(test_errors)
+
+    y_pred = X_scaled @ theta_values[best_index] > 0
+    # y_pred = 1/(1 + np.exp(- X_scaled @ theta_values[best_index] ) )
+    R2 = r2_score(y, y_pred)
+
+    return lambd_values[best_index], theta_values[best_index], R2, \
+        train_errors[best_index], test_errors[best_index]
 
 def alasso_v3(X_train, y_train, X_names = None, n_lasso_iterations = 10, LAMBDA = 0.1, tol = 0.001):
     '''
@@ -167,7 +180,7 @@ def alasso_v3(X_train, y_train, X_names = None, n_lasso_iterations = 10, LAMBDA 
     X_w  = np.nan_to_num(X_w)
     X_w  = np.round(X_w,decimals = 3)
 
-    y_train    = np.nan_to_num(y_train)
+    y_train = np.nan_to_num(y_train)
 
     adaptive_lasso = Lasso(alpha = LAMBDA, fit_intercept=False)
     adaptive_lasso.fit(X_w, y_train)
@@ -210,4 +223,4 @@ def alasso_v3(X_train, y_train, X_names = None, n_lasso_iterations = 10, LAMBDA 
     plt.title("Top and Botton 10 Coefficients Selected by the Adaptive LASSO Model", fontsize = 10)
     plt.show()
 
-    return adaptive_lasso.coef_ # adaptive_lasso
+    return adaptive_lasso.coef_, adaptive_lasso.score(X_train,y_train) # adaptive_lasso

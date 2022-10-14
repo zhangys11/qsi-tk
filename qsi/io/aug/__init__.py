@@ -1,5 +1,5 @@
 # data augmentation
-from . import SMOTE, ctGAN
+from . import SMOTE
 from sklearn.decomposition import PCA
 from ...vis import plotComponents2D
 import matplotlib.pyplot as plt
@@ -20,6 +20,7 @@ epochs = 10, batch_size = 100, cuda = True, display = False, verbose = True):
     if method == 'SMOTE':
         Xn, yn = SMOTE.expand_dataset(X, y, X_names, target_path, d, folds)
     elif method == 'ctGAN':
+        from . import ctGAN
         Xn, yn = ctGAN.expand_dataset(X, y, X_names, target_path, folds, epochs, batch_size, cuda, verbose)
 
     if display:

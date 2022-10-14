@@ -26,11 +26,29 @@ def __fs__(X, fi, X_names = None, N = 30, display = True):
     fi : feature importance
     N : how many features to be kept
 
-    Return
-    ------
+    Returns
+    -------
     X_s : top-N selected features
     idx : top-N selected feature indices
     fi : top-N feature importances (e.g., coef abs values)
+
+    Notes
+    -----
+    Some FS algorithms will output the R2 metric.
+    You should remember R2 is not a good measure to assess goodness of fit 
+    for a classification task. 
+    R2 is suitable for predicting continuous variable (regression). 
+    When dependent variable is continuous R2 usually takes values between 0 and 1 
+    (in linear regression for example it is impossible to have R2 beyond these boundaries),
+    and it is interpreted as share of variance of dependent variable that 
+    model is able to correctly reproduce. 
+    When R2 equals 1 it means that the model is able to fully recreate 
+    dependent variable, when it equals 0, it means that the model completely 
+    failed at this task.
+    When the dependent variable is categorical it makes no sense, 
+    because R2 uses distances between predicted and actual values, 
+    while distances between let say '1' meaning class 'A', '2' meaning class 'B' 
+    and '3' meaning class 'C' make no sense.
     '''
 
     if display:        
@@ -109,7 +127,8 @@ def lasso_fs(X, y, X_names=None,  N = 30, display = True, verbose = True):
     N = np.count_nonzero(lasso.coef_)
 
     if verbose:
-        print('LASSO alpha = ', lasso.alpha_)
+        print('R2 = ', round(lasso.score(X,y), 3) )
+        print("LASSO alpha = %.3g" %lasso.alpha_)
         print('Non-zero feature coefficients:',N)
    
     return __fs__(X, np.abs(lasso.coef_), X_names, N, display)
@@ -133,7 +152,8 @@ def elastic_net_fs (X, y, X_names=None, N = 30, display = True, verbose = True):
     NZ = np.count_nonzero(elastic_net.coef_)
 
     if verbose:
-        print('alpha = ', elastic_net.alpha_, ', L1 ratio = ', elastic_net.l1_ratio_ )
+        print('R2 = ', round(elastic_net.score(X,y),3) )
+        print('alpha =  %.3g' % elastic_net.alpha_ , ', L1 ratio = ', elastic_net.l1_ratio_ )
         print('Non-zero feature coefficients:',NZ)
     
     if N is None or N <=0 or N > NZ:
@@ -141,7 +161,8 @@ def elastic_net_fs (X, y, X_names=None, N = 30, display = True, verbose = True):
    
     return __fs__(X, np.abs(elastic_net.coef_), X_names, N, display)
     
-def alasso_fs(X, y, X_names=None, N = 30, LAMBDA = 0.1, flavor = 2, display = True, verbose = True):
+def alasso_fs(X, y, X_names=None, N = 30, LAMBDA = 0.1, flavor = 2, \
+    display = True, verbose = True):
     '''
     Adaptive lasso
 
@@ -157,16 +178,16 @@ def alasso_fs(X, y, X_names=None, N = 30, LAMBDA = 0.1, flavor = 2, display = Tr
         coef_ = alasso_v1(X, y, W = None, LAMBDA = LAMBDA)
         if len(coef_) != X.shape[1]:
             print('Error: returned coef dim differs from X. \nTry flavor 3.')
-            coef_ = alasso_v3(X, y, LAMBDA=LAMBDA)
+            coef_, R2 = alasso_v3(X, y, LAMBDA=LAMBDA)
     elif flavor == 2:
-        _, theta_values, _, _ = alasso_v2(X, y, LAMBDAS = [LAMBDA], display=display)
-        coef_ = theta_values[0]
+        _, coef_, R2, _, _ = alasso_v2(X, y, LAMBDAS = [LAMBDA], display=display)
     else: # flavor 3
-        coef_ = alasso_v3(X, y, LAMBDA=LAMBDA)
+        coef_, R2 = alasso_v3(X, y, LAMBDA=LAMBDA)
 
     NZ = np.count_nonzero(coef_)
     
     if verbose:
+        print('R2 = ', round(R2,3) ) # R2 - the coefficient of determination 
         print('Non-zero feature coefficients:',NZ)
     
     if N is None or N <=0 or N > NZ:
@@ -217,13 +238,13 @@ def aenet_cv_fs(X, y, X_names=None, N = 30, display = True, verbose = True):
         print('Be patient. Your data is high-dimensional. It will take long time.')
     aen = AdaptiveElasticNetCV().fit(X, y)
     if verbose:
-        print('score =', aen.score(X, y))
+        print('R2 =', round(aen.score(X, y),3) )
         # print(aen.__dict__)
 
     NZ = np.count_nonzero(aen.coef_)
 
     if verbose:
-        print('Non-zero feature coefficients:',NZ)
+        print('Non-zero feature coefficients:', NZ)
     
     if N is None or N <=0 or N > NZ:
         N = NZ
@@ -282,7 +303,11 @@ def fsse_fs(X, y, X_names=None, N = 30, base_learner=ensemble.create_elmcv_insta
     idx = fsse_cv(X,y,X_names,N, base_learner=base_learner, \
     WIDTHS = WIDTHS, ALPHAS = ALPHAS, display=display,verbose=verbose)
 
-    if verbose:
+    if verbose and len(WIDTHS) > 1:
+
+        print('')
+        print('-------- Combine the FS results from multiple runs. --------')
+
         print('Most important common feature indices from fsse_cv( WIDTHS = ', WIDTHS , '): ', idx)
         if X_names is not None and X_names != []:
             print('Most important common feature names from fsse_cv( WIDTHS = ', WIDTHS , '): ', np.array(X_names)[idx])
