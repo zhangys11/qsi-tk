@@ -9,6 +9,7 @@ from sklearn.cross_decomposition import PLSRegression
 from sklearn.linear_model import LassoCV, ElasticNetCV, MultiTaskLassoCV, MultiTaskElasticNetCV
 from scipy.fftpack import fft, dct
 from sklearn.feature_selection import mutual_info_classif
+from sklearn.linear_model import LogisticRegressionCV
 
 from .alasso import *
 from .glasso import *
@@ -446,6 +447,10 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N = 30, output = None, multitask = Fa
         plt.show()
 
         X_s_dr = unsupervised_dimension_reductions(X_s, y, legends = labels)
+
+        clf = LogisticRegressionCV().fit(X_s, y)
+        print('Classification accurary with the selected features (LogisticRegressionCV) = ', \
+            round(clf.score(X_s, y), 3))
 
         if output == key:
             FS_OUTPUT[key] = X_s
