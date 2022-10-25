@@ -1,5 +1,3 @@
-from sklearn.feature_selection import chi2, f_classif
-from ..vis import plotComponents2D, plot_feature_importance, unsupervised_dimension_reductions
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -7,10 +5,11 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.cross_decomposition import PLSRegression
 from sklearn.linear_model import LassoCV, ElasticNetCV, MultiTaskLassoCV, MultiTaskElasticNetCV
+from sklearn.feature_selection import chi2, f_classif, mutual_info_classif
 from scipy.fftpack import fft, dct
-from sklearn.feature_selection import mutual_info_classif
 from sklearn.linear_model import LogisticRegressionCV
 
+from ..vis import plotComponents2D, plot_feature_importance, unsupervised_dimension_reductions
 from .alasso import *
 from .glasso import *
 from .aenet import *
@@ -125,7 +124,7 @@ def lasso_fs(X, y, X_names=None,  N = 30, display = True, verbose = True):
 
     lasso = LassoCV(cv = 5)
     lasso.fit(X,y)
-    N = np.count_nonzero(lasso.coef_)
+    N = min( np.count_nonzero(lasso.coef_), N)
 
     if verbose:
         print('R2 = ', round(lasso.score(X,y), 3) )
@@ -232,6 +231,8 @@ def glasso_cv_fs(X, y, X_names=None, N=30, N2=None, \
     if N2 is None:
         N2 = N
     COMMON_FSI = select_features_from_group_lasso_cv(HPARAMS, FSIS, THETAS, SCORES, MAXF = N2, THRESH = 1.0)
+    if COMMON_FSI is None or len(COMMON_FSI) <= 0: # no common important features are selected
+        return None, None, None 
     return X[:,COMMON_FSI], COMMON_FSI, None
 
 def aenet_cv_fs(X, y, X_names=None, N = 30, display = True, verbose = True):
