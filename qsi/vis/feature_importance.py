@@ -30,7 +30,7 @@ def plot_feature_importance(feature_importances, feature_names, title, \
     if title:
         plt.title(title + "\n" + 'importance marked by bar height')
     if feature_names is None:
-        feature_names = range(feature_importances.size)
+        feature_names = list(range(feature_importances.size))
     plt.bar(feature_names, feature_importances, alpha=.8) # , width=2
     if xtick_angle is None or \
         ( len(feature_names) > 100 and isinstance(feature_names[0], str) ): # to avoid crowdy strings

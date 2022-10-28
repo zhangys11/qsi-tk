@@ -89,7 +89,7 @@ def alasso_v2(X_scaled, y, LAMBDAS = np.logspace(-10, 0, 11), gamma = 1, \
     ridge = RidgeCV(cv = 5) # use ridge to get initial coef
     ridge.fit(X_scaled, y)
     print('alpha = ', ridge.alpha_)
-    print('coef = ', ridge.coef_)
+    # print('ridge coef = ', ridge.coef_)
 
     w = np.array(ridge.coef_)
     w = 1 / ( np.absolute(w)** gamma )
@@ -117,6 +117,8 @@ def alasso_v2(X_scaled, y, LAMBDAS = np.logspace(-10, 0, 11), gamma = 1, \
         test_errors.append(mse(X_test, Y_test, theta))
         theta_values.append(theta.value)
 
+    eps = 1e-9 # epsilon - non-zero coef cut threshold
+
     if display and len(lambd_values) > 1:
         
         # plot training curve
@@ -129,7 +131,6 @@ def alasso_v2(X_scaled, y, LAMBDAS = np.logspace(-10, 0, 11), gamma = 1, \
         plt.show()
 
         # plot non-zero coef curve
-        eps = 1e-9 # epsilon - cut threshold
         nz = []
 
         for coef in theta_values:

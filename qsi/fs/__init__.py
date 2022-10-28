@@ -51,7 +51,7 @@ def __fs__(X, fi, X_names = None, N = 30, display = True):
     and '3' meaning class 'C' make no sense.
     '''
 
-    if display:        
+    if display:
         plot_feature_importance(fi, X_names, 'feature-wise coefs/values', xtick_angle=0)
 
     idx = (np.argsort(fi)[-N:])[::-1]
@@ -129,7 +129,7 @@ def lasso_fs(X, y, X_names=None,  N = 30, display = True, verbose = True):
     if verbose:
         print('R2 = ', round(lasso.score(X,y), 3) )
         print("LASSO alpha = %.3g" %lasso.alpha_)
-        print('Non-zero feature coefficients:',N)
+        print('Non-zero feature coefficients:', np.count_nonzero(lasso.coef_))
    
     return __fs__(X, np.abs(lasso.coef_), X_names, N, display)
     
@@ -184,11 +184,13 @@ def alasso_fs(X, y, X_names=None, N = 30, LAMBDA = 0.1, flavor = 2, \
     else: # flavor 3
         coef_, R2 = alasso_v3(X, y, LAMBDA=LAMBDA)
 
-    NZ = np.count_nonzero(coef_)
+    eps = 0 # 1e-9 # epsilon - non-zero coef cut threshold
+    NZ = np.count_nonzero(coef_ > eps)
     
     if verbose:
         print('R2 = ', round(R2,3) ) # R2 - the coefficient of determination 
-        print('Non-zero feature coefficients:',NZ)
+        # print(coef_)
+        print('Non-zero feature coefficients (eps = %2g'%eps + '):', NZ)
     
     if N is None or N <=0 or N > NZ:
         N = NZ

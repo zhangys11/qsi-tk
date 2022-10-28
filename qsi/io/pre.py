@@ -43,7 +43,7 @@ def x_binning(X, X_names = None, target_dim = 0.1, flavor = 'max', display = Fal
 
     Parameters
     ----------
-    target_dim : if float, should range (0,1]. If integer, should not exceeds the original dim.
+    target_dim : float, range (0,1]. target_dim = 1 will return the original X.
     flavor : how do we condense each segment
         'max' - take the maximum. 
         'sum' / 'rect' / 'mean' - take the sum / integral / mean.
@@ -61,8 +61,9 @@ def x_binning(X, X_names = None, target_dim = 0.1, flavor = 'max', display = Fal
     n = X.shape[1]
     if target_dim < 1:
         target_dim = int(target_dim * n)
-    if target_dim > n:
+    elif target_dim >= 1:
         target_dim = n
+        return X, X_names
 
     NX = []
     NX_names = []     
@@ -78,7 +79,7 @@ def x_binning(X, X_names = None, target_dim = 0.1, flavor = 'max', display = Fal
         else: # sum / rect /mean
             NCol = a.sum(axis = 1)
         NX.append( NCol )
-        
+    
     NX = np.array(NX).T
 
     if display:
