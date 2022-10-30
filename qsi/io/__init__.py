@@ -26,7 +26,7 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt', ['S
 'vintage_spi': ('7345.csv',',', True,'7345 desc.txt', ["5Y","8Y","16Y","26Y"]),
 'vintage_c2': ('7344_C03.csv',',',True,'7344_C03 desc.txt',["5Y","26Y"]),
 'beimu': ('754a_C2S_Beimu.txt',',', True,'754a_C2S_Beimu desc.txt',["Sichuan","Zhejiang"]),
-'shihu_c2': ('754b_C2S_Shihu.txt',',',True,'754b_C2S_Shihu desc.txt',['Yunnan','Zhejiang']),
+'shihu_c2': ('754b_C2S_Shihu.csv',',',True,'754b_C2S_Shihu desc.txt',['Yunnan','Zhejiang']),
 # 'shihu': ('754b.csv',',',True,'754b desc.txt',['Yunnan','Wenzhou','Panan1','Panan2']),
 'huangqi_rm': ('7044X_RAMAN.csv',',', True,'7044X_RAMAN desc.txt',['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu']),
 'huangqi_uv': ('7143X_UV.csv',',',True,'7143X_UV desc.txt',['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu']),
