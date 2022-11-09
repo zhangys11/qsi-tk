@@ -24,7 +24,7 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False ,'7341_C1 desc.txt', ['S
 'yogurt': ('7346.csv',',', True,'7346 desc.txt', ["YL","GM","WQ","MN"]),
 'vintage': ('7344.txt','\t', False,'7344 desc.txt', ['8-year vintage']),
 'vintage_spi': ('7345.csv',',', True,'7345 desc.txt', ["5Y","8Y","16Y","26Y"]),
-'vintage_c2': ('7344_C03.csv',',',True,'7344_C03 desc.txt',["5Y","26Y"]),
+'vintage_526': ('7344_Y5Y26.csv',',',True,'7344_Y5Y26 desc.txt',["5Y","26Y"]),
 'beimu': ('754a_C2S_Beimu.txt',',', True,'754a_C2S_Beimu desc.txt',["Sichuan","Zhejiang"]),
 'shihu_c2': ('754b_C2S_Shihu.csv',',',True,'754b_C2S_Shihu desc.txt',['Yunnan','Zhejiang']),
 # 'shihu': ('754b.csv',',',True,'754b desc.txt',['Yunnan','Wenzhou','Panan1','Panan2']),

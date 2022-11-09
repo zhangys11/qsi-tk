@@ -15,8 +15,24 @@ label = 1: Sichuan (Southwest China),
 label = 2: Shanxi (Northwest China), 
 label = 3: Gansu (Northwest China).
 
+Data set summary:
+
+Y labels: ["内蒙黄芪","四川黄芪","山西黄芪","甘肃黄芪"]
+
 Among these regions, Inner Mongolia, Shanxi, and Gansu are traditional daodi regions.
+
+Instrument:
+The Raman spectrum of each sample was collected by a portable laser Raman spectrometer ProttezRaman-D3 (Enwave Optronics, USA). 
+The excitation wavelength of the laser was 785 nm and the spectral measurements were conducted with an exposure time of 5 s and a laser power of 450 mW. 
+The ultraviolet-visible absorption spectrum of each sample was recorded from a T6 New century ultraviolet-visible spectrometer (Purkinje General Instrument Company Limited, Beijing, China). 
+
+Sample preparation: 
+Radix astragali samples were added into a high speed multifunction grinder for processing for 5–10 min at 25000 rpm. 
+3 g of the obtained powder sample was added into 30 mL of ethanol solution, and then the mixture solution was stirred at 100C for 60 min under reflux condition. 
+Finally, the treated sample was cooled naturally and filtered.
+
 -----------------------------------
 If you use this dataset, reference this article: 
 [1] Spectroscopic Profiling-based Geographic Herb Identification by Neural Network with Random Weights [J]. Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy, 2022, doi: 10.1016/j.saa.2022.121348
+
 

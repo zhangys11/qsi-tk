@@ -7,7 +7,7 @@ setup(
     name="qsi-tk",
     
     # Version number:
-    version="0.3.2",
+    version="0.3.5",
     
     # Application author details:
     author="Yinsheng Zhang (Ph.D.)",
@@ -41,8 +41,7 @@ setup(
         "PyWavelets",
         "statsmodels",
         "pyNNRW",
-        "pyCLAMs",
-        "wCLAMs",
+        "cla",
         "pyDRMetrics",
         "wDRMetrics",
         "pyMFDR",

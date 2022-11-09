@@ -1,5 +1,4 @@
 build/
 dist/
-qsi-tk.egg-info/
+*.egg-info/
 *.pyc
-qsi_tk.egg-info/

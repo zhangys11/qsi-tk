@@ -445,15 +445,17 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N = 30, output = None, multitask = Fa
         f = FS_DICT[key]
         X_s, idx, fi = f(X, y, X_names, N = N, display = True)
 
-        ax = plotComponents2D(X_s[:,:2], y)
-        ax.set_title('Scatter Plot of Top-2 Selected Features')
-        plt.show()
+        if X_s is not None and X_s.shape[0] > 0 and X_s.shape[1] > 0:
 
-        X_s_dr = unsupervised_dimension_reductions(X_s, y, legends = labels)
+            ax = plotComponents2D(X_s[:,:2], y)
+            ax.set_title('Scatter Plot of Top-2 Selected Features')
+            plt.show()
 
-        clf = LogisticRegressionCV().fit(X_s, y)
-        print('Classification accurary with the selected features (LogisticRegressionCV) = ', \
-            round(clf.score(X_s, y), 3))
+            X_s_dr = unsupervised_dimension_reductions(X_s, y, legends = labels)
+
+            clf = LogisticRegressionCV().fit(X_s, y)
+            print('Classification accurary with the selected features (LogisticRegressionCV) = ', \
+                round(clf.score(X_s, y), 3))
 
         if output == key:
             FS_OUTPUT[key] = X_s
