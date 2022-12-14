@@ -422,6 +422,7 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N = 30, output = None, multitask = Fa
 
     X_names = np.array(X_names)
     FS_OUTPUT = {}
+    FS_IDX = {}
 
     for key in FS_DICT:
 
@@ -459,14 +460,16 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N = 30, output = None, multitask = Fa
 
         if output == key:
             FS_OUTPUT[key] = X_s
+            FS_IDX[key] = idx
         elif output == 'all':
             FS_OUTPUT[key] = X_s
+            FS_IDX[key] = idx
         else:
             pass
 
         display(HTML('<hr/>'))
 
-    return FS_OUTPUT
+    return FS_OUTPUT, FS_IDX
 
 ########### e-nose / e-tongue functions ###############
 
