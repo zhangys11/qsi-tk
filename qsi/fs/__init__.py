@@ -469,7 +469,18 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N = 30, output = None, multitask = Fa
 
         display(HTML('<hr/>'))
 
-    return FS_OUTPUT, FS_IDX
+    FS_COMMON_IDX = [] # common feature indices 
+
+    # if you want to exclude some fs algs
+    # del FS_IDX['group lasso']
+    del FS_IDX['adaptive elastic net'] # this alg differs from others
+
+    if len(FS_IDX) > 0:
+        FS_COMMON_IDX = list(FS_IDX.values())[0]        
+        for a in list(FS_IDX.values())[1:]:
+            FS_COMMON_IDX = np.intersect1d(FS_COMMON_IDX, a)
+
+    return FS_OUTPUT, FS_IDX, FS_COMMON_IDX
 
 ########### e-nose / e-tongue functions ###############
 
