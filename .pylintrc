@@ -1,0 +1,6 @@
+[BASIC]
+
+# Good variable names which should always be accepted, separated by a comma.
+good-names=a,b,c,d,e,f,g,h,i, j, k, l,m,n,p,q,r,s,t,u,v,w, x, y, z,\
+ A, M, N, P, Q, R, U, V, W, X, Y, Z, xs, Xs, Xr, xr, df, ax, XK, m1, m2, \
+  x1, x2, y1, y2, id, ds
