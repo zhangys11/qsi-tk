@@ -1,12 +1,11 @@
 import os
 import os.path
+import pickle
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib
-import os.path
-import pickle
 from sklearn.decomposition import PCA
 from sklearn.cross_decomposition import PLSRegression
 from . import pre
@@ -17,65 +16,78 @@ from ..vis import *
 DATA_FOLDER = os.path.dirname(os.path.dirname(
     os.path.realpath(__file__))) + "/data/"
 
-DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['Stage 4 (4-7 years) formula']),
-               's3_formula': ('B3.csv', ',', False, 'B3 desc.txt', ['Stage 3 (12~36 months) infant formula']),
-               's4_formula_c2': ('7341_C2.csv', ',', True, '7341_C2 desc.txt', ['Brand 1', 'Brand 2']),
-               's4_formula_c3': ('7341.csv', ',', True, '7341 desc.txt', ['Brand 1', 'Brand 2', 'Brand 3']),
-               'milk_tablet_candy': ('734b.csv', ',', False, '734b desc.txt', None),
-               'yogurt': ('7346.csv', ',', True, '7346 desc.txt', ["YL", "GM", "WQ", "MN"]),
-               'vintage': ('7344.txt', '\t', False, '7344 desc.txt', ['8-year vintage']),
-               'vintage_spi': ('7345.csv', ',', True, '7345 desc.txt', ["5Y", "8Y", "16Y", "26Y"]),
-               'vintage_526': ('7344_Y5Y26.csv', ',', True, '7344_Y5Y26 desc.txt', ["5Y", "26Y"]),
-               'beimu': ('754a_C2S_Beimu.txt', ',', True, '754a_C2S_Beimu desc.txt', ["Sichuan", "Zhejiang"]),
-               'shihu_c2': ('754b_C2S_Shihu.csv', ',', True, '754b_C2S_Shihu desc.txt', ['Yunnan', 'Zhejiang']),
+DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['Stage 4 (4-7 years) formula'],200),
+               's3_formula': ('B3.csv', ',', False, 'B3 desc.txt', ['Stage 3 (12~36 months) infant formula'],200),
+               's4_formula_c2': ('7341_C2.csv', ',', True, '7341_C2 desc.txt', ['Brand 1', 'Brand 2'], 1000),
+               's4_formula_c3': ('7341.csv', ',', True, '7341 desc.txt', ['Brand 1', 'Brand 2', 'Brand 3'], 1000),
+               'milk_tablet_candy': ('734b.csv', ',', False, '734b desc.txt', ['Compressed Milk Tablet Candy'], 200),
+               'yogurt': ('7346.csv', ',', True, '7346 desc.txt', ["YL", "GM", "WQ", "MN"], 200),
+               'vintage': ('7344.txt', '\t', False, '7344 desc.txt', ['8-year vintage'],200),
+               'vintage_spi': ('7345.csv', ',', True, '7345 desc.txt', ["5Y", "8Y", "16Y", "26Y"],200),
+               'vintage_526': ('7344_Y5Y26.csv', ',', True, '7344_Y5Y26 desc.txt', ["5Y", "26Y"], 2000),
+               'beimu': ('754a_C2S_Beimu.txt', ',', True, '754a_C2S_Beimu desc.txt', ["Sichuan", "Zhejiang"], 300),
+               'shihu_c2': ('754b_C2S_Shihu.csv', ',', True, '754b_C2S_Shihu desc.txt', ['Yunnan', 'Zhejiang'], 500),
                # 'shihu': ('754b.csv',',',True,'754b desc.txt',['Yunnan','Wenzhou','Panan1','Panan2']),
-               'huangqi_rm': ('7044X_RAMAN.csv', ',', True, '7044X_RAMAN desc.txt', ['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu']),
-               'huangqi_uv': ('7143X_UV.csv', ',', True, '7143X_UV desc.txt', ['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu']),
-               'huangqi_ims': ('704b_IMS.csv', ',', True, '704b_IMS desc.txt', ['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu']),
-               'cheese': ('Cheese_RAMAN.csv', ',', True, 'Cheese_RAMAN desc.txt', ['MK', 'SL', 'YL']),
-               'huangjing': ('7a43.csv', ',', True, '7a43 desc.txt', ['Wild', 'Cultivated']),
-               'huangjing2': ('7a47.csv', ',', True, '7a47 desc.txt', ['Red-Stem', 'Green-Stem']),
-               'chaihu_rm': ('7a41.csv', ',', True, '7a41 desc.txt', ['Wild', 'Cultivated', 'B. smithii Wolff', 'Gansu', 'Shanxi', 'vinegar Concocted', 'Terrestrosin D']),
-               'rice_cereal': ('7741_rice_cereal_rm.csv', ',', True, '7741_rice_cereal_rm desc.txt', ['LF', 'EB']),
-               'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv', ',', True, 'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt', ['inorganic', 'organic']),
-               'milkpowder_enose': ('7747.pkl', ',', True, '7747 desc.txt', ['cn', 'au']),
+               'huangqi_rm': ('7044X_RAMAN.csv', ',', True, '7044X_RAMAN desc.txt', ['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu'], 3000),
+               'huangqi_uv': ('7143X_UV.csv', ',', True, '7143X_UV desc.txt', ['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu'], 2),
+               'huangqi_ims': ('704b_IMS.csv', ',', True, '704b_IMS desc.txt', ['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu'], 5),
+               'cheese': ('Cheese_RAMAN.csv', ',', True, 'Cheese_RAMAN desc.txt', ['MK', 'SL', 'YL'], 200),
+               'huangjing': ('7a43.csv', ',', True, '7a43 desc.txt', ['Wild', 'Cultivated'], 3000),
+               'huangjing2': ('7a47.csv', ',', True, '7a47 desc.txt', ['Red-Stem', 'Green-Stem'], 3000),
+               'chaihu_rm': ('7a41.csv', ',', True, '7a41 desc.txt', ['Wild', 'Cultivated', 'B. smithii Wolff', 'Gansu', 'Shanxi', 'vinegar Concocted', 'Terrestrosin D'], 1500),
+               'rice_cereal': ('7741_rice_cereal_rm.csv', ',', True, '7741_rice_cereal_rm desc.txt', ['LF', 'EB'], 3000),
+               'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv', ',', True, 'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt', ['inorganic', 'organic'], 1000),
+               'milkpowder_enose': ('7747.pkl', ',', True, '7747 desc.txt', ['cn', 'au'], 200),
                # 'forsythia': ('7746.pkl',',',True,'7746 desc.txt', ["SX山西","HN河南","HB湖北","SHX陕西"]) # 该电子鼻数据未有效对齐
-               'milkpowder_etongue': ('7744.pkl', ',', True, '7744 desc.txt', ['cn', 'au']),
+               'milkpowder_etongue': ('7744.pkl', ',', True, '7744 desc.txt', ['cn', 'au'], 200),
                # 该电子鼻数据未有效对齐
-               'forsythia_etongue': ('7745.pkl', ',', True, '7745 desc.txt', ["SX山西", "HN河南", "HB湖北", "SHX陕西"]),
-               'yimi_rm': ('yimi_raman.csv', ',', False, 'yimi_raman desc.txt', ['coix seed']),
-               'hangbaiju_rm': ('hangbaiju_raman.csv', ',', False, 'hangbaiju_raman desc.txt', ['chrysanthemum morifolium']),
-               'salt': ('7545.csv', ',', True, '7545 desc.txt', ["well salt", "sea salt"]),
-               'chaihu_ms': ('7b43.csv', ',', True, '7b43 desc.txt', ["wild", "cultivated"])
+               'forsythia_etongue': ('7745.pkl', ',', True, '7745 desc.txt', ["SX山西", "HN河南", "HB湖北", "SHX陕西"], 200),
+               'yimi_rm': ('yimi_raman.csv', ',', False, 'yimi_raman desc.txt', ['coix seed'], 200),
+               'hangbaiju_rm': ('hangbaiju_raman.csv', ',', False, 'hangbaiju_raman desc.txt', ['chrysanthemum morifolium'], 200),
+               'salt': ('7545.csv', ',', True, '7545 desc.txt', ["well salt", "sea salt"], 200),
+               'chaihu_ms': ('7b43.csv', ',', True, '7b43 desc.txt', ["wild", "cultivated"], 200)
                }
 
 
 def get_available_datasets():
+    '''
+    Returns available dataset names.    
+    '''
     return list(DATASET_MAP.keys())
 
 
 def id_to_path(id):
+    '''
+    Returns dataset metadata.
+    '''
     return DATASET_MAP[id]
 
 
-def load_dataset(id, SD=1, shift=200, x_range=None, y_subset=None, display=True):
+def load_dataset(id, SD=1, shift=None, x_range=None, y_subset=None, display=True):
     '''
     Load a built-in dataset.
+
+    Parameters
+    ----------
+    x_range : e.g., list(range(0,500))
+    y_subset : e.g., [0,3]
 
     Examples
     --------
     X, y, X_names, _, labels = io.load_dataset('milk_tablet_candy')
     '''
 
-    path, delimiter, has_y, path_desc, labels = id_to_path(id)
+    path, delimiter, has_y, path_desc, labels, default_shift = id_to_path(id)
     print('load dataset from', path)
 
     if display:
-        X, y, X_names = peek_dataset(
+        if shift is None:
+            shift = default_shift
+        X, y, X_names, labels = peek_dataset(
             DATA_FOLDER + path, delimiter, has_y, labels, SD, shift, x_range, y_subset)
     else:
-        X, y, X_names = open_dataset(
-            DATA_FOLDER + path, delimiter, has_y, x_range, y_subset)
+        X, y, X_names, labels = open_dataset(
+            DATA_FOLDER + path, delimiter, has_y, labels, x_range, y_subset)
 
     if os.path.exists(DATA_FOLDER + path_desc):
         f = open(DATA_FOLDER + path_desc, "r", encoding='UTF-8')
@@ -86,11 +98,11 @@ def load_dataset(id, SD=1, shift=200, x_range=None, y_subset=None, display=True)
 
     else:
         desc = ''
-
+    
     return X, y, X_names, desc, labels
 
 
-def open_dataset(path, delimiter=',', has_y=True, x_range=None, y_subset=None):
+def open_dataset(path, delimiter=',', has_y=True, labels = None, x_range=None, y_subset=None):
     '''
     Parameters
     ----------
@@ -172,8 +184,11 @@ def open_dataset(path, delimiter=',', has_y=True, x_range=None, y_subset=None):
     if cnt_nan > 0:
         print('Found' + str(cnt_nan) +
               'NaN elements in X. You may need to purge NaN.')
+    
+    if labels is not None and labels != [] and y_subset is not None:
+        labels = list(np.array(labels)[y_subset])
 
-    return X, y, X_names
+    return X, y, X_names, labels
 
 
 def scatter_plot(X, y, labels=None, tags=None):
@@ -328,8 +343,8 @@ def draw_class_average(X, y, X_names, labels=None, SD=1, shift=200):
 
 def peek_dataset(path,  delimiter=',', has_y=True, labels=None, SD=1, shift=200, x_range=None, y_subset=None):
 
-    X, y, X_names = open_dataset(
-        path, delimiter=delimiter, has_y=has_y, x_range=x_range, y_subset=y_subset)
+    X, y, X_names, labels = open_dataset(
+        path, delimiter=delimiter, has_y=has_y, labels=labels, x_range=x_range, y_subset=y_subset)
 
     if len(X.shape) == 2:
 
@@ -373,7 +388,7 @@ def peek_dataset(path,  delimiter=',', has_y=True, labels=None, SD=1, shift=200,
 
         matplotlib.rcParams.update({'font.size': 10})
 
-    return X, y, X_names
+    return X, y, X_names, labels
 
 
 '''
