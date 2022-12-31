@@ -9,7 +9,6 @@ import matplotlib
 from sklearn.decomposition import PCA
 from sklearn.cross_decomposition import PLSRegression
 from . import pre
-from .aug import upsample
 from ..dr import lda
 
 from ..vis import *
@@ -389,15 +388,6 @@ def peek_dataset(path,  delimiter=',', has_y=True, labels=None, SD=1, shift=200,
         matplotlib.rcParams.update({'font.size': 10})
 
     return X, y, X_names, labels
-
-
-'''
-def upsample(target_path, X, y, X_names, method = 'SMOTE', folds = 3, d = 0.5, 
-epochs = 10, batch_size = 100, cuda = True, display = False, verbose = True):
-    
-    return upsample(target_path, X, y, X_names, method, folds, d, 
-epochs, batch_size, cuda, display, verbose)
-'''
 
 
 def save_dataset(targe_path, X, y, X_names):

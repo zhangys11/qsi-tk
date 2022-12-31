@@ -17,6 +17,9 @@ epochs = 10, batch_size = 100, cuda = True, display = False, verbose = True):
     epochs, batch_size, cuda : ctgan params
     '''
 
+    if folds == 0:
+        return X, y
+
     if method == 'SMOTE':
         Xn, yn = SMOTE.expand_dataset(X, y, X_names, target_path, d, folds)
     elif method == 'ctGAN':
