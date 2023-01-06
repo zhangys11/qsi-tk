@@ -4,19 +4,17 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.cross_decomposition import PLSRegression
-from sklearn.linear_model import LassoCV, ElasticNetCV, MultiTaskLassoCV, MultiTaskElasticNetCV
+from sklearn.linear_model import LogisticRegressionCV, LassoCV, ElasticNetCV, MultiTaskLassoCV, MultiTaskElasticNetCV
 from sklearn.feature_selection import chi2, f_classif, mutual_info_classif
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from scipy.fftpack import fft, dct
-from sklearn.linear_model import LogisticRegressionCV
+from IPython.display import HTML, display
 
-from ..vis import plotComponents2D, plot_feature_importance, unsupervised_dimension_reductions
+from ..vis import plotComponents2D, plotComponents3D, plot_feature_importance, unsupervised_dimension_reductions
 from .alasso import *
 from .glasso import *
 from .aenet import *
 from .fsse import *
-
-from IPython.display import HTML, display
-
 
 def __fs__(X, fi, X_names=None, N=30, display=True):
     '''
@@ -620,21 +618,50 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1, conv_mask=[1,
 
                 ################ PCA ####################
 
-                pca = PCA(n_components=2, scale=False)
-                F_2d = pls.fit_transform(FS)
+                pca = PCA(n_components=2)
+                f_2d = pca.fit_transform(FS)
 
-                plotComponents2D(F_2d, legends=labels)
+                plotComponents2D(f_2d, y, legends=labels)
                 plt.title(name + ' - PCA')
+
+            elif len(set(y)) > 2:
+
+                ################ LDA ####################
+
+                lda = LinearDiscriminantAnalysis(n_components=2)
+                f_2d = lda.fit(FS, y).transform(FS)
+
+                # plt.figure(figsize = (20,15))
+                plotComponents2D(f_2d, y, legends=labels)
+                title = name + ' - LDA'
+
+                # Returns the coefficient of determination R^2 of the prediction.
+                title = title + '\nACC = ' + str(np.round(lda.score(FS, y), 3))
+
+                plt.title(title)
+                plt.show()
+
+                if len(set(y)) > 3:
+                    lda = LinearDiscriminantAnalysis(n_components=3)
+                    f_3d = lda.fit(FS, y).transform(FS)
+
+                    plotComponents3D(f_3d, y, legends=labels)
+                    title = name + ' - LDA'
+
+                    # Returns the coefficient of determination R^2 of the prediction.
+                    title = title + '\nACC = ' + str(np.round(lda.score(FS, y), 3))
+
+                    plt.title(title)
 
             else:
 
                 ################ PLS ####################
 
                 pls = PLSRegression(n_components=2, scale=False)
-                F_2d = pls.fit(FS, y).transform(FS)
+                f_2d = pls.fit(FS, y).transform(FS)
 
                 # plt.figure(figsize = (20,15))
-                plotComponents2D(F_2d, y, legends=labels)
+                plotComponents2D(f_2d, y, legends=labels)
                 title = name + ' - PLS'
 
                 # Returns the coefficient of determination R^2 of the prediction.
@@ -645,4 +672,5 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1, conv_mask=[1,
             plt.show()
 
         if y is not None:
-            print('About the PLS R2 core: \nThe score is the coefficient of determination of the prediction, defined as 1 - u/v, where u is the residual sum of squares ((y_true - y_pred)** 2).sum() and v is the total sum of squares ((y_true - y_true.mean()) ** 2).sum(). The best possible score is 1.0 and it can be negative (because the model can be arbitrarily worse). A constant model that always predicts the expected value of y, disregarding the input features, would get a score of 0.0.')
+            print('The LDA ACC: \nthe mean accuracy on the given test data and labels')
+            print('The PLS R2 score: \nThe score is the coefficient of determination of the prediction, defined as 1 - u/v, where u is the residual sum of squares ((y_true - y_pred)** 2).sum() and v is the total sum of squares ((y_true - y_true.mean()) ** 2).sum(). The best possible score is 1.0 and it can be negative (because the model can be arbitrarily worse). A constant model that always predicts the expected value of y, disregarding the input features, would get a score of 0.0.')

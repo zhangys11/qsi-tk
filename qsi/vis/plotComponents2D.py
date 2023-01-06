@@ -8,7 +8,7 @@ def plotComponents2D(X, y, labels = None, use_markers = False, ax=None, legends 
         return
     
     # Gray shades can be given as a string encoding a float in the 0-1 range
-    colors = ['0.9', '0.1', 'red', 'blue', 'black','orange','green','cyan','purple','gray']
+    colors = ['0.9', '0.1', 'red', 'blue', 'green','black','orange','cyan','purple','gray']
     markers = ['o', 's', '^', 'D', 'H', 'o', 's', '^', 'D', 'H', 'o', 's', '^', 'D', 'H', 'o', 's', '^', 'D', 'H']
 
     if (ax is None):
