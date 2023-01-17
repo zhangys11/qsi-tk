@@ -8,13 +8,14 @@ from sklearn.linear_model import LogisticRegressionCV, LassoCV, ElasticNetCV, Mu
 from sklearn.feature_selection import chi2, f_classif, mutual_info_classif
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from scipy.fftpack import fft, dct
-from IPython.display import HTML, display
+import IPython.display
 
 from ..vis import plotComponents2D, plotComponents3D, plot_feature_importance, unsupervised_dimension_reductions
 from .alasso import *
 from .glasso import *
 from .aenet import *
 from .fsse import *
+
 
 def __fs__(X, fi, X_names=None, N=30, display=True):
     '''
@@ -443,7 +444,7 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
     FS_OUTPUT = {}
     FS_IDX = {}
 
-    for key in FS_DICT:
+    for key,_ in FS_DICT.items():
 
         if multitask and 'multi-task' in key:
             pass
@@ -453,15 +454,15 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
             continue  # otherwise, skip this alg
 
         if key == 'pearsion-r':
-            display(HTML('<h2>Univariate feature selection</h2><br/><p>Univariate feature selection examines each feature individually to determine the strength of the relationship of the feature with the response variable.</p><br/>'))
+            IPython.display.display(IPython.display.HTML('<h2>Univariate feature selection</h2><br/><p>Univariate feature selection examines each feature individually to determine the strength of the relationship of the feature with the response variable.</p><br/>'))
         elif key == 'lasso':
-            display(HTML(
+            IPython.display.display(IPython.display.HTML(
                 '<h4>Generally speaking, univariate methods dont generate sparsity and have weak FS effect. </h4><hr/>'))
-            display(HTML('<h2>Model based ranking</h2><br/><p>Use a machine learning method to build a discriminative model for the response variable using each individual feature, and measure the performance of each model.</p><br/>'))
+            IPython.display.display(IPython.display.HTML('<h2>Model based ranking</h2><br/><p>Use a machine learning method to build a discriminative model for the response variable using each individual feature, and measure the performance of each model.</p><br/>'))
 
-        display(HTML('<h3>' + key + '</h3><br/>'))
+        IPython.display.display(IPython.display.HTML('<h3>' + key + '</h3><br/>'))
         if key in FS_DESC_DICT:
-            display(HTML('<p>' + FS_DESC_DICT[key] + '</p><br/>'))
+            IPython.display.display(IPython.display.HTML('<p>' + FS_DESC_DICT[key] + '</p><br/>'))
 
         f = FS_DICT[key]
         X_s, idx, fi = f(X, y, X_names, N=N, display=True)
@@ -472,7 +473,7 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
             ax.set_title('Scatter Plot of Top-2 Selected Features')
             plt.show()
 
-            X_s_dr = unsupervised_dimension_reductions(X_s, y, legends=labels)
+            _ = unsupervised_dimension_reductions(X_s, y, legends=labels)
 
             clf = LogisticRegressionCV().fit(X_s, y)
             print('Classification accurary with the selected features (LogisticRegressionCV) = ',
@@ -487,7 +488,7 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
         else:
             pass
 
-        display(HTML('<hr/>'))
+        IPython.display.display(IPython.display.HTML('<hr/>'))
 
     FS_COMMON_IDX = []  # common feature indices
 
@@ -505,7 +506,12 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
 ########### e-nose / e-tongue functions ###############
 
 
-def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1, conv_mask=[1, -2, 1], display=True, y=None, labels=None):
+def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1,
+                       conv_masks=[[-1, 1], [1, -2, 1], [-1, 3, -3, 1], \
+                        [1, -4, 6, -4,1], [-1, 5, -10, 10, -5, 1], \
+                        [1, -6, 15, -20, 15, -6, 1],  [-1, 7, -21, 35, -35, 21, -7, 1], \
+                            [1, -8, 28, -56, 70, -56, 28, -8, 1]],
+                       display=True, y=None, labels=None):
     '''
     Multi-channel time series data feature selection. 
     Suitable for e-nose and e-tongue signals.
@@ -522,10 +528,12 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1, conv_mask=[1,
         变换域中的低频特征，如FFT、DCT。考虑前5%的低频组分。
         一维卷积核（sliding window, 1d conv kernel, e.g., Laplace mask)
 
+    Parameters
+    ----------
     X : input data. Should have shape (m,ch,n)
     fft_percentage : default 0.05, means to keep the top 5% FFT components
     dct_percentage : default 0.1, means to keep the top 10% DCT components.
-    conv_mask : convolution mask. default is 1D-laplacian mask [1,-2,1]
+    conv_masks : convolution masks. default is k-rank 1D-difference operators: [-1,1], [1,-2,1], etc.
 
     y, labels : only used in the visualization part. If you don't need visualizaiton, just pass None or ignore.
 
@@ -536,14 +544,14 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1, conv_mask=[1,
     FS1 = []
     FS2 = []
     FS3 = []
-    FS4 = []
+    FS4 = [[]]*len(conv_masks)
 
     for x in X:
 
         fs1 = []
         fs2 = []
         fs3 = []
-        fs4 = []
+        fs4s = [[]]*len(conv_masks)
         LV.append(x.flatten().tolist())
 
         for xx in x:
@@ -583,30 +591,40 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1, conv_mask=[1,
             dct_arr = dct(ch)[:round(L * dct_percentage)]
             fs3 = fs3 + dct_arr.tolist()
 
-            ###### Feature Set 4 #######
+            ###### Feature Sets 4 #######
+            for idx, conv_mask in enumerate( conv_masks ):
+                conved = np.convolve(ch, conv_mask, 'valid')
+                # plt.plot(laplace) # not sparse at all
+                # plt.show()
+                fs4s[idx] = fs4s[idx] + conved.tolist()
 
-            conved = np.convolve(ch, conv_mask, 'valid')
-            # plt.plot(laplace) # not sparse at all
-            # plt.show()
-            fs4 = fs4 + conved.tolist()
+            # print(np.array(fs1).shape, np.array(fs2).shape, np.array(fs3).shape, np.array(fs4s[0]).shape, np.array(fs4s[1]).shape)
 
         FS1.append(fs1)
         FS2.append(fs2)
         FS3.append(fs3)
-        FS4.append(fs4)
-
+        for idx, fs4 in enumerate(fs4s):
+            FS4[idx] = FS4[idx] + [fs4]
+        
+    # for idx, fs4 in enumerate(FS4):
+    #     print(np.array(fs4).shape)
+    
     LV = np.array(LV)
 
     FS_names = ['Concatenated Long Vector', 'Basic Descriptive Features',
                 'FFT top-n Low-Frequency Components',
-                'DCT top-n Low-Frequency Components',
-                '1D Convolution Kernel']
+                'DCT top-n Low-Frequency Components'] + \
+                    list('Convolution Kernel ' + str(i) for i in conv_masks)
+
+    # print(FS_names)
 
     # return FS_names, [LV, FS1, FS2, FS3, FS4]
 
     if display:
 
-        for name, FS in zip(FS_names, [LV, FS1, FS2, FS3, FS4]):
+        for name, FS in zip(FS_names, [LV, FS1, FS2, FS3] + FS4):
+
+            # print(name, np.array(FS).shape)
 
             ################ Feature Scaling ###############
 
@@ -649,7 +667,8 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1, conv_mask=[1,
                     title = name + ' - LDA'
 
                     # Returns the coefficient of determination R^2 of the prediction.
-                    title = title + '\nACC = ' + str(np.round(lda.score(FS, y), 3))
+                    title = title + '\nACC = ' + \
+                        str(np.round(lda.score(FS, y), 3))
 
                     plt.title(title)
 

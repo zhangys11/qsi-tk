@@ -44,7 +44,8 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'yimi_rm': ('yimi_raman.csv', ',', False, 'yimi_raman desc.txt', ['coix seed'], 200),
                'hangbaiju_rm': ('hangbaiju_raman.csv', ',', False, 'hangbaiju_raman desc.txt', ['chrysanthemum morifolium'], 200),
                'salt': ('7545.csv', ',', True, '7545 desc.txt', ["well salt", "sea salt"], 200),
-               'chaihu_ms': ('7b43.csv', ',', True, '7b43 desc.txt', ["wild", "cultivated"], 200)
+               'chaihu_ms': ('7b43.csv', ',', True, '7b43 desc.txt', ["wild", "cultivated"], 200),
+               'mouse_omics': ('metabolomics.txt', '\t', True, 'metabolomics desc.txt', ["control", "experiment"], 50000000)             
                }
 
 
@@ -112,7 +113,19 @@ def open_dataset(path, delimiter=',', has_y=True, labels = None, x_range=None, y
 
     ext = os.path.splitext(path)[1]
 
-    if ext == '.pkl':
+    # special treatment for specific datasets
+    if 'metabolomics.txt' in path:
+        data = pd.read_csv(path, delimiter = '\t') # ,header=None
+        X_names_mol = data.iloc[:5022,4].values.tolist() # molecules
+        X = data.iloc[:5022,19:].T.values
+        y = np.array([0]*int(len(X)/2) + [1]*int(len(X)/2) )
+        X_names = list(map(float, data.iloc[:5022,1].values)) # m/z
+
+        idx = np.argsort(X_names) # re-order by m/z
+        X_names = np.array(X_names)[idx]
+        X = X[:,idx]  # re-arrange columns to match X_names
+
+    elif ext == '.pkl':
 
         with open(path, 'rb') as f:
 
@@ -239,7 +252,7 @@ def draw_average(X, X_names, SD=1):
 
     plt.legend()
 
-    plt.title(u'Averaged Spectrum')
+    plt.title('Averaged Spectrum')
     # plt.xlabel(r'Wavenumber $(cm^{-1})$')
     # plt.ylabel('Raman signal')
     plt.yticks([])

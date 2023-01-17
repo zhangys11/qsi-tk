@@ -1,0 +1,8 @@
+Mouse kidney-eye metabolomics dataset | 小鼠肾脏代谢组学
+
+WT-1 ~ 8 为control group, OIR-1 ~ 8为experiment group. Independent samples.
+
+-----------------------------------
+If you use this dataset, reference these articles: 
+[1] Comparative Analysis Reveals Novel Changes in Plasma Metabolites and Metabolomic Networks of Infants With Retinopathy of Prematurity [J]. IOVS, SCI, 2022, 63(28), doi: 110.1167/iovs.63.1.28. 
+[2] Kidney-eye metabolomics in a mouse mode of oxygen-induced retinopathy correlates with those in retinopathy of prematurity, Nature Communications, 2023, (reference number: NCOMMS-23-00213, Under Review)
