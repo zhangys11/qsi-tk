@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt
 
 def raman_prior():
@@ -6,7 +5,7 @@ def raman_prior():
     Return Raman prior knowledge, i.e., what wavenumber ranges correspond to what functional groups (chemical bonds).
     TODO: This function is now obsolete. Need update.
     '''
-
+    
     d = {}
 
     d['alkane_1'] = list(range(1295, 1305 + 1))
@@ -49,3 +48,64 @@ def plot_raman_prior():
     plt.yticks([])
     plt.xticks(range(500, 3001, 500))
     plt.show()
+
+
+class RamanPeak:
+
+    def __init__(self,chemical='',vibration='',peak_start=0,peak_end=0,reference='',comment=''):
+        '''
+        Parameters
+        ----------
+        chemical : Chemical name.
+        vibration : Function groups or chemical bond and their vibration modes.
+        peak_start : Start of the peak.
+        peak_end : End of the peak.
+        reference : URL or DOI.
+        comment : Comment.
+        '''
+        self.chemical = chemical
+        self.vibration = vibration 
+        self.peak_start = peak_start
+        self.peak_end = peak_end
+        self.reference = reference
+        self.comment = comment
+
+    def __str__(self):
+        return f'{self.chemical} {self.vibration} {self.peak_start} {self.peak_end} {self.reference} {self.comment}'
+    
+    def __repr__(self):
+        return f'{self.chemical} {self.vibration} {self.peak_start} {self.peak_end} {self.reference} {self.comment}'    
+    
+    def is_same_group(self, other):
+        '''
+        Return True if two Raman peaks are in the same group.
+        '''
+        return self.chemical == other.chemical and self.vibration == other.vibration 
+    
+    def __html__(self):
+        return '<tr><td>' + self.chemical + '</td><td>' + self.vibration + '</td><td>' + str(self.peak_start) + '</td><td>' + str(self.peak_end) + '</td><td>' + self.reference + '</td><td>' + self.comment + '</td></tr>'
+    
+
+def get_raman_peak_list():
+    '''
+    Load the excel file and return a list of Raman peak objects.
+    '''
+
+    raman_peak_list = []
+
+    # ...
+    return raman_peak_list
+
+def save_raman_peak_list(raman_peak_list, filepath):
+    '''
+    Save the list of Raman peak objects to a file.
+    '''
+
+    json.dupm(raman_peak_list, filepath)
+
+def load_raman_peak_list(filepath):
+    '''
+    Load the list of Raman peak objects from a file.
+    '''
+
+    return json.load(filepath)
