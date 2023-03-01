@@ -4,13 +4,22 @@ import numpy as np
 
 
 def createOneRandomsample(X, l=[], d=0.5):
-    m = len(X)
-    n = X.shape[1]
+    '''
+    Create a random sample from two reference data points.
 
-    if(m < 2):
+    Parameters
+    ----------
+    X : dataset.
+    l : two ref data point indices. if None, will select two random indices.
+    d : the max distance from the center of the two ref points. default is 0.5, which means the range of [x1, x2].
+    '''
+
+    m = len(X)
+    
+    if m < 2:
         return None
 
-    if (len(l) == 0):
+    if len(l) == 0:
         l = np.random.choice(m, 2, replace=False)
 
     # print(l[0], l[1])
@@ -22,20 +31,28 @@ def createOneRandomsample(X, l=[], d=0.5):
 
     k = random.random() * 2 * d - d  # random.random(), [0,1) -> [-1, 1)
 
-    s = (x1+x2)/2 + np.multiply(k, (x2-x1))  # element-wise multiply
+    s = (x1 + x2)/2 + np.multiply(k, (x2 - x1))  # element-wise multiply
 
     return s
 
 
-def expand_dataset(X, y, names, savepath, d=0.5, NX=3):
+def expand_dataset(X, y, names, savepath, d = 0.5, NX = 3):
+    '''
+    Parameters
+    ----------
+    d : the max distance from the center of the two ref points. 
+        default is 0.5, which means the range of [x1, x2].
+        defines the variance / fluctuation of generated points.
+    NX : how many times to expand the dataset.
+    '''
 
     # use SMOTE to upsample
     labels = set(y)
 
     for label in labels:
         # the iteration size doesn't change once set
-        for i in range(len(y[y == label]) * NX):
-            y_grp = y[y == label]  # the dataset is updated in each iteration.
+        for _ in range(len(y[y == label]) * NX):
+            # y_grp = y[y == label]  # the dataset is updated in each iteration.
             X_grp = X[y == label]
 
             X_blend = X_grp

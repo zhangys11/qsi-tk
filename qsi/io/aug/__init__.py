@@ -1,8 +1,9 @@
 # data augmentation
-from . import SMOTE
+
 from sklearn.decomposition import PCA
-from ...vis import plotComponents2D
 import matplotlib.pyplot as plt
+from ...vis import plotComponents2D
+from . import SMOTE
 
 def upsample(target_path, X, y, X_names, method = 'SMOTE', folds = 3, d = 0.5, 
 epochs = 10, batch_size = 100, cuda = True, display = False, verbose = True):

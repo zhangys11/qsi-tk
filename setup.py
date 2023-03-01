@@ -13,7 +13,7 @@ setup(
     author_email="oo@zju.edu.cn",
 
     # Packages
-    packages=["qsi", "qsi.fs", "qsi.dr", "qsi.cla",
+    packages=["qsi", "qsi.fs", "qsi.fs.glasso", "qsi.dr", "qsi.cla",
               "qsi.vis", "qsi.io", "qsi.data", "qsi.io.aug"],
 
     # package_dir={'': 'qsi'},
@@ -38,8 +38,10 @@ setup(
         "scikit-learn",
         "matplotlib",
         "numpy",
+        "pandas",
         "PyWavelets",
         "statsmodels",
+        "h5py",
         "pyNNRW",
         "cla",
         "pyDRMetrics",
