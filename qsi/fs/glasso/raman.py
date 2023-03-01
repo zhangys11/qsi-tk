@@ -5,7 +5,7 @@ def raman_prior():
     Return Raman prior knowledge, i.e., what wavenumber ranges correspond to what functional groups (chemical bonds).
     TODO: This function is now obsolete. Need update.
     '''
-    
+
     d = {}
 
     d['alkane_1'] = list(range(1295, 1305 + 1))
@@ -86,16 +86,6 @@ class RamanPeak:
         return '<tr><td>' + self.chemical + '</td><td>' + self.vibration + '</td><td>' + str(self.peak_start) + '</td><td>' + str(self.peak_end) + '</td><td>' + self.reference + '</td><td>' + self.comment + '</td></tr>'
     
 
-def get_raman_peak_list():
-    '''
-    Load the excel file and return a list of Raman peak objects.
-    '''
-
-    raman_peak_list = []
-
-    # ...
-    return raman_peak_list
-
 def save_raman_peak_list(raman_peak_list, filepath):
     '''
     Save the list of Raman peak objects to a file.
@@ -109,3 +99,26 @@ def load_raman_peak_list(filepath):
     '''
 
     return json.load(filepath)
+
+def get_raman_peak_list_from_excel(filepath):
+    '''
+    Load the excel file and return a list of Raman peak objects.
+    '''
+
+    raman_peak_list = []
+
+    # ...
+    return raman_peak_list
+
+def generate_html_table(raman_peak_list):
+    '''
+    Generate HTML table from the list of Raman peak objects.
+    '''
+
+    html = '<table border="1">'
+    html += '<tr><th>Chemical</th><th>Vibration</th><th>Peak Start</th><th>Peak End</th><th>Reference</th><th>Comment</th></tr>'
+    for raman_peak in raman_peak_list:
+        html += raman_peak.__html__()
+    html += '</table>'
+
+    return html
