@@ -72,8 +72,7 @@ class RamanPeak:
         self.comment = comment
     '''
 
-    def __init__(self, dic):
-
+    def __init__(self, *args):
         '''
         Parameters
         ----------
@@ -84,13 +83,25 @@ class RamanPeak:
         reference : URL or DOI.
         comment : Comment.
         '''
-                
-        self.chemical = dic['chemical']
-        self.vibration = dic['vibration'] 
-        self.peak_start = dic['peak_start']
-        self.peak_end = dic['peak_end']
-        self.reference = dic['reference']
-        self.comment = dic['comment']
+        
+        # if args are more than 1 sum of args
+        if len(args) > 1:
+            self.chemical = args[0]
+            self.vibration = args[1]
+            self.peak_start = args[2]
+            self.peak_end = args[3]
+            self.reference = args[4]
+            self.comment = args[5]
+
+        # if arg is an integer square the arg
+        elif isinstance(args[0], dict):
+            dic = args[0]
+            self.chemical = dic['chemical']
+            self.vibration = dic['vibration'] 
+            self.peak_start = dic['peak_start']
+            self.peak_end = dic['peak_end']
+            self.reference = dic['reference']
+            self.comment = dic['comment']
 
     def __str__(self):
         return f'{self.chemical} {self.vibration} {self.peak_start} {self.peak_end} {self.reference} {self.comment}'
@@ -98,6 +109,12 @@ class RamanPeak:
     def __repr__(self):
         return f'{self.chemical} {self.vibration} {self.peak_start} {self.peak_end} {self.reference} {self.comment}'    
     
+    def __enter__(self):
+        pass
+    
+    def __exit__(self, exc_type, exc_value, traceback):
+        pass
+
     def is_same_group(self, other):
         '''
         Return True if two Raman peaks are in the same group.
@@ -118,7 +135,7 @@ def save_raman_peak_list(raman_peak_list, filepath):
         raman_peak_list = get_raman_peak_list_from_excel()
         save_raman_peak_list(save_raman_peak_list)
     '''
-    with open (filepath, "w") as f:
+    with open(filepath, "w", encoding="utf-8") as f:
         json.dump(raman_peak_list, f, indent=4)
 
 
@@ -130,7 +147,7 @@ def load_raman_peak_list(json_file = None):
     if json_file is None:
         json_file = os.path.realpath(__file__).replace('.py', '.json')
 
-    with open (json_file) as f:
+    with open(json_file, encoding="utf-8") as f:
         raman_peak_list = json.load(f)
 
     return [RamanPeak(dic) for dic in raman_peak_list]
