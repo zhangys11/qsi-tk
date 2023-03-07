@@ -1,0 +1,1562 @@
+[
+    {
+        "chemical": "Alkane",
+        "vibration": "CH2 in-phase twist",
+        "peak_start": 1295.0,
+        "peak_end": 1305.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Alkane",
+        "vibration": "C-C skeletal stretch(-alkane)",
+        "peak_start": 1040.0,
+        "peak_end": 1100.0,
+        "reference": "\u65e0",
+        "comment": "(the first peak)"
+    },
+    {
+        "chemical": "Alkane",
+        "vibration": "C-C skeletal stretch(-alkane)",
+        "peak_start": 800.0,
+        "peak_end": 900.0,
+        "reference": "\u65e0",
+        "comment": "(the second peak)"
+    },
+    {
+        "chemical": "Branched alkane",
+        "vibration": "C-C skeletal stretch",
+        "peak_start": 1165.0,
+        "peak_end": 1175.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Branched alkane",
+        "vibration": "C-C skeletal stretch",
+        "peak_start": 1140.0,
+        "peak_end": 1170.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Branched alkane",
+        "vibration": "C-C skeletal stretch",
+        "peak_start": 1040.0,
+        "peak_end": 1060.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Branched alkane",
+        "vibration": "C-C skeletal stretch",
+        "peak_start": 900.0,
+        "peak_end": 950.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Haloalkane",
+        "vibration": "C-Cl stretch",
+        "peak_start": 740.0,
+        "peak_end": 760.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Haloalkane",
+        "vibration": "C-Cl stretch",
+        "peak_start": 655.0,
+        "peak_end": 675.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Haloalkane",
+        "vibration": "C-Cl stretch",
+        "peak_start": 630.0,
+        "peak_end": 635.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Haloalkane",
+        "vibration": "C-Cl stretch",
+        "peak_start": 605.0,
+        "peak_end": 615.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Alkene",
+        "vibration": "Monoalkyl C=C stretch",
+        "peak_start": 1638.0,
+        "peak_end": 1650.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Alkyne",
+        "vibration": "Disubstituted C\u2261C stretch",
+        "peak_start": 2230.0,
+        "peak_end": 2237.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Toluene",
+        "vibration": "Monosubstituted aromatic ring breathing",
+        "peak_start": 990.0,
+        "peak_end": 1010.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Alcohol",
+        "vibration": "In-phase CCO stretch",
+        "peak_start": 800.0,
+        "peak_end": 900.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Aldehyde",
+        "vibration": "Alkyl aldehyde C=O stretch",
+        "peak_start": 1725.0,
+        "peak_end": 1740.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Ketone ",
+        "vibration": "Alkyl ketone C=O stretch",
+        "peak_start": 1712.0,
+        "peak_end": 1720.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Ether",
+        "vibration": "Symmetrical COC stretch",
+        "peak_start": 820.0,
+        "peak_end": 890.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Carboxylic acid",
+        "vibration": "Dimer C=O stretch",
+        "peak_start": 634.0,
+        "peak_end": 644.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Ester",
+        "vibration": "O-C=O in-plane deformation (acetate ester)",
+        "peak_start": 634.0,
+        "peak_end": 644.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Amine",
+        "vibration": "Trisubstituted amine C-N stretch",
+        "peak_start": 1000.0,
+        "peak_end": 1250.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Amine",
+        "vibration": "Trisubstituted amine C-N stretch",
+        "peak_start": 740.0,
+        "peak_end": 833.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Amide",
+        "vibration": "Tertiary amide C-N stretch",
+        "peak_start": 700.0,
+        "peak_end": 750.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Nitrile",
+        "vibration": "C\u2261N stretch",
+        "peak_start": 2230.0,
+        "peak_end": 2250.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "PHospHolipid Headgroup",
+        "vibration": "Inositol residue(846)",
+        "peak_start": 845.0,
+        "peak_end": 895.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "PHospHolipid Headgroup",
+        "vibration": "PHospHatidiC aCid(860)",
+        "peak_start": 845.0,
+        "peak_end": 895.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "PHospHolipid Headgroup",
+        "vibration": "CHoline(875)",
+        "peak_start": 845.0,
+        "peak_end": 895.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "Carotenoids",
+        "vibration": "\u201cBreatHing\u201d mode of ring Compounds",
+        "peak_start": 1006.0,
+        "peak_end": 1006.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "Fatty aCid",
+        "vibration": "v(C-C) stretCHing SymmetriC pHospHoryl StretCHing gauCHe C-C",
+        "peak_start": 1063.0,
+        "peak_end": 1083.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "Saturated fatty aCid",
+        "vibration": "\u03c6(C-C) Out-of-pHase C-C solid fat",
+        "peak_start": 1125.0,
+        "peak_end": 1133.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "Carotenoids",
+        "vibration": "v(C-C)",
+        "peak_start": 1158.0,
+        "peak_end": 1158.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "Carotenoids",
+        "vibration": "AntisymmetriC pHospHoryl stretCHing",
+        "peak_start": 1208.0,
+        "peak_end": 1213.0,
+        "reference": "10.1016/j.idairyj.2011.01.008 and 10.1002/jrs.5054",
+        "comment": "(antisym.pHospHoryl str.)-1208"
+    },
+    {
+        "chemical": "phosphatidyl serine, phosphatidyl choline and phosphatidyl inositol",
+        "vibration": "C=C Cis unsaturation C-H in-plane bending of etHylene groups",
+        "peak_start": 1270.0,
+        "peak_end": 1270.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "phosphatidyl serine, phosphatidyl choline and phosphatidyl inositol",
+        "vibration": "\u03b4(CH2) twisting unsaturation",
+        "peak_start": 1301.0,
+        "peak_end": 1303.0,
+        "reference": "10.1016/j.idairyj.2011.01.008 and 10.1002/jrs.5054",
+        "comment": "\u03b4(CH2)twisting-1301"
+    },
+    {
+        "chemical": "Saturated fatty aCid,phosphatidyl serine, phosphatidyl choline and phosphatidyl inositol",
+        "vibration": "\u03b4(CH2)sCissoring",
+        "peak_start": 1443.0,
+        "peak_end": 1443.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "Carotenoids",
+        "vibration": "v(C=C)",
+        "peak_start": 1523.0,
+        "peak_end": 1526.0,
+        "reference": "10.1016/j.idairyj.2011.01.008 and 10.1002/jrs.5054",
+        "comment": "Carotenoids v(C=C)-1523"
+    },
+    {
+        "chemical": "phosphatidyl serine, phosphatidyl choline and phosphatidyl inositol",
+        "vibration": "v(C=C) Cis unsaturation",
+        "peak_start": 1654.0,
+        "peak_end": 1654.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "phosphatidyl serine, phosphatidyl choline and phosphatidyl inositol",
+        "vibration": "v(C=C) Cis",
+        "peak_start": 1655.0,
+        "peak_end": 1655.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "TriaCylglyCerol Ester",
+        "vibration": "v(C=O)",
+        "peak_start": 1744.0,
+        "peak_end": 1746.0,
+        "reference": "10.1016/j.idairyj.2011.01.008 and 10.1002/jrs.5054",
+        "comment": ""
+    },
+    {
+        "chemical": "ACyl CHains",
+        "vibration": "v(C-H)",
+        "peak_start": 2715.0,
+        "peak_end": 2726.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "ACyl CHains in liquid state",
+        "vibration": "CH2 symmetriC stretCHing",
+        "peak_start": 2850.0,
+        "peak_end": 2850.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "CHolesterol,CHolesterol ester",
+        "vibration": "CH3 symmetriC stretCHing",
+        "peak_start": 2874.0,
+        "peak_end": 2874.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "ACyl CHains in Crystalline state",
+        "vibration": "Fermi resonanCe CH2 stretCHing CH2 anti-symmetriC stretCHing",
+        "peak_start": 2880.0,
+        "peak_end": 2890.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "ACyl CHains",
+        "vibration": "v(C-H) of aCyl CHain",
+        "peak_start": 2900.0,
+        "peak_end": 2910.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "ACyl CHains",
+        "vibration": "CH3 symmetriC stretCHing",
+        "peak_start": 2935.0,
+        "peak_end": 2935.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "ACyl CHains",
+        "vibration": "out-of-plane and CH3 anti-symmetriC stretCHing",
+        "peak_start": 2960.0,
+        "peak_end": 2960.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "ACyl CHains",
+        "vibration": "Cis-unsaturated=CH stretCHing",
+        "peak_start": 3007.0,
+        "peak_end": 3007.0,
+        "reference": "10.1016/j.idairyj.2011.01.008",
+        "comment": ""
+    },
+    {
+        "chemical": "L-arginine",
+        "vibration": "Ring vibration",
+        "peak_start": 492.0,
+        "peak_end": 492.0,
+        "reference": "10.1038/srep04751",
+        "comment": ""
+    },
+    {
+        "chemical": "Tyrosine(Tyr)",
+        "vibration": "C-C twisting",
+        "peak_start": 638.0,
+        "peak_end": 644.0,
+        "reference": "10.1038/srep04751",
+        "comment": ""
+    },
+    {
+        "chemical": "THymine",
+        "vibration": "Ring vibration",
+        "peak_start": 743.0,
+        "peak_end": 743.0,
+        "reference": "10.1038/srep04751",
+        "comment": ""
+    },
+    {
+        "chemical": "Collagen",
+        "vibration": "C-C stretCHing",
+        "peak_start": 818.0,
+        "peak_end": 818.0,
+        "reference": "10.1038/srep04751",
+        "comment": ""
+    },
+    {
+        "chemical": "D-galaCtosamine",
+        "vibration": "C-O-H bending",
+        "peak_start": 890.0,
+        "peak_end": 890.0,
+        "reference": "10.1038/srep04751",
+        "comment": ""
+    },
+    {
+        "chemical": "PHenylalanine",
+        "vibration": "C-C symmetriC stretCH ring breatHing",
+        "peak_start": 1003.0,
+        "peak_end": 1005.0,
+        "reference": "10.1038/srep04751",
+        "comment": ""
+    },
+    {
+        "chemical": "Lipids",
+        "vibration": "C-C stretCHing",
+        "peak_start": 1068.0,
+        "peak_end": 1068.0,
+        "reference": "10.1038/srep04751",
+        "comment": ""
+    },
+    {
+        "chemical": "D-mannos",
+        "vibration": "s(C-N)",
+        "peak_start": 1130.0,
+        "peak_end": 1130.0,
+        "reference": "10.1038/srep04751 and 10.2147/IJN.S186226",
+        "comment": ""
+    },
+    {
+        "chemical": "D-mannos",
+        "vibration": "s(C-N)",
+        "peak_start": 1131.0,
+        "peak_end": 1131.0,
+        "reference": "10.1038/srep04751 and 10.2147/IJN.S186226",
+        "comment": ""
+    },
+    {
+        "chemical": "PHospHolipids",
+        "vibration": "\\",
+        "peak_start": 1402.0,
+        "peak_end": 1402.0,
+        "reference": "10.1038/srep04751",
+        "comment": ""
+    },
+    {
+        "chemical": "DNA/RNA bases",
+        "vibration": "\\",
+        "peak_start": 1573.0,
+        "peak_end": 1573.0,
+        "reference": "10.1038/srep04751",
+        "comment": ""
+    },
+    {
+        "chemical": "Amidel,\u03b1-Helix",
+        "vibration": "C=O stretCHing",
+        "peak_start": 1655.0,
+        "peak_end": 1655.0,
+        "reference": "10.1038/srep04751",
+        "comment": ""
+    },
+    {
+        "chemical": "Amide \u2162",
+        "vibration": "\u03bd (CN), \u03b4 (NH)",
+        "peak_start": 1265.0,
+        "peak_end": 1265.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Amide \u2162",
+        "vibration": "\u03bd (CN), \u03b4 (NH)",
+        "peak_start": 1270.0,
+        "peak_end": 1270.0,
+        "reference": "10.1002/jrs.5054",
+        "comment": ""
+    },
+    {
+        "chemical": "CHolesterol",
+        "vibration": "\u03b4(CH2)sCissoring",
+        "peak_start": 1442.0,
+        "peak_end": 1443.0,
+        "reference": "10.1016/j.idairyj.2011.01.008 and 10.1002/jrs.5054",
+        "comment": ""
+    },
+    {
+        "chemical": "Tyrosine",
+        "vibration": "\\",
+        "peak_start": 1614.0,
+        "peak_end": 1620.0,
+        "reference": "10.1002/jrs.5054",
+        "comment": ""
+    },
+    {
+        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "vibration": "\u03b4(P-O-CH3)",
+        "peak_start": 466.0,
+        "peak_end": 466.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "vibration": "\u03b4(PO3)umbrella",
+        "peak_start": 500.0,
+        "peak_end": 500.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "vibration": "v(P-CH3)+v(P-O)+\u03b4(P-O-CH3)",
+        "peak_start": 710.0,
+        "peak_end": 710.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "vibration": "vas(O-P-O)",
+        "peak_start": 788.0,
+        "peak_end": 788.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "vibration": "v(P-CH3)",
+        "peak_start": 819.0,
+        "peak_end": 819.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "vibration": "v(O-CH3)+Vas(O-P-O)",
+        "peak_start": 1028.0,
+        "peak_end": 1028.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "vibration": "v(O-CH3)+Vas(O-P-O)",
+        "peak_start": 1057.0,
+        "peak_end": 1057.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "vibration": "\u03b4(CH3)",
+        "peak_start": 895.0,
+        "peak_end": 895.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "vibration": "\u03b4(CH3)",
+        "peak_start": 1179.0,
+        "peak_end": 1179.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "vibration": "\u03b4(CH3)",
+        "peak_start": 1419.0,
+        "peak_end": 1419.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "vibration": "\u03b4(CH3)",
+        "peak_start": 1464.0,
+        "peak_end": 1464.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "vibration": "v(P=O)+\u03b4(CH3)",
+        "peak_start": 1240.0,
+        "peak_end": 1240.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "PHenylalanine",
+        "vibration": "C-C twisting mode",
+        "peak_start": 621.0,
+        "peak_end": 621.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "PHenylalanine",
+        "vibration": "C-C twisting mode",
+        "peak_start": 626.0,
+        "peak_end": 626.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "PHenylalanine",
+        "vibration": "C-C twisting mode",
+        "peak_start": 643.0,
+        "peak_end": 643.0,
+        "reference": "10.1039/c2cp42496g",
+        "comment": ""
+    },
+    {
+        "chemical": "TryptopHan",
+        "vibration": "ring breathing mode",
+        "peak_start": 760.0,
+        "peak_end": 760.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Tyrosine",
+        "vibration": "ring breathing mode",
+        "peak_start": 839.0,
+        "peak_end": 839.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Tyrosine",
+        "vibration": "ring breathing mode",
+        "peak_start": 854.0,
+        "peak_end": 854.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Tyrosine",
+        "vibration": "ring breathing mode",
+        "peak_start": 859.0,
+        "peak_end": 859.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Hydroxyproline",
+        "vibration": "\u03bd (C-C)",
+        "peak_start": 876.0,
+        "peak_end": 876.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Proline",
+        "vibration": "\u03bd (C-C)",
+        "peak_start": 935.0,
+        "peak_end": 935.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Proline",
+        "vibration": "\u03bd (C-C)",
+        "peak_start": 958.0,
+        "peak_end": 958.0,
+        "reference": "10.2147/IJN.S186226",
+        "comment": ""
+    },
+    {
+        "chemical": "PHenylalanine",
+        "vibration": "\u03b4 (C-H)",
+        "peak_start": 1030.0,
+        "peak_end": 1033.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Proteins",
+        "vibration": "\u03bd (C-O)",
+        "peak_start": 1049.0,
+        "peak_end": 1049.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Proteins",
+        "vibration": "\u03bd (C-N)",
+        "peak_start": 1084.0,
+        "peak_end": 1084.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Proteins",
+        "vibration": "\u03bd (C-N)",
+        "peak_start": 1049.0,
+        "peak_end": 1049.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Tyrosine",
+        "vibration": "\u03b4 (C-H)",
+        "peak_start": 1176.0,
+        "peak_end": 1176.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Tyrosine",
+        "vibration": "\u03b4 (C-H)",
+        "peak_start": 1200.0,
+        "peak_end": 1200.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "TryptopHan",
+        "vibration": "\u03bd (C-C6H5)",
+        "peak_start": 1208.0,
+        "peak_end": 1208.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Collagen",
+        "vibration": "\u03bd (CN), \u03b4 (NH)",
+        "peak_start": 1265.0,
+        "peak_end": 1265.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Collagen",
+        "vibration": "CH3CH2 wagging",
+        "peak_start": 1340.0,
+        "peak_end": 1340.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "Collagen, lipids",
+        "vibration": "\u03b4 (C-H)",
+        "peak_start": 1447.0,
+        "peak_end": 1447.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "TryptopHan",
+        "vibration": "\u03bd (C=C)",
+        "peak_start": 1552.0,
+        "peak_end": 1552.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "amide I",
+        "vibration": "\u03bd (C=C)",
+        "peak_start": 1684.0,
+        "peak_end": 1684.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
+        "chemical": "l-tyrosine, lactose",
+        "vibration": "\u03c4(C-S)",
+        "peak_start": 638.0,
+        "peak_end": 638.0,
+        "reference": "10.2147/IJN.S186226",
+        "comment": "Major assignments(\u764c)"
+    },
+    {
+        "chemical": "Adenine, hypoxanthine,coenzyme A",
+        "vibration": "b\u03c5(C-H)",
+        "peak_start": 725.0,
+        "peak_end": 725.0,
+        "reference": "10.2147/IJN.S186226",
+        "comment": ""
+    },
+    {
+        "chemical": "l-serine",
+        "vibration": "s(C-C-O)",
+        "peak_start": 810.0,
+        "peak_end": 810.0,
+        "reference": "10.2147/IJN.S186226",
+        "comment": ""
+    },
+    {
+        "chemical": "Amino galactose",
+        "vibration": "\u03b4(C-O-H)",
+        "peak_start": 890.0,
+        "peak_end": 890.0,
+        "reference": "10.2147/IJN.S186226",
+        "comment": ""
+    },
+    {
+        "chemical": "Valine",
+        "vibration": "\u03c5(C-C)",
+        "peak_start": 958.0,
+        "peak_end": 958.0,
+        "reference": "10.2147/IJN.S186226",
+        "comment": ""
+    },
+    {
+        "chemical": "Phenylalanine",
+        "vibration": "s(C-H)",
+        "peak_start": 1014.0,
+        "peak_end": 1014.0,
+        "reference": "10.2147/IJN.S186226",
+        "comment": ""
+    },
+    {
+        "chemical": "Amide III",
+        "vibration": "s(C-N), b\u03c5(N-H)",
+        "peak_start": 1210.0,
+        "peak_end": 1210.0,
+        "reference": "10.2147/IJN.S186226",
+        "comment": ""
+    },
+    {
+        "chemical": "Lipids, CH vibration in DNA/RNA",
+        "vibration": "\u03c4(CH2)",
+        "peak_start": 1328.0,
+        "peak_end": 1328.0,
+        "reference": "10.2147/IJN.S186226",
+        "comment": ""
+    },
+    {
+        "chemical": "Collagen, phospholipids",
+        "vibration": "b\u03c5(C-H2)",
+        "peak_start": 1447.0,
+        "peak_end": 1447.0,
+        "reference": "10.2147/IJN.S186226",
+        "comment": ""
+    },
+    {
+        "chemical": "Acetoacetate",
+        "vibration": "b\u03c5(C=C)",
+        "peak_start": 1584.0,
+        "peak_end": 1584.0,
+        "reference": "10.2147/IJN.S186226",
+        "comment": ""
+    },
+    {
+        "chemical": "Amide I",
+        "vibration": "s(C=C):(\u03b2-pleated sheet)",
+        "peak_start": 1660.0,
+        "peak_end": 1660.0,
+        "reference": "10.2147/IJN.S186226",
+        "comment": ""
+    },
+    {
+        "chemical": "Sulfur",
+        "vibration": "\\",
+        "peak_start": 83.2,
+        "peak_end": 83.2,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "Sulfur",
+        "vibration": "\\",
+        "peak_start": 473.2,
+        "peak_end": 473.2,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "Sulfur",
+        "vibration": "\\",
+        "peak_start": 153.2,
+        "peak_end": 153.2,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "Sulfur",
+        "vibration": "\\",
+        "peak_start": 219.2,
+        "peak_end": 219.2,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "naphthalene",
+        "vibration": "\\",
+        "peak_start": 513.7,
+        "peak_end": 513.7,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "naphthalene",
+        "vibration": "\\",
+        "peak_start": 1146.3,
+        "peak_end": 1146.3,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "naphthalene",
+        "vibration": "\\",
+        "peak_start": 1463.5,
+        "peak_end": 1463.5,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "naphthalene",
+        "vibration": "\\",
+        "peak_start": 1576.3,
+        "peak_end": 1576.3,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "naphthalene",
+        "vibration": "\\",
+        "peak_start": 3055.1,
+        "peak_end": 3055.1,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "naphthalene",
+        "vibration": "\\",
+        "peak_start": 763.0,
+        "peak_end": 763.0,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "naphthalene",
+        "vibration": "\\",
+        "peak_start": 1019.8,
+        "peak_end": 1019.8,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "naphthalene",
+        "vibration": "\\",
+        "peak_start": 1381.3,
+        "peak_end": 1381.3,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "cyclohexane",
+        "vibration": "\\",
+        "peak_start": 801.9,
+        "peak_end": 801.9,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "cyclohexane",
+        "vibration": "\\",
+        "peak_start": 384.1,
+        "peak_end": 384.1,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "cyclohexane",
+        "vibration": "\\",
+        "peak_start": 426.5,
+        "peak_end": 426.5,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "cyclohexane",
+        "vibration": "\\",
+        "peak_start": 1157.6,
+        "peak_end": 1157.6,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "cyclohexane",
+        "vibration": "\\",
+        "peak_start": 1028.1,
+        "peak_end": 1028.1,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "cyclohexane",
+        "vibration": "\\",
+        "peak_start": 1266.4,
+        "peak_end": 1266.4,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "cyclohexane",
+        "vibration": "\\",
+        "peak_start": 1444.2,
+        "peak_end": 1444.2,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "cyclohexane",
+        "vibration": "\\",
+        "peak_start": 2664.2,
+        "peak_end": 2664.2,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "cyclohexane",
+        "vibration": "\\",
+        "peak_start": 2852.4,
+        "peak_end": 2852.4,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "cyclohexane",
+        "vibration": "\\",
+        "peak_start": 2923.4,
+        "peak_end": 2923.4,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "cyclohexane",
+        "vibration": "\\",
+        "peak_start": 2937.5,
+        "peak_end": 2937.5,
+        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
+        "comment": ""
+    },
+    {
+        "chemical": "LaCtose",
+        "vibration": "\\",
+        "peak_start": 384.0,
+        "peak_end": 384.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "GluCose",
+        "vibration": "\\",
+        "peak_start": 510.0,
+        "peak_end": 510.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "\u03b4(C-C-O)",
+        "peak_start": 636.0,
+        "peak_end": 636.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "\u03b4(C-C-H)+\u03b4(C-O-C)",
+        "peak_start": 851.0,
+        "peak_end": 851.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "\u03b4(C-O-C)+\u03b4(C-O-H)+v(C-O)",
+        "peak_start": 938.0,
+        "peak_end": 938.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "pHenylalanine",
+        "vibration": "Ring-breatHing(pHenylalanine);v(C-C)ring",
+        "peak_start": 1019.0,
+        "peak_end": 1019.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "v(C-O)+v(C-C)+\u03b4(C-O-H)",
+        "peak_start": 1080.0,
+        "peak_end": 1080.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "v(C-O)+v(C-C)+\u03b4(C-O-H)",
+        "peak_start": 1095.0,
+        "peak_end": 1095.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "v(C-O)+v(C-C)+\u03b4(C-O-H)",
+        "peak_start": 1143.0,
+        "peak_end": 1143.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "\u03c4(CH2)",
+        "peak_start": 1313.0,
+        "peak_end": 1313.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "\u03b4(CH2)",
+        "peak_start": 1458.0,
+        "peak_end": 1458.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "v(C-C)ring",
+        "peak_start": 1620.0,
+        "peak_end": 1620.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "amide \u2160",
+        "vibration": "v(C=O); v(C=C)",
+        "peak_start": 1670.0,
+        "peak_end": 1670.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "v(C-O)ester",
+        "peak_start": 1760.0,
+        "peak_end": 1760.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "tHe pyranose ring",
+        "vibration": "\\",
+        "peak_start": 476.0,
+        "peak_end": 476.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "Pyran",
+        "vibration": "\\",
+        "peak_start": 479.0,
+        "peak_end": 479.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "proteins",
+        "vibration": "\\",
+        "peak_start": "~1456",
+        "peak_end": "~1456",
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "proteins",
+        "vibration": "\\",
+        "peak_start": "~2886",
+        "peak_end": "~2886",
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "Carotenoids",
+        "vibration": "\\",
+        "peak_start": 1520.0,
+        "peak_end": 1530.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "CO2",
+        "vibration": "\\",
+        "peak_start": 2432.0,
+        "peak_end": 2432.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "CO2",
+        "vibration": "\\",
+        "peak_start": 2300.0,
+        "peak_end": 2300.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "lipids amide I proteins",
+        "vibration": "\\",
+        "peak_start": 1660.0,
+        "peak_end": 1660.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "Lipids",
+        "vibration": "\\",
+        "peak_start": "~1750",
+        "peak_end": "~1750",
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "Lipids",
+        "vibration": "\\",
+        "peak_start": "~2856",
+        "peak_end": "~2856",
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "Lipids",
+        "vibration": "\\",
+        "peak_start": 1130.0,
+        "peak_end": 1130.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "Lipids",
+        "vibration": "\\",
+        "peak_start": 1314.0,
+        "peak_end": 1314.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "lipids and protein",
+        "vibration": "\\",
+        "peak_start": 1660.0,
+        "peak_end": 1660.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "lipids and protein",
+        "vibration": "\\",
+        "peak_start": "~2887",
+        "peak_end": "~2887",
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "water",
+        "vibration": "OH",
+        "peak_start": 3600.0,
+        "peak_end": 3300.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "CarboHydrates",
+        "vibration": "\\",
+        "peak_start": 478.0,
+        "peak_end": 478.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": " lactose and monosaccharides",
+        "vibration": "\\",
+        "peak_start": 1162.0,
+        "peak_end": 1162.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "PHenylalanine(PHe)",
+        "vibration": "\\",
+        "peak_start": 1589.0,
+        "peak_end": 1620.0,
+        "reference": "10.3233/BSI-200201",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "v S-S (g-g-g and g-g-t)",
+        "peak_start": 508.0,
+        "peak_end": 508.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "v S-S (g-g-g and g-g-t)",
+        "peak_start": 528.0,
+        "peak_end": 528.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Trp",
+        "vibration": "\\",
+        "peak_start": 538.0,
+        "peak_end": 538.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Trp",
+        "vibration": "\\",
+        "peak_start": 543.0,
+        "peak_end": 543.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Trp",
+        "vibration": "\\",
+        "peak_start": 754.0,
+        "peak_end": 754.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "v C-S,Met",
+        "peak_start": 699.0,
+        "peak_end": 699.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Trp",
+        "vibration": "\\",
+        "peak_start": 761.0,
+        "peak_end": 761.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Trp",
+        "vibration": "\\",
+        "peak_start": 879.0,
+        "peak_end": 879.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "\u03b1-Helix",
+        "vibration": "v C-C",
+        "peak_start": 900.0,
+        "peak_end": 900.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "\u03b1-Helix",
+        "vibration": "v C-C",
+        "peak_start": 936.0,
+        "peak_end": 936.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "\u03b2-sHeet",
+        "vibration": "v C-C",
+        "peak_start": 980.0,
+        "peak_end": 980.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Trp",
+        "vibration": "\\",
+        "peak_start": 1014.0,
+        "peak_end": 1014.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "v C-N",
+        "peak_start": 1080.0,
+        "peak_end": 1080.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "v C-N",
+        "peak_start": 1107.0,
+        "peak_end": 1107.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "v C-N",
+        "peak_start": "1130(sH)",
+        "peak_end": "1130(sH)",
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Amide\u2162",
+        "vibration": "(vC-N,\u03b4N-H,vCH3-C)",
+        "peak_start": "1238(sH)",
+        "peak_end": "1238(sH)",
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Amide\u2162",
+        "vibration": "(vC-N,\u03b4N-H,vCH3-C)",
+        "peak_start": 1258.0,
+        "peak_end": 1258.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Amide\u2162",
+        "vibration": "(vC-N,\u03b4N-H,vCH3-C)",
+        "peak_start": "1278(sH)",
+        "peak_end": "1278(sH)",
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Trp",
+        "vibration": "\u03b4C-H",
+        "peak_start": 1343.0,
+        "peak_end": 1343.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Trp",
+        "vibration": "\u03b4C-H",
+        "peak_start": 1365.0,
+        "peak_end": 1365.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "\u03b4C-H2",
+        "peak_start": 1447.0,
+        "peak_end": 1447.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "\u03b4C-H2",
+        "peak_start": "1460(sH)",
+        "peak_end": "1460(sH)",
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Trp",
+        "vibration": "\\",
+        "peak_start": 1553.0,
+        "peak_end": 1553.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Trp",
+        "vibration": "\\",
+        "peak_start": 1582.0,
+        "peak_end": 1582.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Trp",
+        "vibration": "\\",
+        "peak_start": "1620(sH)",
+        "peak_end": "1620(sH)",
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "Amide \u2160",
+        "vibration": "(v C-O,\u03b4N-H),\u03b4H-O-H",
+        "peak_start": 1660.0,
+        "peak_end": 1660.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "alipHatiC",
+        "vibration": "v C-H",
+        "peak_start": 2880.0,
+        "peak_end": 2880.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "alipHatiC",
+        "vibration": "v C-H",
+        "peak_start": 2942.0,
+        "peak_end": 2942.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "alipHatiC",
+        "vibration": "v C-H",
+        "peak_start": "2982(sH)",
+        "peak_end": "2982(sH)",
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "aromatiC",
+        "vibration": "v C-H",
+        "peak_start": 3070.0,
+        "peak_end": 3070.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "\\",
+        "vibration": "v O-H and v N-H",
+        "peak_start": 3250.0,
+        "peak_end": 3250.0,
+        "reference": "\u65e0",
+        "comment": ""
+    },
+    {
+        "chemical": "\u5907\u6ce8\uff1at = twisting; n = stretching; o = wagging; d = bending; r = rocking",
+        "vibration": "",
+        "peak_start": "",
+        "peak_end": "",
+        "reference": "",
+        "comment": ""
+    }
+]

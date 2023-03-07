@@ -1,9 +1,13 @@
+import os.path
 import matplotlib.pyplot as plt
+import xlrd
+import json
+import pandas as pd
 
-def raman_prior():
+def raman_prior_sample():
     '''
     Return Raman prior knowledge, i.e., what wavenumber ranges correspond to what functional groups (chemical bonds).
-    TODO: This function is now obsolete. Need update.
+    This function is now obsolete. Just used to generate sample data.
     '''
 
     d = {}
@@ -34,13 +38,18 @@ def raman_prior():
 
     return d
 
-def plot_raman_prior():
+def plot_raman_prior(raman_peak_list):
+    '''
+    TODO: plot
+    '''
 
     d = raman_prior()
 
     plt.figure(figsize = (14,7))
 
-    for idx, key in enumerate(d):
+    for raman in enumerate(raman_peak_list):
+        # same group
+
         # print(d[key])
         plt.scatter(d[key], [-idx] * len(d[key]), lw = 5, label = key)
         
@@ -52,7 +61,19 @@ def plot_raman_prior():
 
 class RamanPeak:
 
+    '''
     def __init__(self,chemical='',vibration='',peak_start=0,peak_end=0,reference='',comment=''):
+
+        self.chemical = chemical
+        self.vibration = vibration 
+        self.peak_start = peak_start
+        self.peak_end = peak_end
+        self.reference = reference
+        self.comment = comment
+    '''
+
+    def __init__(self, dic):
+
         '''
         Parameters
         ----------
@@ -63,12 +84,13 @@ class RamanPeak:
         reference : URL or DOI.
         comment : Comment.
         '''
-        self.chemical = chemical
-        self.vibration = vibration 
-        self.peak_start = peak_start
-        self.peak_end = peak_end
-        self.reference = reference
-        self.comment = comment
+                
+        self.chemical = dic['chemical']
+        self.vibration = dic['vibration'] 
+        self.peak_start = dic['peak_start']
+        self.peak_end = dic['peak_end']
+        self.reference = dic['reference']
+        self.comment = dic['comment']
 
     def __str__(self):
         return f'{self.chemical} {self.vibration} {self.peak_start} {self.peak_end} {self.reference} {self.comment}'
@@ -79,7 +101,7 @@ class RamanPeak:
     def is_same_group(self, other):
         '''
         Return True if two Raman peaks are in the same group.
-        '''
+        ''' 
         return self.chemical == other.chemical and self.vibration == other.vibration 
     
     def __html__(self):
@@ -89,31 +111,73 @@ class RamanPeak:
 def save_raman_peak_list(raman_peak_list, filepath):
     '''
     Save the list of Raman peak objects to a file.
+
+    Note
+    ----
+    Use the following code to dump the Raman info from excel to a json file.
+        raman_peak_list = get_raman_peak_list_from_excel()
+        save_raman_peak_list(save_raman_peak_list)
     '''
+    with open (filepath, "w") as f:
+        json.dump(raman_peak_list, f, indent=4)
 
-    json.dupm(raman_peak_list, filepath)
 
-def load_raman_peak_list(filepath):
+def load_raman_peak_list(json_file = None):
     '''
     Load the list of Raman peak objects from a file.
     '''
 
-    return json.load(filepath)
+    if json_file is None:
+        json_file = os.path.realpath(__file__).replace('.py', '.json')
 
-def get_raman_peak_list_from_excel(filepath):
+    with open (json_file) as f:
+        raman_peak_list = json.load(f)
+
+    return [RamanPeak(dic) for dic in raman_peak_list]
+
+def get_raman_peak_list_from_excel(n = 194, filepath="D:\\group lasso\\raman.xls"):
     '''
     Load the excel file and return a list of Raman peak objects.
+
+    TODO: n : get from excel rows.
     '''
+    raman_peak_excel = xlrd.open_workbook(filepath)#括号里为路径
+    raman_peak_sheet = raman_peak_excel.sheet_by_index(0)#索引至页
+   
+    #中间量，以暂时存储从表中读取的数据
+    chemicals=[]
+    vibrations=[]
+    peak_starts=[]
+    peak_ends=[]
+    references=[]
+    comments=[]    
+    
+    for i in range(1,n+1): 
+        chemicals.append(raman_peak_sheet.cell_value(i,0))
+        vibrations.append(raman_peak_sheet.cell_value(i,1))
+        peak_starts.append(raman_peak_sheet.cell_value(i,2))
+        peak_ends.append(raman_peak_sheet.cell_value(i,3))
+        references.append(raman_peak_sheet.cell_value(i,4))
+        comments.append(raman_peak_sheet.cell_value(i,5))
 
-    raman_peak_list = []
-
-    # ...
+    raman_peak_list = [{'chemical': c, 'vibration': v, 'peak_start': ps, 'peak_end': pe, 'reference': r, 'comment': co} for c, v, ps, pe, r, co in zip(chemicals, vibrations, peak_starts, peak_ends, references, comments)]
     return raman_peak_list
+
 
 def generate_html_table(raman_peak_list):
     '''
     Generate HTML table from the list of Raman peak objects.
+
+    Example
+    -------
+    raman_peak_list = load_raman_peak_list()
+    html = generate_html_table(raman_peak_list)
+    from IPython.core.display import HTML, display
+    display(HTML(html))
     '''
+    # ranman_html = pd.DataFrame.from_dict(raman_peak_list)
+    # html_text = ranman_html.to_html(justify='center')
+    # print(html_text)
 
     html = '<table border="1">'
     html += '<tr><th>Chemical</th><th>Vibration</th><th>Peak Start</th><th>Peak End</th><th>Reference</th><th>Comment</th></tr>'

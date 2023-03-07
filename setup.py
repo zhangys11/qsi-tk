@@ -54,7 +54,7 @@ setup(
     ],
 
     package_data={
-        "": ["*.txt", "*.csv", "*.png", "*.jpg"],
+        "": ["*.txt", "*.csv", "*.png", "*.jpg", "*.json"],
     }
 )
 
