@@ -15,14 +15,14 @@ from ..vis import *
 DATA_FOLDER = os.path.dirname(os.path.dirname(
     os.path.realpath(__file__))) + "/data/"
 
-DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['Stage 4 (4-7 years) formula'],200),
-               's3_formula': ('B3.csv', ',', False, 'B3 desc.txt', ['Stage 3 (12~36 months) infant formula'],200),
+DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['Stage 4 (4-7 years) formula'], 200),
+               's3_formula': ('B3.csv', ',', False, 'B3 desc.txt', ['Stage 3 (12~36 months) infant formula'], 200),
                's4_formula_c2': ('7341_C2.csv', ',', True, '7341_C2 desc.txt', ['Brand 1', 'Brand 2'], 1000),
                's4_formula_c3': ('7341.csv', ',', True, '7341 desc.txt', ['Brand 1', 'Brand 2', 'Brand 3'], 1000),
                'milk_tablet_candy': ('734b.csv', ',', False, '734b desc.txt', ['Compressed Milk Tablet Candy'], 200),
                'yogurt': ('7346.csv', ',', True, '7346 desc.txt', ["YL", "GM", "WQ", "MN"], 200),
-               'vintage': ('7344.txt', '\t', False, '7344 desc.txt', ['8-year vintage'],200),
-               'vintage_spi': ('7345.csv', ',', True, '7345 desc.txt', ["5Y", "8Y", "16Y", "26Y"],200),
+               'vintage': ('7344.txt', '\t', False, '7344 desc.txt', ['8-year vintage'], 200),
+               'vintage_spi': ('7345.csv', ',', True, '7345 desc.txt', ["5Y", "8Y", "16Y", "26Y"], 200),
                'vintage_526': ('7344_Y5Y26.csv', ',', True, '7344_Y5Y26 desc.txt', ["5Y", "26Y"], 2000),
                'beimu': ('754a_C2S_Beimu.txt', ',', True, '754a_C2S_Beimu desc.txt', ["Sichuan", "Zhejiang"], 300),
                'shihu_c2': ('754b_C2S_Shihu.csv', ',', True, '754b_C2S_Shihu desc.txt', ['Yunnan', 'Zhejiang'], 500),
@@ -45,7 +45,7 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'hangbaiju_rm': ('hangbaiju_raman.csv', ',', False, 'hangbaiju_raman desc.txt', ['chrysanthemum morifolium'], 200),
                'salt': ('7545.csv', ',', True, '7545 desc.txt', ["well salt", "sea salt"], 200),
                'chaihu_ms': ('7b43.csv', ',', True, '7b43 desc.txt', ["wild", "cultivated"], 200),
-               'mouse_omics': ('metabolomics.txt', '\t', True, 'metabolomics desc.txt', ["control", "experiment"], 50000000)             
+               'mouse_omics': ('metabolomics.txt', '\t', True, 'metabolomics desc.txt', ["control", "experiment"], 50000000)
                }
 
 
@@ -98,11 +98,11 @@ def load_dataset(id, SD=1, shift=None, x_range=None, y_subset=None, display=True
 
     else:
         desc = ''
-    
+
     return X, y, X_names, desc, labels
 
 
-def open_dataset(path, delimiter=',', has_y=True, labels = None, x_range=None, y_subset=None):
+def open_dataset(path, delimiter=',', has_y=True, labels=None, x_range=None, y_subset=None):
     '''
     Parameters
     ----------
@@ -115,15 +115,15 @@ def open_dataset(path, delimiter=',', has_y=True, labels = None, x_range=None, y
 
     # special treatment for specific datasets
     if 'metabolomics.txt' in path:
-        data = pd.read_csv(path, delimiter = '\t') # ,header=None
-        X_names_mol = data.iloc[:5022,4].values.tolist() # molecules
-        X = data.iloc[:5022,19:].T.values
-        y = np.array([0]*int(len(X)/2) + [1]*int(len(X)/2) )
-        X_names = list(map(float, data.iloc[:5022,1].values)) # m/z
+        data = pd.read_csv(path, delimiter='\t')  # ,header=None
+        _ = data.iloc[:5022, 4].values.tolist()  # molecules
+        X = data.iloc[:5022, 19:].T.values
+        y = np.array([0]*int(len(X)/2) + [1]*int(len(X)/2))
+        X_names = list(map(float, data.iloc[:5022, 1].values))  # m/z
 
-        idx = np.argsort(X_names) # re-order by m/z
+        idx = np.argsort(X_names)  # re-order by m/z
         X_names = np.array(X_names)[idx]
-        X = X[:,idx]  # re-arrange columns to match X_names
+        X = X[:, idx]  # re-arrange columns to match X_names
 
     elif ext == '.pkl':
 
@@ -196,7 +196,7 @@ def open_dataset(path, delimiter=',', has_y=True, labels = None, x_range=None, y
     if cnt_nan > 0:
         print('Found' + str(cnt_nan) +
               'NaN elements in X. You may need to purge NaN.')
-    
+
     if labels is not None and labels != [] and y_subset is not None:
         labels = list(np.array(labels)[y_subset])
 

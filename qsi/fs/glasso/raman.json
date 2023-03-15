@@ -4,7 +4,7 @@
         "vibration": "CH2 in-phase twist",
         "peak_start": 1295.0,
         "peak_end": 1305.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -12,23 +12,23 @@
         "vibration": "C-C skeletal stretch(-alkane)",
         "peak_start": 1040.0,
         "peak_end": 1100.0,
-        "reference": "\u65e0",
-        "comment": "(the first peak)"
+        "reference": "",
+        "comment": ""
     },
     {
         "chemical": "Alkane",
         "vibration": "C-C skeletal stretch(-alkane)",
         "peak_start": 800.0,
         "peak_end": 900.0,
-        "reference": "\u65e0",
-        "comment": "(the second peak)"
+        "reference": "",
+        "comment": ""
     },
     {
         "chemical": "Branched alkane",
         "vibration": "C-C skeletal stretch",
         "peak_start": 1165.0,
         "peak_end": 1175.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -36,7 +36,7 @@
         "vibration": "C-C skeletal stretch",
         "peak_start": 1140.0,
         "peak_end": 1170.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -44,7 +44,7 @@
         "vibration": "C-C skeletal stretch",
         "peak_start": 1040.0,
         "peak_end": 1060.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -52,7 +52,7 @@
         "vibration": "C-C skeletal stretch",
         "peak_start": 900.0,
         "peak_end": 950.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -60,7 +60,7 @@
         "vibration": "C-Cl stretch",
         "peak_start": 740.0,
         "peak_end": 760.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -68,7 +68,7 @@
         "vibration": "C-Cl stretch",
         "peak_start": 655.0,
         "peak_end": 675.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -76,7 +76,7 @@
         "vibration": "C-Cl stretch",
         "peak_start": 630.0,
         "peak_end": 635.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -84,7 +84,7 @@
         "vibration": "C-Cl stretch",
         "peak_start": 605.0,
         "peak_end": 615.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -92,7 +92,7 @@
         "vibration": "Monoalkyl C=C stretch",
         "peak_start": 1638.0,
         "peak_end": 1650.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -100,7 +100,7 @@
         "vibration": "Disubstituted C\u2261C stretch",
         "peak_start": 2230.0,
         "peak_end": 2237.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -108,7 +108,7 @@
         "vibration": "Monosubstituted aromatic ring breathing",
         "peak_start": 990.0,
         "peak_end": 1010.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -116,7 +116,7 @@
         "vibration": "In-phase CCO stretch",
         "peak_start": 800.0,
         "peak_end": 900.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -124,7 +124,7 @@
         "vibration": "Alkyl aldehyde C=O stretch",
         "peak_start": 1725.0,
         "peak_end": 1740.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -132,7 +132,7 @@
         "vibration": "Alkyl ketone C=O stretch",
         "peak_start": 1712.0,
         "peak_end": 1720.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -140,7 +140,7 @@
         "vibration": "Symmetrical COC stretch",
         "peak_start": 820.0,
         "peak_end": 890.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -148,7 +148,7 @@
         "vibration": "Dimer C=O stretch",
         "peak_start": 634.0,
         "peak_end": 644.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -156,7 +156,7 @@
         "vibration": "O-C=O in-plane deformation (acetate ester)",
         "peak_start": 634.0,
         "peak_end": 644.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -164,7 +164,7 @@
         "vibration": "Trisubstituted amine C-N stretch",
         "peak_start": 1000.0,
         "peak_end": 1250.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -172,7 +172,7 @@
         "vibration": "Trisubstituted amine C-N stretch",
         "peak_start": 740.0,
         "peak_end": 833.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -180,7 +180,7 @@
         "vibration": "Tertiary amide C-N stretch",
         "peak_start": 700.0,
         "peak_end": 750.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -188,7 +188,7 @@
         "vibration": "C\u2261N stretch",
         "peak_start": 2230.0,
         "peak_end": 2250.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -504,100 +504,100 @@
         "comment": ""
     },
     {
-        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
         "vibration": "\u03b4(P-O-CH3)",
         "peak_start": 466.0,
         "peak_end": 466.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": ""
+        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
         "vibration": "\u03b4(PO3)umbrella",
         "peak_start": 500.0,
         "peak_end": 500.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": ""
+        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
         "vibration": "v(P-CH3)+v(P-O)+\u03b4(P-O-CH3)",
         "peak_start": 710.0,
         "peak_end": 710.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": ""
+        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
         "vibration": "vas(O-P-O)",
         "peak_start": 788.0,
         "peak_end": 788.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": ""
+        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
         "vibration": "v(P-CH3)",
         "peak_start": 819.0,
         "peak_end": 819.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": ""
+        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
         "vibration": "v(O-CH3)+Vas(O-P-O)",
         "peak_start": 1028.0,
         "peak_end": 1028.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": ""
+        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
         "vibration": "v(O-CH3)+Vas(O-P-O)",
         "peak_start": 1057.0,
         "peak_end": 1057.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": ""
+        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
         "vibration": "\u03b4(CH3)",
         "peak_start": 895.0,
         "peak_end": 895.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": ""
+        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
         "vibration": "\u03b4(CH3)",
         "peak_start": 1179.0,
         "peak_end": 1179.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": ""
+        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
         "vibration": "\u03b4(CH3)",
         "peak_start": 1419.0,
         "peak_end": 1419.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": ""
+        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
         "vibration": "\u03b4(CH3)",
         "peak_start": 1464.0,
         "peak_end": 1464.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": ""
+        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09",
+        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
         "vibration": "v(P=O)+\u03b4(CH3)",
         "peak_start": 1240.0,
         "peak_end": 1240.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": ""
+        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
         "chemical": "PHenylalanine",
@@ -1178,16 +1178,16 @@
     {
         "chemical": "proteins",
         "vibration": "\\",
-        "peak_start": "~1456",
-        "peak_end": "~1456",
+        "peak_start": 1456.0,
+        "peak_end": 1456.0,
         "reference": "10.3233/BSI-200201",
         "comment": ""
     },
     {
         "chemical": "proteins",
         "vibration": "\\",
-        "peak_start": "~2886",
-        "peak_end": "~2886",
+        "peak_start": 2886.0,
+        "peak_end": 2886.0,
         "reference": "10.3233/BSI-200201",
         "comment": ""
     },
@@ -1226,16 +1226,16 @@
     {
         "chemical": "Lipids",
         "vibration": "\\",
-        "peak_start": "~1750",
-        "peak_end": "~1750",
+        "peak_start": 1750.0,
+        "peak_end": 1750.0,
         "reference": "10.3233/BSI-200201",
         "comment": ""
     },
     {
         "chemical": "Lipids",
         "vibration": "\\",
-        "peak_start": "~2856",
-        "peak_end": "~2856",
+        "peak_start": 2856.0,
+        "peak_end": 2856.0,
         "reference": "10.3233/BSI-200201",
         "comment": ""
     },
@@ -1266,8 +1266,8 @@
     {
         "chemical": "lipids and protein",
         "vibration": "\\",
-        "peak_start": "~2887",
-        "peak_end": "~2887",
+        "peak_start": 2887.0,
+        "peak_end": 2887.0,
         "reference": "10.3233/BSI-200201",
         "comment": ""
     },
@@ -1308,7 +1308,7 @@
         "vibration": "v S-S (g-g-g and g-g-t)",
         "peak_start": 508.0,
         "peak_end": 508.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1316,7 +1316,7 @@
         "vibration": "v S-S (g-g-g and g-g-t)",
         "peak_start": 528.0,
         "peak_end": 528.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1324,7 +1324,7 @@
         "vibration": "\\",
         "peak_start": 538.0,
         "peak_end": 538.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1332,7 +1332,7 @@
         "vibration": "\\",
         "peak_start": 543.0,
         "peak_end": 543.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1340,7 +1340,7 @@
         "vibration": "\\",
         "peak_start": 754.0,
         "peak_end": 754.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1348,7 +1348,7 @@
         "vibration": "v C-S,Met",
         "peak_start": 699.0,
         "peak_end": 699.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1356,7 +1356,7 @@
         "vibration": "\\",
         "peak_start": 761.0,
         "peak_end": 761.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1364,7 +1364,7 @@
         "vibration": "\\",
         "peak_start": 879.0,
         "peak_end": 879.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1372,7 +1372,7 @@
         "vibration": "v C-C",
         "peak_start": 900.0,
         "peak_end": 900.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1380,7 +1380,7 @@
         "vibration": "v C-C",
         "peak_start": 936.0,
         "peak_end": 936.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1388,7 +1388,7 @@
         "vibration": "v C-C",
         "peak_start": 980.0,
         "peak_end": 980.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1396,7 +1396,7 @@
         "vibration": "\\",
         "peak_start": 1014.0,
         "peak_end": 1014.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1404,7 +1404,7 @@
         "vibration": "v C-N",
         "peak_start": 1080.0,
         "peak_end": 1080.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1412,23 +1412,23 @@
         "vibration": "v C-N",
         "peak_start": 1107.0,
         "peak_end": 1107.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
         "chemical": "\\",
         "vibration": "v C-N",
-        "peak_start": "1130(sH)",
-        "peak_end": "1130(sH)",
-        "reference": "\u65e0",
+        "peak_start": 1130.0,
+        "peak_end": 1130.0,
+        "reference": "",
         "comment": ""
     },
     {
         "chemical": "Amide\u2162",
         "vibration": "(vC-N,\u03b4N-H,vCH3-C)",
-        "peak_start": "1238(sH)",
-        "peak_end": "1238(sH)",
-        "reference": "\u65e0",
+        "peak_start": 1238.0,
+        "peak_end": 1238.0,
+        "reference": "",
         "comment": ""
     },
     {
@@ -1436,15 +1436,15 @@
         "vibration": "(vC-N,\u03b4N-H,vCH3-C)",
         "peak_start": 1258.0,
         "peak_end": 1258.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
         "chemical": "Amide\u2162",
         "vibration": "(vC-N,\u03b4N-H,vCH3-C)",
-        "peak_start": "1278(sH)",
-        "peak_end": "1278(sH)",
-        "reference": "\u65e0",
+        "peak_start": 1278.0,
+        "peak_end": 1278.0,
+        "reference": "",
         "comment": ""
     },
     {
@@ -1452,7 +1452,7 @@
         "vibration": "\u03b4C-H",
         "peak_start": 1343.0,
         "peak_end": 1343.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1460,7 +1460,7 @@
         "vibration": "\u03b4C-H",
         "peak_start": 1365.0,
         "peak_end": 1365.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1468,15 +1468,15 @@
         "vibration": "\u03b4C-H2",
         "peak_start": 1447.0,
         "peak_end": 1447.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
         "chemical": "\\",
         "vibration": "\u03b4C-H2",
-        "peak_start": "1460(sH)",
-        "peak_end": "1460(sH)",
-        "reference": "\u65e0",
+        "peak_start": 1460.0,
+        "peak_end": 1460.0,
+        "reference": "",
         "comment": ""
     },
     {
@@ -1484,7 +1484,7 @@
         "vibration": "\\",
         "peak_start": 1553.0,
         "peak_end": 1553.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1492,15 +1492,15 @@
         "vibration": "\\",
         "peak_start": 1582.0,
         "peak_end": 1582.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
         "chemical": "Trp",
         "vibration": "\\",
-        "peak_start": "1620(sH)",
-        "peak_end": "1620(sH)",
-        "reference": "\u65e0",
+        "peak_start": 1620.0,
+        "peak_end": 1620.0,
+        "reference": "",
         "comment": ""
     },
     {
@@ -1508,7 +1508,7 @@
         "vibration": "(v C-O,\u03b4N-H),\u03b4H-O-H",
         "peak_start": 1660.0,
         "peak_end": 1660.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1516,7 +1516,7 @@
         "vibration": "v C-H",
         "peak_start": 2880.0,
         "peak_end": 2880.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1524,15 +1524,15 @@
         "vibration": "v C-H",
         "peak_start": 2942.0,
         "peak_end": 2942.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
         "chemical": "alipHatiC",
         "vibration": "v C-H",
-        "peak_start": "2982(sH)",
-        "peak_end": "2982(sH)",
-        "reference": "\u65e0",
+        "peak_start": 2982.0,
+        "peak_end": 2982.0,
+        "reference": "",
         "comment": ""
     },
     {
@@ -1540,7 +1540,7 @@
         "vibration": "v C-H",
         "peak_start": 3070.0,
         "peak_end": 3070.0,
-        "reference": "\u65e0",
+        "reference": "",
         "comment": ""
     },
     {
@@ -1548,14 +1548,6 @@
         "vibration": "v O-H and v N-H",
         "peak_start": 3250.0,
         "peak_end": 3250.0,
-        "reference": "\u65e0",
-        "comment": ""
-    },
-    {
-        "chemical": "\u5907\u6ce8\uff1at = twisting; n = stretching; o = wagging; d = bending; r = rocking",
-        "vibration": "",
-        "peak_start": "",
-        "peak_end": "",
         "reference": "",
         "comment": ""
     }

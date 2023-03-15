@@ -1,8 +1,9 @@
+import json
 import os.path
 import matplotlib.pyplot as plt
 import xlrd
-import json
-import pandas as pd
+import matplotlib.colors as mcolors
+import random
 
 def raman_prior_sample():
     '''
@@ -40,24 +41,25 @@ def raman_prior_sample():
 
 def plot_raman_prior(raman_peak_list):
     '''
-    TODO: plot
+    plot raman peaks
     '''
 
-    d = raman_prior()
+    plt.figure(figsize = (10, 5))
+    colors=list(mcolors.TABLEAU_COLORS.keys())
 
-    plt.figure(figsize = (14,7))
-
-    for raman in enumerate(raman_peak_list):
-        # same group
-
-        # print(d[key])
-        plt.scatter(d[key], [-idx] * len(d[key]), lw = 5, label = key)
+    dic = {}
+    for p in raman_peak_list:
+        dic.setdefault((p.chemical, p.vibration),[]).append(p)
         
-    plt.legend(loc = "upper right")
+    for idx, (key, value) in enumerate(dic.items()):
+        for item in value:
+            peak_range=[item.peak_start, item.peak_end]
+        _ = plt.hlines(idx,peak_range[0]-10,peak_range[1]+10, lw = 3, label = key,color=random.choice(colors))
+        
+    # plt.legend(loc = "lower right")
     plt.yticks([])
-    plt.xticks(range(500, 3001, 500))
+    plt.xticks([])
     plt.show()
-
 
 class RamanPeak:
 
@@ -88,8 +90,8 @@ class RamanPeak:
         if len(args) > 1:
             self.chemical = args[0]
             self.vibration = args[1]
-            self.peak_start = args[2]
-            self.peak_end = args[3]
+            self.peak_start = float(args[2])
+            self.peak_end = float(args[3])
             self.reference = args[4]
             self.comment = args[5]
 
@@ -98,8 +100,8 @@ class RamanPeak:
             dic = args[0]
             self.chemical = dic['chemical']
             self.vibration = dic['vibration'] 
-            self.peak_start = dic['peak_start']
-            self.peak_end = dic['peak_end']
+            self.peak_start = float(dic['peak_start'])
+            self.peak_end = float(dic['peak_end'])
             self.reference = dic['reference']
             self.comment = dic['comment']
 
