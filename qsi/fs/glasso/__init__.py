@@ -7,7 +7,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 import cvxpy as cp
 
-def binning_op(xaxis, region, filter = 'rbf', SD = 1):
+def window_op(xaxis, region, filter = 'rbf', SD = 1):
     '''
     xaxis : the entire x axis range, e.g., [0, 3000]
     region : e.g., [100,200]
@@ -16,13 +16,20 @@ def binning_op(xaxis, region, filter = 'rbf', SD = 1):
     
     Return : op array. Has the length of xaxis.
     '''
-    if filter == 'uniform':
+
+
+    if filter == 'spike' or filter == 'vanilla':
+        op = np.zeros(len(xaxis))
+        op[region] = 1
+    elif filter == 'uniform' or filter == 'rectangle' or filter == 'average':
         op = np.ones(len(xaxis)) / len(xaxis)
+    elif filter == 'gaussian' or filter == 'rbf':
+        op = ... 
     # todo: others
     return op
 
 
-def adaptive_binning(X, regions, filter = 'rbf'):
+def window_fs(X, regions, filter = 'rbf'):
     '''
     Convert one data to binned features.
     Break down the axis as sections. Each seection is an integral of the signal intensities in the region.
@@ -36,14 +43,13 @@ def adaptive_binning(X, regions, filter = 'rbf'):
 
         Fs = [] # the discrete features for one data sample
         for region in regions:
-            op = binning_op([0, len(x)], region, filter)
+            op = window_op([0, len(x)], region, filter)
             F = (op*x).sum()
             Fs.append(F)
 
         Fss.append(Fs)
 
     return np.array(Fss)
-
 
 def group_lasso(X_scaled, y, WIDTH, offset = 0, LAMBDA = 1, ALPHA = 0.5):
     """
