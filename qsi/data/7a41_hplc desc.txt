@@ -1,0 +1,34 @@
+柴胡为常用中药，为解热要药，有解热、镇痛、利胆等作用。
+有制成柴胡注射液的，可以治疗流感、感冒等上呼吸道感染。
+本属植物作为中药柴胡原料的约20种，
+主要的种类有：北柴胡 B. chinense DC. 、银州柴胡 B. yinchowense Shan et Y. Li、红柴胡 B. scorzonerifolium willd. 、黑柴胡B. smithii Wolff 以及马尾柴胡 B. microcephalum Diels、锥叶柴胡 B. bicaule Helm. 等。
+
+炮制方法:
+1、柴胡：拣去杂质，除去残茎，洗 净泥沙，捞出，润透后及时切片，随即晒干。
+2、醋柴胡：取柴胡片，用醋拌匀，置锅内用文火炒至醋吸尽并微干，取出，晒干。(每柴胡100 斤 ，用醋12斤)。
+3、鳖血柴胡：取柴胡片，置大盆内，淋入用温水少许稀释的鳖血，拌匀，闷润， 置锅内用文火微炒，取出，放凉。(每柴胡100斤，用活鳖200个取血)。
+4、酒柴胡：取柴胡片，用黄酒拌匀，闷润至透，置锅内用文火加热炒干，取出，放凉，每柴胡片100公斤，用黄酒10公斤。
+5、柴胡炭：取柴胡片，用文火炒至外黑内袍色，喷入少量水，取出，晾干。6、蜜柴胡：取蜜置锅内，加热至沸，倒入柴胡片，用文火炒至深黄，不粘手为度。。
+
+本数据集种类:
+0. 野生. 内蒙
+1. 种植. 内蒙
+2. 黑柴胡. 内蒙
+3. 甘肃
+4. 陕西
+5. 柴胡皂苷标准品 5ppm, 10ppm, 20ppm, 40ppm。柴胡皂苷A （Saikosaponin A, SSA） 在中华人民共和国药典 （国家药典委员会2020年版） 中被规定为评价柴胡质量的标记化合物之一。研究显示SSA在体内外均具有生物活性，尤其是在抗炎、抗肿瘤、免疫调节、神经调节与抗病毒等方面
+
+
+色谱：Waters e2695 HPLC separations module with 2998 photodiode array detector
+
+
+Region 	Variety 	Concentration (mg L-1)
+		            saikosaponins-a	saikosaponins-c	saikosaponins-d
+Shaanxi	Bupleurum 	    11.99	2.53	2.94
+Gansu	Bupleurum 	    40.00	8.74	19.45
+Inner Mongolia  - wild Bupleurum	112.34	42.06	82.03
+	            - Cultivated Bupleurum	98.63	33.87	68.08
+	            - black Bupleurum	81.24	27.81	62.54
+
+
+与该数据关联的拉曼数据集：chaihu_rm

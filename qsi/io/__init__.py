@@ -15,6 +15,7 @@ from ..vis import *
 DATA_FOLDER = os.path.dirname(os.path.dirname(
     os.path.realpath(__file__))) + "/data/"
 
+# path, delimiter, has_y, path_desc, labels, default_shift
 DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['Stage 4 (4-7 years) formula'], 200),
                's3_formula': ('B3.csv', ',', False, 'B3 desc.txt', ['Stage 3 (12~36 months) infant formula'], 200),
                's4_formula_c2': ('7341_C2.csv', ',', True, '7341_C2 desc.txt', ['Brand 1', 'Brand 2'], 1000),
@@ -33,7 +34,8 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'cheese': ('Cheese_RAMAN.csv', ',', True, 'Cheese_RAMAN desc.txt', ['MK', 'SL', 'YL'], 200),
                'huangjing': ('7a43.csv', ',', True, '7a43 desc.txt', ['Wild', 'Cultivated'], 3000),
                'huangjing2': ('7a47.csv', ',', True, '7a47 desc.txt', ['Red-Stem', 'Green-Stem'], 3000),
-               'chaihu_rm': ('7a41.csv', ',', True, '7a41 desc.txt', ['Wild', 'Cultivated', 'B. smithii Wolff', 'Gansu', 'Shanxi', 'vinegar Concocted', 'Terrestrosin D'], 1500),
+               'chaihu_rm': ('7a41.csv', ',', True, '7a41 desc.txt', ['Neimeng Wild', 'Neimeng Cultivated', 'Neimeng Black Bupleurum', 'Gansu', 'Shanxi', 'vinegar Concocted', 'Saikosaponin'], 1500),
+               'chaihu_hplc': ('7a41_hplc.xlsx', 'n/a', True, '7a41_hplc desc.txt', [ 'Shanxi', 'Gansu', 'Neimeng Wild', 'Neimeng Cultivated', 'Neimeng Black Bupleurum', 'Saikosaponin 5ppm', 'Saikosaponin 10ppm', 'Saikosaponin 20ppm', 'Saikosaponin 40ppm'], 1),
                'rice_cereal': ('7741_rice_cereal_rm.csv', ',', True, '7741_rice_cereal_rm desc.txt', ['LF', 'EB'], 3000),
                'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv', ',', True, 'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt', ['inorganic', 'organic'], 1000),
                'milkpowder_enose': ('7747.pkl', ',', True, '7747 desc.txt', ['cn', 'au'], 200),
@@ -124,7 +126,14 @@ def open_dataset(path, delimiter=',', has_y=True, labels=None, x_range=None, y_s
         idx = np.argsort(X_names)  # re-order by m/z
         X_names = np.array(X_names)[idx]
         X = X[:, idx]  # re-arrange columns to match X_names
-
+    
+    elif '7a41_hplc' in path: 
+        df=pd.read_excel(path) # sheet 1
+        X_names = df.iloc[:,0].values.tolist()
+        labels = df.columns.values[1:].tolist()
+        y = np.array(range(len(labels)))
+        X = df.iloc[:,1:].values.T
+        
     elif ext == '.pkl':
 
         with open(path, 'rb') as f:
@@ -235,6 +244,11 @@ def scatter_plot(X, y, labels=None, tags=None):
 
 
 def draw_average(X, X_names, SD=1):
+    '''
+    X: 2D array, each row is a spectrum
+    X_names: 1D array, the x-axis labels
+    SD: standard deviation, 0 will not use the error bar
+    '''
 
     matplotlib.rcParams.update({'font.size': 16})
 
@@ -342,8 +356,7 @@ def draw_class_average(X, y, X_names, labels=None, SD=1, shift=200):
                         s=1
                         )
 
-        plt.legend()
-
+    plt.legend()
     plt.title(u'Averaged Spectrums for Each Category\n')
     # plt.xlabel(r'$ cm^{-1} $') # depending on it is Raman or MS
     plt.ylabel('Intensity')
@@ -352,6 +365,43 @@ def draw_class_average(X, y, X_names, labels=None, SD=1, shift=200):
 
     matplotlib.rcParams.update({'font.size': 10})
 
+
+def draw_class_average_3d(X, y, X_names, labels=None, view_point = (30,-50)):
+    '''
+    Draw the average spectrum of each class in a 3D plot.
+
+    Parameter
+    ---------
+    view_point : tuple, the view point of the 3D plot.
+    '''
+
+    matplotlib.rcParams.update({'font.size': 15, 'font.family': 'Times New Roman', 'figure.dpi': 400})
+    
+    fig = plt.figure(figsize=(24, 10))
+
+    if labels is None:
+        labels = list(map(lambda s: 'Class ' + str(s), set(y)))
+
+        
+    ax = fig.add_subplot(111,projection='3d')
+    
+    for c, label in zip(set(y), labels):
+        Xc = X[y == c]
+        yc = y[y == c]
+        # ax.scatter(X_names, [c]*len(X_names), np.mean(Xc, axis=0), label=label, s = 1)
+        ax.plot(X_names, [c]*len(X_names), np.mean(Xc, axis=0), label=label)
+        
+
+    ax.view_init(view_point[0], view_point[1])
+    ax.set_zlabel('Intensity')
+    plt.legend()
+    plt.title(u'Averaged Spectrums for Each Category\n')
+    plt.xlabel('Features') # depending on it is Raman or MS
+    plt.ylabel('Category')
+    plt.yticks( range(len(set(y))) )
+    plt.show()
+
+    matplotlib.rcParams.update({'font.size': 10, 'font.family': 'sans-serif', 'figure.dpi': 100})
 
 def peek_dataset(path,  delimiter=',', has_y=True, labels=None, SD=1, shift=200, x_range=None, y_subset=None):
 
