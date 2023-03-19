@@ -1,5 +1,10 @@
 内蒙古野生与种植柴胡质谱
+
 Dataset Id: 7b43
 The 21th sample of class 1 is an outlier and we removed it.
 
 ['0 野生品种','1 种植品种']
+
+Related dataset:  
+This dataset is related to 7a41.csv(Raman) and 7a41_hplc.xlsx(HPLC).   
+This dataset takes two groups, i.e., "Neimeng Wild" and "Neimeng Cultivated".
