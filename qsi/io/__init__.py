@@ -127,7 +127,7 @@ def open_dataset(path, delimiter=',', has_y=True, labels=None, x_range=None, y_s
         X_names = np.array(X_names)[idx]
         X = X[:, idx]  # re-arrange columns to match X_names
     
-    elif '7a41_hplc' in path: 
+    elif '7a41_hplc' in path:
         df=pd.read_excel(path) # sheet 1
         X_names = df.iloc[:,0].values.tolist()
         labels = df.columns.values[1:].tolist()
