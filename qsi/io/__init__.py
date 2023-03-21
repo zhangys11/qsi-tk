@@ -36,6 +36,7 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'huangjing2': ('7a47.csv', ',', True, '7a47 desc.txt', ['Red-Stem', 'Green-Stem'], 3000),
                'chaihu_rm': ('7a41.csv', ',', True, '7a41 desc.txt', ['Neimeng Wild', 'Neimeng Cultivated', 'Neimeng Black Bupleurum', 'Gansu', 'Shanxi', 'vinegar Concocted', 'Saikosaponin'], 1500),
                'chaihu_hplc': ('7a41_hplc.xlsx', 'n/a', True, '7a41_hplc desc.txt', [ 'Shanxi', 'Gansu', 'Neimeng Wild', 'Neimeng Cultivated', 'Neimeng Black Bupleurum', 'Saikosaponin 5ppm', 'Saikosaponin 10ppm', 'Saikosaponin 20ppm', 'Saikosaponin 40ppm'], 1),
+               'chaihu_ms': ('7b43.csv', ',', True, '7b43 desc.txt', ["wild", "cultivated"], 200),
                'rice_cereal': ('7741_rice_cereal_rm.csv', ',', True, '7741_rice_cereal_rm desc.txt', ['LF', 'EB'], 3000),
                'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv', ',', True, 'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt', ['inorganic', 'organic'], 1000),
                'milkpowder_enose': ('7747.pkl', ',', True, '7747 desc.txt', ['cn', 'au'], 200),
@@ -46,7 +47,6 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'yimi_rm': ('yimi_raman.csv', ',', False, 'yimi_raman desc.txt', ['coix seed'], 200),
                'hangbaiju_rm': ('hangbaiju_raman.csv', ',', False, 'hangbaiju_raman desc.txt', ['chrysanthemum morifolium'], 200),
                'salt': ('7545.csv', ',', True, '7545 desc.txt', ["well salt", "sea salt"], 200),
-               'chaihu_ms': ('7b43.csv', ',', True, '7b43 desc.txt', ["wild", "cultivated"], 200),
                'mouse_omics': ('metabolomics.txt', '\t', True, 'metabolomics desc.txt', ["control", "experiment"], 50000000)
                }
 
@@ -221,7 +221,7 @@ def scatter_plot(X, y, labels=None, tags=None):
 
     pca = PCA(n_components=2)  # keep the first 2 components
     X_pca = pca.fit_transform(X)
-    plotComponents2D(X_pca, y, legends=labels, tags=tags)
+    plot_components_2d(X_pca, y, legends=labels, tags=tags)
     plt.title('PCA')
     plt.show()
 
@@ -230,14 +230,14 @@ def scatter_plot(X, y, labels=None, tags=None):
 
         X_lda = lda(X, y)
         # , tags = range(len(y)), ax = ax
-        plotComponents2D(X_lda, y, legends=labels)
+        plot_components_2d(X_lda, y, legends=labels)
         plt.title('LDA`')
         plt.show()
 
         pls = PLSRegression(n_components=2, scale=False)
         X_pls = pls.fit(X, y).transform(X)
         # , tags = range(len(y)), ax = ax
-        plotComponents2D(X_pls, y, legends=labels)
+        plot_components_2d(X_pls, y, legends=labels)
         # print('score = ', np.round(pls.score(X, y),3))
         plt.title('PLS')
         plt.show()
@@ -395,10 +395,12 @@ def draw_class_average_3d(X, y, X_names, labels=None, view_point = (30,-50)):
     ax.view_init(view_point[0], view_point[1])
     ax.set_zlabel('Intensity')
     plt.legend()
-    plt.title(u'Averaged Spectrums for Each Category\n')
+    plt.title('Averaged Spectrums for Each Category\n')
     plt.xlabel('Features') # depending on it is Raman or MS
     plt.ylabel('Category')
     plt.yticks( range(len(set(y))) )
+    plt.ylim([-0.5, len(set(y))-0.5])
+    # plt.grid(False)
     plt.show()
 
     matplotlib.rcParams.update({'font.size': 10, 'font.family': 'sans-serif', 'figure.dpi': 100})

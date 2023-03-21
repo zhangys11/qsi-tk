@@ -2,7 +2,7 @@
 
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
-from ...vis import plotComponents2D
+from ...vis import plot_components_2d
 from . import SMOTE
 
 def upsample(target_path, X, y, X_names, method = 'SMOTE', folds = 3, d = 0.5, 
@@ -31,7 +31,7 @@ epochs = 10, batch_size = 100, cuda = True, display = False, verbose = True):
 
         pca = PCA(n_components=2) # keep the first 2 components
         X_pca = pca.fit_transform(Xn)
-        plotComponents2D(X_pca, yn)
+        plot_components_2d(X_pca, yn)
         plt.title('PCA of extended dataset')
         plt.show()
 

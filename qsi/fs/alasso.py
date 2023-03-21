@@ -100,7 +100,7 @@ def alasso_v2(X_scaled, y, LAMBDAS = np.logspace(-10, 0, 11), gamma = 1, \
     lambd = cp.Parameter(nonneg=True)
     # w = cp.Constant(w)
     problem = cp.Problem(cp.Minimize(objective_fn(X_scaled, y.flatten(), theta, w, lambd)))
-    X_train, X_test, Y_train, Y_test = train_test_split(X_scaled, y, test_size=0.33)
+    X_train, X_test, Y_train, Y_test = train_test_split(X_scaled, y, test_size=0.33, stratify=y)
 
     lambd_values = LAMBDAS # np.logspace(-10, 0, 11)
     train_errors = []

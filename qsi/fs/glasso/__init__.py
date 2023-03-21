@@ -123,7 +123,7 @@ def group_lasso_cv(X_scaled, y, MAXF, WIDTHS, LAMBDAS, ALPHAS, cv_size = 0.2, ve
                 for lam in LAMBDAS:
                     
                     train_X,test_X, train_y, test_y = train_test_split(X_scaled, y,
-                                                   test_size = cv_size)
+                                                   test_size = cv_size, stratify=y)
                     
                     hparam = 'Window Size: ' + str(w) + ', offset = ' + str(offset) + ', alpha = ' + str(alpha) + ', lambda = ' + str(lam) 
                     HPARAMS.append(hparam)

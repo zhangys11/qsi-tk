@@ -10,7 +10,7 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from scipy.fftpack import fft, dct
 import IPython.display
 
-from ..vis import plotComponents2D, plotComponents3D, plot_feature_importance, unsupervised_dimension_reductions
+from ..vis import plot_components_2d, plot_components_3d, plot_feature_importance, unsupervised_dimension_reductions
 from .alasso import *
 from .glasso import *
 from .aenet import *
@@ -232,8 +232,7 @@ def glasso_fs(X, y, X_names=None, N=30, WIDTH=8, ALPHA=0.5, LAMBDA=0.1, display=
 
 
 def glasso_cv_fs(X, y, X_names=None, N=30, N2=None,
-                 WIDTHS=[2, 8, 32], LAMBDAS=[0.01, 0.1, 1], ALPHAS=[0, 0.5, 1],
-                 display=True):
+                 WIDTHS=[2, 8, 32], LAMBDAS=[0.01, 0.1, 1], ALPHAS=[0, 0.5, 1]):
     '''
     Parameters
     ----------
@@ -346,8 +345,7 @@ FS_DICT = {
     "lasso": lasso_fs,
     "elastic net": elastic_net_fs,
     "adaptive lasso": alasso_fs,
-    "group lasso": glasso_cv_fs,
-    # "group lasso cv": glasso_cv_fs,
+    # "group lasso": glasso_cv_fs,
     "adaptive elastic net": aenet_cv_fs,
     "multi-task lasso": multitask_lasso_fs,
     "multi-task elastic net": multitask_elastic_net_fs,
@@ -465,11 +463,11 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
             IPython.display.display(IPython.display.HTML('<p>' + FS_DESC_DICT[key] + '</p><br/>'))
 
         f = FS_DICT[key]
-        X_s, idx, fi = f(X, y, X_names, N=N, display=True)
+        X_s, idx, _ = f(X, y, X_names, N=N, display=True)
 
         if X_s is not None and X_s.shape[0] > 0 and X_s.shape[1] > 0:
 
-            ax = plotComponents2D(X_s[:, :2], y)
+            ax = plot_components_2d(X_s[:, :2], y)
             ax.set_title('Scatter Plot of Top-2 Selected Features')
             plt.show()
 
@@ -479,10 +477,7 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
             print('Classification accurary with the selected features (LogisticRegressionCV) = ',
                   round(clf.score(X_s, y), 3))
 
-        if output == key:
-            FS_OUTPUT[key] = X_s
-            FS_IDX[key] = idx
-        elif output == 'all':
+        if output == key or output == 'all':
             FS_OUTPUT[key] = X_s
             FS_IDX[key] = idx
         else:
@@ -639,7 +634,7 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1,
                 pca = PCA(n_components=2)
                 f_2d = pca.fit_transform(FS)
 
-                plotComponents2D(f_2d, y, legends=labels)
+                plot_components_2d(f_2d, y, legends=labels)
                 plt.title(name + ' - PCA')
 
             elif len(set(y)) > 2:
@@ -650,7 +645,7 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1,
                 f_2d = lda.fit(FS, y).transform(FS)
 
                 # plt.figure(figsize = (20,15))
-                plotComponents2D(f_2d, y, legends=labels)
+                plot_components_2d(f_2d, y, legends=labels)
                 title = name + ' - LDA'
 
                 # Returns the coefficient of determination R^2 of the prediction.
@@ -663,7 +658,7 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1,
                     lda = LinearDiscriminantAnalysis(n_components=3)
                     f_3d = lda.fit(FS, y).transform(FS)
 
-                    plotComponents3D(f_3d, y, legends=labels)
+                    plot_components_3d(f_3d, y, legends=labels)
                     title = name + ' - LDA'
 
                     # Returns the coefficient of determination R^2 of the prediction.
@@ -680,7 +675,7 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1,
                 f_2d = pls.fit(FS, y).transform(FS)
 
                 # plt.figure(figsize = (20,15))
-                plotComponents2D(f_2d, y, legends=labels)
+                plot_components_2d(f_2d, y, legends=labels)
                 title = name + ' - PLS'
 
                 # Returns the coefficient of determination R^2 of the prediction.

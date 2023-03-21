@@ -17,6 +17,7 @@ def lda(X,y):
     _,Z,_ = LDA(X,y,display = False)
     return Z
 
+
 def dct(x, K = None, flavor = 'fftpack', display = True):
     '''
     Parameters

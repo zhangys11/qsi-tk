@@ -1,39 +1,37 @@
 import os.path
+import joblib
 import numpy as np
 import matplotlib.pyplot as plt
 from IPython.core.display import HTML, display
-import pickle
-import joblib
-
-from qsi.io.pre import filter_dataset
-from . import io
-from .vis import *
-from .dr import dataset_dct_row_wise
-from .dr import mf, lda
-from .fs import *
-from .cla import metrics
-from .cla import grid_search_svm_hyperparams, plot_svm_boundary, plot_lr_boundary
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler,MinMaxScaler
-from sklearn.decomposition import PCA, SparsePCA, KernelPCA, TruncatedSVD
-from sklearn.manifold import TSNE, MDS
+from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
 from sklearn.feature_selection import SelectFromModel
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.svm import SVC # SVC(C=1.0, ...) 与 nuSVC(nu = 0.5, ...) 的区别：前者使用C～[0，inf），后者使用nu～(0,1]，惩罚性的解释不同，优化都可以使用GridSearch方法
 from scipy.signal import savgol_filter
 
-def analyze(id, x_range = None, y_subset=None, shift = 100, pre=None, pre_param=None):
+from qsi.io.pre import filter_dataset
+from . import io
+from .vis import supervised_dimension_reductions, unsupervised_dimension_reductions
+from .fs import RUN_ALL_FS
+from cla import metrics
+
+def analyze(id, x_range = None, y_subset=None, shift = 100, pres = None, fs_output = '', fs_feature_num = 30, cla_feature_num = 10):
     '''
-    A general and standard data analysis flow. Provides an overview for the target dataset.
+    A complete data analysis flow. 
+    1. Load dataset 2. Preprocess 3. General dataset analysis
     
     Parameters
     ----------
     id : dataset id or a full path
     x_range, y_subset : select specific rows and cols for analysis, if you don't wish to use the entire dataset.
     shift : interval between classes in the average wave plot
-    pre, pre_param : additional preprocessing (with params) applied, e.g. 'max_bin, 100'
+    
+    pres : a list of tuple (pre_type, pre_param) : additional preprocessing (with params) applied, e.g. ['max_bin, 100', 'threshold', 10]
+        
         pre = 'max(target_dim = pre_param)' : binning and take the maximum in each interval
         pre = 'sum(target_dim = pre_param)' or 'rect(window_size = pre_param)' : 
             binning and take the sum/mean in each interval, i.e., rectangle window
@@ -44,13 +42,20 @@ def analyze(id, x_range = None, y_subset=None, shift = 100, pre=None, pre_param=
         pre = 'trapezoidal(pre_param)' : trapezoid window kernel. Not implementated yet.
         
         pre = 'diff' : first-order op. We use io.pre.diff_dataset()
-        default is '' or None. 
+        pre = 'threshold' : call io.pre.x_thresholding()
+        pre = 'peak_normalize' / 'rowvec_normalize' : call io.pre.x_normalize()
+        
+        default is [] or None. 
+
+    Remarks
+    -------
+    Default preprocessing parameters for MALDI-TOF data:
+    [('threshold', 10), ('peak_normalize', 1000), ('max', 100)]
     '''
     display(HTML('<h2>数据加载 Load Dataset</h2>'))
 
-    labels = None
     if (id in io.DATASET_MAP.keys()):
-        X, y, X_names, _, labels = io.load_dataset(id, x_range=x_range, y_subset=y_subset, shift = shift)
+        X, y, X_names, _, _ = io.load_dataset(id, x_range=x_range, y_subset=y_subset, shift = shift)
     elif os.path.exists(id):
         X, y, X_names, _ = io.open_dataset(id, x_range=x_range, y_subset=y_subset, shift = shift)
     else:
@@ -58,23 +63,49 @@ def analyze(id, x_range = None, y_subset=None, shift = 100, pre=None, pre_param=
 
     display(HTML('<hr/><h2>预处理 Preprocessing </h2>'))
     
-    if pre:
-        display(HTML('<h3>' + pre + '</h3>'))
-        if pre in ['max', 'sum', 'rect', 'tri', 'mean']:
-            X, X_names = io.pre.x_binning(X,X_names,target_dim=pre_param,flavor=pre)
-        elif pre == 'diff':
+    if pres is None:
+        pres = []
+
+    for pre in pres:
+        pre_type, pre_param = pre        
+        display(HTML('<h3>' + pre_type + '</h3>'))
+
+        if pre_type == 'threshold':
+            X = io.pre.x_thresholding(X, pre_param)
+        elif pre_type in ['max', 'sum', 'rect', 'tri', 'mean']:
+            X, X_names = io.pre.x_binning(X, X_names,target_dim=pre_param,flavor=pre_type)
+        elif pre_type == 'diff':
             X = io.pre.diff_dataset(X)
             X_names = X_names[1:] # pop the 1st x label, as diff reduces dim by 1
+        elif pre_type == 'rowvec_normalize':
+            X = io.pre.x_normalize(X, flavor='rowvec', target_max=pre_param)
+        elif pre_type == 'peak_normalize':
+            X = io.pre.x_normalize(X, flavor='peak', target_max=pre_param)
 
-        display(HTML('预处理后的维度：X.shape = ' + str(X.shape) +'<hr/>'))
+    display(HTML('预处理后的维度：X.shape = ' + str(X.shape) +'<hr/>'))
 
-    analyze_dataset(X, y, X_names)
+    analyze_dataset(X, y, X_names, fs_output, fs_feature_num, cla_feature_num)
 
-def analyze_dataset(X, y, X_names, cla_feature_num = 10):
+def analyze_dataset(X, y, X_names, fs_output = '', fs_feature_num = 30, cla_feature_num = 10):
     '''
+    This is a general pipeline for data analysis. 
+    ordinary feature scaling + feature selection + classifiability analysis + classification 
+    
     Parameters
     ----------
-    X : preprocessed data matrix
+    X : an already-preprocessed data matrix
+    fs_output : which feature selection result to use for the final classification. 
+        Available values: (multi-task fs are not provided here)
+        "pearsion-r", 
+        "info-gain / mutual information", 
+        "chi-squared statistic",
+        "anova statistic", 
+        "lasso", 
+        "elastic net",
+        "adaptive lasso",
+        "adaptive elastic net"
+        Default is '' (empty string) or 'common', which means to use the common intersection of all feature selections.
+        If no common features are found, then use elastic net. 
     cla_feature_num : how many features to use for classification
     '''
 
@@ -113,95 +144,27 @@ def analyze_dataset(X, y, X_names, cla_feature_num = 10):
 
     mm_scaler = MinMaxScaler()
     X_mm_scaled = mm_scaler.fit_transform(X)
-    print('X_mm_scaled is rescaled to [0,1]. We use X_mm_scaled in the MFDR and feature selectioin section.')
+    print('X_mm_scaled is rescaled to [0,1]. We use X_mm_scaled in DR and FS.')
 
     display(HTML('<hr/><h2>降维 Dimensionality Reduction</h2>'))
-    # Dimension Reduction & Visualization
-
-    if X.shape[1] > 6000:
-         display(HTML('<h3>数据维度过高，降维算法运行时间过长，请等待。<br/>The dataset is high-dimensional (>6000). Some DR algorithms may take very long time. Please wait.</h3>'))
-    else:
-        # SparsePCA(n_components=None, alpha=1, ridge_alpha=0.01, max_iter=1000, tol=1e-08, method=’lars’, n_jobs=1, U_init=None, V_init=None, verbose=False, random_state=None)    # [Warn] SparsePCA takes very long time to run.
-        X_spca = SparsePCA(n_components=2).fit_transform(X) # keep the first 2 components. default L1 = 1; default L2 = 0.01 pca.fit(X) X_spca = pca.transform(X) print(X_spca.shape)
-        ax = plotComponents2D(X_spca, y)
-        ax.set_title('Sparse PCA')
-        plt.show()    
-        display(HTML('<hr/>'))
-
-        for kernel in ['linear', 'rbf','sigmoid', 'cosine','poly']:
-            try:
-                X_kpca = KernelPCA(n_components=2, kernel=kernel).fit_transform(X) # keep the first 2 components. default gamma = 1/n_features
-                ax = plotComponents2D(X_kpca, y)
-                ax.set_title('Kernel PCA (' + kernel + ')')
-                plt.show()
-                display(HTML('<hr/>'))
-            except:
-                print('Exception in kernel-PCA: ' + kernel)
-
-
-        X_tsvd = TruncatedSVD(n_components=2).fit_transform(X)
-        ax = plotComponents2D(X_tsvd, y)
-        ax.set_title('Truncated SVD')    
-        plt.show()
-        print('PCA is (truncated) SVD on centered data (by per-feature mean substraction). If the data is already centered, those two classes will do the same. In practice TruncatedSVD is useful on large sparse datasets which cannot be centered easily. ')
-        display(HTML('<hr/>'))   
-
-        X_tsne = TSNE(n_components=2).fit_transform(X)
-        ax = plotComponents2D(X_tsne, y)
-        ax.set_title('t-SNE')
-        plt.show()
-        print('t-SNE (t-distributed Stochastic Neighbor Embedding) is highly recommended to use another dimensionality reduction method (e.g. PCA for dense data or TruncatedSVD for sparse data) to reduce the number of dimensions to a reasonable amount (e.g. 50) if the number of features is very high. This will suppress some noise and speed up the computation of pairwise distances between samples.')
-        display(HTML('<hr/>'))
-
-        X_mds = MDS(n_components=2).fit_transform(X_scaled)
-        ax = plotComponents2D(X_mds, y)
-        ax.set_title('MDS')
-        plt.show()
-        print('MDS (Multidimensional scaling) is a simplification of kernel PCA, and can be extensible with alternate kernels. PCA selects influential dimensions by eigenanalysis of the N data points themselves, while MDS (Multidimensional Scaling) selects influential dimensions by eigenanalysis of the N2 data points of a pairwise distance matrix. This has the effect of highlighting the deviations from uniformity in the distribution. Reference manifold.ipynb')
-        display(HTML('<hr/>'))
-
-        Z = dataset_dct_row_wise(X, K = 2, verbose = False)
-        ax = plotComponents2D(Z, y)
-        ax.set_title('DCT')
-        plt.show()
-        display(HTML('<hr/>'))
-        
-        for alg in mf.get_algorithms():
-            W,_,_,_ = mf.mf(X_mm_scaled, k = 2, alg = alg, display = False) # some MFDR algs (e.g., NMF) require non-negative X
-            ax = plotComponents2D(W, y)
-            ax.set_title(alg)
-            plt.show()
-            display(HTML('<hr/>'))
-        
-        X_lda = lda(X, y)
-        ax = plotComponents2D(X_lda, y)
-        ax.set_title('LDA')
-        plt.show()
-        print('LDA is like PCA, but focuses on maximizing the seperatibility between categories. \
-    LDA for two categories tries to maximize distance between group means, meanwhile minimize intra-group variances. \n\
-    { (\mu_1 - \mu_2)^2 } \over { s_1^2 + s_2^2 }')
-        print('The model fits a Gaussian density to each class, assuming that all classes share the same covariance matrix.\n \
-            The fitted model can be used to reduce the dimensionality of the input by projecting it to the most discriminative directions.')
-        print('Risk of using LDA: Possible Warning - Variables are collinear. \n\
-    LDA, like regression techniques involves computing a matrix inversion, which is inaccurate if the determinant is close to 0 (i.e. two or more variables are almost a linear combination of each other). \n\
-    More importantly, it makes the estimated coefficients impossible to interpret. If an increase in X1 , say, is associated with an decrease in X2 and they both increase variable Y, every change in X1 will be compensated by a change in X2 and you will underestimate the effect of X1 on Y. In LDA, you would underestimate the effect of X1 on the classification. If all you care for is the classification per se, and that after training your model on half of the data and testing it on the other half you get 85-95% accuracy I\'d say it is fine. ')
-        display(HTML('<hr/>'))
-
-        pls = PLSRegression(n_components=2, scale = True)
-        X_pls = pls.fit(X, y).transform(X)
-        ax = plotComponents2D(X_pls, y)
-        ax.set_title('PLS')
-        plt.show()
-        print('PLS STEPS: \n\
-    X and Y are decomposed into latent structures in an iterative way. \n\
-    The latent structure corresponding to the most variation of Y is explained by a best latent strcture of X. \n\n \
-    ADVANTAGES: Deal with multi-colinearity; Interpretation by data structure')
-        display(HTML('<hr/>'))
-
+    display(HTML('<h3>无监督降维 Unsupervised Dimensionality Reduction</h3>'))
+    unsupervised_dimension_reductions(X_mm_scaled, X_names, y)
+    display(HTML('<h3>有监督降维 Supervised Dimensionality Reduction</h3>'))
+    unsupervised_dimension_reductions(X_mm_scaled, X_names, y)
 
     display(HTML('<hr/><h2>特征选择 Feature Selection</h2>'))
     
-    X_s = RUN_ALL_FS(X_mm_scaled, y, X_names, N = 30, output='adaptive lasso')['adaptive lasso']
+    FS_OUTPUT, _, FS_COMMON_IDX = RUN_ALL_FS(X_mm_scaled, y, X_names, N = fs_feature_num, output='all')
+    if fs_output == 'common' or fs_output == '':
+        if len(FS_COMMON_IDX) > 0:
+            display(HTML('<h3>' + 'Use common features selected by all FS methods: ' + str(X_names(FS_COMMON_IDX)) + '</h3>'))
+            X_s = X_mm_scaled[FS_COMMON_IDX]        
+        else:
+            display(HTML('<h3>' + 'No common features. We will use the default elastic net fs for the following procedures.' + '</h3>'))
+            X_s = FS_OUTPUT['elastic net']
+    else:
+        display(HTML('<h3>' + 'Use ' + fs_output + ' for the following procedures.</h3>'))
+        X_s = FS_OUTPUT[fs_output]
 
     if len(set(y)) == 2:
         if cla_feature_num is None:
@@ -219,8 +182,8 @@ def analyze_dataset(X, y, X_names, cla_feature_num = 10):
 
     print('Use elastic net selected features after PCA as input: ')
     X_s_pca = PCA(n_components=2).fit_transform(X_s)
-    best_params, clf, _ = grid_search_svm_hyperparams(X_s_pca, y, 0.2, tuned_parameters)
-    plot_svm_boundary(X_s_pca, y, clf)
+    best_params, clf, _ = metrics.grid_search_svm_hyperparams(X_s_pca, y, 0.2, tuned_parameters)
+    metrics.plot_svm_boundary(X_s_pca, y, clf)
 
 
     display(HTML('<hr/><h3>线性分类（逻辑回归模型）Linear Classifier (Logistic Regression)</h3>'))
@@ -235,7 +198,7 @@ def analyze_dataset(X, y, X_names, cla_feature_num = 10):
                         verbose=0,                        
                         l1_ratio=None).fit(X_s_pca, y)
     
-    plot_lr_boundary(X_s_pca, y, lr)
+    metrics.plot_lr_boundary(X_s_pca, y, lr)
 
 def build_simple_pipeline(X, y, save_path = None):
     '''
@@ -256,7 +219,7 @@ def build_simple_pipeline(X, y, save_path = None):
         ('pca', PCA(n_components=2)), 
         ('grid_search', GridSearchCV(SVC(), tuned_parameters, cv=5)) ]) 
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y)
     pipe.fit(X_train, y_train) 
     print('Test accuracy: %.3f' % pipe.score(X_test, y_test))
 

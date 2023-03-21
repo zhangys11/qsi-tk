@@ -57,7 +57,7 @@ def fsse_cv(X_scaled,y, X_names = None, N = 30, base_learner=ensemble.create_elm
         
             plt.figure()
             xfsse_pca = PCA(n_components = 2).fit_transform(xfsse)
-            plotComponents2D(xfsse_pca, y, set(y), ax = None)
+            plot_components_2d(xfsse_pca, y, set(y), ax = None)
             plt.legend()
             plt.show()
 

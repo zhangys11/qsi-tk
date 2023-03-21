@@ -7,34 +7,44 @@ from scipy.interpolate import interp1d
 from scipy.ndimage.interpolation import shift
 from statsmodels.tsa.stattools import ccovf
 
+############# feature filter by threshold ##############
+def x_thresholding(X, threshold = 10):
+    '''
+    All features below the threshold will be removed.
+    Typically used in TOF-MS data.
+    Signals weaker than 10 is mostly considered as background noise.
+
+    Note
+    ----
+    This function can only be used in the original unscaled data. 
+    '''
+    NX = X.copy()
+    NX[NX <= threshold] = 0
+    return NX
+
 ############# row-wise normalization / scaling ##############
 
-def peak_normalize(X, target_max = 1000):
+def x_normalize(X, flavor = 'highest_peak', target_max = 1000):
     '''
-    Normalize each data / row by its highest peak. 
+    Normalize each data / row by its highest peak or row vector.
     Typically used in TOF-MS data. 
-    rowvec_normalize() is more often used.
+    
+    Parameters
+    ----------
+    flavor : 'highest_peak' or 'row_vector'
+    target_max : the maximum value after normalization. Default is 1000.
     '''
     NX = []
     for x in X:
-        row_max = x.abs().max()
-        nx = x / row_max * target_max
+        if flavor == 'row_vector' or flavor == 'rowvec':
+            x_max = np.linalg.norm(x)
+        else:
+            x_max = np.abs(x).max()
+        nx = x / x_max * target_max
         NX.append(nx)
     return np.array(NX)
 
-def rowvec_normalize(X, target_max = 1000):
-    '''
-    Normalize each data / row by the row vector magnitude.
-    Typically used in TOF-MS data.
-    '''
-    NX = []
-    for x in X:
-        v = np.linalg.norm(x)
-        nx = x / v * target_max
-        NX.append(nx)
-    return np.array(NX)
-
-################### binning & kernel & sliding window ###################
+################### binning / kernel / sliding window ###################
 
 def x_binning(X, X_names = None, target_dim = 0.1, flavor = 'max', display = False):
     '''
@@ -49,7 +59,6 @@ def x_binning(X, X_names = None, target_dim = 0.1, flavor = 'max', display = Fal
         'sum' / 'rect' / 'mean' - take the sum / integral / mean.
         'tri' - triangle integral, use a mask e.g., [1,2,3,4,3,2,1]
     display : whether show the 1st sample after processing
-
 
     Return
     ------
