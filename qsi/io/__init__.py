@@ -9,7 +9,7 @@ import matplotlib
 from sklearn.decomposition import PCA
 from sklearn.cross_decomposition import PLSRegression
 from . import pre
-from ..dr import lda
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
 from ..vis import *
 DATA_FOLDER = os.path.dirname(os.path.dirname(
@@ -227,12 +227,18 @@ def scatter_plot(X, y, labels=None, tags=None):
 
     # for very-high dimensional data, lda/pls is very slow.
     if y is not None and X.shape[1] < 6000:
-
-        X_lda = lda(X, y)
-        # , tags = range(len(y)), ax = ax
-        plot_components_2d(X_lda, y, legends=labels)
-        plt.title('LDA`')
+        
+        '''
+        lda = LinearDiscriminantAnalysis()
+        X_lda = lda.fit(X, y).transform(X)
+        if X_lda.shape[1] == 1:
+            plot_components_1d(X_lda, y, legends=labels)
+            plt.title('LDA\nX has only 1 FEATURE/COLUMN. Plot X directly.')   
+        else:
+            plot_components_2d(X_lda, y, legends=labels)
+            plt.title('LDA')
         plt.show()
+        '''
 
         pls = PLSRegression(n_components=2, scale=False)
         X_pls = pls.fit(X, y).transform(X)

@@ -17,7 +17,7 @@ def unsupervised_dimension_reductions(X, y, legends = None):
         
     labels = list(set(y))
 
-    fig = plt.figure(figsize=(36, 10))
+    fig = plt.figure(figsize=(18, 24))
     # plt.title("", fontsize=14)
 
     ax = fig.add_subplot(631) # , projection='polar' , projection='3d'
@@ -152,15 +152,20 @@ def unsupervised_dimension_reductions(X, y, legends = None):
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
     
-    for idx, alg in enumerate( mf.get_algorithms() ):
+    idx = 0
+    for alg in mf.get_algorithms():
+        if alg == 'PCA':
+            continue # already has PCA above
         ax = fig.add_subplot(6,3,11 + idx)
-        W,_,_,_ = mf.mf(X, k = 2, alg = alg, display = False) # some MFDR algs (e.g., NMF) require non-negative X
-        plot_components_2d(W, y, labels, legends=legends, ax=ax)
+        idx += 1
+        try:
+            W,_,_,_ = mf.mf(X, k = 2, alg = alg, display = False) # some MFDR algs (e.g., NMF) require non-negative X
+            plot_components_2d(W, y, labels, legends=legends, ax=ax)
+        except Exception as e:
+            # if kernel PCA throws exception, print the error message
+            ax.text(0.01,0.5, alg + ' exception: ' + str( getattr(e, 'message', repr(e) ) ) )    
         ax.set_title(alg)
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
 
     plt.show()
-
-    print('NOTES:\n PCA is (truncated) SVD on centered data (by per-feature mean substraction). If the data is already centered, those two classes will do the same. In practice TruncatedSVD is useful on large sparse datasets which cannot be centered easily. ')
-    print('MDS (Multidimensional scaling) is a simplification of kernel PCA, and can be extensible with alternate kernels. PCA selects influential dimensions by eigenanalysis of the N data points themselves, while MDS (Multidimensional Scaling) selects influential dimensions by eigenanalysis of the N2 data points of a pairwise distance matrix. This has the effect of highlighting the deviations from uniformity in the distribution. Reference manifold.ipynb')

@@ -52,8 +52,7 @@ def __fs__(X, fi, X_names=None, N=30, display=True):
     '''
 
     if display:
-        plot_feature_importance(
-            fi, X_names, 'feature-wise coefs/values', xtick_angle=0)
+        plot_feature_importance(fi, X_names, 'feature-wise coefs/importance', xtick_angle=0)
 
     idx = (np.argsort(fi)[-N:])[::-1]
     # idx = np.where(pval < 0.1)[0] # np.where(chi2 > 4.5)
@@ -345,8 +344,8 @@ FS_DICT = {
     "lasso": lasso_fs,
     "elastic net": elastic_net_fs,
     "adaptive lasso": alasso_fs,
-    # "group lasso": glasso_cv_fs,
-    "adaptive elastic net": aenet_cv_fs,
+    # "group lasso": glasso_cv_fs, # very slow for high-dim data
+    # "adaptive elastic net": aenet_cv_fs, # very slow for high-dim data
     "multi-task lasso": multitask_lasso_fs,
     "multi-task elastic net": multitask_elastic_net_fs,
 }
@@ -489,7 +488,8 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
 
     # if you want to exclude some fs algs
     # del FS_IDX['group lasso']
-    del FS_IDX['adaptive elastic net']  # this alg differs from others
+    if 'adaptive elastic net' in FS_IDX:
+        del FS_IDX['adaptive elastic net']  # this alg differs from others
 
     if len(FS_IDX) > 0:
         FS_COMMON_IDX = list(FS_IDX.values())[0]

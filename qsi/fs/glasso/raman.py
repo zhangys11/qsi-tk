@@ -191,8 +191,7 @@ def generate_html_table(raman_peak_list):
     -------
     raman_peak_list = load_raman_peak_list()
     html = generate_html_table(raman_peak_list)
-    from IPython.core.display import HTML, display
-    display(HTML(html))
+    IPython.display.display(IPython.display.HTML(html))
     '''
     # ranman_html = pd.DataFrame.from_dict(raman_peak_list)
     # html_text = ranman_html.to_html(justify='center')

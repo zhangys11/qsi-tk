@@ -9,14 +9,16 @@ import matplotlib.pyplot as plt
 import scipy.fftpack
 import numpy as np
 from .metrics import calculate_recon_error, DRMetrics
-from IPython.core.display import HTML, display
+import IPython.display
 from sklearn.preprocessing import MinMaxScaler
+
+'''
 from ..cs import LDA # import LDA as a supervised DR alg
 
 def lda(X,y):
     _,Z,_ = LDA(X,y,display = False)
     return Z
-
+'''
 
 def dct(x, K = None, flavor = 'fftpack', display = True):
     '''
@@ -206,7 +208,7 @@ def dataset_dct(X, tq = 0.99, flavor = 'fftpack'):
         s += '</tr>'
         
     s += '</table>'
-    display(HTML(s))
+    IPython.display.display(IPython.display.HTML(s))
 
     if tq > 0 and tq < 1:        
 

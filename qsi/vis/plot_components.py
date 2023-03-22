@@ -5,7 +5,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_components_1d(X, y, labels, use_markers=False, ax=None, legends = None):
+def plot_components_1d(X, y, labels = None, use_markers = False, ax = None, legends = None):
     '''
     Plot 1D data points in a 2D space.
     '''
@@ -19,6 +19,11 @@ def plot_components_1d(X, y, labels, use_markers=False, ax=None, legends = None)
 
     if (ax is None):
         fig, ax = plt.subplots()
+
+    if (y is None or len(y) == 0):
+        labels = [0] # only one class
+    if (labels is None):
+        labels = set(y)
         
     i=0
     for label in labels:
@@ -40,6 +45,11 @@ def plot_components_1d(X, y, labels, use_markers=False, ax=None, legends = None)
         i=i+1
 
     ax.legend()
+
+    ax.axes.xaxis.set_visible(False) 
+    ax.axes.yaxis.set_visible(False)
+
+    return ax
 
 
 def plot_components_2d(X, y, labels = None, use_markers = False, ax=None, legends = None, tags = None):
@@ -75,17 +85,17 @@ def plot_components_2d(X, y, labels = None, use_markers = False, ax=None, legend
         if use_markers:
             ax.scatter([cluster[:,0]], [cluster[:,1]], 
                        s=40, 
-                       marker=markers[i], 
+                       marker=markers[i%len(markers)], 
                        facecolors='none', 
-                       edgecolors=colors[i+3],
+                       edgecolors=colors[(i+3)%len(colors)],
                        label= (str(legends[i]) if legends is not None else ("Y = " + str(label)  + ' (' + str(len(cluster)) + ')')) )
         else:
-            ax.scatter([cluster[:,0]], [cluster[:,1]], 
+            ax.scatter([cluster[:,0]], [cluster[:,1]],
                        s=70, 
-                       facecolors=colors[i],  
+                       facecolors=colors[i%len(colors)],
                        label= (str(legends[i]) if legends is not None else ("Y = " + str(label) + ' (' + str(len(cluster)) + ')')), 
                        edgecolors = 'black', 
-                       alpha = .4) # cmap='tab20'                
+                       alpha = .4) # cmap='tab20'
         i=i+1
     
     if (tags is not None):
@@ -131,3 +141,5 @@ def plot_components_3d(X, y, labels=None, legends = None):
                 c=colors[idx])
 
     ax.legend()
+
+    return ax
