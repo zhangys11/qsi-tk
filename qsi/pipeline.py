@@ -18,16 +18,41 @@ from . import io
 from .vis import supervised_dimension_reductions, unsupervised_dimension_reductions
 from .fs import RUN_ALL_FS
 
+
 def analyze(id, x_range = None, y_subset=None, shift = None, pres = None, fs_output = '', fs_feature_num = 30, cla_feature_num = 3):
     '''
-    A complete data analysis flow. 
+    A standard data analysis flow. 
     1. Load dataset 2. Preprocess 3. General dataset analysis
+
+    Don't use this funciton if you want to do some extra preprocessing or feature selection.
+    Instead, use the individual functions, i.e., preprocess_dataset and analyze_dataset.
     
     Parameters
     ----------
     id : dataset id or a full path
     x_range, y_subset : select specific rows and cols for analysis, if you don't wish to use the entire dataset.
     shift : interval between classes in the average wave plot
+    '''
+
+    IPython.display.display(IPython.display.HTML('<h2>数据加载 Load Dataset</h2>'))
+
+    if (id in io.DATASET_MAP.keys()):
+        X, y, X_names, _, _ = io.load_dataset(id, x_range=x_range, y_subset=y_subset, shift = shift)
+    elif os.path.exists(id):
+        X, y, X_names, _ = io.open_dataset(id, x_range=x_range, y_subset=y_subset, shift = shift)
+    else:
+        IPython.display.display(IPython.display.HTML('<h3>数据加载失败，请传入正确的id或文件路径。<br/>Load data failed. Please specific a correct dataset ID or file path.</h3>'))
+        return
+
+    X, X_names = preprocess_dataset(X, X_names, pres)
+    analyze_dataset(X, y, X_names, fs_output, fs_feature_num, cla_feature_num)
+
+def preprocess_dataset(X, X_names, pres = None):
+    '''
+    Load and preprocess a dataset.
+
+    Parameters
+    ----------
     
     pres : a list of tuple (pre_type, pre_param) : additional preprocessing (with params) applied, e.g. ['max_bin, 100', 'threshold', 10]
         
@@ -51,15 +76,6 @@ def analyze(id, x_range = None, y_subset=None, shift = None, pres = None, fs_out
     Default preprocessing parameters for MALDI-TOF data:
     [('threshold', 10), ('max', 0.01), ('peak_normalize', 1000)]
     '''
-    IPython.display.display(IPython.display.HTML('<h2>数据加载 Load Dataset</h2>'))
-
-    if (id in io.DATASET_MAP.keys()):
-        X, y, X_names, _, _ = io.load_dataset(id, x_range=x_range, y_subset=y_subset, shift = shift)
-    elif os.path.exists(id):
-        X, y, X_names, _ = io.open_dataset(id, x_range=x_range, y_subset=y_subset, shift = shift)
-    else:
-        IPython.display.display(IPython.display.HTML('<h3>数据加载失败，请传入正确的id或文件路径。<br/>Load data failed. Please specific a correct dataset ID or file path.</h3>'))
-
     IPython.display.display(IPython.display.HTML('<hr/><h2>每个样本的预处理 Row-wise Preprocessing </h2>'))
     
     if pres is None:
@@ -88,7 +104,7 @@ def analyze(id, x_range = None, y_subset=None, shift = None, pres = None, fs_out
 
     IPython.display.display(IPython.display.HTML('<br/><br/>预处理后的维度：X.shape = ' + str(X.shape) +'<hr/>'))
 
-    analyze_dataset(X, y, X_names, fs_output, fs_feature_num, cla_feature_num)
+    return X, X_names
 
 def analyze_dataset(X, y, X_names, fs_output = '', fs_feature_num = 30, cla_feature_num = 10):
     '''

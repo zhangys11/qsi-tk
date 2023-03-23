@@ -1,6 +1,19 @@
 Data Set ID:婴幼儿米糊（Rice Cereal）拉曼光谱
 
 x：988, ..., 3400 cm-1
-y：["小皮 LittleFreddie","爱思贝 EARTH’S BEST"]
+y：["小皮 LittleFreddie, Austrilia","爱思贝 EARTH’S BEST, Germany"]
 
+This dataset has removed outliers (by MDS scatter plot).
+Code for removing outliers:   
 
+```
+from sklearn.manifold import MDS
+plot_components_2d(X_mds, y, labels, tags = range(len(y)), ax = ax)
+
+path = "7741.csv"
+data = pd.read_csv(path)
+
+outliers_df = data.index.isin([74, 87, 61, 64, 60, 86, 33, 24, 37, 21, 39])
+data = data[~outliers_df]
+data.to_csv('7741_P.csv') 
+``

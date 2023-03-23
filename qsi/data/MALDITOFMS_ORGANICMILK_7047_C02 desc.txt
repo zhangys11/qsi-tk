@@ -1,4 +1,4 @@
-MALDITOFMS_ORGANICMILK_7047_C02.csv
+7047_S.txt
 
 Instrument：4800 plus MALDI-TOF/TOF MS（AB Sciex，US），with Dd：YAG Laser Generator（Wave length 355 nm）. 
 Mode: Positive ion linear mode. In this mode, signals under 2000 m/z are inaccurate, so they are abandoned in the final dataset.
@@ -14,8 +14,24 @@ Preprocessed by "AB Sciex Data Explorer" software.
 第一类（非有机）vs 第二类（有机）
 
 Class Labels: 
-["Inorganic", "Organic"]
-Inorganic and organic milk from the YL company
+["Non-organic", "Organic"]
+Non-organic and organic milk from the YL company
+
+
+This dataset is a subset(1st and 3rd class samples from 7047_P.txt). 
+The subsetting code is as follows:   
+```
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv('7047.txt')
+df = df.iloc[: , :-1] # last column contains NaN
+df.to_csv('7047_P.txt', index = False) 
+
+df = df.iloc[np.where(df['Label'] != 1)]
+df['Label'][df['Label'] == 2] = 1
+df.to_csv('7047_S.txt', index = False) 
+```
 
 --------------------
 If you use this data set, please add the reference: 

@@ -1,0 +1,21 @@
+7047_P.txt
+
+Instrument：4800 plus MALDI-TOF/TOF MS（AB Sciex，US），with Dd：YAG Laser Generator（Wave length 355 nm）. 
+Mode: Positive ion linear mode. In this mode, signals under 2000 m/z are inaccurate, so they are abandoned in the final dataset.
+Laser Intensity: 7500. 
+Each spectrum is the sum of 400 scan on the same target. 
+Preprocessed by "AB Sciex Data Explorer" software. 
+
+仪器：4800 plus MALDI-TOF/TOF质谱仪（AB Sciex，美国），配备Dd：YAG激光器（波长355 nm）。实验所采用的模式是正离子线性模式，激光强度7500。每张谱图来源于目标点上400次扫描谱图的叠加，数据处理工作由AB Sciex的软件Data Explorer执行。
+样本：牛奶原液稀释100倍，与基质SA（浓度为10 mg/mL）混合，滴加至金属靶板，空气中自然待干，检测。
+
+类标签：
+["金典纯牛奶","金典低脂纯牛奶","金典有机纯牛奶"]
+
+Class Labels: 
+["Non-organic", "Low-fat", "Organic"]
+Non-organic, low-fat and organic milk from the YL company
+
+--------------------
+If you use this data set, please add the reference: 
+[1] Matrix Factorization Based Dimensionality Reduction Algorithms - A Comparative Study on Spectroscopic Profiling Data [J]. Analytical Chemistry, 2022, doi: 10.1021/acs.analchem.2c01922

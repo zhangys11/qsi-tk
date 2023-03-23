@@ -37,8 +37,9 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'chaihu_rm': ('7a41.csv', ',', True, '7a41 desc.txt', ['Neimeng Wild', 'Neimeng Cultivated', 'Neimeng Black Bupleurum', 'Gansu', 'Shanxi', 'vinegar Concocted', 'Saikosaponin'], 1500),
                'chaihu_hplc': ('7a41_hplc.xlsx', 'n/a', True, '7a41_hplc desc.txt', [ 'Shanxi', 'Gansu', 'Neimeng Wild', 'Neimeng Cultivated', 'Neimeng Black Bupleurum', 'Saikosaponin 5ppm', 'Saikosaponin 10ppm', 'Saikosaponin 20ppm', 'Saikosaponin 40ppm'], 1),
                'chaihu_ms': ('7b43.csv', ',', True, '7b43 desc.txt', ["wild", "cultivated"], 200),
-               'rice_cereal': ('7741_rice_cereal_rm.csv', ',', True, '7741_rice_cereal_rm desc.txt', ['LF', 'EB'], 3000),
-               'organic_milk': ('MALDITOFMS_ORGANICMILK_7047_C02.csv', ',', True, 'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt', ['inorganic', 'organic'], 1000),
+               'rice_cereal': ('7741_P.csv', ',', True, '7741_rice_cereal_rm desc.txt', ['LF', 'EB'], 3000),
+               'organic_milk': ('7047_S.txt', ',', True, 'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt', ['non-organic', 'organic'], 1000),
+               'organic_milk_c3': ('7047_P.txt', ',', True, 'MALDITOFMS_ORGANICMILK_7047 desc.txt', ['non-organic', 'low-fat', 'organic'], 1000),
                'milkpowder_enose': ('7747.pkl', ',', True, '7747 desc.txt', ['cn', 'au'], 200),
                # 'forsythia': ('7746.pkl',',',True,'7746 desc.txt', ["SX山西","HN河南","HB湖北","SHX陕西"]) # 该电子鼻数据未有效对齐
                'milkpowder_etongue': ('7744.pkl', ',', True, '7744 desc.txt', ['cn', 'au'], 200),
@@ -227,7 +228,7 @@ def scatter_plot(X, y, labels=None, tags=None):
 
     # for very-high dimensional data, lda/pls is very slow.
     if y is not None and X.shape[1] < 6000:
-        
+
         '''
         lda = LinearDiscriminantAnalysis()
         X_lda = lda.fit(X, y).transform(X)
@@ -357,13 +358,13 @@ def draw_class_average(X, y, X_names, labels=None, SD=1, shift=200):
                          ' (' + str(len(yc)) + ' samples)' + \
                          ' mean ± ' + str(SD) + ' SD',
                          )  # X.std(axis = 0)
-            plt.scatter(X_names, np.mean(Xc, axis=0).tolist() + c*shift,
-                        # color = ["blue","red","green","orange"][c],
-                        s=1
-                        )
+            # plt.scatter(X_names, np.mean(Xc, axis=0).tolist() + c*shift,
+            #            # color = ["blue","red","green","orange"][c],
+            #            s=1
+            #            )
 
     plt.legend()
-    plt.title(u'Averaged Spectrums for Each Category\n')
+    plt.title('Averaged Spectrums for Each Category\n')
     # plt.xlabel(r'$ cm^{-1} $') # depending on it is Raman or MS
     plt.ylabel('Intensity')
     plt.yticks([])
