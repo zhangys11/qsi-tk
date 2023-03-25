@@ -160,23 +160,29 @@ def open_dataset(path, delimiter=',', has_y=True, labels=None, x_range=None, y_s
 
         cols = data.shape[1]
 
+        # judge whether there is a Tag column
+        if 'Tag' in data.columns.values:
+            has_tag = 1
+        else:
+            has_tag = 0
+
         if has_y:
 
             # convert from pandas dataframe to numpy matrices
-            X = data.iloc[:, 1:cols].values  # .values[:,::10]
+            X = data.iloc[:, has_tag + 1:].values  # .values[:,::10]
             y = data.iloc[:, 0].values.ravel()  # first col is y label
             # use map(float, ) to convert the string list to float list
             # list(map(float, data.columns.values[1:])) # X_names = np.array(list(data)[1:])
-            X_names = list(map(float, data.columns.values[1:]))
+            X_names = list(map(float, data.columns.values[has_tag + 1:]))
 
         else:
 
-            X = data.values
+            X = data.iloc[:, has_tag:].values
             y = None
 
             # use map(float, ) to convert the string list to float list
             # X_names = np.array(list(data)[1:])
-            X_names = list(map(float, data.columns.values))
+            X_names = list(map(float, data.columns.values[has_tag:]))
 
     if x_range is not None:
         X = X[:, x_range]
@@ -266,7 +272,7 @@ def draw_average(X, X_names, SD=1):
                  str(SD) + '\sigma$ (' + str(len(X)) + ' samples)')
         plt.errorbar(X_names, X.mean(axis=0), X.std(axis=0)*SD,
                      color="dodgerblue", linewidth=3,
-                     alpha=0.1)  # X.std(axis = 0)
+                     alpha=0.6)  # X.std(axis = 0)
     else:
         plt.plot(X_names, X.mean(axis=0), "k", linewidth=1,
                  label='averaged waveform' + ' (' + str(len(X)) + ' samples)')

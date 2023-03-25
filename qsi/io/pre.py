@@ -1,7 +1,8 @@
 #### Pre-processing ####
-from scipy import signal
+from scipy import signal, sparse
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.sparse.linalg import spsolve
 from scipy.optimize import minimize
 from scipy.interpolate import interp1d
 from scipy.ndimage.interpolation import shift
@@ -479,3 +480,47 @@ def align_nch_dataset(X, start, length, method = 'peak', display = True):
         XSH.append(np.array(Xchs))
 
     return np.array(XSH), SHIFTS
+
+class BaselineDetector:
+    '''
+    Baseline detection using asymmetric least squares smoothing
+    '''
+    def __init__(self, lam = 1e8, p = 1e-3):
+        self.lam = lam  # 1e2 - 1e9
+        self.p = p  # 1e-3 - 1e-1
+
+    @staticmethod
+    def baseline_als(y, lam, p, niter=10):
+        L = len(y)
+        D = sparse.csc_matrix(np.diff(np.eye(L), 2))
+        w = np.ones(L)
+        z = 0
+        for i in range(niter):
+            W = sparse.spdiags(w, 0, L, L)
+            Z = W + lam * D.dot(D.transpose())
+            z = spsolve(Z, w * y)
+            w = p * (y > z) + (1 - p) * (y < z)
+        return z
+
+    def detect_baseline(self, data):
+        return np.apply_along_axis(lambda x: self.baseline_als(x, self.lam, self.p), 0, data)
+    
+
+def x_baseline_removal(X, lam = 1e8, p = 1e-3):
+    '''
+    Perform baseline removal on each sample in X.
+    Caution: it takes long time for high-dimensional spectroscopic data.
+
+    Parameters
+    ----------
+    X: 2D array, each row is a sample
+    lam: float, lambda for baseline removal
+    p: float, p for baseline removal
+    '''
+    NX = []
+    detector = BaselineDetector(lam = lam, p = p)
+    for x in X:
+        baseline = detector.detect_baseline(x)
+        NX.append(x - baseline)
+    return np.array(NX)
+

@@ -10,7 +10,7 @@ from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
 from sklearn.feature_selection import SelectFromModel
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.svm import SVC # SVC(C=1.0, ...) 与 nuSVC(nu = 0.5, ...) 的区别：前者使用C～[0，inf），后者使用nu～(0,1]，惩罚性的解释不同，优化都可以使用GridSearch方法
+from sklearn.svm import SVC
 from scipy.signal import savgol_filter
 
 from cla import metrics
@@ -39,7 +39,7 @@ def analyze(id, x_range = None, y_subset=None, shift = None, pres = None, fs_out
     if (id in io.DATASET_MAP.keys()):
         X, y, X_names, _, _ = io.load_dataset(id, x_range=x_range, y_subset=y_subset, shift = shift)
     elif os.path.exists(id):
-        X, y, X_names, _ = io.open_dataset(id, x_range=x_range, y_subset=y_subset, shift = shift)
+        X, y, X_names, _ = io.open_dataset(id, x_range=x_range, y_subset=y_subset)
     else:
         IPython.display.display(IPython.display.HTML('<h3>数据加载失败，请传入正确的id或文件路径。<br/>Load data failed. Please specific a correct dataset ID or file path.</h3>'))
         return
@@ -187,7 +187,7 @@ More importantly, it makes the estimated coefficients impossible to interpret. I
     print('\nPLS: X and Y are decomposed into latent structures in an iterative way. The latent structure corresponding to the most variation of Y is explained by a best latent strcture of X. \nADVANTAGES: Deal with multi-colinearity; Interpretation by data structure')
     
     IPython.display.display(IPython.display.HTML('<hr/><h2>特征选择 Feature Selection</h2>'))
-    IPython.display.display(IPython.display.HTML('<p>Reasons for using feature selection:\nImprove data processing efficiency; reduce memory usage.\nReducing the number of features, to reduce overfitting and improve the generalization of models.\nTo gain a better understanding of the features and their relationship to the response variables.</p>'))
+    IPython.display.display(IPython.display.HTML('<p>Reasons for using feature selection:<br/>Improve data processing efficiency; reduce memory usage.<br/>Reducing the number of features, to reduce overfitting and improve the generalization of models.<br/>To gain a better understanding of the features and their relationship to the response variables.</p>'))
 
     FS_OUTPUT, _, FS_COMMON_IDX = RUN_ALL_FS(X_mm_scaled, y, X_names, N = fs_feature_num, output='all')
     if len(FS_COMMON_IDX) > 0:
@@ -241,11 +241,13 @@ More importantly, it makes the estimated coefficients impossible to interpret. I
 def build_simple_pipeline(X, y, save_path = None):
     '''
     Build a simple pipeline: Standard Scaler + LASSO + PCA + Grid Search - SVM.
-
+    
     Remarks
     -------
     sklearn.pipeline.Pipeline(steps, memory=None):  
     Intermediate steps of the pipeline must be ‘transforms’, that is, they must implement fit and transform methods. The final estimator only needs to implement fit. The transformers in the pipeline can be cached using memory argument.
+    
+    SVC(C=1.0, ...) 与 nuSVC(nu = 0.5, ...) 的区别：前者使用C～[0，inf），后者使用nu～(0,1]，惩罚性的解释不同，优化都可以使用GridSearch方法
     '''
 
     tuned_parameters = [{'kernel': ['rbf'], 'gamma': [10, 1, 1e-1, 1e-2],'C': [0.01, 0.1, 1, 10, 100, 1000]},

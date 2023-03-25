@@ -441,7 +441,7 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
     FS_OUTPUT = {}
     FS_IDX = {}
 
-    for key,_ in FS_DICT.items():
+    for key, f in FS_DICT.items():
 
         if multitask and 'multi-task' in key:
             pass
@@ -461,26 +461,29 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
         if key in FS_DESC_DICT:
             IPython.display.display(IPython.display.HTML('<p>' + FS_DESC_DICT[key] + '</p><br/>'))
 
-        f = FS_DICT[key]
-        X_s, idx, _ = f(X, y, X_names, N=N, display=True)
+        try:
+            X_s, idx, _ = f(X, y, X_names, N=N, display=True)
 
-        if X_s is not None and X_s.shape[0] > 0 and X_s.shape[1] > 0:
+            if X_s is not None and X_s.shape[0] > 0 and X_s.shape[1] > 0:
 
-            ax = plot_components_2d(X_s[:, :2], y)
-            ax.set_title('Scatter Plot of Top-2 Selected Features')
-            plt.show()
+                ax = plot_components_2d(X_s[:, :2], y)
+                ax.set_title('Scatter Plot of Top-2 Selected Features')
+                plt.show()
 
-            _ = unsupervised_dimension_reductions(X_s, y, legends=labels)
+                _ = unsupervised_dimension_reductions(X_s, y, legends=labels)
 
-            clf = LogisticRegressionCV().fit(X_s, y)
-            print('Classification accurary with the selected features (LogisticRegressionCV) = ',
-                  round(clf.score(X_s, y), 3))
+                clf = LogisticRegressionCV().fit(X_s, y)
+                print('Classification accurary with the selected features (LogisticRegressionCV) = ',
+                    round(clf.score(X_s, y), 3))
 
-        if output == key or output == 'all':
-            FS_OUTPUT[key] = X_s
-            FS_IDX[key] = idx
-        else:
-            pass
+            if output == key or output == 'all':
+                FS_OUTPUT[key] = X_s
+                FS_IDX[key] = idx
+            else:
+                pass
+
+        except Exception as e:
+            print('Exception in', key, ':', e)
 
         IPython.display.display(IPython.display.HTML('<hr/>'))
 
