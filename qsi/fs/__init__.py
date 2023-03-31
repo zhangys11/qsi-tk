@@ -462,7 +462,10 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
             IPython.display.display(IPython.display.HTML('<p>' + FS_DESC_DICT[key] + '</p><br/>'))
 
         try:
-            X_s, idx, _ = f(X, y, X_names, N=N, display=True)
+            X_s, idx, fi = f(X, y, X_names, N=N, display=True)
+            if np.isnan(fi).any():
+                print('\nWarning: NaN in feature importance. Skip this FS method.')
+                continue
 
             if X_s is not None and X_s.shape[0] > 0 and X_s.shape[1] > 0:
 
@@ -480,7 +483,7 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
                 FS_OUTPUT[key] = X_s
                 FS_IDX[key] = idx
             else:
-                pass
+                continue
 
         except Exception as e:
             print('Exception in', key, ':', e)
