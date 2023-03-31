@@ -36,7 +36,7 @@ This package is a master library containing various previous packages published 
             <td>qsi.io.pre</td>
             <td>Spectroscopic profiling data processing</td>
             <td></td>
-            <td>qsi.io.pre.x_binning, qsi.io.pre.x_baseline_removal, etc.</td>
+            <td>TODO qsi.io.pre.x_binning, qsi.io.pre.x_baseline_removal, etc.</td>
         </tr>
         <tr>
             <td colspan = 2>qsi.vis</td>
