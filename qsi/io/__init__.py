@@ -8,10 +8,11 @@ import matplotlib.cm as cm
 import matplotlib
 from sklearn.decomposition import PCA
 from sklearn.cross_decomposition import PLSRegression
-from . import pre
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
+from . import pre
 from ..vis import *
+from ..vis.plt2base64 import plt2html
 DATA_FOLDER = os.path.dirname(os.path.dirname(
     os.path.realpath(__file__))) + "/data/"
 
@@ -219,7 +220,7 @@ def open_dataset(path, delimiter=',', has_y=True, labels=None, x_range=None, y_s
     return X, y, X_names, labels
 
 
-def scatter_plot(X, y, labels=None, tags=None):
+def scatter_plot(X, y, labels=None, tags=None, output_html=False):
     '''
     Parameters
     ----------
@@ -230,7 +231,13 @@ def scatter_plot(X, y, labels=None, tags=None):
     X_pca = pca.fit_transform(X)
     plot_components_2d(X_pca, y, legends=labels, tags=tags)
     plt.title('PCA')
-    plt.show()
+
+    s = ''
+    if output_html:
+        s += plt2html(plt)
+        plt.close()
+    else:
+        plt.show()
 
     # for very-high dimensional data, lda/pls is very slow.
     if y is not None and X.shape[1] < 6000:
@@ -253,10 +260,15 @@ def scatter_plot(X, y, labels=None, tags=None):
         plot_components_2d(X_pls, y, legends=labels)
         # print('score = ', np.round(pls.score(X, y),3))
         plt.title('PLS')
-        plt.show()
+        if output_html:
+            s += plt2html(plt)
+            plt.close()
+        else:
+            plt.show()
 
+    return s
 
-def draw_average(X, X_names, SD=1):
+def draw_average(X, X_names, SD=1, output_html=False):
     '''
     X: 2D array, each row is a spectrum
     X_names: 1D array, the x-axis labels
@@ -284,9 +296,15 @@ def draw_average(X, X_names, SD=1):
     # plt.ylabel('Raman signal')
     plt.yticks([])
     # plt.xticks([])
-    plt.show()
 
-    matplotlib.rcParams.update({'font.size': 12})
+    if output_html:
+        s = plt2html(plt)
+        plt.close()
+        matplotlib.rcParams.update({'font.size': 12})
+        return s
+    else:
+        plt.show()
+        matplotlib.rcParams.update({'font.size': 12})
 
 
 def draw_samples(X, y, X_names, titles=None, bdr=False):
@@ -332,7 +350,7 @@ def draw_samples(X, y, X_names, titles=None, bdr=False):
     matplotlib.rcParams.update({'font.size': 12})
 
 
-def draw_class_average(X, y, X_names, labels=None, SD=1, shift=200):
+def draw_class_average(X, y, X_names, labels=None, SD=1, shift=200, output_html=False):
     '''
     Parameter
     ---------
@@ -374,9 +392,15 @@ def draw_class_average(X, y, X_names, labels=None, SD=1, shift=200):
     # plt.xlabel(r'$ cm^{-1} $') # depending on it is Raman or MS
     plt.ylabel('Intensity')
     plt.yticks([])
-    plt.show()
 
-    matplotlib.rcParams.update({'font.size': 10})
+    if output_html:
+        s = plt2html(plt)
+        plt.close()
+        matplotlib.rcParams.update({'font.size': 10})
+        return s
+    else:
+        plt.show()
+        matplotlib.rcParams.update({'font.size': 10})
 
 
 def draw_class_average_3d(X, y, X_names, labels=None, view_point = (30,-50)):
@@ -430,9 +454,9 @@ def peek_dataset(path,  delimiter=',', has_y=True, labels=None, SD=1, shift=200,
         else:
             draw_class_average(X, y, X_names, labels, SD, shift)
 
-        scatter_plot(X, y, labels=labels)
+        _ = scatter_plot(X, y, labels=labels)
 
-    elif len(X.shape) == 3:  # enose/etongue
+    elif len(X.shape) == 3:  # multi-channel data, e.g., enose/etongue
 
         # Display one data sample in each category.
 

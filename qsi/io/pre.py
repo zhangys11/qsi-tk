@@ -514,8 +514,8 @@ def x_baseline_removal(X, lam = 1e8, p = 1e-3):
     Parameters
     ----------
     X: 2D array, each row is a sample
-    lam: float, lambda for baseline removal
-    p: float, p for baseline removal
+    lam: float, regularization strength for 2nd-order derivative penalty
+    p: float, p controls asymmetry of positive and negative residual penalties
     '''
     NX = []
     detector = BaselineDetector(lam = lam, p = p)
