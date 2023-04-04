@@ -2,7 +2,7 @@ import random
 import numpy as np
 
 
-def createOneRandomsample(X, l=[], d=0.5):
+def create_one_random_sample(X, l=[], d=0.5):
     '''
     Create a random sample from two reference data points.
 
@@ -58,7 +58,7 @@ def expand_dataset(X, y, d = 0.5, NX = 3):
             # X_blend = np.vstack((X_grp, X_grp, X)) # blend 1/4 other class samples
 
             # print(l,k)
-            s = createOneRandomsample(X_blend, d=d)
+            s = create_one_random_sample(X_blend, d=d)
 
             if s is None:
                 continue

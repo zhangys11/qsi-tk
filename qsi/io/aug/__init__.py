@@ -5,13 +5,12 @@ import pandas as pd
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 from ...vis import plot_components_2d
-from . import SMOTE
-from . import KDE
+from . import SMOTE, KDE, VAE
 
 def upsample(target_path, X, y, X_names, method = 'SMOTE', folds = 3, d = 0.5, 
 epochs = 10, batch_size = 100, cuda = True, display = False, verbose = True):
     '''
-    Upsample a dataset by SMOTE, KDE, GAN (todo), Gaussian (todo), or ctGAN.
+    Upsample a dataset by SMOTE, KDE, VAE, GAN (todo), Gaussian (todo), or ctGAN.
 
     Parameters
     ----------
@@ -29,13 +28,14 @@ epochs = 10, batch_size = 100, cuda = True, display = False, verbose = True):
         Xn, yn = SMOTE.expand_dataset(X, y, d, folds)
     elif method == 'KDE':
         Xn, yn = KDE.expand_dataset(X, y, folds)
+    elif method == 'VAE':
+        Xn, yn = VAE.expand_dataset(X, y, folds)
     elif method == 'ctGAN' or method == 'CTGAN':
         from . import ctGAN
         Xn, yn = ctGAN.expand_dataset(X, y, folds, epochs, batch_size, cuda, verbose)
     else:
         print('Unsupported method: ' + method + '. Use SMOTE / ctGAN / KDE.' )
         return X, y
-
 
     dfX = pd.DataFrame(Xn)
     dfX.columns = X_names
