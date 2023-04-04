@@ -4,3 +4,6 @@ dist/
 *.pyc
 notebook/.ipynb_checkpoints/
 notebook/小鼠肾脏代谢组学.xlsx
+notebook/ctgan.csv
+notebook/kde.csv
+notebook/smote.csv

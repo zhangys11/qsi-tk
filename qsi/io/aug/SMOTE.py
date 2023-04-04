@@ -1,5 +1,4 @@
 import random
-import pandas as pd
 import numpy as np
 
 
@@ -36,7 +35,7 @@ def createOneRandomsample(X, l=[], d=0.5):
     return s
 
 
-def expand_dataset(X, y, names, savepath, d = 0.5, NX = 3):
+def expand_dataset(X, y, d = 0.5, NX = 3):
     '''
     Parameters
     ----------
@@ -66,15 +65,5 @@ def expand_dataset(X, y, names, savepath, d = 0.5, NX = 3):
 
             X = np.vstack((X, s))
             y = np.append(y, label)
-
-    dfX = pd.DataFrame(X)
-    dfX.columns = names
-
-    dfY = pd.DataFrame(y)
-    dfY.columns = ['label']
-
-    df = pd.concat([dfY, dfX], axis=1)
-    df = df.sort_values(by=['label'], ascending=True)
-    df.to_csv(savepath, index=False)  # don't create the index column
 
     return X, y

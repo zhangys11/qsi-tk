@@ -377,7 +377,7 @@ def draw_class_average(X, y, X_names, labels=None, SD=1, shift=200, output_html=
             plt.errorbar(X_names, Xc.mean(axis=0) + shift*c, Xc.std(axis=0)*SD,
                          # color = ["blue","red","green","orange"][c],
                          linewidth=1,
-                         alpha=0.2,
+                         alpha=0.7,
                          label=label + \
                          ' (' + str(len(yc)) + ' samples)' + \
                          ' mean ± ' + str(SD) + ' SD',
