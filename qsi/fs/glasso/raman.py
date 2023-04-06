@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import xlrd
 import matplotlib.colors as mcolors
 import random
+import numpy as np
 
 def raman_prior_sample():
     '''
@@ -204,3 +205,14 @@ def generate_html_table(raman_peak_list):
     html += '</table>'
 
     return html
+
+def generate_glasso_groups(regions, raman_peak_list):
+    '''
+    TODO: generate groups for group lasso.
+    
+    Parameters
+    ----------
+    regions : filtered regions
+    ramam_peak_list : list of Raman peaks. It specfifies which regions are in the same group.
+    '''
+    return -np.ones(len(regions)) # -1 means no group
