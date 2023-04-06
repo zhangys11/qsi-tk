@@ -422,14 +422,14 @@ class AdaptiveElasticNetCV(RegressorMixin, LinearModelCV):
         eps=1e-3,
         positive=False,
         positive_tol=None,
-        normalize=False,
+        # normalize=False,
         precompute="auto",
     ):
         super().__init__(
             n_alphas=n_alphas,
             alphas=alphas,
             fit_intercept=fit_intercept,
-            normalize=normalize,
+            # normalize=normalize,
             precompute=precompute,
             # precompute=precompute,
             cv=cv,

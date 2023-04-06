@@ -20,7 +20,7 @@ This package is a master library containing various previous packages published 
             <td>publication</td>
         </tr>
         <tr>
-            <td colspan = 1 rowspan = 2>qsi.io</td>
+            <td colspan = 1 rowspan = 3>qsi.io</td>
             <td>
             <td>File I/O, Dataset loading</td>
             <td></td>
@@ -33,8 +33,16 @@ This package is a master library containing various previous packages published 
             <td>TODO Data aug with deep generative models. e.g., " variational autoencoders, generative adversarial networks, autoregressive models, normalizing flow models, energy-based models, and score-based models. "</td>
         </tr>
         <tr>
+            <td>qsi.io.pre</td>
+            <td>Spectroscopic profiling data processing</td>
+            <td></td>
+            <td>TODO qsi.io.pre.x_binning, qsi.io.pre.x_baseline_removal, etc.</td>
+        </tr>
+        <tr>
             <td colspan = 2>qsi.vis</td>
             <td>Plotting</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
             <td colspan = 2>qsi.cs</td>
@@ -43,6 +51,8 @@ This package is a master library containing various previous packages published 
             <td>Adaptive compressed sensing of Raman spectroscopic profiling data for discriminative tasks [J]. Talanta, 2020, doi: 10.1016/j.talanta.2019.120681
             <br/>
             Task-adaptive eigenvector-based projection (EBP) transform for compressed sensing: A case study of spectroscopic profiling sensor [J]. Analytical Science Advances. Chemistry Europe, 2021, doi: 10.1002/ansa.202100018
+            <br/>
+            Compressed Sensing library for spectroscopic profiling data [J]. Software Impacts, 2023, doi: 10.1016/j.simpa.2023.100492
             </td>
         </tr>
         <tr>

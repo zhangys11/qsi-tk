@@ -1,6 +1,6 @@
 ﻿import numpy as np
 import matplotlib.pyplot as plt
-from .unsupervised_dimension_reductions import *
+from .unsupervised_dimension_reductions import unsupervised_dimension_reductions
 
 # plot the importance for all features
 def plot_feature_importance(feature_importances, feature_names, title, \
@@ -23,15 +23,19 @@ def plot_feature_importance(feature_importances, feature_names, title, \
         ax = fig.add_subplot(rows, 1, i + 1)
         ax.axis('off')
         arr = feature_importances[i*ROW_SIZE: min(i*ROW_SIZE+ROW_SIZE - 1, feature_importances.size - 1)]
-        s = ax.matshow(arr.reshape(1,-1), cmap=plt.cm.Blues)    
+        _ = ax.matshow(arr.reshape(1,-1), cmap=plt.cm.Blues)  
     
     # bar chart
     plt.figure(figsize=figsize)
     if title:
-        plt.title(title + "\n" + 'importance marked by bar height')
+        plt.title(title) #  + "\n" + 'importance marked by bar height'
     if feature_names is None:
         feature_names = list(range(feature_importances.size))
-    plt.bar(feature_names, feature_importances, alpha=.8) # , width=2
+
+    # plt.bar is buggy for high dimensional data
+    plt.scatter(feature_names, feature_importances, s=1, alpha=.7, cmap=plt.cm.Blues)
+    plt.plot(feature_names, feature_importances, alpha=.7) # , width=2
+    
     if xtick_angle is None or \
         ( len(feature_names) > 100 and isinstance(feature_names[0], str) ): # to avoid crowdy strings
         plt.xticks([])

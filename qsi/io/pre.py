@@ -1,40 +1,51 @@
 #### Pre-processing ####
-from scipy import signal
+from scipy import signal, sparse
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.sparse.linalg import spsolve
 from scipy.optimize import minimize
 from scipy.interpolate import interp1d
 from scipy.ndimage.interpolation import shift
 from statsmodels.tsa.stattools import ccovf
 
+############# feature filter by threshold ##############
+def x_thresholding(X, threshold = 10):
+    '''
+    All features below the threshold will be removed.
+    Typically used in TOF-MS data.
+    Signals weaker than 10 is mostly considered as background noise.
+
+    Note
+    ----
+    This function can only be used in the original unscaled data. 
+    '''
+    NX = X.copy()
+    NX[NX <= threshold] = 0
+    return NX
+
 ############# row-wise normalization / scaling ##############
 
-def peak_normalize(X, target_max = 1000):
+def x_normalize(X, flavor = 'highest_peak', target_max = 1000):
     '''
-    Normalize each data / row by its highest peak. 
+    Normalize each data / row by its highest peak or row vector.
     Typically used in TOF-MS data. 
-    rowvec_normalize() is more often used.
+    
+    Parameters
+    ----------
+    flavor : 'highest_peak' or 'row_vector'
+    target_max : the maximum value after normalization. Default is 1000.
     '''
     NX = []
     for x in X:
-        row_max = x.abs().max()
-        nx = x / row_max * target_max
+        if flavor == 'row_vector' or flavor == 'rowvec':
+            x_max = np.linalg.norm(x)
+        else:
+            x_max = np.abs(x).max()
+        nx = x / x_max * target_max
         NX.append(nx)
     return np.array(NX)
 
-def rowvec_normalize(X, target_max = 1000):
-    '''
-    Normalize each data / row by the row vector magnitude.
-    Typically used in TOF-MS data.
-    '''
-    NX = []
-    for x in X:
-        v = np.linalg.norm(x)
-        nx = x / v * target_max
-        NX.append(nx)
-    return np.array(NX)
-
-################### binning & kernel & sliding window ###################
+################### binning / kernel / sliding window ###################
 
 def x_binning(X, X_names = None, target_dim = 0.1, flavor = 'max', display = False):
     '''
@@ -49,7 +60,6 @@ def x_binning(X, X_names = None, target_dim = 0.1, flavor = 'max', display = Fal
         'sum' / 'rect' / 'mean' - take the sum / integral / mean.
         'tri' - triangle integral, use a mask e.g., [1,2,3,4,3,2,1]
     display : whether show the 1st sample after processing
-
 
     Return
     ------
@@ -470,3 +480,47 @@ def align_nch_dataset(X, start, length, method = 'peak', display = True):
         XSH.append(np.array(Xchs))
 
     return np.array(XSH), SHIFTS
+
+class BaselineDetector:
+    '''
+    Baseline detection using asymmetric least squares smoothing
+    '''
+    def __init__(self, lam = 1e8, p = 1e-3):
+        self.lam = lam  # 1e2 - 1e9
+        self.p = p  # 1e-3 - 1e-1
+
+    @staticmethod
+    def baseline_als(y, lam, p, niter=10):
+        L = len(y)
+        D = sparse.csc_matrix(np.diff(np.eye(L), 2))
+        w = np.ones(L)
+        z = 0
+        for i in range(niter):
+            W = sparse.spdiags(w, 0, L, L)
+            Z = W + lam * D.dot(D.transpose())
+            z = spsolve(Z, w * y)
+            w = p * (y > z) + (1 - p) * (y < z)
+        return z
+
+    def detect_baseline(self, data):
+        return np.apply_along_axis(lambda x: self.baseline_als(x, self.lam, self.p), 0, data)
+    
+
+def x_baseline_removal(X, lam = 1e8, p = 1e-3):
+    '''
+    Perform baseline removal on each sample in X.
+    Caution: it takes long time for high-dimensional spectroscopic data.
+
+    Parameters
+    ----------
+    X: 2D array, each row is a sample
+    lam: float, regularization strength for 2nd-order derivative penalty
+    p: float, p controls asymmetry of positive and negative residual penalties
+    '''
+    NX = []
+    detector = BaselineDetector(lam = lam, p = p)
+    for x in X:
+        baseline = detector.detect_baseline(x)
+        NX.append(x - baseline)
+    return np.array(NX)
+

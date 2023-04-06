@@ -9,7 +9,7 @@ import cvxpy as cp
 
 def window_op(xaxis, region, filter = 'rbf', SD = 1):
     '''
-    xaxis : the entire x axis range, e.g., [0, 3000]
+    xaxis : the entire x axis range, e.g., [100, 3000]
     region : e.g., [100,200]
     filter : can be 'rbf', 'sinc', 'logistic', 'uniform'. Uniform is just averaging filter.
     SD : for rbf kernel, the region will lie inside +/-SD
@@ -17,7 +17,7 @@ def window_op(xaxis, region, filter = 'rbf', SD = 1):
     Return : op array. Has the length of xaxis.
     '''
 
-
+    ''' TO BE FINISHED
     if filter == 'spike' or filter == 'vanilla':
         op = np.zeros(len(xaxis))
         op[region] = 1
@@ -26,7 +26,51 @@ def window_op(xaxis, region, filter = 'rbf', SD = 1):
     elif filter == 'gaussian' or filter == 'rbf':
         op = ... 
     # todo: others
+
+    op = np.zeros(len(xaxis))
+    region_start = math.ceil(region[0])
+    region_end = math.floor(region[1])
+    
+    if filter == 'spike' or filter == 'vanilla':
+        op[(region[0]+region[1])/2] = 1
+    elif filter == 'uniform' or filter == 'rectangle' or filter == 'average':
+        if region[1]-region[0] != 0:
+            op[start_int: end_int] = 1 / (region[1]-region[0])
+        elif region[1]-region[0] == 0:
+            op[region[0]] = 1
+    elif filter == 'triangle':
+        if region[1]-region[0] != 0:
+            d = region[1]-region[0]
+            h = 2/d
+            k = h/(d/2)
+            op = []
+            for x in range(round(region[0]),math.ceil(region[1]+1)):
+                if x > region[0] and x <=  d/2+region[0]:
+                    op_value1 = k*x+(h-(d/2+region[0])*k)
+                    op.append(op_value1)
+                elif x > d/2+region[0] and x < region[1]:
+                    op_value2 = -k*x+(h+(d/2+region[0])*k)
+                    op.append(op_value2)
+            op[]
+        elif region[1]-region[0] == 0:
+            op[(region[0]+region[1])/2] = 1
+    elif filter == 'gaussian' or filter == 'rbf':
+        if region[1]-region[0] != 0:
+            x = np.arange(region[0],region[1]+1)
+            mean = np.mean(region)
+            std = np.std(np.array(region))
+            op = np.random.normal(mean, std, x.shape[0])
+            op /= sum(op)
+            fs = np.dot(np.array(op),np.array(list(range(math.ceil(region[0]),math.floor(region[1]+1)))))
+            Fs.append(fs)
+        elif region[1]-region[0] == 0:
+            op = 1
+            fs = region[0]*op
+            Fs.append(fs)
+
     return op
+    '''
+    pass
 
 
 def window_fs(X, regions, filter = 'rbf'):
@@ -123,7 +167,7 @@ def group_lasso_cv(X_scaled, y, MAXF, WIDTHS, LAMBDAS, ALPHAS, cv_size = 0.2, ve
                 for lam in LAMBDAS:
                     
                     train_X,test_X, train_y, test_y = train_test_split(X_scaled, y,
-                                                   test_size = cv_size)
+                                                   test_size = cv_size, stratify=y)
                     
                     hparam = 'Window Size: ' + str(w) + ', offset = ' + str(offset) + ', alpha = ' + str(alpha) + ', lambda = ' + str(lam) 
                     HPARAMS.append(hparam)

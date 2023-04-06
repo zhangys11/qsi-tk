@@ -1,9 +1,8 @@
 import random
-import pandas as pd
 import numpy as np
 
 
-def createOneRandomsample(X, l=[], d=0.5):
+def create_one_random_sample(X, l=[], d=0.5):
     '''
     Create a random sample from two reference data points.
 
@@ -36,7 +35,7 @@ def createOneRandomsample(X, l=[], d=0.5):
     return s
 
 
-def expand_dataset(X, y, names, savepath, d = 0.5, NX = 3):
+def expand_dataset(X, y, d = 0.5, NX = 3):
     '''
     Parameters
     ----------
@@ -59,22 +58,12 @@ def expand_dataset(X, y, names, savepath, d = 0.5, NX = 3):
             # X_blend = np.vstack((X_grp, X_grp, X)) # blend 1/4 other class samples
 
             # print(l,k)
-            s = createOneRandomsample(X_blend, d=d)
+            s = create_one_random_sample(X_blend, d=d)
 
             if s is None:
                 continue
 
             X = np.vstack((X, s))
             y = np.append(y, label)
-
-    dfX = pd.DataFrame(X)
-    dfX.columns = names
-
-    dfY = pd.DataFrame(y)
-    dfY.columns = ['label']
-
-    df = pd.concat([dfY, dfX], axis=1)
-    df = df.sort_values(by=['label'], ascending=True)
-    df.to_csv(savepath, index=False)  # don't create the index column
 
     return X, y

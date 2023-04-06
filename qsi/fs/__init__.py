@@ -10,7 +10,7 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from scipy.fftpack import fft, dct
 import IPython.display
 
-from ..vis import plotComponents2D, plotComponents3D, plot_feature_importance, unsupervised_dimension_reductions
+from ..vis import plot_components_2d, plot_components_3d, plot_feature_importance, unsupervised_dimension_reductions
 from .alasso import *
 from .glasso import *
 from .aenet import *
@@ -52,8 +52,7 @@ def __fs__(X, fi, X_names=None, N=30, display=True):
     '''
 
     if display:
-        plot_feature_importance(
-            fi, X_names, 'feature-wise coefs/values', xtick_angle=0)
+        plot_feature_importance(fi, X_names, 'feature-wise coefs/importance', xtick_angle=0)
 
     idx = (np.argsort(fi)[-N:])[::-1]
     # idx = np.where(pval < 0.1)[0] # np.where(chi2 > 4.5)
@@ -232,8 +231,7 @@ def glasso_fs(X, y, X_names=None, N=30, WIDTH=8, ALPHA=0.5, LAMBDA=0.1, display=
 
 
 def glasso_cv_fs(X, y, X_names=None, N=30, N2=None,
-                 WIDTHS=[2, 8, 32], LAMBDAS=[0.01, 0.1, 1], ALPHAS=[0, 0.5, 1],
-                 display=True):
+                 WIDTHS=[2, 8, 32], LAMBDAS=[0.01, 0.1, 1], ALPHAS=[0, 0.5, 1]):
     '''
     Parameters
     ----------
@@ -346,9 +344,8 @@ FS_DICT = {
     "lasso": lasso_fs,
     "elastic net": elastic_net_fs,
     "adaptive lasso": alasso_fs,
-    "group lasso": glasso_cv_fs,
-    # "group lasso cv": glasso_cv_fs,
-    "adaptive elastic net": aenet_cv_fs,
+    # "group lasso": glasso_cv_fs, # very slow for high-dim data
+    # "adaptive elastic net": aenet_cv_fs, # very slow for high-dim data
     "multi-task lasso": multitask_lasso_fs,
     "multi-task elastic net": multitask_elastic_net_fs,
 }
@@ -444,7 +441,7 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
     FS_OUTPUT = {}
     FS_IDX = {}
 
-    for key,_ in FS_DICT.items():
+    for key, f in FS_DICT.items():
 
         if multitask and 'multi-task' in key:
             pass
@@ -464,29 +461,32 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
         if key in FS_DESC_DICT:
             IPython.display.display(IPython.display.HTML('<p>' + FS_DESC_DICT[key] + '</p><br/>'))
 
-        f = FS_DICT[key]
-        X_s, idx, fi = f(X, y, X_names, N=N, display=True)
+        try:
+            X_s, idx, fi = f(X, y, X_names, N=N, display=True)
+            if np.isnan(fi).any():
+                print('\nWarning: NaN in feature importance. Skip this FS method.')
+                continue
 
-        if X_s is not None and X_s.shape[0] > 0 and X_s.shape[1] > 0:
+            if X_s is not None and X_s.shape[0] > 0 and X_s.shape[1] > 0:
 
-            ax = plotComponents2D(X_s[:, :2], y)
-            ax.set_title('Scatter Plot of Top-2 Selected Features')
-            plt.show()
+                ax = plot_components_2d(X_s[:, :2], y)
+                ax.set_title('Scatter Plot of Top-2 Selected Features')
+                plt.show()
 
-            _ = unsupervised_dimension_reductions(X_s, y, legends=labels)
+                _ = unsupervised_dimension_reductions(X_s, y, legends=labels)
 
-            clf = LogisticRegressionCV().fit(X_s, y)
-            print('Classification accurary with the selected features (LogisticRegressionCV) = ',
-                  round(clf.score(X_s, y), 3))
+                clf = LogisticRegressionCV().fit(X_s, y)
+                print('Classification accurary with the selected features (LogisticRegressionCV) = ',
+                    round(clf.score(X_s, y), 3))
 
-        if output == key:
-            FS_OUTPUT[key] = X_s
-            FS_IDX[key] = idx
-        elif output == 'all':
-            FS_OUTPUT[key] = X_s
-            FS_IDX[key] = idx
-        else:
-            pass
+            if output == key or output == 'all':
+                FS_OUTPUT[key] = X_s
+                FS_IDX[key] = idx
+            else:
+                continue
+
+        except Exception as e:
+            print('Exception in', key, ':', e)
 
         IPython.display.display(IPython.display.HTML('<hr/>'))
 
@@ -494,7 +494,8 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
 
     # if you want to exclude some fs algs
     # del FS_IDX['group lasso']
-    del FS_IDX['adaptive elastic net']  # this alg differs from others
+    if 'adaptive elastic net' in FS_IDX:
+        del FS_IDX['adaptive elastic net']  # this alg differs from others
 
     if len(FS_IDX) > 0:
         FS_COMMON_IDX = list(FS_IDX.values())[0]
@@ -639,7 +640,7 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1,
                 pca = PCA(n_components=2)
                 f_2d = pca.fit_transform(FS)
 
-                plotComponents2D(f_2d, y, legends=labels)
+                plot_components_2d(f_2d, y, legends=labels)
                 plt.title(name + ' - PCA')
 
             elif len(set(y)) > 2:
@@ -650,7 +651,7 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1,
                 f_2d = lda.fit(FS, y).transform(FS)
 
                 # plt.figure(figsize = (20,15))
-                plotComponents2D(f_2d, y, legends=labels)
+                plot_components_2d(f_2d, y, legends=labels)
                 title = name + ' - LDA'
 
                 # Returns the coefficient of determination R^2 of the prediction.
@@ -663,7 +664,7 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1,
                     lda = LinearDiscriminantAnalysis(n_components=3)
                     f_3d = lda.fit(FS, y).transform(FS)
 
-                    plotComponents3D(f_3d, y, legends=labels)
+                    plot_components_3d(f_3d, y, legends=labels)
                     title = name + ' - LDA'
 
                     # Returns the coefficient of determination R^2 of the prediction.
@@ -680,7 +681,7 @@ def nch_time_series_fs(X, fft_percentage=0.05, dct_percentage=0.1,
                 f_2d = pls.fit(FS, y).transform(FS)
 
                 # plt.figure(figsize = (20,15))
-                plotComponents2D(f_2d, y, legends=labels)
+                plot_components_2d(f_2d, y, legends=labels)
                 title = name + ' - PLS'
 
                 # Returns the coefficient of determination R^2 of the prediction.
