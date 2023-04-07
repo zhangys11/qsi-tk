@@ -1,102 +1,176 @@
-import math
-from collections import Counter
 import numpy as np
+from scipy.stats import norm
 import matplotlib.pyplot as plt
-from tqdm import tqdm
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-import cvxpy as cp
+from ._group_lasso import LogisticGroupLasso
 
-def window_op(xaxis, region, filter = 'rbf', SD = 1):
+def window_op(x_names, region, window = 'rbf', sd = 1, display = False):
     '''
-    xaxis : the entire x axis range, e.g., [100, 3000]
+    Parameters
+    ----------
+    x_names : the entire x axis ticks, e.g., [50.04522, 51.97368, ... 2310.208] cm-1 for Raman
     region : e.g., [100,200]
-    filter : can be 'rbf', 'sinc', 'logistic', 'uniform'. Uniform is just averaging filter.
-    SD : for rbf kernel, the region will lie inside +/-SD
+    window : can be 'rbf', 'sinc', 'logistic', 'uniform'. Uniform is just averaging filter.
+    sd : controls the std of rbf kernel. The standard region will lie inside +/-3d of the gaussian distribution.
     
-    Return : op array. Has the length of xaxis.
+    Return
+    ------ 
+    op array. Has the length of x_names.
+
+    Note
+    ----
+    When x_names has large/small intervals, spikes may miss or spike becomes a rectangle.
     '''
-
-    ''' TO BE FINISHED
-    if filter == 'spike' or filter == 'vanilla':
-        op = np.zeros(len(xaxis))
-        op[region] = 1
-    elif filter == 'uniform' or filter == 'rectangle' or filter == 'average':
-        op = np.ones(len(xaxis)) / len(xaxis)
-    elif filter == 'gaussian' or filter == 'rbf':
-        op = ... 
-    # todo: others
-
-    op = np.zeros(len(xaxis))
-    region_start = math.ceil(region[0])
-    region_end = math.floor(region[1])
     
-    if filter == 'spike' or filter == 'vanilla':
-        op[(region[0]+region[1])/2] = 1
-    elif filter == 'uniform' or filter == 'rectangle' or filter == 'average':
-        if region[1]-region[0] != 0:
-            op[start_int: end_int] = 1 / (region[1]-region[0])
-        elif region[1]-region[0] == 0:
-            op[region[0]] = 1
-    elif filter == 'triangle':
-        if region[1]-region[0] != 0:
-            d = region[1]-region[0]
+    if region[0] > np.max(x_names) or region[1] < np.min(x_names): # out of range
+        return np.zeros(len(x_names))
+    
+    op = [0]*round(np.max(x_names) + 2)
+    
+    if window == 'spike' or window == 'vanilla':
+        op[round(region[0])] = 1
+    elif window == 'uniform' or window == 'rectangle' or window == 'average':
+        if region[-1]-region[0] != 0:
+            op[round(region[0]):round(region[-1])] = [1 / (round(region[-1])-round(region[0]))] * (round(region[-1])-round(region[0]))
+        elif region[-1]-region[0] == 0:
+            op[round(region[0])] = 1
+    elif window == 'triangle':
+        if region[-1]-region[0] != 0:
+            d = region[-1]-region[0]
             h = 2/d
             k = h/(d/2)
-            op = []
-            for x in range(round(region[0]),math.ceil(region[1]+1)):
-                if x > region[0] and x <=  d/2+region[0]:
+            op_triangle = []
+            for x in range(round(region[0]),round(region[-1])):
+                if x >= round(region[0]) and x <  d/2+round(region[0]):
                     op_value1 = k*x+(h-(d/2+region[0])*k)
-                    op.append(op_value1)
-                elif x > d/2+region[0] and x < region[1]:
+                    op_triangle.append(op_value1)
+                elif x >= d/2+round(region[0]) and x <=round(region[-1]):
                     op_value2 = -k*x+(h+(d/2+region[0])*k)
-                    op.append(op_value2)
-            op[]
-        elif region[1]-region[0] == 0:
-            op[(region[0]+region[1])/2] = 1
-    elif filter == 'gaussian' or filter == 'rbf':
-        if region[1]-region[0] != 0:
-            x = np.arange(region[0],region[1]+1)
-            mean = np.mean(region)
-            std = np.std(np.array(region))
-            op = np.random.normal(mean, std, x.shape[0])
-            op /= sum(op)
-            fs = np.dot(np.array(op),np.array(list(range(math.ceil(region[0]),math.floor(region[1]+1)))))
-            Fs.append(fs)
-        elif region[1]-region[0] == 0:
-            op = 1
-            fs = region[0]*op
-            Fs.append(fs)
+                    op_triangle.append(op_value2)
+            op[round(region[0]):round(region[-1])] = op_triangle
+        elif region[-1]-region[0] == 0:
+            op[round(region[0])] = 1
+    elif window == 'gaussian' or window == 'rbf':
+        if region[-1]-region[0] != 0:
+            start_region,end_region=round(region[0]),round(region[-1])
+            sd *= (end_region-start_region)/6 # use 6-simga region
+            x = np.linspace(0, round(x_names[-1] + 2), round(x_names[-1] + 2))
+            op = norm.pdf(x, loc=(start_region+end_region)/2, scale=sd)
+            op = op / op.sum()
+        elif region[-1]-region[0] == 0:
+            op[round(region[0])] = 1
+    
+    # map range
+    mop = []
+    
+    for idx in x_names:
+        mop.append(0.5*op[round(idx-0.5)] + 0.5*op[round(idx+0.5)])
+        
+    # normalization: make sure integral is always 1
+    mop = np.array(mop)
+    mop *= 1/(mop.sum())
+    
+    if display:
+        plt.title('Window Operator ' + window + ' on ' + str(region))
+        plt.plot(x_names,mop)
+        plt.show()
 
-    return op
-    '''
-    pass
+    return mop
 
-
-def window_fs(X, regions, filter = 'rbf'):
+def window_fs(X , x_names, regions, window = 'rbf', sd = 1, display = False):
     '''
     Convert one data to binned features.
     Break down the axis as sections. Each seection is an integral of the signal intensities in the region.
     Integration can be done by radius basis function / sinc kernel, etc.
 
-    filter : Apply a filter operator to a continuous region. Can be 'rbf', 'sinc', 'logistic', 'uniform'. Uniform is just averaging filter.
+    window : Apply a window operator to a continuous region. Can be 'rbf / gaussian', 'uniform', 'spike', 'triangle'. Uniform is just averaging filter.
     '''
 
     Fss = []
-    for x in X:
-
-        Fs = [] # the discrete features for one data sample
+    filtered_regions = [] # filtered regions
+    filtered_region_centers = [] # filtered region centers
+    
+    # filter regions x_names
+    
+    for region in regions:
+        if np.min(x_names) <= region[0] and np.max(x_names) >= region[-1]:
+            filtered_regions.append(region)
+            filtered_region_centers.append((region[0]+region[1])/2)
+            
+    for i, x in enumerate(X):
+        # the discrete features for one data sample
+        Fs = []
         for region in regions:
-            op = window_op([0, len(x)], region, filter)
-            F = (op*x).sum()
-            Fs.append(F)
+            if np.min(x_names) <= region[0] and np.max(x_names) >= region[-1]:
+                op = window_op(x_names, region, window, sd, display = False)
+                F = np.dot(op, x)
+                Fs.append(F)
+
+        if display:
+            plt.title('Feature Selection on Sample ' + str(i))
+            plt.xlabel('Region Centers')
+            plt.ylabel('Feature')
+            plt.scatter(filtered_region_centers, Fs, s=50, facecolors='0.8', edgecolors='0.2', alpha = .5)
+            plt.show()
 
         Fss.append(Fs)
 
-    return np.array(Fss)
+    return np.array(Fss), filtered_regions, filtered_region_centers
+
+
+def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100, verbose = True):
+    '''
+    Group Lasso Feature Selection
+
+    Parameters
+    ----------
+    X : array-like, shape (n_samples, n_features)
+    y : array-like, shape (n_samples,)
+    groups : array-like, shape (n_features,). This is the most important parameter for group lasso. It specifies which group each column corresponds to. For columns that should not be regularised, the corresponding group index should either be None or negative. For example, the list [1, 1, 1, 2, 2, -1] specifies that the first three columns of the data matrix belong to the first group, the next two columns belong to the second group and the last column should not be regularised.
+        Use raman.get_groups() to get the groups.
+    group_reg : group regularization strength
+    l1_reg : l1 regularization strength
+    '''
+
+    if groups is None or len(groups) == 0: # degraded to routine lasso
+        groups = - np.ones(X.shape[1]) # -1 for ungrouped features
+    
+    LogisticGroupLasso.LOG_LOSSES = True
+
+    gl = LogisticGroupLasso(
+        groups = groups, # Iterable that specifies which group each column corresponds to. For columns that should not be regularised, the corresponding group index should either be None or negative. For example, the list [1, 1, 1, 2, 2, -1] specifies that the first three columns of the data matrix belong to the first group, the next two columns belong to the second group and the last column should not be regularised.
+        group_reg = group_reg, # If ``group_reg`` is an iterable (pre-initilized weights), then its length should be equal to the number of groups.
+        l1_reg = l1_reg, # default 0.05
+        scale_reg="inverse_group_size", # for dummy vars, should be None. In statistics and econometrics, particularly in regression analysis, a dummy variable is one that takes only the value 0 or 1 to indicate the absence or presence of some categorical effect that may be expected to shift the outcome.
+        # subsampling_scheme=1,
+        # supress_warning=True,
+    )
+
+    gl.fit(X, y)
+    
+    if (verbose):
+        # Extract info from estimator
+        pred_c = gl.predict(X)
+        sparsity_mask = gl.sparsity_mask_
+        # w_hat = gl.coef_
+
+        # Compute performance metrics
+        accuracy = (pred_c == y).mean()
+
+        # Print results
+        print(f"Number variables: {len(sparsity_mask)}")
+        print(f"Number of chosen variables: {sparsity_mask.sum()}")
+        print(f"Accuracy: {accuracy}")
+    
+    return gl.coef_
+
+
+"""
+
+# Sliding N-Gram LASSO, i.e., Group lasso with SLIDING WINDOW of EQUAL WIDTH
+# These functions are obselete. We can use io.pre.x_binning + lasso to achieve the same effect.
 
 def group_lasso(X_scaled, y, WIDTH, offset = 0, LAMBDA = 1, ALPHA = 0.5):
-    """
+    '''
     Group Lasso Feature Selection
 
     Parameters
@@ -106,7 +180,7 @@ def group_lasso(X_scaled, y, WIDTH, offset = 0, LAMBDA = 1, ALPHA = 0.5):
     WIDTH : sliding window's width; 
     LAMBDA : regularization coefficient; 
     ALPHA : ratio of L1 vs Group;
-    """
+    '''
 
     assert(offset < WIDTH)
 
@@ -245,3 +319,5 @@ def select_features_from_group_lasso_cv(HPARAMS, FSIS, THETAS, SCORES, MAXF = 50
         COMMON_FSI.append(f[0])
                
     return np.array(COMMON_FSI)
+
+"""
