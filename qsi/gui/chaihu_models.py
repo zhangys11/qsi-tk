@@ -107,39 +107,28 @@ def get_html(X):
     Generate a summary report in HTML format
     '''
 
+    ssa = predict_SSa(X)
+    ssc = predict_SSc(X)
+    ssd = predict_SSd(X)
+    pro, place = predict_class(X)
+
     html = '<table class="table table-striped" bgcolor="white">'
 
-    tr = '<tr bgcolor="white"><th> place</th><tr>'  # <th> Value </th><th> Details </th>
+    tr = '<tr bgcolor="white"><th colspan="3" style="center"> place:  '+ str(place) + '</th><tr>'  # <th> Value </th><th> Details </th>
+
     html += tr
 
-    ssa=predict_SSa(X)
-    ssc=predict_SSc(X)
-    ssd=predict_SSd(X)
-    _, place=predict_class(X)
-
-    tr = '<tr ><td>  ' + \
-         str(place) + '</td><tr>'
+    tr = '<tr >' '<td colspan="3"> ' + str('Inner Mongolia wild :'+str(round(pro[0]*100,2))+str('%')+ ', '+'Inner Mongolia cultivated :'+str(round(pro[1]*100,2))+str('%')+', '+'Inner Mongolia black :'+str(round(pro[2]*100,2))+str('%')+', '+'Gansu :'+str(round(pro[3]*100,2))+str('%')+', '+'Shaanxi :'+str(round(pro[4]*100,2)))+str('%')+', ' + '</td>' '<tr>'
     html += tr
 
-    tr = '<tr ><th> SSa(mg/L)</th><tr>'  # <th> Value </th><th> Details </th>
+    tr = '<tr >' '<th> SSa(mg/L)</th>' '<th> SSc(mg/L)</th>' '<th> SSd(mg/L)</th>' '<tr>'  # <th> Value </th><th> Details </th>
     html += tr
 
-    tr = '<tr ><td> ' + \
-         str(round(float(ssa),2) )+'</td><tr>'
-    html += tr
-
-    tr = '<tr ><th> SSc(mg/L) </th><tr>'  # <th> Value </th><th> Details </th>
-    html += tr
-
-    tr = '<tr><td> ' + \
-         str(round(float(ssc),2)) + '</td><tr>'
-    html += tr
-
-    tr = '<tr ><th> SSd(mg/L) </th><tr>'  # <th> Value </th><th> Details </th>
-    html += tr
-
-    tr = '<tr ><td>  ' + \
-         str(round(float(ssd),2)) + '</td><tr>'
+    tr = '<tr >' \
+         '<td> ' + str(round(float(ssa),2) ) + '</td>' \
+         '<td> ' + str(round(float(ssc), 2)) + '</td>' \
+         '<td> ' + str(round(float(ssd), 2)) + '</td>' \
+         '<tr>'
     html += tr
 
     html += "</table>"
@@ -175,8 +164,7 @@ def analyze_probs(fn):
     a = str('wild')+str('  ')+str(round(probs[0]*100,2))+str("%")
     b = str('cultivated') + str('  ') + str(round(probs[1] * 100,2)) + str("%")
     c = str('black') + str('  ') + str(round(probs[2] * 100,2)) + str("%")
-    # f = a+str('/n')+b+str('/n')+c
-    f=a+b+c
+    f=f"{a}<br/>{b}<br/>{c}"
     d = str(round(probs[3] * 100,2)) + str("%")
     e = str(round(probs[4] * 100,2)) + str("%")
     pro=[f,d,e]
