@@ -75,7 +75,7 @@ def preprocess_dataset(X, X_names, pres = None):
     Remarks
     -------
     Default preprocessing parameters for MALDI-TOF data:
-    [('baseline_removal', 1e-3), ('threshold', 10), ('max', 0.01), ('peak_normalize', 1000)]
+    [('baseline_removal', (1e8, 1e-3)), ('threshold', 10), ('max', 0.01), ('peak_normalize', 1000)]
     '''
     IPython.display.display(IPython.display.HTML('<hr/><h2>每个样本的预处理 Row-wise Preprocessing </h2>'))
     
@@ -83,12 +83,12 @@ def preprocess_dataset(X, X_names, pres = None):
         pres = []
 
     for _, pre in enumerate(pres):
-        pre_type, pre_param = pre        
+        pre_type, pre_param = pre
         IPython.display.display(IPython.display.HTML('<h3>' + pre_type + '</h3>'))
 
         if pre_type == 'baseline_removal':
-            X = io.pre.x_baseline_removal(X, p = pre_param)  # use default lambda = 1e8
-            print('消除基线飘移: baseline removal (residual penalty asymetry = ' + str(pre_param) + ')')
+            X = io.pre.x_baseline_removal(X, lam = pre_param[0], p = pre_param[1])  # use default lambda = 1e8
+            print('消除基线飘移: baseline removal (regularization = ' + str(pre_param[0]) + ', residual penalty asymetry = ' + str(pre_param[1]) + ')')
         elif pre_type == 'threshold':
             X = io.pre.x_thresholding(X, pre_param)
             print('阈值预处理（消除背景噪声）: threshold = ' + str(pre_param))
