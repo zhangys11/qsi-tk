@@ -17,7 +17,7 @@
 
     function translate_gui(lan){
             let chineseArray = ['分析您的数据集','上传数据集','提交','改变语言','模型描述','柴胡皂苷A回归模型','柴胡皂苷C回归模型','柴胡皂苷D回归模型','产地鉴别分类器','准确率','混淆矩阵','提示','上传文件仅支持csv<a href="#modelDatasets_chinese" data-toggle="modal">格式</a>，如<a href="/static/sample.csv">本例</a>','分析结果','返回全国','模型功能','1.针对您的柴胡拉曼光谱数据集，分析主要成分（柴胡皂苷A、柴胡皂苷C和柴胡皂苷D）的含量','2.针对您的柴胡拉曼光谱数据集，分析其道地性','使用方法','1.准备如下<a href="#modelDatasets_chinese" data-toggle="modal">格式</a>的数据集','2.点击‘提交’，分析结果将显示在页面上','快速入门','a、b、c、d、e分别代表内蒙古野生、内蒙古种植、内蒙古黑柴胡、甘肃产、陕西产共五种柴胡']
-            let englishArray = ['analyze your own datasets','Upload Data File','submit','change_language','Model Description','SSa regressor','SSc regressor','SSd regressor','Origin classifier','accurary','Confusion matrix','remark','The file should use the csv <a href="#modelDatasets" data-toggle="modal">format</a>. Check this <a href="/static/sample.csv">example</a>.','Result','Return to the country','Model functionality','1.Analyze the content (SSa, SSc, SSd) of three main substances in your Bupleurum sample Raman spectroscopy dataset','2.Analyze the authenticity of your Bupleurum sample Raman spectroscopy datase','Usage method','1.Prepare a dataset in the required <a href="#modelDatasets" data-toggle="modal">format</a>','2.Click "Submit". The server will analyze the dataset and send back the result.',' QuickStart','a, b, c, d and e represent Inner Mongolia wild, Inner Mongolia cultivated, Gansu, and Shaanxi sample respectively']
+            let englishArray = ['analyze your own datasets','Upload Data File','submit','change_language','Model Description','SSa regressor','SSc regressor','SSd regressor','Origin classifier','accurary','Confusion matrix','remark','The file should use the csv <a href="#modelDatasets" data-toggle="modal">format</a>. Check this <a href="/static/sample.csv">example</a>.','Result','Return to the country','Model functionality','1.Analyze the content (SSa, SSc, SSd) of three main substances in your Bupleurum sample Raman spectroscopy dataset','2.Analyze the authenticity of your Bupleurum sample Raman spectroscopy datase','Usage method','1.Prepare a dataset in the required <a href="#modelDatasets" data-toggle="modal">format</a>','2.Click "Submit". The server will analyze the dataset and send back the result.',' QuickStart','a, b, c, d and e represent Inner Mongolia wild, Inner Mongolia cultivated,Inner Mongolia black, Gansu, and Shaanxi sample respectively']
             if (lan == 'cn'){
                 console.log(chineseArray.length, englishArray.length)
                  $('#header_corpse').html(chineseArray[0])
@@ -475,7 +475,7 @@
                 <td>0.97</td>
               </tr>
             </table>
-            
+
             <p id="SSc">SSc regressor</p>
             <table class="table table-sm">
               <tr>
@@ -508,7 +508,7 @@
             <p id="Origin_classifier">Origin classifier</p>
             <table class="table table-sm">
               <!--                <caption>Origin Identification and Classification Model</caption>-->
-              
+
               <tr>
                 <td>SVC</td>
                 <td>kernel=rbf,C=10</td>
@@ -523,7 +523,7 @@
               </tr>
               <tr>
                 <td id="re">remarks</td>
-                <td id="re_1">a, b, c, d and e represent Inner Mongolia wild, Inner Mongolia cultivated, Gansu, and Shaanxi sample respectively</td>
+                <td id="re_1">a, b, c, d and e represent Inner Mongolia wild, Inner Mongolia cultivated,Inner Mongolia black, Gansu, and Shaanxi sample respectively</td>
               </tr>
             </table>
           </div>
@@ -579,13 +579,13 @@
                 <tr>
                   <td id="function_1">
                     1.
-                    Analyze the content (SSa, SSc, SSd) of three main substances in your Bupleurum sample Raman spectroscopy dataset
+                    Analyze the content (SSa, SSc, SSd) of three main substances in your Bupleurum sample
                   </td>
                 </tr>
                 <tr>
                   <td id="function_2">
                     2.
-                    Analyze the authenticity of your Bupleurum sample Raman spectroscopy datase
+                    Analyze the authenticity of your Bupleurum sample
                   </td>
                 </tr>
                 <tr>
