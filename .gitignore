@@ -8,3 +8,4 @@ notebook/ctgan.csv
 notebook/kde.csv
 notebook/smote.csv
 notebook/vae.csv
+qsi/gui/*.csv
