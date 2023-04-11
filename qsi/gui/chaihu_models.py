@@ -1,5 +1,4 @@
 import os
-import os.path
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
@@ -114,25 +113,28 @@ def get_html(X):
 
     html = '<table class="table table-striped" bgcolor="white">'
 
-    tr = '<tr bgcolor="white"><th colspan="3" style="center"> place:  '+ str(place) + '</th><tr>'  # <th> Value </th><th> Details </th>
+    tr = '<tr bgcolor="white"><th colspan="3" style="center">Predicted origin 产地预测:  ' + str(place) + '</th><tr>'  # <th> Value </th><th> Details </th>
 
     html += tr
 
-    tr = '<tr >' '<td colspan="3"> ' + str('Inner Mongolia wild :'+str(round(pro[0]*100,2))+str('%')+ ', '+'Inner Mongolia cultivated :'+str(round(pro[1]*100,2))+str('%')+', '+'Inner Mongolia black :'+str(round(pro[2]*100,2))+str('%')+', '+'Gansu :'+str(round(pro[3]*100,2))+str('%')+', '+'Shaanxi :'+str(round(pro[4]*100,2)))+str('%')+', ' + '</td>' '<tr>'
+    tr = '<tr><td colspan=3>' + str('Inner Mongolia 内蒙 (wild 野生:' 
+                                       + str(round(pro[0]*100,2))+str('%') 
+                                       + ', '+'cultivated 种植:'+str(round(pro[1]*100,2)) + str('%') + ', '
+                                       + 'black bupleurum 黑柴胡:'+str(round(pro[2]*100,2)) + str('%')+'), ' 
+                                       + '<br/>Gansu 甘肃:'+str(round(pro[3]*100,2))+str('%')+', ' 
+                                       + '<br/>Shaanxi 陕西:'+str(round(pro[4]*100,2)))+str('%') + '</td></tr>'
     html += tr
 
-    tr = '<tr >' '<th> SSa(mg/L)</th>' '<th> SSc(mg/L)</th>' '<th> SSd(mg/L)</th>' '<tr>'  # <th> Value </th><th> Details </th>
+    tr = '<tr><th> Saikosaponin A, 柴胡皂苷A, SSa (mg/L)</th><th>Saikosaponin C, 柴胡皂苷C, SSc (mg/L)</th><th>Saikosaponin D, 柴胡皂苷D, SSd (mg/L)</th></tr>'  # <th> Value </th><th> Details </th>
     html += tr
 
-    tr = '<tr >' \
+    tr = '<tr>' \
          '<td> ' + str(round(float(ssa),2) ) + '</td>' \
          '<td> ' + str(round(float(ssc), 2)) + '</td>' \
          '<td> ' + str(round(float(ssd), 2)) + '</td>' \
-         '<tr>'
+         '</tr>'
     html += tr
-
     html += "</table>"
-    # html += '<style> td { text-align:center; vertical-align:middle } </style>'
 
     return html
 
@@ -142,21 +144,21 @@ def load_file(pathname):
     '''
     X = pd.read_excel(pathname)
     if len(X)!=1:
-        print('The model only supports single sample analysis')
+        print('The model only supports single sample analysis.')
     else:
         X = s.transform(X)
         X = lda.transform(X)
     return X
 
 def analyze_file(fn):
-    if os.path.isfile(fn) == False:
+    if os.path.isfile(fn) is False:
         return 'File ' + fn + ' does not exist.'
 
     X= load_file(fn)
     return get_html(X)
 
 def analyze_probs(fn):
-    if os.path.isfile(fn) == False:
+    if os.path.isfile(fn) is False:
         return 'File ' + fn + ' does not exist.'
 
     X = load_file(fn)

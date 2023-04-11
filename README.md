@@ -108,5 +108,10 @@ This package is a master library containing various previous packages published 
             <td></td>
             <td></td>
         </tr>
+        <tr>
+            <td rowspan = 1>qsi.gui</td>
+            <td></td>
+            <td colspan = 3>Web-based apps. e.g., `python -m qsi.gui.chaihu` will launch the app for bupleurum origin discrimination.</td>
+        </tr>
     </tbody>
 </table>

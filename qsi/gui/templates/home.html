@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>cla.gui</title>
+  <title>qsi.gui</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/static/bootstrap.css">
@@ -15,62 +15,62 @@
 
   <script>
 
-    function translate_gui(lan){
-            let chineseArray = ['分析您的数据集','上传数据集','提交','改变语言','模型描述','柴胡皂苷A回归模型','柴胡皂苷C回归模型','柴胡皂苷D回归模型','产地鉴别分类器','准确率','混淆矩阵','提示','上传文件仅支持csv<a href="#modelDatasets_chinese" data-toggle="modal">格式</a>，如<a href="/static/sample.csv">本例</a>','分析结果','返回全国','模型功能','1.针对您的柴胡拉曼光谱数据集，分析主要成分（柴胡皂苷A、柴胡皂苷C和柴胡皂苷D）的含量','2.针对您的柴胡拉曼光谱数据集，分析其道地性','使用方法','1.准备如下<a href="#modelDatasets_chinese" data-toggle="modal">格式</a>的数据集','2.点击‘提交’，分析结果将显示在页面上','快速入门','a、b、c、d、e分别代表内蒙古野生、内蒙古种植、内蒙古黑柴胡、甘肃产、陕西产共五种柴胡']
-            let englishArray = ['analyze your own datasets','Upload Data File','submit','change_language','Model Description','SSa regressor','SSc regressor','SSd regressor','Origin classifier','accurary','Confusion matrix','remark','The file should use the csv <a href="#modelDatasets" data-toggle="modal">format</a>. Check this <a href="/static/sample.csv">example</a>.','Result','Return to the country','Model functionality','1.Analyze the content (SSa, SSc, SSd) of three main substances in your Bupleurum sample Raman spectroscopy dataset','2.Analyze the authenticity of your Bupleurum sample Raman spectroscopy datase','Usage method','1.Prepare a dataset in the required <a href="#modelDatasets" data-toggle="modal">format</a>','2.Click "Submit". The server will analyze the dataset and send back the result.',' QuickStart','a, b, c, d and e represent Inner Mongolia wild, Inner Mongolia cultivated,Inner Mongolia black, Gansu, and Shaanxi sample respectively']
-            if (lan == 'cn'){
-                console.log(chineseArray.length, englishArray.length)
-                 $('#header_corpse').html(chineseArray[0])
-                 $('#upload').html(chineseArray[1])
-                 $('#submit_button').val(chineseArray[2])
-                 $('#change_language').html(chineseArray[3])
-                 $('#Model_Description').html(chineseArray[4])
-                 $('#SSa').html(chineseArray[5])
-                 $('#SSc').html(chineseArray[6])
-                 $('#SSd').html(chineseArray[7])
-                 $('#Origin_classifier').html(chineseArray[8])
-                 $('#acc').html(chineseArray[9])
-                 $('#cm').html(chineseArray[10])
-                 $('#re').html(chineseArray[11])
-                 $('#format').html(chineseArray[12])
-                 $('#result').html(chineseArray[13])
-                 $('#back').html(chineseArray[14])
-                 $('#function').html(chineseArray[15])
-                 $('#function_1').html(chineseArray[16])
-                 $('#function_2').html(chineseArray[17])
-                 $('#use').html(chineseArray[18])
-                 $('#use_1').html(chineseArray[19])
-                 $('#use_2').html(chineseArray[20])
-                 $('#start').html(chineseArray[21])
-                 $('#re_1').html(chineseArray[22])
+    function translate_gui(lan) {
+      let chineseArray = ['分析您的数据', '上传数据', '提交', '改变语言', '模型描述', '柴胡皂苷A回归模型', '柴胡皂苷C回归模型', '柴胡皂苷D回归模型', '产地鉴别分类器', '准确率', '混淆矩阵', '提示', '上传文件仅支持csv<a href="#modelDatasets_chinese" data-toggle="modal">格式</a>，如<a href="/static/sample.csv">本例</a>', '分析结果', '返回全国', '模型功能', '1.根据柴胡拉曼光谱，预测三种主要成分（柴胡皂苷A、柴胡皂苷C和柴胡皂苷D）的含量', '2.根据柴胡拉曼光谱，预测道地性（产地鉴别）', '使用方法', '1.准备如下<a href="#modelDatasets_chinese" data-toggle="modal">格式</a>的数据文件', '2.点击‘提交’，分析结果将显示在地图上', '关于', 'a、b、c、d、e分别代表内蒙古野生、内蒙古种植、内蒙古黑柴胡、甘肃产、陕西产共五种柴胡']
+      let englishArray = ['analyze your own data', 'Upload Data File', 'submit', 'header_change_language', 'Model Description', 'SSa regressor', 'SSc regressor', 'SSd regressor', 'Origin classifier', 'accurary', 'Confusion matrix', 'remark', 'The file should use the csv <a href="#modelDatasets" data-toggle="modal">format</a>. Check this <a href="/static/sample.csv">example</a>.', 'Result', 'reset', 'This model provides two functions:', '1. Predict the three characteristic components (Saikosaponin A/C/D) of Bupleurum.', '2. Predict the geographical origin of Bupleurum.', 'How to use; ', '1.Prepare a data file in the required <a href="#modelDatasets" data-toggle="modal">format</a>', '2.Click "Submit". The result will be shown on the map.', ' About', 'a, b, c, d and e represent Inner Mongolia wild, Inner Mongolia cultivated,Inner Mongolia black bupleurum, Gansu, and Shaanxi sample respectively']
+      if (lan == 'cn') {
+        console.log(chineseArray.length, englishArray.length)
+        $('#header_corpse').html(chineseArray[0])
+        $('#btn_upload').html(chineseArray[1])
+        $('#btn_submit').val(chineseArray[2])
+        $('#header_change_language').html(chineseArray[3])
+        $('#header_model_desc').html(chineseArray[4])
+        $('#header_ssa').html(chineseArray[5])
+        $('#header_ssc').html(chineseArray[6])
+        $('#header_ssd').html(chineseArray[7])
+        $('#header_origin_classifier').html(chineseArray[8])
+        $('#header_accuracy').html(chineseArray[9])
+        $('#header_confusion_matrix').html(chineseArray[10])
+        $('#header_remarks').html(chineseArray[11])
+        $('#desc_file_format').html(chineseArray[12])
+        $('#header_result').html(chineseArray[13])
+        $('#btn_back').html(chineseArray[14])
+        $('#header_function').html(chineseArray[15])
+        $('#txt_function_1').html(chineseArray[16])
+        $('#txt_function_2').html(chineseArray[17])
+        $('#txt_use').html(chineseArray[18])
+        $('#txt_use_1').html(chineseArray[19])
+        $('#txt_use_2').html(chineseArray[20])
+        $('#header_about').html(chineseArray[21])
+        $('#txt_remarks').html(chineseArray[22])
 
-            }
-            else{
-                console.log('english')
-                $('#header_corpse').html(englishArray[0])
-                $('#upload').html(englishArray[1])
-                $('#submit_button').val(englishArray[2])
-                $('#change_language').html(englishArray[3])
-                $('#Model_Description').html(englishArray[4])
-                $('#SSa').html(englishArray[5])
-                $('#SSc').html(englishArray[6])
-                $('#SSd').html(englishArray[7])
-                $('#Origin_classifier').html(englishArray[8])
-                $('#acc').html(englishArray[9])
-                $('#cm').html(englishArray[10])
-                $('#re').html(englishArray[11])
-                $('#format').html(englishArray[12])
-                $('#result').html(englishArray[13])
-                $('#back').html(englishArray[14])
-                $('#function').html(englishArray[15])
-                $('#function_1').html(englishArray[16])
-                $('#function_2').html(englishArray[17])
-                $('#use').html(englishArray[18])
-                $('#use_1').html(englishArray[19])
-                $('#use_2').html(englishArray[20])
-                $('#start').html(englishArray[21])
-                $('#re_1').html(englishArray[22])
-            }
+      }
+      else {
+        console.log('english')
+        $('#header_corpse').html(englishArray[0])
+        $('#btn_upload').html(englishArray[1])
+        $('#btn_submit').val(englishArray[2])
+        $('#header_change_language').html(englishArray[3])
+        $('#header_model_desc').html(englishArray[4])
+        $('#header_ssa').html(englishArray[5])
+        $('#header_ssc').html(englishArray[6])
+        $('#header_ssd').html(englishArray[7])
+        $('#header_origin_classifier').html(englishArray[8])
+        $('#header_accuracy').html(englishArray[9])
+        $('#header_confusion_matrix').html(englishArray[10])
+        $('#header_remarks').html(englishArray[11])
+        $('#desc_file_format').html(englishArray[12])
+        $('#header_result').html(englishArray[13])
+        $('#btn_back').html(englishArray[14])
+        $('#header_function').html(englishArray[15])
+        $('#txt_function_1').html(englishArray[16])
+        $('#txt_function_2').html(englishArray[17])
+        $('#txt_use').html(englishArray[18])
+        $('#txt_use_1').html(englishArray[19])
+        $('#txt_use_2').html(englishArray[20])
+        $('#header_about').html(englishArray[21])
+        $('#txt_remarks').html(englishArray[22])
+      }
     }
 
     $(function () {
@@ -118,7 +118,7 @@
       });
       var myChart = echarts.init(document.getElementById('china-map'));
       console.log(myChart);
-      var oBack = document.getElementById("back");
+      var oBack = document.getElementById("btn_back");
 
       var provinces = ['shanghai', 'hebei', 'shanxi', 'neimenggu', 'liaoning', 'jilin', 'heilongjiang', 'jiangsu', 'zhejiang', 'anhui', 'fujian', 'jiangxi', 'shandong', 'henan', 'hubei', 'hunan', 'guangdong', 'guangxi', 'hainan', 'sichuan', 'guizhou', 'yunnan', 'xizang', 'shanxi1', 'gansu', 'qinghai', 'ningxia', 'xinjiang', 'beijing', 'tianjin', 'chongqing', 'xianggang', 'aomen'];
       var provincesText = ['上海', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江', '江苏', '浙江', '安徽', '福建', '江西', '山东', '河南', '湖北', '湖南', '广东', '广西', '海南', '四川', '贵州', '云南', '西藏', '陕西', '甘肃', '青海', '宁夏', '新疆', '北京', '天津', '重庆', '香港', '澳门'];
@@ -228,21 +228,21 @@
 
 
 
-    function updateMapData(probs){
-      seriesData[20] = {
-        name: '内蒙古',
-        value: probs[0],
-      };
-      seriesData[18] = {
-        name: '甘肃',
-        value: probs[1],
-      };
-      seriesData[21] = {
-        name: '陕西',
-        value: probs[2],
-      };
-      initEcharts("china", "中国");
-    }
+      function updateMapData(probs) {
+        seriesData[20] = {
+          name: '内蒙古',
+          value: probs[0],
+        };
+        seriesData[18] = {
+          name: '甘肃',
+          value: probs[1],
+        };
+        seriesData[21] = {
+          name: '陕西',
+          value: probs[2],
+        };
+        initEcharts("china", "中国");
+      }
 
       oBack.onclick = function () {
         initEcharts("china", "中国");
@@ -292,7 +292,7 @@
                 normal: {
                   borderWidth: .5,//区域边框宽度
                   borderColor: '#0550c3',//区域边框颜色
-                  areaColor: "#4ea397",//区域颜色
+                  areaColor: "#888888",//区域颜色
 
                 },
 
@@ -339,7 +339,7 @@
       // 展示对应的省
       function showProvince(pName, Chinese_) {
         //这写省份的js都是通过在线构建工具生成的，保存在本地，需要时加载使用即可，最好不要一开始全部直接引入。
-        loadBdScript('$' + pName + 'JS', './js/map/province/' + pName + '.js', function () {
+        loadBdScript('$' + pName + 'JS', './static/map/province/' + pName + '.js', function () {
           initEcharts(Chinese_);
         });
       }
@@ -414,12 +414,9 @@
       display: none;
     }
   </style>
-
-
 </head>
 
 <body>
-
   <div>
     <br />
     <div class="row p-2 m-2">
@@ -428,13 +425,13 @@
 
           <div class="card">
             <h6 id="header_corpse" class="card-header">
-              Analyze Your Own Dataset
+              Analyze Your Own Data
             </h6>
 
             <div class="card-body">
 
-              <h6 id="upload" onclick="$('#dataFile').click();">Upload Data File</h6>
-              <p id="format">
+              <h6 id="btn_upload" onclick="$('#dataFile').click();">Upload Data File</h6>
+              <p id="desc_file_format">
                 The file should use the csv
                 <a href="#modelDatasets" data-toggle="modal">format</a>.
                 Check this <a href="/static/sample.csv">example</a>.
@@ -446,8 +443,8 @@
               <br /><br />
 
               <div class="btn-group">
-                <input id="submit_button" class="btn btn-default btn-outline-dark" type="submit" onclick="$('#use_sample').val(false);"
-                  value="Submit" />
+                <input id="btn_submit" class="btn btn-default btn-outline-dark" type="submit"
+                  onclick="$('#use_sample').val(false);" value="Submit" />
                 <!--input class="btn btn-default btn-outline-dark" type="submit" value="Test with sample file" /-->
               </div>
 
@@ -459,103 +456,60 @@
         <hr />
 
         <div class="card">
-          <h6 id="Model_Description" class="card-header">
-            Model Description
+          <h6 id="header_change_language" class="language_box card-header">
+            Change Language
           </h6>
 
           <div class="card-body">
-            <p id="SSa">SSa regressor</p>
-            <table class="table table-sm">
-              <tr>
-                <td>SVR</td>
-                <td>kernel=rbf C=1000</td>
-              </tr>
-              <tr>
-                <td>R^2</td>
-                <td>0.97</td>
-              </tr>
-            </table>
-
-            <p id="SSc">SSc regressor</p>
-            <table class="table table-sm">
-              <tr>
-                <td>SVR</td>
-                <td>kernel=rbf,C=800</td>
-              </tr>
-              <tr>
-                <td>R^2</td>
-                <td>0.97</td>
-              </tr>
-            </table>
-
-            <p id="SSd">SSd regressor</p>
-            <table class="table table-sm">
-              <tr>
-                <td>SVC</td>
-                <td>kernel=rbf,C=1200</td>
-              </tr>
-              <tr>
-                <td>R^2</td>
-                <td>0.99</td>
-              </tr>
-              <tr>
-                <!--                <td>Fit Image</td>-->
-                <!--                <td><img src="/static/SSd.png" /></td>-->
-              </tr>
-            </table>
-
-            <hr/>
-            <p id="Origin_classifier">Origin classifier</p>
-            <table class="table table-sm">
-              <!--                <caption>Origin Identification and Classification Model</caption>-->
-
-              <tr>
-                <td>SVC</td>
-                <td>kernel=rbf,C=10</td>
-              </tr>
-              <tr>
-                <td id="acc">accurary</td>
-                <td>0.93</td>
-              </tr>
-              <tr>
-                <td id="cm">Confusion matrix</td>
-                <td><img src="/static/matrix.png" /></td>
-              </tr>
-              <tr>
-                <td id="re">remarks</td>
-                <td id="re_1">a, b, c, d and e represent Inner Mongolia wild, Inner Mongolia cultivated,Inner Mongolia black, Gansu, and Shaanxi sample respectively</td>
-              </tr>
-            </table>
+            <div class="btn-group">
+              <input type="button" class=" btn btn-default btn-outline-dark" onclick="translate_gui('cn')" value="中文" />
+              <input type="button" class=" btn btn-default btn-outline-dark" onclick="translate_gui('en')"
+                value="English" />
+            </div>
           </div>
         </div>
-       <hr />
+
+        <hr />
 
         <div class="card">
-                <h6 id="change_language" class="language_box card-header">
-                    Change Language
-                </h6>
+          <h6 id="header_about" class="card-header">About</h6>
+          <div class="card-body">
+            <b id="header_function">This model provides two functions: </b>
 
-                <div class="card-body">
-                    <div class="btn-group">
-                        <input type="button" class=" btn btn-default btn-outline-dark"
-                            onclick="translate_gui('cn')" value="中文" />
-                        <input type="button" class=" btn btn-default btn-outline-dark"
-                            onclick="translate_gui('en')" value="English" />
-                    </div>
-                </div>
+            <br />
+            <span id="txt_function_1">
+              1.
+              Predict the three characteristic components (Saikosaponin A/C/D) of Bupleurum.
+            </span>
+            <br />
+            <span id="txt_function_2">
+              2.
+              Predict the geographical origin of Bupleurum.
+            </span>
+            <br />
+            <b id="txt_use">How to use: </b><br/>
+            <span id="txt_use_1">
+              1.
+              Prepare a data file in the required <a href="#modelDatasets" data-toggle="modal">format</a>.
+            </span>
+            <br />
+            <span id="txt_use_2">
+              2.
+              Click "Submit". The result will be shown on the map.
+            </span>
+          </div>
         </div>
-
         <p>
-          © cla.gui - A web wrapper for cla.metrics (oo@zju.edu.cn)
+          © qsi.gui - A web wrapper for qsi-tk-based apps (oo@zju.edu.cn)
         </p>
       </div>
       <div class="col-6">
         <div class="card">
-          <h6 id="result" class="card-header">Result</h6>
+          <h6 id="header_result" class="card-header">Result</h6>
           <div class="card-body">
             <table>
               <tr>
-                <button id="back">返回全国</button>
+                <button id="btn_back">reset</button>
                 <div style="min-height:500px; min-width: 700px" id="china-map"></div>
               </tr>
               <tr>
@@ -568,51 +522,76 @@
 
       <div class="col-3">
         <div class="card">
-          <h6 id="start" class="card-header">QuickStart</h6>
-          <div class="card-body" id="div_instruction">
-            <table class="table table-striped">
-              <tbody>
-                <tr>
-                  <th id="function">Model functionality</th>
-                </tr>
+          <h6 id="header_model_desc" class="card-header">
+            Model Details
+          </h6>
 
-                <tr>
-                  <td id="function_1">
-                    1.
-                    Analyze the content (SSa, SSc, SSd) of three main substances in your Bupleurum sample
-                  </td>
-                </tr>
-                <tr>
-                  <td id="function_2">
-                    2.
-                    Analyze the authenticity of your Bupleurum sample
-                  </td>
-                </tr>
-                <tr>
-                  <th id="use">Usage method</th>
-                </tr>
-                <tr>
+          <div class="card-body">
+            <p id="header_ssa">SSa regressor</p>
+            <table class="table table-sm">
+              <tr>
+                <td>SVR</td>
+                <td>kernel=rbf,C=1000</td>
+              </tr>
+              <tr>
+                <td>R<sup>2</sup></td>
+                <td>0.97</td>
+              </tr>
+            </table>
 
-                  <td id="use_1">
-                    1.
-                    Prepare a dataset in the required <a href="#modelDatasets" data-toggle="modal">format</a>.
-                  </td>
-                </tr>
-                <tr>
-                  <td id="use_2">
-                    2.
-                    Click "Submit". The server will analyze the dataset and send back the result.
-                  </td>
-                </tr>
+            <p id="header_ssc">SSc regressor</p>
+            <table class="table table-sm">
+              <tr>
+                <td>SVR</td>
+                <td>kernel=rbf,C=800</td>
+              </tr>
+              <tr>
+                <td>R<sup>2</sup></td>
+                <td>0.97</td>
+              </tr>
+            </table>
 
-              </tbody>
+            <p id="header_ssd">SSd regressor</p>
+            <table class="table table-sm">
+              <tr>
+                <td>SVC</td>
+                <td>kernel=rbf,C=1200</td>
+              </tr>
+              <tr>
+                <td>R<sup>2</sup></td>
+                <td>0.99</td>
+              </tr>
+              <tr>
+                <!--                <td>Fit Image</td>-->
+                <!--                <td><img src="/static/SSd.png" /></td>-->
+              </tr>
+            </table>
+
+            <hr />
+            <p id="header_origin_classifier">Origin classifier</p>
+            <table class="table table-sm">
+              <!--                <caption>Origin Identification and Classification Model</caption>-->
+
+              <tr>
+                <td>SVC</td>
+                <td>kernel=rbf,C=10</td>
+              </tr>
+              <tr>
+                <td id="header_accuracy">accurary</td>
+                <td>0.93</td>
+              </tr>
+              <tr>
+                <td id="header_confusion_matrix">Confusion matrix</td>
+                <td><img src="/static/matrix.png" /></td>
+              </tr>
+              <tr>
+                <td id="header_remarks">remarks</td>
+                <td id="txt_remarks">a, b, c, d and e represent Inner Mongolia wild, Inner Mongolia cultivated,Inner Mongolia
+                  black bupleurum, Gansu, and Shaanxi sample respectively</td>
+              </tr>
             </table>
           </div>
-
         </div>
-
-
-
       </div>
 
       <a href="https://github.com/zhangys11/cla" class="github-corner" aria-label="View source on Github">
@@ -690,7 +669,6 @@
       </div>
     </div>
   </div>
-
 </body>
 
 </html>
