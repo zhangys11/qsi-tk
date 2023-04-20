@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.stats import norm
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 from ._group_lasso import LogisticGroupLasso
 
 def window_op(x_names, region, window = 'rbf', sd = 1, display = False):
@@ -18,56 +19,55 @@ def window_op(x_names, region, window = 'rbf', sd = 1, display = False):
 
     Note
     ----
-    When x_names has large/small intervals, spikes may miss or spike becomes a rectangle.
+    The resolution is 0.1 cm-1. When x_names has large/small intervals, spikes may miss or spike becomes a rectangle.
     '''
     
     if region[0] > np.max(x_names) or region[1] < np.min(x_names): # out of range
         return np.zeros(len(x_names))
     
-    op = [0]*round(np.max(x_names) + 2)
-    
+    op = [0]*round(10*(np.max(x_names))+1)
     if window == 'spike' or window == 'vanilla':
-        op[round(region[0])] = 1
+        op[round(10*region[0])] = 1      
     elif window == 'uniform' or window == 'rectangle' or window == 'average':
         if region[-1]-region[0] != 0:
-            op[round(region[0]):round(region[-1])] = [1 / (round(region[-1])-round(region[0]))] * (round(region[-1])-round(region[0]))
+            op[round(10*region[0]):round(10*region[-1])] = [10 / (round(10*region[-1])-round(10*region[0]))] * (round(10*region[-1])-round(10*region[0]))
         elif region[-1]-region[0] == 0:
-            op[round(region[0])] = 1
+            op[round(10*region[0])] = 1
     elif window == 'triangle':
         if region[-1]-region[0] != 0:
-            d = region[-1]-region[0]
-            h = 2/d
+            d = 10*region[-1]-10*region[0]
+            h = 20/d
             k = h/(d/2)
             op_triangle = []
-            for x in range(round(region[0]),round(region[-1])):
-                if x >= round(region[0]) and x <  d/2+round(region[0]):
-                    op_value1 = k*x+(h-(d/2+region[0])*k)
+            for x in range(round(10*region[0]),round(10*region[-1])+1):
+                if x >= round(10*region[0]) and x <  d/2+round(10*region[0]):
+                    op_value1 = k*x+(h-(d/2+10*region[0])*k)
                     op_triangle.append(op_value1)
-                elif x >= d/2+round(region[0]) and x <=round(region[-1]):
-                    op_value2 = -k*x+(h+(d/2+region[0])*k)
+                elif x >= d/2+round(10*region[0]) and x <=round(10*region[-1]):
+                    op_value2 = -k*x+(h+(d/2+10*region[0])*k)
                     op_triangle.append(op_value2)
-            op[round(region[0]):round(region[-1])] = op_triangle
+            op[round(10*region[0]):round(10*region[-1])+1] = op_triangle
         elif region[-1]-region[0] == 0:
-            op[round(region[0])] = 1
+            op[round(10*region[0])] = 1
     elif window == 'gaussian' or window == 'rbf':
         if region[-1]-region[0] != 0:
-            start_region,end_region=round(region[0]),round(region[-1])
+            start_region,end_region=round(10*region[0]),round(10*region[-1])
             sd *= (end_region-start_region)/6 # use 6-simga region
-            x = np.linspace(0, round(x_names[-1] + 2), round(x_names[-1] + 2))
+            x = np.linspace(0, round(10*(x_names[-1]) + 2), round(10*(x_names[-1]) + 2))
             op = norm.pdf(x, loc=(start_region+end_region)/2, scale=sd)
             op = op / op.sum()
         elif region[-1]-region[0] == 0:
-            op[round(region[0])] = 1
+            op[round(10*region[0])] = 1
     
-    # map range
+    #############  map range ##############
     mop = []
     
     for idx in x_names:
-        mop.append(0.5*op[round(idx-0.5)] + 0.5*op[round(idx+0.5)])
-        
+        mop.append(op[round(10*idx)])
     # normalization: make sure integral is always 1
     mop = np.array(mop)
-    mop *= 1/(mop.sum())
+    if mop.sum() > 0:
+        mop = mop/mop.sum()
     
     if display:
         plt.title('Window Operator ' + window + ' on ' + str(region))
@@ -85,7 +85,7 @@ def window_fs(X, x_names, regions, window = 'rbf', sd = 1, display = False):
     window : Apply a window operator to a continuous region. Can be 'rbf / gaussian', 'uniform', 'spike', 'triangle'. Uniform is just averaging filter.
     '''
 
-    Fss = []
+    fss = []
     filtered_regions = [] # filtered regions
     filtered_region_centers = [] # filtered region centers
     
@@ -112,14 +112,99 @@ def window_fs(X, x_names, regions, window = 'rbf', sd = 1, display = False):
             plt.scatter(filtered_region_centers, Fs, s=50, facecolors='0.8', edgecolors='0.2', alpha = .5)
             plt.show()
 
-        Fss.append(Fs)
+        fss.append(Fs)
 
-    return np.array(Fss), filtered_regions, filtered_region_centers
+    return np.array(fss), filtered_regions, filtered_region_centers
 
-
-def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100, verbose = True):
+def raman_window_fs(X , x_names, raman_peak_list, window = 'rbf', sd = 1, display = False):
     '''
-    Group Lasso Feature Selection
+    Extract features from Raman spectra with specified window operator.
+    
+    Parameters
+    ----------
+    X : array-like, shape (n_samples, n_features)
+        The input data.
+    x_names : array-like, shape (n_features,)
+        The feature names, i.e., raman shifts / wavenumbers (in cm-1), of the input data.
+    raman_peak_list : list of RamanPeak objects
+    window : Apply a window operator to a continuous region. Can be 'rbf / gaussian', 'uniform', 'spike', 'triangle'. Uniform is just averaging filter.
+    sd : standard deviation of the 'rbf / gaussian' window.
+    display : whether display the per-sample feature selection result.
+
+    Returns
+    -------
+    Fss : array-like, shape (n_samples, n_extracted_features)
+        The extracted features.
+    group_info : list of extracted feature information
+        group_info[i] = [chemical, vibration, peak_start, peak_end, group_id]
+    group_ids : list of group ids, e.g., [-1,-1,1,1,1,2,2,-1,-1]
+        Required by the group_lasso function.
+    filtered_regions : list of regions that are within the range of x_names (in cm-1)
+    filtered_region_centers : list of region centers that are within the range of x_names (in cm-1)
+    '''
+
+    raman_peak_key_list = [[x.chemical +x.vibration]+[(x.peak_start,x.peak_end)] for x in raman_peak_list]
+    
+    Fss = []
+    filtered_keys = []
+    filtered_regions = [] # filtered regions
+    filtered_region_centers = [] # filtered region centers
+        
+    # filter regions x_names 
+    for sublist in raman_peak_key_list:
+        if np.min(x_names) <= sublist[-1][0] and np.max(x_names) >= sublist[-1][-1]:
+            filtered_keys.append(sublist) # 不仅添加该物质的region，同时将其对应的键值添加进去
+            filtered_regions.append(sublist[-1])
+            filtered_region_centers.append((sublist[-1][0]+sublist[-1][1])/2)
+    
+    # 分组----------------------------------------------------
+    # 先对filtered_keys不同的物质键值进行排列
+    d = {}
+    group_num = 0
+    for sublist in filtered_keys:
+        if sublist[0] not in d:
+            d[sublist[0]] = group_num
+            group_num += 1
+    # filtered_keys中物质键值相同的给予相同的组号
+    result = []
+    for sublist in filtered_keys:
+        group_id = d.get(sublist[0], -1)
+        if group_id == -1:
+            result.append(sublist + [-1])
+        else:
+            result.append(sublist + [group_id])        
+    # 将result中只出现了一次的组号修改为-1
+    count_dict = {}
+    for sublist in result:
+        count_dict[sublist[2]] = count_dict.get(sublist[2], 0) + 1
+    group_info = [[sublist[0], sublist[1], -1] if count_dict[sublist[2]] == 1 else sublist for sublist in result] # 分组表[物质和键，对应的region，对应的组号]             
+    # 分组完成------------------------------------------------------------------------------
+    
+
+    for i, x in enumerate(X):
+        # the discrete features for one data sample
+        Fs = []
+        for sublist in raman_peak_key_list:
+            if np.min(x_names) <= sublist[-1][0] and np.max(x_names) >= sublist[-1][-1]:
+                op = window_op(x_names, sublist[-1], window, sd, display = False)
+                F = np.dot(op, x)
+                Fs.append(F)
+        if display:
+            plt.figure(figsize=(10, 3))
+            plt.title('Feature Selection on Sample ' + str(i))
+            plt.xlabel('Region Centers')
+            plt.ylabel('Feature')
+            plt.scatter(filtered_region_centers, Fs, s=50, facecolors='0.8', edgecolors='0.2', alpha = .5)
+            plt.show()
+
+        Fss.append(Fs)
+    group_ids = [x[-1] for x in group_info] 
+    return np.array(Fss), group_info, group_ids, filtered_regions, filtered_region_centers
+
+def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100, split = 0.3, verbose = False):
+    '''
+    Group Lasso Feature Selection. 
+    The most important param is groups. It can be generated from raman_window_fs(), i.e., the 3rd returned result.
 
     Parameters
     ----------
@@ -127,8 +212,15 @@ def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100, verbose = Tr
     y : array-like, shape (n_samples,)
     groups : array-like, shape (n_features,). This is the most important parameter for group lasso. It specifies which group each column corresponds to. For columns that should not be regularised, the corresponding group index should either be None or negative. For example, the list [1, 1, 1, 2, 2, -1] specifies that the first three columns of the data matrix belong to the first group, the next two columns belong to the second group and the last column should not be regularised.
         Use raman.get_groups() to get the groups.
+    split : test set split ratio. Default is 0.3.
     group_reg : group regularization strength
     l1_reg : l1 regularization strength
+
+    Returns
+    -------
+    coef : array-like, shape (n_features,). Coefficients returned from the LogisticGroupLasso model, indicating the importance of each feature.
+    mask : array-like, shape (n_features,). The mask of selected features. 1 for selected, 0 for not selected. It can be very sparse.
+    acc : accuracy of the model on the test set.
     '''
 
     if groups is None or len(groups) == 0: # degraded to routine lasso
@@ -145,23 +237,24 @@ def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100, verbose = Tr
         # supress_warning=True,
     )
 
-    gl.fit(X, y)
-    
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=split, stratify=y)
+
+    gl.fit(X_train, y_train)
+
+    # Extract info from estimator
+    pred_c = gl.predict(X_test)
+    # w_hat = gl.coef_
+    # Compute performance metrics
+    acc = (pred_c == y_test).mean()
+
     if (verbose):
-        # Extract info from estimator
-        pred_c = gl.predict(X)
-        sparsity_mask = gl.sparsity_mask_
-        # w_hat = gl.coef_
-
-        # Compute performance metrics
-        accuracy = (pred_c == y).mean()
-
-        # Print results
-        print(f"Number variables: {len(sparsity_mask)}")
-        print(f"Number of chosen variables: {sparsity_mask.sum()}")
-        print(f"Accuracy: {accuracy}")
+        
+        print(f"Group Lasso Parameters (group_reg, l1_reg, split): {group_reg, l1_reg, split}")
+        print(f"Number of selected features: {gl.sparsity_mask_.sum()}")
+        print(f"Test accuracy: {acc}")
+        print(group_reg,l1_reg)
     
-    return gl.coef_
+    return gl.coef_, gl.sparsity_mask_, acc
 
 
 """

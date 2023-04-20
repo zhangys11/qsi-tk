@@ -4,11 +4,9 @@ import pickle
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
 import matplotlib
 from sklearn.decomposition import PCA
 from sklearn.cross_decomposition import PLSRegression
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
 from . import pre
 from ..vis import *

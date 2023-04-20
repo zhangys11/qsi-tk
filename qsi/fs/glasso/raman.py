@@ -55,7 +55,7 @@ def plot_raman_prior(raman_peak_list):
     for idx, (key, value) in enumerate(dic.items()):
         for item in value:
             peak_range=[item.peak_start, item.peak_end]
-        _ = plt.hlines(idx,peak_range[0]-10,peak_range[1]+10, lw = 3, label = key,color=random.choice(colors))
+            _ = plt.hlines(idx,peak_range[0]-10,peak_range[1]+10, lw = 3, label = key,color=random.choice(colors))
         
     # plt.legend(loc = "lower right")
     plt.yticks([])
@@ -203,14 +203,3 @@ def generate_html_table(raman_peak_list):
     html += '</table>'
 
     return html
-
-def generate_glasso_groups(regions, raman_peak_list):
-    '''
-    TODO: generate groups for group lasso.
-    
-    Parameters
-    ----------
-    regions : filtered regions
-    ramam_peak_list : list of Raman peaks. It specfifies which regions are in the same group.
-    '''
-    return -np.ones(len(regions)) # -1 means no group

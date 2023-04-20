@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from .unsupervised_dimension_reductions import unsupervised_dimension_reductions
 
 # plot the importance for all features
-def plot_feature_importance(feature_importances, feature_names, title, \
+def plot_feature_importance(feature_importances, feature_names, title = None, \
     xtick_angle=None, xlabel = '', ylabel = '', row_size = None, figsize=(12,2)):
     
     feature_importances = np.array(feature_importances)
@@ -34,7 +34,7 @@ def plot_feature_importance(feature_importances, feature_names, title, \
 
     # plt.bar is buggy for high dimensional data
     plt.scatter(feature_names, feature_importances, s=1, alpha=.7, cmap=plt.cm.Blues)
-    plt.plot(feature_names, feature_importances, alpha=.7) # , width=2
+    plt.bar(feature_names, feature_importances, alpha=.7) # , width=2 # bar
     
     if xtick_angle is None or \
         ( len(feature_names) > 100 and isinstance(feature_names[0], str) ): # to avoid crowdy strings
