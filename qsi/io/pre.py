@@ -69,14 +69,14 @@ def x_binning(X, X_names = None, target_dim = 0.1, flavor = 'max', display = Fal
     '''
     
     n = X.shape[1]
-    if target_dim < 1:
-        target_dim = int(target_dim * n)
-    elif target_dim >= 1:
+    if target_dim >= 1 or target_dim <= 0:
         target_dim = n
         return X, X_names
-
+    
+    target_dim = int(target_dim * n)
+    
     NX = []
-    NX_names = []     
+    NX_names = []
     for idx, a in enumerate( np.array_split(X, target_dim, axis = 1) ):
         if X_names is not None and len(X_names) == n:
             NX_names.append( X_names[ int (a.shape[1] * (idx + 0.5)) ] ) # take the middle xlabel

@@ -155,11 +155,9 @@ def load_raman_peak_list(json_file = None):
 
     return [RamanPeak(dic) for dic in raman_peak_list]
 
-def get_raman_peak_list_from_excel(n = 194, filepath="D:\\group lasso\\raman.xls"):
+def get_raman_peak_list_from_excel(filepath="raman.xls"):
     '''
     Load the excel file and return a list of Raman peak objects.
-
-    TODO: n : get from excel rows.
     '''
     raman_peak_excel = xlrd.open_workbook(filepath)#括号里为路径
     raman_peak_sheet = raman_peak_excel.sheet_by_index(0)#索引至页
@@ -172,7 +170,7 @@ def get_raman_peak_list_from_excel(n = 194, filepath="D:\\group lasso\\raman.xls
     references=[]
     comments=[]    
     
-    for i in range(1,n+1): 
+    for i in range(1,raman_peak_sheet.nrows):
         chemicals.append(raman_peak_sheet.cell_value(i,0))
         vibrations.append(raman_peak_sheet.cell_value(i,1))
         peak_starts.append(raman_peak_sheet.cell_value(i,2))
