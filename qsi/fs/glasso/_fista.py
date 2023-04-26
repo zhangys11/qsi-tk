@@ -3,7 +3,6 @@ To avoid package dependency, we use the code from the following link: https://gi
 Copyright (c) 2019 Yngve Mardal Moe
 '''
 
-
 import warnings
 from math import sqrt
 

@@ -76,7 +76,7 @@ def window_op(x_names, region, window = 'rbf', sd = 1, display = False):
 
     return mop
 
-def window_fs(X , x_names, regions, window = 'rbf', sd = 1, display = False):
+def window_fs(X, x_names, regions, window = 'rbf', sd = 1, display = False):
     '''
     Convert one data to binned features.
     Break down the axis as sections. Each seection is an integral of the signal intensities in the region.
