@@ -1,10 +1,12 @@
+'''
+Contains Raman prior knowledgebase and functions.
+'''
+import random
 import json
 import os.path
 import matplotlib.pyplot as plt
-import xlrd
 import matplotlib.colors as mcolors
-import random
-import numpy as np
+import xlrd
 
 def raman_prior_sample():
     '''
@@ -40,9 +42,13 @@ def raman_prior_sample():
 
     return d
 
-def plot_raman_prior(raman_peak_list):
+def plot_raman_prior(raman_peak_list, group_only = False):
     '''
     plot raman peaks
+
+    Parameters
+    ----------
+    group_only : whether only plot peaks that are in any group. Otherwise, plot all.
     '''
 
     plt.figure(figsize = (10, 5))

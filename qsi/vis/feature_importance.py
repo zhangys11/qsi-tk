@@ -33,8 +33,8 @@ def plot_feature_importance(feature_importances, feature_names, title = None, \
         feature_names = list(range(feature_importances.size))
 
     # plt.bar is buggy for high dimensional data
-    plt.scatter(feature_names, feature_importances, s=1, alpha=.7, cmap=plt.cm.Blues)
-    plt.bar(feature_names, feature_importances, alpha=.7) # , width=2 # bar
+    plt.scatter(feature_names, feature_importances, s=1, alpha=.5) # , cmap=plt.cm.Blues
+    plt.bar(feature_names, feature_importances, alpha=.7, width=2)
     
     if xtick_angle is None or \
         ( len(feature_names) > 100 and isinstance(feature_names[0], str) ): # to avoid crowdy strings
