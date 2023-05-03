@@ -93,7 +93,7 @@ class RamanPeak:
         comment : Comment.
         '''
         
-        # if args are more than 1 sum of args
+        # if args are separated params
         if len(args) > 1:
             self.chemical = args[0]
             self.vibration = args[1]
@@ -102,15 +102,27 @@ class RamanPeak:
             self.reference = args[4]
             self.comment = args[5]
 
-        # if arg is an integer square the arg
+        # if arg is a dict
         elif isinstance(args[0], dict):
             dic = args[0]
-            self.chemical = dic['chemical']
-            self.vibration = dic['vibration'] 
-            self.peak_start = float(dic['peak_start'])
-            self.peak_end = float(dic['peak_end'])
-            self.reference = dic['reference']
-            self.comment = dic['comment']
+
+            try:
+                self.chemical = dic['chemical']
+                self.vibration = dic['vibration']
+                self.peak_start = float(dic['peak_start'])
+                self.peak_end = float(dic['peak_end'])
+                self.reference = dic['reference']
+                self.comment = dic['comment']
+            except Exception as e:
+                print(e)
+                print('Skipping this item...')
+                print(dic)
+
+    def validate(self):
+        '''
+        Validate the Raman peak object.
+        '''
+        return 'peak_start' in self.__dict__ and 'peak_end' in self.__dict__ and self.peak_start >= 0 and self.peak_end >= 0
 
     def __str__(self):
         return f'{self.chemical} {self.vibration} {self.peak_start} {self.peak_end} {self.reference} {self.comment}'
@@ -159,7 +171,8 @@ def load_raman_peak_list(json_file = None):
     with open(json_file, encoding="utf-8") as f:
         raman_peak_list = json.load(f)
 
-    return [RamanPeak(dic) for dic in raman_peak_list]
+    l = [RamanPeak(dic) for dic in raman_peak_list]
+    return list(filter(lambda item: item.validate(), l)) # remove None items
 
 def get_raman_peak_list_from_excel(filepath="raman.xls"):
     '''
