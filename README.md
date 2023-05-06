@@ -30,13 +30,13 @@ This package is a master library containing various previous packages published 
             <td colspan = 1>qsi.io.aug</td>
             <td>Data augmentation, e.g., generative models</td>
             <td></td>
-            <td>TODO Data aug with deep generative models. e.g., " variational autoencoders, generative adversarial networks, autoregressive models, normalizing flow models, energy-based models, and score-based models. "</td>
+            <td>TODO Data aug with deep generative models. e.g., " variational autoencoders, generative adversarial networks, autoregressive models, KDE, normalizing flow models, energy-based models, and score-based models. "</td>
         </tr>
         <tr>
             <td>qsi.io.pre</td>
-            <td>Spectroscopic profiling data processing</td>
+            <td>Data processing, e.g., channel alignment and 1D-laplacian kernel fs for e-nose data; x-binning, baseline removal for TOF MS.</td>
             <td></td>
-            <td>TODO qsi.io.pre.x_binning, qsi.io.pre.x_baseline_removal, etc.</td>
+            <td>TODO</td>
         </tr>
         <tr>
             <td colspan = 2>qsi.vis</td>
@@ -56,8 +56,19 @@ This package is a master library containing various previous packages published 
             </td>
         </tr>
         <tr>
-            <td colspan = 2>qsi.fs</td>
-            <td>feature selection</td>
+            <td colspan = 1 rowspan = 3>qsi.fs</td>
+        </tr>
+        <tr>
+            <td colspan = 1>qsi.fs.nch_time_series_fs</td>
+            <td>multi-channel enose data fs with 1d-laplacian conv kernel</td>
+            <td></td>
+            <td>TODO</td>
+        </tr>
+        <tr>
+            <td>qsi.fs.glasso</td>
+            <td>Structured-fs of Raman data with group lasso</td>
+            <td></td>
+            <td>TODO</td>
         </tr>
         <tr>
             <td colspan = 2>qsi.ks</td>

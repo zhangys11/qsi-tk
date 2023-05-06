@@ -464,8 +464,8 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
         try:
             X_s, idx, fi = f(X, y, X_names, N=N, display=True)
             if np.isnan(fi).any():
-                print('\nWarning: NaN in feature importance. Skip this FS method.')
-                continue
+                print('\nWarning: NaN in feature importance. Replace with 0.')
+                fi[np.isnan(fi)] = 0
 
             if X_s is not None and X_s.shape[0] > 0 and X_s.shape[1] > 0:
 

@@ -40,7 +40,7 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'organic_milk': ('7047_S.txt', ',', True, 'MALDITOFMS_ORGANICMILK_7047_C02 desc.txt', ['non-organic', 'organic'], 1000),
                'organic_milk_c3': ('7047_P.txt', ',', True, 'MALDITOFMS_ORGANICMILK_7047 desc.txt', ['non-organic', 'low-fat', 'organic'], 1000),
                'milkpowder_enose': ('7747.pkl', ',', True, '7747 desc.txt', ['cn', 'au'], 200),
-               # 'forsythia': ('7746.pkl',',',True,'7746 desc.txt', ["SX山西","HN河南","HB湖北","SHX陕西"]) # 该电子鼻数据未有效对齐
+               #'forsythia': ('7746.pkl',',',True,'7746 desc.txt', ["SX山西","HN河南","HB湖北","SHX陕西"], 200), # 该电子鼻数据未有效对齐
                'milkpowder_etongue': ('7744.pkl', ',', True, '7744 desc.txt', ['cn', 'au'], 200),
                # 该电子鼻数据未有效对齐
                'forsythia_etongue': ('7745.pkl', ',', True, '7745 desc.txt', ["SX山西", "HN河南", "HB湖北", "SHX陕西"], 200),
