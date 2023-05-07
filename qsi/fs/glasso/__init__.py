@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from scipy.stats import norm
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -356,7 +357,7 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, random_state = None, verbo
     return dic_metrics
 
 
-def interpret_group_result(feature_importances, group_info, top_k):
+def interpret_group_result(feature_importances, group_info, top_k = None):
     '''
     Interpret the result of group lasso feature selection.
 
@@ -364,16 +365,18 @@ def interpret_group_result(feature_importances, group_info, top_k):
     ----------
     feature_importances : array-like of shape (n_features,)
     group_info : the group_info returned from raman_window_fs
-    top_k : the top k percentage of features to be considered as important. range: (0, 1]
+    top_k : the top k features to be considered as important. You can pass the selected feature number to this parameter.
     '''
     # 将feature_importances列加入groups数据中
     result = []
     for i in range(len(group_info)):
-        result.append(np.concatenate((groups[i], [feature_importances[i]])))  
+        result.append(np.concatenate((group_info[i], [feature_importances[i]])))  
     new_groups_list = [arr.tolist() for arr in result]       
 
     # 设置一个p参数，认为feature_importances中前百分之多少重要
-    most_feature_importances = sorted(feature_importances, reverse=True)[:int(top_k*len(feature_importances))]
+    if top_k is None or top_k > len(feature_importances):
+        top_k = len(feature_importances)
+    most_feature_importances = sorted(feature_importances, reverse=True)[:top_k]
     
     # 遍历feature_importances每个元素，判断该值是否在most_feature_importances列表里，如果在，代表重要，添加到新列表new_groups
     new_groups=[]
