@@ -504,100 +504,100 @@
         "comment": ""
     },
     {
-        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
+        "chemical": "Organophosphorus compounds",
         "vibration": "\u03b4(P-O-CH3)",
         "peak_start": 466.0,
         "peak_end": 466.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
+        "comment": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)\n\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
+        "chemical": "Organophosphorus compounds",
         "vibration": "\u03b4(PO3)umbrella",
         "peak_start": 500.0,
         "peak_end": 500.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
+        "comment": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)\n\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
+        "chemical": "Organophosphorus compounds",
         "vibration": "v(P-CH3)+v(P-O)+\u03b4(P-O-CH3)",
         "peak_start": 710.0,
         "peak_end": 710.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
+        "comment": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)\n\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
+        "chemical": "Organophosphorus compounds",
         "vibration": "vas(O-P-O)",
         "peak_start": 788.0,
         "peak_end": 788.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
+        "comment": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)\n\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
+        "chemical": "Organophosphorus compounds",
         "vibration": "v(P-CH3)",
         "peak_start": 819.0,
         "peak_end": 819.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
+        "comment": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)\n\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
+        "chemical": "Organophosphorus compounds",
         "vibration": "v(O-CH3)+Vas(O-P-O)",
         "peak_start": 1028.0,
         "peak_end": 1028.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
+        "comment": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)\n\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
+        "chemical": "Organophosphorus compounds",
         "vibration": "v(O-CH3)+Vas(O-P-O)",
         "peak_start": 1057.0,
         "peak_end": 1057.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
+        "comment": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)\n\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
+        "chemical": "Organophosphorus compounds",
         "vibration": "\u03b4(CH3)",
         "peak_start": 895.0,
         "peak_end": 895.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
+        "comment": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)\n\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
+        "chemical": "Organophosphorus compounds",
         "vibration": "\u03b4(CH3)",
         "peak_start": 1179.0,
         "peak_end": 1179.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
+        "comment": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)\n\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
+        "chemical": "Organophosphorus compounds",
         "vibration": "\u03b4(CH3)",
         "peak_start": 1419.0,
         "peak_end": 1419.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
+        "comment": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)\n\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
+        "chemical": "Organophosphorus compounds",
         "vibration": "\u03b4(CH3)",
         "peak_start": 1464.0,
         "peak_end": 1464.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
+        "comment": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)\n\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
-        "chemical": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)",
+        "chemical": "Organophosphorus compounds",
         "vibration": "v(P=O)+\u03b4(CH3)",
         "peak_start": 1240.0,
         "peak_end": 1240.0,
         "reference": "10.1039/c2cp42496g",
-        "comment": "\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
+        "comment": "organic phosphorus pesticides(Dichlormid and glyphosate)\nOrganophosphorus compounds(Dimethyl methylphosphonate and o-ethyl methylthiophosphonate)\n\u6709\u673a\u78f7\u519c\u836f\uff08\u654c\u767e\u866b\u548c\u8349\u7518\u81a6\uff09\n\u6709\u673a\u78f7\u5316\u5408\u7269\uff08\u7532\u57fa\u81a6\u9178\u4e8c\u7532\u916f\u548c\u90bb\u4e59\u916f\u7532\u57fa\u786b\u4ee3\u81a6\u9178\u916f\uff09"
     },
     {
         "chemical": "PHenylalanine",
@@ -1274,8 +1274,8 @@
     {
         "chemical": "water",
         "vibration": "OH",
-        "peak_start": 3600.0,
-        "peak_end": 3300.0,
+        "peak_start": 3300.0,
+        "peak_end": 3600.0,
         "reference": "10.3233/BSI-200201",
         "comment": ""
     },
@@ -1424,7 +1424,7 @@
         "comment": ""
     },
     {
-        "chemical": "Amide",
+        "chemical": "Amide\u2162",
         "vibration": "(vC-N,\u03b4N-H,vCH3-C)",
         "peak_start": 1238.0,
         "peak_end": 1238.0,
