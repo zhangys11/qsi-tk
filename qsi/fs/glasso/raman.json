@@ -449,7 +449,7 @@
     },
     {
         "chemical": "Phospholipids",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1402.0,
         "peak_end": 1402.0,
         "reference": "10.1038/srep04751",
@@ -457,7 +457,7 @@
     },
     {
         "chemical": "DNA/RNA bases",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1573.0,
         "peak_end": 1573.0,
         "reference": "10.1038/srep04751",
@@ -497,7 +497,7 @@
     },
     {
         "chemical": "Tyrosine",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1614.0,
         "peak_end": 1620.0,
         "reference": "10.1002/jrs.5054",
@@ -865,7 +865,7 @@
     },
     {
         "chemical": "Sulfur",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 83.2,
         "peak_end": 83.2,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -873,7 +873,7 @@
     },
     {
         "chemical": "Sulfur",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 473.2,
         "peak_end": 473.2,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -881,7 +881,7 @@
     },
     {
         "chemical": "Sulfur",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 153.2,
         "peak_end": 153.2,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -889,7 +889,7 @@
     },
     {
         "chemical": "Sulfur",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 219.2,
         "peak_end": 219.2,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -897,7 +897,7 @@
     },
     {
         "chemical": "Naphthalene",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 513.7,
         "peak_end": 513.7,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -905,7 +905,7 @@
     },
     {
         "chemical": "Naphthalene",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1146.3,
         "peak_end": 1146.3,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -913,7 +913,7 @@
     },
     {
         "chemical": "Naphthalene",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1463.5,
         "peak_end": 1463.5,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -921,7 +921,7 @@
     },
     {
         "chemical": "Naphthalene",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1576.3,
         "peak_end": 1576.3,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -929,7 +929,7 @@
     },
     {
         "chemical": "Naphthalene",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 3055.1,
         "peak_end": 3055.1,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -937,7 +937,7 @@
     },
     {
         "chemical": "Naphthalene",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 763.0,
         "peak_end": 763.0,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -945,7 +945,7 @@
     },
     {
         "chemical": "Naphthalene",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1019.8,
         "peak_end": 1019.8,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -953,7 +953,7 @@
     },
     {
         "chemical": "Naphthalene",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1381.3,
         "peak_end": 1381.3,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -961,7 +961,7 @@
     },
     {
         "chemical": "Cyclohexane",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 801.9,
         "peak_end": 801.9,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -969,7 +969,7 @@
     },
     {
         "chemical": "Cyclohexane",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 384.1,
         "peak_end": 384.1,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -977,7 +977,7 @@
     },
     {
         "chemical": "Cyclohexane",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 426.5,
         "peak_end": 426.5,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -985,7 +985,7 @@
     },
     {
         "chemical": "Cyclohexane",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1157.6,
         "peak_end": 1157.6,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -993,7 +993,7 @@
     },
     {
         "chemical": "Cyclohexane",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1028.1,
         "peak_end": 1028.1,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -1001,7 +1001,7 @@
     },
     {
         "chemical": "Cyclohexane",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1266.4,
         "peak_end": 1266.4,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -1009,7 +1009,7 @@
     },
     {
         "chemical": "Cyclohexane",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1444.2,
         "peak_end": 1444.2,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -1017,7 +1017,7 @@
     },
     {
         "chemical": "Cyclohexane",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2664.2,
         "peak_end": 2664.2,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -1025,7 +1025,7 @@
     },
     {
         "chemical": "Cyclohexane",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2852.4,
         "peak_end": 2852.4,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -1033,7 +1033,7 @@
     },
     {
         "chemical": "Cyclohexane",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2923.4,
         "peak_end": 2923.4,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -1041,7 +1041,7 @@
     },
     {
         "chemical": "Cyclohexane",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2937.5,
         "peak_end": 2937.5,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
@@ -1049,7 +1049,7 @@
     },
     {
         "chemical": "Lactose",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 384.0,
         "peak_end": 384.0,
         "reference": "10.3233/BSI-200201",
@@ -1057,14 +1057,14 @@
     },
     {
         "chemical": "Glucose",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 510.0,
         "peak_end": 510.0,
         "reference": "10.3233/BSI-200201",
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03b4(C-C-O)",
         "peak_start": 636.0,
         "peak_end": 636.0,
@@ -1072,7 +1072,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03b4(C-C-H)+\u03b4(C-O-C)",
         "peak_start": 851.0,
         "peak_end": 851.0,
@@ -1080,7 +1080,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03b4(C-O-C)+\u03b4(C-O-H)+\u03bd(C-O)",
         "peak_start": 938.0,
         "peak_end": 938.0,
@@ -1096,7 +1096,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03bd(C-O)+\u03bd(C-C)+\u03b4(C-O-H)",
         "peak_start": 1080.0,
         "peak_end": 1080.0,
@@ -1104,7 +1104,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03bd(C-O)+\u03bd(C-C)+\u03b4(C-O-H)",
         "peak_start": 1095.0,
         "peak_end": 1095.0,
@@ -1112,7 +1112,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03bd(C-O)+\u03bd(C-C)+\u03b4(C-O-H)",
         "peak_start": 1143.0,
         "peak_end": 1143.0,
@@ -1120,7 +1120,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03c4(CH2)",
         "peak_start": 1313.0,
         "peak_end": 1313.0,
@@ -1128,7 +1128,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03b4(CH2)",
         "peak_start": 1458.0,
         "peak_end": 1458.0,
@@ -1136,7 +1136,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03bd(C-C)ring",
         "peak_start": 1620.0,
         "peak_end": 1620.0,
@@ -1152,7 +1152,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03bd(C-O)ester",
         "peak_start": 1760.0,
         "peak_end": 1760.0,
@@ -1161,7 +1161,7 @@
     },
     {
         "chemical": "the pyranose ring",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 476.0,
         "peak_end": 476.0,
         "reference": "10.3233/BSI-200201",
@@ -1169,7 +1169,7 @@
     },
     {
         "chemical": "Pyran",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 479.0,
         "peak_end": 479.0,
         "reference": "10.3233/BSI-200201",
@@ -1177,7 +1177,7 @@
     },
     {
         "chemical": "Proteins",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1456.0,
         "peak_end": 1456.0,
         "reference": "10.3233/BSI-200201",
@@ -1185,7 +1185,7 @@
     },
     {
         "chemical": "Proteins",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2886.0,
         "peak_end": 2886.0,
         "reference": "10.3233/BSI-200201",
@@ -1193,7 +1193,7 @@
     },
     {
         "chemical": "Carotenoids",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1520.0,
         "peak_end": 1530.0,
         "reference": "10.3233/BSI-200201",
@@ -1201,7 +1201,7 @@
     },
     {
         "chemical": "CO2",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2432.0,
         "peak_end": 2432.0,
         "reference": "10.3233/BSI-200201",
@@ -1209,7 +1209,7 @@
     },
     {
         "chemical": "CO2",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2300.0,
         "peak_end": 2300.0,
         "reference": "10.3233/BSI-200201",
@@ -1217,7 +1217,7 @@
     },
     {
         "chemical": "lipids amide I proteins",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1660.0,
         "peak_end": 1660.0,
         "reference": "10.3233/BSI-200201",
@@ -1225,7 +1225,7 @@
     },
     {
         "chemical": "Lipids",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1750.0,
         "peak_end": 1750.0,
         "reference": "10.3233/BSI-200201",
@@ -1233,7 +1233,7 @@
     },
     {
         "chemical": "Lipids",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2856.0,
         "peak_end": 2856.0,
         "reference": "10.3233/BSI-200201",
@@ -1241,7 +1241,7 @@
     },
     {
         "chemical": "Lipids",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1130.0,
         "peak_end": 1130.0,
         "reference": "10.3233/BSI-200201",
@@ -1249,7 +1249,7 @@
     },
     {
         "chemical": "Lipids",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1314.0,
         "peak_end": 1314.0,
         "reference": "10.3233/BSI-200201",
@@ -1257,7 +1257,7 @@
     },
     {
         "chemical": "Lipids and protein",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1660.0,
         "peak_end": 1660.0,
         "reference": "10.3233/BSI-200201",
@@ -1265,7 +1265,7 @@
     },
     {
         "chemical": "Lipids and protein",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2887.0,
         "peak_end": 2887.0,
         "reference": "10.3233/BSI-200201",
@@ -1281,7 +1281,7 @@
     },
     {
         "chemical": "Carbohydrates",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 478.0,
         "peak_end": 478.0,
         "reference": "10.3233/BSI-200201",
@@ -1289,7 +1289,7 @@
     },
     {
         "chemical": " lactose and monosaccharides",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1162.0,
         "peak_end": 1162.0,
         "reference": "10.3233/BSI-200201",
@@ -1297,14 +1297,14 @@
     },
     {
         "chemical": "Phenylalanine(Phe)",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1589.0,
         "peak_end": 1620.0,
         "reference": "10.3233/BSI-200201",
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03bd(S-S)(g-g-g and g-g-t)",
         "peak_start": 508.0,
         "peak_end": 508.0,
@@ -1312,7 +1312,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03bd(S-S)(g-g-g and g-g-t)",
         "peak_start": 528.0,
         "peak_end": 528.0,
@@ -1321,7 +1321,7 @@
     },
     {
         "chemical": "Trp",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 538.0,
         "peak_end": 538.0,
         "reference": "",
@@ -1329,7 +1329,7 @@
     },
     {
         "chemical": "Trp",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 543.0,
         "peak_end": 543.0,
         "reference": "",
@@ -1337,14 +1337,14 @@
     },
     {
         "chemical": "Trp",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 754.0,
         "peak_end": 754.0,
         "reference": "",
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03bd(C-S),Met",
         "peak_start": 699.0,
         "peak_end": 699.0,
@@ -1353,7 +1353,7 @@
     },
     {
         "chemical": "Trp",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 761.0,
         "peak_end": 761.0,
         "reference": "",
@@ -1361,7 +1361,7 @@
     },
     {
         "chemical": "Trp",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 879.0,
         "peak_end": 879.0,
         "reference": "",
@@ -1393,14 +1393,14 @@
     },
     {
         "chemical": "Trp",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1014.0,
         "peak_end": 1014.0,
         "reference": "",
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03bd(C-N)",
         "peak_start": 1080.0,
         "peak_end": 1080.0,
@@ -1408,7 +1408,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03bd(C-N)",
         "peak_start": 1107.0,
         "peak_end": 1107.0,
@@ -1416,7 +1416,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03bd(C-N)",
         "peak_start": 1130.0,
         "peak_end": 1130.0,
@@ -1464,7 +1464,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03b4(C-H2)",
         "peak_start": 1447.0,
         "peak_end": 1447.0,
@@ -1472,7 +1472,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03b4(C-H2)",
         "peak_start": 1460.0,
         "peak_end": 1460.0,
@@ -1481,7 +1481,7 @@
     },
     {
         "chemical": "Trp",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1553.0,
         "peak_end": 1553.0,
         "reference": "",
@@ -1489,7 +1489,7 @@
     },
     {
         "chemical": "Trp",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1582.0,
         "peak_end": 1582.0,
         "reference": "",
@@ -1497,7 +1497,7 @@
     },
     {
         "chemical": "Trp",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1620.0,
         "peak_end": 1620.0,
         "reference": "",
@@ -1544,7 +1544,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "\u03bd(O-H) and \u03bd(N-H)",
         "peak_start": 3250.0,
         "peak_end": 3250.0,
@@ -1552,7 +1552,7 @@
         "comment": ""
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "Lattice vibrations",
         "peak_start": 100.0,
         "peak_end": 210.0,
@@ -1560,7 +1560,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "Xmetal-O",
         "peak_start": 150.0,
         "peak_end": 430.0,
@@ -1568,7 +1568,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "C-C aliphatic chain",
         "peak_start": 250.0,
         "peak_end": 400.0,
@@ -1576,7 +1576,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "Se-Se",
         "peak_start": 295.0,
         "peak_end": 340.0,
@@ -1584,7 +1584,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "S-S",
         "peak_start": 425.0,
         "peak_end": 550.0,
@@ -1592,7 +1592,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "Si-O-Si",
         "peak_start": 460.0,
         "peak_end": 550.0,
@@ -1600,7 +1600,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "Si-O-Si",
         "peak_start": 1010.0,
         "peak_end": 1095.0,
@@ -1608,7 +1608,7 @@
         "comment": "Weak"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "C-I",
         "peak_start": 490.0,
         "peak_end": 660.0,
@@ -1616,7 +1616,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "C-Br",
         "peak_start": 505.0,
         "peak_end": 700.0,
@@ -1624,7 +1624,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "C-Cl",
         "peak_start": 550.0,
         "peak_end": 790.0,
@@ -1632,7 +1632,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "C=S",
         "peak_start": 580.0,
         "peak_end": 680.0,
@@ -1640,7 +1640,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "C=S",
         "peak_start": 1020.0,
         "peak_end": 1225.0,
@@ -1648,7 +1648,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "C-C aliphatic chains",
         "peak_start": 630.0,
         "peak_end": 1250.0,
@@ -1656,7 +1656,7 @@
         "comment": "Moderate"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "C-S",
         "peak_start": 670.0,
         "peak_end": 780.0,
@@ -1664,7 +1664,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "C-F",
         "peak_start": 720.0,
         "peak_end": 800.0,
@@ -1672,7 +1672,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "C-O-C",
         "peak_start": 800.0,
         "peak_end": 950.0,
@@ -1681,7 +1681,7 @@
     },
     {
         "chemical": "Carboxylic acid dimer",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 910.0,
         "peak_end": 960.0,
         "reference": "dept. of chemistry, uci",
@@ -1689,7 +1689,7 @@
     },
     {
         "chemical": "Aromatic ring",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 990.0,
         "peak_end": 1100.0,
         "reference": "dept. of chemistry, uci",
@@ -1697,14 +1697,14 @@
     },
     {
         "chemical": "Aromatic ring",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1450.0,
         "peak_end": 1505.0,
         "reference": "dept. of chemistry, uci",
         "comment": "Moderate"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "Si-O-C",
         "peak_start": 1010.0,
         "peak_end": 1095.0,
@@ -1712,7 +1712,7 @@
         "comment": "Weak"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "Si-O-C",
         "peak_start": 1120.0,
         "peak_end": 1190.0,
@@ -1721,7 +1721,7 @@
     },
     {
         "chemical": "Sulfonic acid",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1025.0,
         "peak_end": 1060.0,
         "reference": "dept. of chemistry, uci",
@@ -1729,7 +1729,7 @@
     },
     {
         "chemical": "Sulfonic acid",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1145.0,
         "peak_end": 1240.0,
         "reference": "dept. of chemistry, uci",
@@ -1737,7 +1737,7 @@
     },
     {
         "chemical": "Sulfonamide",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1050.0,
         "peak_end": 1210.0,
         "reference": "dept. of chemistry, uci",
@@ -1745,7 +1745,7 @@
     },
     {
         "chemical": "Sulfone",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1050.0,
         "peak_end": 1210.0,
         "reference": "dept. of chemistry, uci",
@@ -1753,7 +1753,7 @@
     },
     {
         "chemical": "Carboxylate salt",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1315.0,
         "peak_end": 1435.0,
         "reference": "dept. of chemistry, uci",
@@ -1761,7 +1761,7 @@
     },
     {
         "chemical": "Nitro",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1320.0,
         "peak_end": 1350.0,
         "reference": "dept. of chemistry, uci",
@@ -1769,7 +1769,7 @@
     },
     {
         "chemical": "Nitro",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1535.0,
         "peak_end": 1600.0,
         "reference": "dept. of chemistry, uci",
@@ -1777,14 +1777,14 @@
     },
     {
         "chemical": "Aromatic azo",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1365.0,
         "peak_end": 1450.0,
         "reference": "dept. of chemistry, uci",
         "comment": "Very strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "CH2",
         "peak_start": 1405.0,
         "peak_end": 1455.0,
@@ -1792,7 +1792,7 @@
         "comment": "Weak"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "CH2",
         "peak_start": 2770.0,
         "peak_end": 2830.0,
@@ -1800,7 +1800,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "CH2",
         "peak_start": 2900.0,
         "peak_end": 2940.0,
@@ -1808,7 +1808,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "CH3",
         "peak_start": 1405.0,
         "peak_end": 1455.0,
@@ -1817,7 +1817,7 @@
     },
     {
         "chemical": "Aliphatic azo",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1540.0,
         "peak_end": 1590.0,
         "reference": "dept. of chemistry, uci",
@@ -1825,7 +1825,7 @@
     },
     {
         "chemical": "Aromatic/hetero ring",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1550.0,
         "peak_end": 1610.0,
         "reference": "dept. of chemistry, uci",
@@ -1833,7 +1833,7 @@
     },
     {
         "chemical": "Amide",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1550.0,
         "peak_end": 1700.0,
         "reference": "dept. of chemistry, uci",
@@ -1841,7 +1841,7 @@
     },
     {
         "chemical": "Amide",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 3150.0,
         "peak_end": 3480.0,
         "reference": "dept. of chemistry, uci",
@@ -1849,7 +1849,7 @@
     },
     {
         "chemical": "Ketone ",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1600.0,
         "peak_end": 1710.0,
         "reference": "dept. of chemistry, uci",
@@ -1857,14 +1857,14 @@
     },
     {
         "chemical": "Carboxylic acid",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1610.0,
         "peak_end": 1740.0,
         "reference": "dept. of chemistry, uci",
         "comment": "Moderate"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "C=C",
         "peak_start": 1625.0,
         "peak_end": 1680.0,
@@ -1872,7 +1872,7 @@
         "comment": "Very strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "C=N",
         "peak_start": 1630.0,
         "peak_end": 1665.0,
@@ -1881,7 +1881,7 @@
     },
     {
         "chemical": "Urethane",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1690.0,
         "peak_end": 1720.0,
         "reference": "dept. of chemistry, uci",
@@ -1889,7 +1889,7 @@
     },
     {
         "chemical": "Aldehyde",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1710.0,
         "peak_end": 1725.0,
         "reference": "dept. of chemistry, uci",
@@ -1897,7 +1897,7 @@
     },
     {
         "chemical": "Aldehyde",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2680.0,
         "peak_end": 2740.0,
         "reference": "dept. of chemistry, uci",
@@ -1905,7 +1905,7 @@
     },
     {
         "chemical": "Aldehyde",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2780.0,
         "peak_end": 2830.0,
         "reference": "dept. of chemistry, uci",
@@ -1913,7 +1913,7 @@
     },
     {
         "chemical": "Ester",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1710.0,
         "peak_end": 1745.0,
         "reference": "dept. of chemistry, uci",
@@ -1921,7 +1921,7 @@
     },
     {
         "chemical": "Aliphatic ester",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1730.0,
         "peak_end": 1750.0,
         "reference": "dept. of chemistry, uci",
@@ -1929,7 +1929,7 @@
     },
     {
         "chemical": "Lactone",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1735.0,
         "peak_end": 1790.0,
         "reference": "dept. of chemistry, uci",
@@ -1937,7 +1937,7 @@
     },
     {
         "chemical": "Anhydride",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1740.0,
         "peak_end": 1830.0,
         "reference": "dept. of chemistry, uci",
@@ -1945,7 +1945,7 @@
     },
     {
         "chemical": "Acid chloride",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 1745.0,
         "peak_end": 1780.0,
         "reference": "dept. of chemistry, uci",
@@ -1953,7 +1953,7 @@
     },
     {
         "chemical": "Isothiocyanate",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2020.0,
         "peak_end": 2100.0,
         "reference": "dept. of chemistry, uci",
@@ -1961,7 +1961,7 @@
     },
     {
         "chemical": "Alkyne",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2070.0,
         "peak_end": 2250.0,
         "reference": "dept. of chemistry, uci",
@@ -1969,14 +1969,14 @@
     },
     {
         "chemical": "Alkyne",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 3250.0,
         "peak_end": 3300.0,
         "reference": "dept. of chemistry, uci",
         "comment": "Very weak"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "Si-H",
         "peak_start": 2080.0,
         "peak_end": 2150.0,
@@ -1985,7 +1985,7 @@
     },
     {
         "chemical": "Isonitrile",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2090.0,
         "peak_end": 2170.0,
         "reference": "dept. of chemistry, uci",
@@ -1993,7 +1993,7 @@
     },
     {
         "chemical": "Thiocyanate",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2100.0,
         "peak_end": 2170.0,
         "reference": "dept. of chemistry, uci",
@@ -2001,7 +2001,7 @@
     },
     {
         "chemical": "Azide",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2110.0,
         "peak_end": 2160.0,
         "reference": "dept. of chemistry, uci",
@@ -2009,7 +2009,7 @@
     },
     {
         "chemical": "Aromatic nitrile",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2200.0,
         "peak_end": 2230.0,
         "reference": "dept. of chemistry, uci",
@@ -2017,7 +2017,7 @@
     },
     {
         "chemical": "Diazonium salt",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2200.0,
         "peak_end": 2280.0,
         "reference": "dept. of chemistry, uci",
@@ -2025,7 +2025,7 @@
     },
     {
         "chemical": "Nitrile",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2220.0,
         "peak_end": 2260.0,
         "reference": "dept. of chemistry, uci",
@@ -2033,14 +2033,14 @@
     },
     {
         "chemical": "Isocyanate",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2230.0,
         "peak_end": 2270.0,
         "reference": "dept. of chemistry, uci",
         "comment": "Very weak"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "P-H",
         "peak_start": 2290.0,
         "peak_end": 2420.0,
@@ -2049,14 +2049,14 @@
     },
     {
         "chemical": "Th iol",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 2530.0,
         "peak_end": 2610.0,
         "reference": "dept. of chemistry, uci",
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "N-CH3",
         "peak_start": 2750.0,
         "peak_end": 2800.0,
@@ -2064,7 +2064,7 @@
         "comment": "Weak"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "O-CH3",
         "peak_start": 2790.0,
         "peak_end": 2850.0,
@@ -2072,7 +2072,7 @@
         "comment": "Weak"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "C-CH3",
         "peak_start": 2810.0,
         "peak_end": 2960.0,
@@ -2088,7 +2088,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "OH",
         "peak_start": 2880.0,
         "peak_end": 3530.0,
@@ -2096,7 +2096,7 @@
         "comment": "Weak"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "CH=CH",
         "peak_start": 2980.0,
         "peak_end": 3020.0,
@@ -2104,7 +2104,7 @@
         "comment": "Strong"
     },
     {
-        "chemical": "\\",
+        "chemical": "",
         "vibration": "CH2",
         "peak_start": 3010.0,
         "peak_end": 3080.0,
@@ -2113,7 +2113,7 @@
     },
     {
         "chemical": "Amine",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 3150.0,
         "peak_end": 3480.0,
         "reference": "dept. of chemistry, uci",
@@ -2121,7 +2121,7 @@
     },
     {
         "chemical": "Phenol",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 3200.0,
         "peak_end": 3400.0,
         "reference": "dept. of chemistry, uci",
@@ -2129,7 +2129,7 @@
     },
     {
         "chemical": "Alcohol",
-        "vibration": "\\",
+        "vibration": "",
         "peak_start": 3210.0,
         "peak_end": 3250.0,
         "reference": "dept. of chemistry, uci",
