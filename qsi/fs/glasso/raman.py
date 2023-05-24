@@ -70,7 +70,6 @@ def plot_raman_prior(raman_peak_list, group_only = False):
             for item in value:
                 peak_range=[item.peak_start, item.peak_end]
                 _ = plt.hlines(idx,peak_range[0]-10,peak_range[1]+10, lw = 6, label = key,color=random.choice(colors))
-    
     else:
         for idx, (key, value) in enumerate(group_dic.items()):
             page_range_list=[]
