@@ -50,20 +50,43 @@ def plot_raman_prior(raman_peak_list, group_only = False):
     ----------
     group_only : whether only plot peaks that are in any group. Otherwise, plot all.
     '''
-
-    plt.figure(figsize = (10, 5))
+    plt.figure(figsize = (20, 10))
     colors=list(mcolors.TABLEAU_COLORS.keys())
-
     dic = {}
     for p in raman_peak_list:
         dic.setdefault((p.chemical, p.vibration),[]).append(p)
-        
-    for idx, (key, value) in enumerate(dic.items()):
-        for item in value:
-            peak_range=[item.peak_start, item.peak_end]
-            _ = plt.hlines(idx,peak_range[0]-10,peak_range[1]+10, lw = 3, label = key,color=random.choice(colors))
-        
-    # plt.legend(loc = "lower right")
+    
+    # 将字典中键的物质和键值连在一起
+    new_dict = {f"{key[0]} {key[1]}": value for key, value in dic.items()}
+
+    # 将上述字典中成组的挑出来
+    group_dic = {}
+    for key, value in new_dict.items():
+        if len(value) >= 2:
+            group_dic[key] = value
+    
+    if group_only is False:
+        for idx, (key, value) in enumerate(new_dict.items()):
+            for item in value:
+                peak_range=[item.peak_start, item.peak_end]
+                _ = plt.hlines(idx,peak_range[0]-10,peak_range[1]+10, lw = 6, label = key,color=random.choice(colors))
+    
+    else:
+        for idx, (key, value) in enumerate(group_dic.items()):
+            page_range_list=[]
+            for item in value:
+                peak_range=[item.peak_start, item.peak_end]
+                page_range_list.append(peak_range)
+            color=random.choice(colors)
+            for i,_ in enumerate(page_range_list):
+                _ = plt.hlines(idx,page_range_list[i][0]-10,page_range_list[i][1]+10, lw = 6, label = key, color=color)
+        # 获取标签列表并去重
+        handles, labels = plt.gca().get_legend_handles_labels()
+        unique_labels = list(set(labels))
+        # 创建新的图例并显示
+        new_handles = [handles[labels.index(label)] for label in unique_labels]
+        plt.legend(new_handles, unique_labels,bbox_to_anchor=(1.02, 1), loc='upper left', ncol=1, borderaxespad=0., labelspacing=0.5, handletextpad=0.5, handlelength=2.5)
+
     plt.yticks([])
     plt.xticks([])
     plt.show()
