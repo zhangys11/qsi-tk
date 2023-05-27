@@ -330,8 +330,8 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, random_state = None, verbo
     for resolution in [1, 2, 5, 10]:
         for window in ['rectangle', 'triangle', 'rbf']:
             for sd in ['n/a'] if window != 'rbf' else [1, 2]: # sd is only used in rbf
-                for group_reg in [0, 0.01, 0.1, 1, 10]:
-                    for l1_reg in [0, 0.01, 0.1, 1, 10]:
+                for group_reg in [0.001, 0.01, 0.1, 1, 10]:
+                    for l1_reg in [0.001, 0.01, 0.1, 1, 10]:
 
                         fss, group_info, group_ids, filtered_regions, filtered_region_centers = raman_window_fs(
                             X, X_names, raman_peak_list, resolution, window = window, sd = sd, display = False
