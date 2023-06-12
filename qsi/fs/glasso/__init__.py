@@ -154,7 +154,8 @@ def window_fs(X, x_names, regions, resolution = 2, window = 'rbf', sd = 1, displ
 
     return np.array(fss), filtered_regions, filtered_region_centers
 
-def raman_window_fs(X , x_names, raman_peak_list, resolution = 2, window = 'rbf', sd = 1, display = False):
+def raman_window_fs(X , x_names, raman_peak_list, resolution = 2, 
+                    window = 'rbf', sd = 1, display = False):
     '''
     Extract features from Raman spectra with specified window operator.
     
@@ -240,7 +241,8 @@ def raman_window_fs(X , x_names, raman_peak_list, resolution = 2, window = 'rbf'
     return np.array(Fss), group_info, group_ids, filtered_regions, filtered_region_centers
 
 
-def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100, split = 0.2, random_state = None, verbose = False):
+def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100, 
+                split = 0.2, random_state = None, verbose = False):
     '''
     Group Lasso Feature Selection. 
     The most important param is groups. It can be generated from raman_window_fs(), i.e., the 3rd returned result.
@@ -303,7 +305,7 @@ def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100, split = 0.2,
     return gl.coef_, gl.sparsity_mask_, acc, aic, bic, aicc
 
 
-def raman_group_lasso(X, y, X_names, raman_peak_list, random_state = None, verbose = False):
+def raman_group_lasso(X, y, X_names, raman_peak_list, split = .4, random_state = None, verbose = False):
     '''
     An all-in-one function that runs group-lasso feature selection and classification on a specified Raman dataset.
     Hyperparameters are tuned by grid search.
@@ -324,14 +326,18 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, random_state = None, verbo
     dic_metrics = {}
 
     html_str = '''<table><tr><th>resolution</th><th>window</th><th>sd</th><th>group_reg</th><th>l1_reg</th>
-    <th>testset accuracy</th><th>aic</th><th>bic</th><th>aicc</th>
-    <th>k</th></tr>'''
+    <th>testset accuracy</th><th>aic</th><th>bic</th><th>k</th></tr>'''
+
+    best_acc = 0
+    best_k = np.inf
+    best_aic = np.inf
+    best_bic = np.inf
 
     for resolution in [1, 2, 5, 10]:
         for window in ['rectangle', 'triangle', 'rbf']:
             for sd in ['n/a'] if window != 'rbf' else [1, 2]: # sd is only used in rbf
-                for group_reg in [0.001, 0.01, 0.1, 1, 10]:
-                    for l1_reg in [0.001, 0.01, 0.1, 1, 10]:
+                for group_reg in [0.001, 0.01, 0.1, 1]:
+                    for l1_reg in [0.001, 0.01, 0.1, 1]: # 10 is too strong, only 1 or 2 features are kept and acc is poor
 
                         fss, group_info, group_ids, filtered_regions, filtered_region_centers = raman_window_fs(
                             X, X_names, raman_peak_list, resolution, window = window, sd = sd, display = False
@@ -339,43 +345,72 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, random_state = None, verbo
 
                         _, mask, acc, aic, bic, aicc = group_lasso(fss, y, groups = group_ids, 
                                                                       group_reg = group_reg, l1_reg = l1_reg, 
-                                                                      split=0.4, random_state=random_state, verbose = False)
+                                                                      split=split, random_state=random_state, verbose = False)
+
+                        k = mask.sum()
 
                         row_str = f'''<tr><td>{resolution}</td><td>{window}</td><td>{sd}</td><td>{group_reg}</td><td>{l1_reg}</td>
-                        <td>{round(100*acc,1)}%</td><td>{round(aic,1)}</td><td>{round(bic,1)}</td><td>{round(aicc,1)}</td><td>{mask.sum()}</td></tr>'''
+                        <td>{round(100*acc,1)}%</td><td>{round(aic,1)}</td><td>{round(bic,1)}</td><td>{k}</td></tr>'''
                         
                         if verbose: # output step-wise result
                             IPython.display.display(IPython.display.HTML(row_str))
                         
                         html_str += row_str
-                        dic_metrics[(resolution, window, sd, group_reg, l1_reg)] = acc, aic, bic, aicc
+
+                        if acc > best_acc:
+                            best_acc = acc
+                        if k < best_k and k > 0:
+                            best_k = k
+                        if aic < best_aic:
+                            best_aic = aic
+                        if bic < best_bic:
+                            best_bic = bic
+
+                        dic_metrics[(resolution, window, sd, group_reg, l1_reg)] = acc, k, aic, bic
     
     html_str += '</table>'
     IPython.display.display(IPython.display.HTML(html_str))
     # IPython.display.display(IPython.display.HTML('<p>' + str(group_info[mask]) + '</p>'))
 
+    for key, value in dic_metrics.items():
+        if value[0] == best_acc:
+            print(f'Best accuracy: {value[0]} at {key}. All metrics: {np.round(value, 3)}')
+        if value[1] == best_k:
+            print(f'Best k: {value[1]} at {key}. All metrics: {np.round(value, 3)}')
+        if value[2] == best_aic:
+            print(f'Best AIC: {value[2]} at {key}. All metrics: {np.round(value, 3)}')
+        if value[3] == best_bic:
+            print(f'Best BIC: {value[3]} at {key}. All metrics: {np.round(value, 3)}')
+            
     return dic_metrics
 
 
-def interpret_group_result(feature_importances, group_info, top_k = None):
+def interpret_group_result(feature_importances, fss, mask, group_info,
+                           labels = None,
+                           draw_boxplots = True):
     '''
     Interpret the result of group lasso feature selection.
-
     Parameters
     ----------
     feature_importances : array-like of shape (n_features,)
+    fss : the extracted features returned from raman_window_fs
+    mask : the mask returned from group_lasso. a boolean array of shape (n_features,)    
     group_info : the group_info returned from raman_window_fs
-    top_k : the top k features to be considered as important. You can pass the selected feature number to this parameter.
+    labels : the labels of the two classes. Default is ["Class 1", "Class 2"]
+    draw_boxplots : whether to draw feature-wise boxplots.
+
     '''
+
+    if labels is None:
+        labels = ["Class 1", "Class 2"]
+
     # 将feature_importances列加入groups数据中
     result = []
-    for i in range(len(group_info)):
-        result.append(np.concatenate((group_info[i], [feature_importances[i]])))  
+    for i, gi in enumerate(group_info):
+        result.append(np.concatenate((gi, [feature_importances[i]])))  
     new_groups_list = [arr.tolist() for arr in result]       
 
-    # 设置一个p参数，认为feature_importances中前百分之多少重要
-    if top_k is None or top_k > len(feature_importances):
-        top_k = len(feature_importances)
+    top_k = mask.sum()
     most_feature_importances = sorted(feature_importances, reverse=True)[:top_k]
     
     # 遍历feature_importances每个元素，判断该值是否在most_feature_importances列表里，如果在，代表重要，添加到新列表new_groups
@@ -401,7 +436,33 @@ def interpret_group_result(feature_importances, group_info, top_k = None):
     df = df.groupby('Chemical and Vibration', sort=False).apply(lambda x: x.reset_index(drop=True))
     # 重置索引
     df = df.reset_index(drop=True)
+    title = df.apply(lambda row: str(row['Chemical and Vibration']) + ': ' + str(round(row['region'][0]))+r' $cm^{-1}$' 
+                     if row['region'][0] == row['region'][1] 
+                     else str(row['Chemical and Vibration']) + ': ' + str(round(row['region'][0])) + '~' + str(round(row['region'][1])) + r' $cm^{-1}$' , axis=1)
+    
+    # 将fss与mask对比，进行筛选
+    result_filter = fss[:, mask]
+    # 获取数组的形状
+    _, cols = result_filter.shape
+    # 遍历每一列
+    for j in range(cols):
+        # 提取当前列
+        col = result_filter[:, j]
+        result_class = np.split(col, len(labels))
+        result = [np.squeeze(arr).tolist() for arr in result_class]
+        # 绘制箱型图
+        if draw_boxplots:  
+            # 创建 Figure 对象和 Axes 对象
+            _, ax = plt.subplots()
+            # 绘制箱型图，并设置标签
+            _ = ax.boxplot(result, labels=labels)
+            # 设置图表标题和轴标签
+            ax.set_title(title[j])
+            # ax.set_ylabel('Value')
+            # 显示图表
+            plt.show()
     return df
+
 
 """
 
