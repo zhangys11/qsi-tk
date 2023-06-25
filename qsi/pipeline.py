@@ -1,23 +1,32 @@
 import os.path
 import joblib
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 import IPython.display
 
-from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import BernoulliNB, GaussianNB
+from sklearn.tree import ExtraTreeClassifier, DecisionTreeClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.neighbors import KNeighborsClassifier, NearestCentroid
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
+from sklearn.svm import LinearSVC, SVC
+from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.preprocessing import StandardScaler,MinMaxScaler
 from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
 from sklearn.feature_selection import SelectFromModel
+from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.svm import SVC
 from scipy.signal import savgol_filter
 
 from cla import metrics
 from . import io
 from .vis import supervised_dimension_reductions, unsupervised_dimension_reductions
 from .fs import RUN_ALL_FS
-
+from .vis.confusion_matrix import plot_confusion_matrix
 
 def analyze(id, x_range = None, y_subset=None, shift = None, pres = None, fs_output = '', fs_feature_num = 30, cla_feature_num = 3):
     '''
@@ -112,9 +121,10 @@ def preprocess_dataset(X, X_names, pres = None):
 
 def analyze_dataset(X, y, X_names, fs_output = '', fs_feature_num = 30, cla_feature_num = 10):
     '''
-    This is a general pipeline for data analysis. 
+    This is a general pipeline for data analysis.  
     ordinary feature scaling + feature selection + classifiability analysis + classification 
-    
+    NOTE: y must be a vector of 0/1 labels, i.e., only binary classification is supported.
+
     Parameters
     ----------
     X : an already-preprocessed data matrix
@@ -158,6 +168,7 @@ def analyze_dataset(X, y, X_names, fs_output = '', fs_feature_num = 30, cla_feat
     plt.title('Averaged Spectrum After Butterworth Filter\nIf the filtered result is not good, you will need to finetune the Butterworth highpass filter cutoff freq.', fontsize=30)
     plt.show()
 
+
     IPython.display.display(IPython.display.HTML('<hr/><h3>特征缩放 Feature Scaling</h3>'))
     # normalization
 
@@ -170,6 +181,9 @@ def analyze_dataset(X, y, X_names, fs_output = '', fs_feature_num = 30, cla_feat
     mm_scaler = MinMaxScaler()
     X_mm_scaled = mm_scaler.fit_transform(X)
     print('X_mm_scaled is rescaled to [0,1]. We use X_mm_scaled in DR and FS.')
+
+    IPython.display.display(IPython.display.HTML('<hr/><h2>尝试各类常用分类器(支持多分类)</h2>'))
+    run_multiclass_clfs(X, y)
 
     IPython.display.display(IPython.display.HTML('<hr/><h2>降维 Dimensionality Reduction</h2>'))
 
@@ -216,31 +230,27 @@ More importantly, it makes the estimated coefficients impossible to interpret. I
         IPython.display.display(IPython.display.HTML('若运行报错，请尝试安装R运行环境，并执行 install.packages("ECoL") '))
         IPython.display.display(IPython.display.HTML(metrics.get_html(X_s[:,:cla_feature_num],y)))
     
-    IPython.display.display(IPython.display.HTML('<hr/><h2>分类 Classification</h2><h3>超参数优化及模型选择 Hyper-parameter Optimization （SVM）</h3>'))
+    IPython.display.display(IPython.display.HTML('<hr/><h2>对筛选后的特征进行分类 Classification on Selected Features</h2><h3>超参数优化及模型选择 Hyper-parameter Optimization （SVM）</h3>'))
     
+    IPython.display.display(IPython.display.HTML('<hr/><h3>支持向量机 SVC</h3>'))
+
     # Set the parameters by cross-validation
-    tuned_parameters = [{'kernel': ['rbf'], 'gamma': [10, 1, 1e-1, 1e-2],'C': [0.01, 0.1, 1, 10, 100, 1000]},
-                        {'kernel': ['linear'], 'C': [0.01, 0.1, 1, 10, 100, 1000,10000,100000]}]
+    tuned_parameters = [{'kernel': ['rbf'], 'gamma': [10, 1, 1e-1, 1e-2],'C': [0.001, 0.01, 0.1, 1, 10]},
+                        {'kernel': ['linear'], 'C': [0.001, 0.01, 0.1, 1, 10]}]
 
-    print('Use elastic net selected features after PCA as input: ')
-    X_s_pca = PCA(n_components=2).fit_transform(X_s)
-    _, clf, _ = metrics.grid_search_svm_hyperparams(X_s_pca, y, 0.2, tuned_parameters)
-    metrics.plot_svm_boundary(X_s_pca, y, clf)
+    # X_s_pca = PCA(n_components=2).fit_transform(X_s)
+    _, clf, _ = metrics.grid_search_svm_hyperparams(X_s, y, 0.2, tuned_parameters, verbose = False)
+    metrics.plot_svm_boundary(X_s, y, clf)
+    print('ACC = ', clf.score(X_s, y))
 
 
-    IPython.display.display(IPython.display.HTML('<hr/><h3>线性分类（逻辑回归模型）Linear Classifier (Logistic Regression)</h3>'))
+    IPython.display.display(IPython.display.HTML('<hr/><h3>逻辑回归 (Logistic Regression)</h3>'))
     
-    lr = LogisticRegression(penalty='l2',
-                        tol=0.0001,
-                        C=1.0,
-                        class_weight=None,
-                        solver='liblinear', # good for small dataset, but requires ovr for multi-class senarios
-                        max_iter=100,
-                        multi_class='ovr', # one-vs-rest: a binary problem is fit for each label
-                        verbose=0,
-                        l1_ratio=None).fit(X_s_pca, y)
+    lr = LogisticRegressionCV(max_iter=1000,
+                        multi_class='multinomial').fit(X_s, y)
     
-    metrics.plot_lr_boundary(X_s_pca, y, lr)
+    metrics.plot_lr_boundary(X_s, y, lr)
+    print('ACC = ', clf.score(X_s, y))
 
 def build_simple_pipeline(X, y, save_path = None):
     '''
@@ -291,3 +301,59 @@ def build_simple_pipeline(X, y, save_path = None):
         # dict_r['pipeline'].predict(X_test)
 
     return pipe
+
+
+def run_multiclass_clfs(X, y, split = .3):
+    '''
+
+    原生支持多分类的模型：
+
+    naive_bayes.BernoulliNB
+    tree.DecisionTreeClassifier
+    tree.ExtraTreeClassifier
+    ensemble.ExtraTreesClassifier
+    naive_bayes.GaussianNB
+    neighbors.KNeighborsClassifier
+    discriminant_analysis.LinearDiscriminantAnalysis
+    svm.LinearSVC (multi_class=”crammer_singer”)
+    linear_model.LogisticRegression (multi_class=”multinomial”)
+    linear_model.LogisticRegressionCV (setting multi_class=”multinomial”)
+    neural_network.MLPClassifier
+    neighbors.NearestCentroid
+    ensemble.RandomForestClassifier
+    '''
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=split, random_state = 2, stratify=y)
+
+    for clf in [BernoulliNB(), GaussianNB(), ExtraTreeClassifier(), DecisionTreeClassifier(), RandomForestClassifier(), 
+                LinearSVC(multi_class="crammer_singer"), LogisticRegression (multi_class="multinomial"), 
+                LogisticRegressionCV (multi_class="multinomial"), MLPClassifier(), 
+                KNeighborsClassifier(), NearestCentroid(), LinearDiscriminantAnalysis()]:
+        
+        IPython.display.display(IPython.display.HTML('<h3>' + str(clf) + '</h3>'))
+        # IPython.display.display(IPython.display.HTML('<h2>' + str(clf.__class__) + '</h2>'))
+                                
+        clf.fit(X_train, y_train)   
+        y_pred = clf.predict(X_test)
+        
+        matplotlib.rcParams.update({'font.size': 16})
+        _, ax = plt.subplots(1, 3, figsize=(18,6))
+                               # gridspec_kw={'width_ratios': [6, 5, 5]})
+
+        # ax[0].set_title('classification report\n')
+        ax[0].text(0.1, 0, classification_report(y_test, y_pred), 
+                   fontsize = 18, horizontalalignment='right')
+        ax[0].axis('off')
+
+        # ax[1].set_title('confusion matrix\n')
+        plot_confusion_matrix(y_test, y_pred, normalize=False, ax=ax[1], cax = None) # cax = ax[2]
+ 
+        # ax[2].set_title('confusion matrix \n(normalized)')
+        plot_confusion_matrix(y_test, y_pred, normalize=True, ax=ax[2], cax = None) # cax = ax[4]
+        
+        plt.tight_layout()
+        plt.show()
+
+        matplotlib.rcParams.update({'font.size': 12})
+
+        IPython.display.display(IPython.display.HTML('<br/>'))

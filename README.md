@@ -53,6 +53,8 @@ This package is a master library containing various previous packages published 
             Task-adaptive eigenvector-based projection (EBP) transform for compressed sensing: A case study of spectroscopic profiling sensor [J]. Analytical Science Advances. Chemistry Europe, 2021, doi: 10.1002/ansa.202100018
             <br/>
             Compressed Sensing library for spectroscopic profiling data [J]. Software Impacts, 2023, doi: 10.1016/j.simpa.2023.100492
+            <br/>
+            Secured telemetry based on time-variant sensing matrix – An empirical study of spectroscopic profiling, Smart Agricultural Technology, Volume 5, 2023, doi: 10.1016/j.atech.2023.100268
             </td>
         </tr>
         <tr>
@@ -71,10 +73,10 @@ This package is a master library containing various previous packages published 
             <td>TODO</td>
         </tr>
         <tr>
-            <td colspan = 2>qsi.ks</td>
+            <td colspan = 2>qsi.kernel</td>
             <td>kernels</td>
             <td>ackl</td>
-            <td>TODO</td>
+            <td>Analytical chemistry kernel library for spectroscopic profiling data, Food Chemistry Advances, Volume 3, 2023, 100342, ISSN 2772-753X, https://doi.org/10.1016/j.focha.2023.100342.</td>
         </tr>
         <tr>
             <td rowspan = 2>qsi.dr</td>

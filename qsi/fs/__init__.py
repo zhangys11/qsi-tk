@@ -350,6 +350,12 @@ FS_DICT = {
     "multi-task elastic net": multitask_elastic_net_fs,
 }
 
+FS_DICT_MULTICLASS = {
+    "info-gain / mutual information": mi_fs,
+    "chi-squared statistic": chisq_stats_fs,
+    "anova statistic": anova_stats_fs,
+}
+
 FS_DESC_DICT = {
     "pearson-r": '''
     Two reasons why to prefer Pearson correlation when the relationship is close to linear.
@@ -441,7 +447,9 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
     FS_OUTPUT = {}
     FS_IDX = {}
 
-    for key, f in FS_DICT.items():
+    is_multi_class = len(set(y))>2
+
+    for key, f in (FS_DICT_MULTICLASS if is_multi_class else FS_DICT).items():
 
         if multitask and 'multi-task' in key:
             pass

@@ -1,6 +1,7 @@
 import os
 import os.path
 import pickle
+import csv
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -524,3 +525,84 @@ def save_dataset(targe_path, X, y, X_names):
         # save dictionary to pickle file
         with open(targe_path, "wb") as f:
             pickle.dump(ds, f)
+
+
+def import_raman_csv_files(folder_path, output_path, class_label = 0):
+    '''
+    Import all the csv files in a folder and combine them as a single csv file.
+
+    Parameters
+    ----------
+    class_label : the class label assigned for the imported data. 
+        You may have multiple folders for different classes. 
+        In this case, each folder should be assigned with a different label, e.g., 0,1,2,3...
+    '''
+
+    if os.path.exists(folder_path) is False:
+        print('The input folder path does not exist!', folder_path)
+        return None
+
+    # 获取目标文件夹下的所有csv文件路径
+    csv_files = [file for file in os.listdir(folder_path) if file.endswith('.CSV')]
+
+    # 创建一个空的DataFrame用于存储整合后的数据
+    merged_data = pd.DataFrame()
+
+    # 逐个读取csv文件并整合到merged_data中
+    for file in csv_files:
+        file_path = os.path.join(folder_path, file)
+        data = pd.read_csv(file_path, header=None)
+        merged_data = pd.concat([data,merged_data,], axis=1, ignore_index=True)
+    #print(merged_data)
+
+    # 转置处理
+    merged_data = merged_data.transpose()    
+
+    # 填充缺失值为0
+    merged_data = merged_data.fillna(0)    
+
+    # 在第一行之前插入一行，值由原来的第一行的值赋
+    merged_data.loc[-1] = merged_data.iloc[0]
+    merged_data.index = merged_data.index + 1
+    merged_data = merged_data.sort_index()
+   
+    # 删除偶数行，保留奇数行
+    merged_data = merged_data.iloc[::2, :]
+    
+    # 在最左侧增加一列，第一个值为'label'，其余为0
+    #若有其他产地，0可以进行修改为1、2....
+    merged_data.insert(0, 'label', ['label'] + [class_label] * (merged_data.shape[0] - 1))
+    
+    # 保存整合好的数据到输出文件
+    merged_data.to_csv(output_path, index=False,header=None)
+
+    return merged_data
+
+def combine_multiclass_csv_file(file_list, output_file):
+    '''
+    合并多个csv文件，每个csv文件的第一行为标题，其余行为数据
+
+    Example
+    -------
+    file_list = ['file1.csv', 'file2.csv', 'file3.csv', 'file4.csv', 'file5.csv']
+    output_file = 'combined.csv'
+    combine_multiclass_csv_file(file_list, output_file)
+    '''
+
+    # 创建一个写入 CSV 文件的文件对象
+    with open(output_file, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+
+        # 读取第一个文件的所有数据
+        with open(file_list[0], 'r', newline='') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                writer.writerow(row)
+
+        # 读取其他文件的除去第一行的数据
+        for file_name in file_list[1:]:
+            with open(file_name, 'r', newline='') as file:
+                reader = csv.reader(file)
+                next(reader)  # 跳过第一行标题
+                for row in reader:
+                    writer.writerow(row)
