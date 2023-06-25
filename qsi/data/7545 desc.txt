@@ -11,3 +11,7 @@ DXR2xi显微拉曼成像光谱仪（美国Thermo Fisher公司），
 仪器参数设置：
 激光功率为10 mw，曝光时间1 s，扫描次数500，
 拉曼位移范围为100～3000 cm-1。
+
+--------------------
+If you use this data set, please add the reference: 
+[1] Analytical chemistry kernel library for spectroscopic profiling data, Food Chemistry Advances, Volume 3, 2023, 100342, ISSN 2772-753X, https://doi.org/10.1016/j.focha.2023.100342
