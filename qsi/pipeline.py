@@ -1,24 +1,14 @@
 import os.path
 import joblib
 import numpy as np
-import matplotlib
 import matplotlib.pyplot as plt
 import IPython.display
 
-from sklearn.naive_bayes import BernoulliNB, GaussianNB
-from sklearn.tree import ExtraTreeClassifier, DecisionTreeClassifier
-from sklearn.neural_network import MLPClassifier
-from sklearn.neighbors import KNeighborsClassifier, NearestCentroid
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
-from sklearn.svm import LinearSVC, SVC
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.linear_model import LogisticRegressionCV
 from sklearn.preprocessing import StandardScaler,MinMaxScaler
 from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
 from sklearn.feature_selection import SelectFromModel
-from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split, GridSearchCV
 from scipy.signal import savgol_filter
 
@@ -26,7 +16,6 @@ from cla import metrics
 from . import io
 from .vis import supervised_dimension_reductions, unsupervised_dimension_reductions
 from .fs import RUN_ALL_FS
-from .vis.confusion_matrix import plot_confusion_matrix
 
 def analyze(id, x_range = None, y_subset=None, shift = None, pres = None, fs_output = '', fs_feature_num = 30, cla_feature_num = 3):
     '''
@@ -183,7 +172,7 @@ def analyze_dataset(X, y, X_names, fs_output = '', fs_feature_num = 30, cla_feat
     print('X_mm_scaled is rescaled to [0,1]. We use X_mm_scaled in DR and FS.')
 
     IPython.display.display(IPython.display.HTML('<hr/><h2>尝试各类常用分类器(支持多分类)</h2>'))
-    run_multiclass_clfs(X, y)
+    _ = metrics.run_multiclass_clfs(X, y)
 
     IPython.display.display(IPython.display.HTML('<hr/><h2>降维 Dimensionality Reduction</h2>'))
 
@@ -301,59 +290,3 @@ def build_simple_pipeline(X, y, save_path = None):
         # dict_r['pipeline'].predict(X_test)
 
     return pipe
-
-
-def run_multiclass_clfs(X, y, split = .3):
-    '''
-
-    原生支持多分类的模型：
-
-    naive_bayes.BernoulliNB
-    tree.DecisionTreeClassifier
-    tree.ExtraTreeClassifier
-    ensemble.ExtraTreesClassifier
-    naive_bayes.GaussianNB
-    neighbors.KNeighborsClassifier
-    discriminant_analysis.LinearDiscriminantAnalysis
-    svm.LinearSVC (multi_class=”crammer_singer”)
-    linear_model.LogisticRegression (multi_class=”multinomial”)
-    linear_model.LogisticRegressionCV (setting multi_class=”multinomial”)
-    neural_network.MLPClassifier
-    neighbors.NearestCentroid
-    ensemble.RandomForestClassifier
-    '''
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=split, random_state = 2, stratify=y)
-
-    for clf in [BernoulliNB(), GaussianNB(), ExtraTreeClassifier(), DecisionTreeClassifier(), RandomForestClassifier(), 
-                LinearSVC(multi_class="crammer_singer"), LogisticRegression (multi_class="multinomial"), 
-                LogisticRegressionCV (multi_class="multinomial"), MLPClassifier(), 
-                KNeighborsClassifier(), NearestCentroid(), LinearDiscriminantAnalysis()]:
-        
-        IPython.display.display(IPython.display.HTML('<h3>' + str(clf) + '</h3>'))
-        # IPython.display.display(IPython.display.HTML('<h2>' + str(clf.__class__) + '</h2>'))
-                                
-        clf.fit(X_train, y_train)   
-        y_pred = clf.predict(X_test)
-        
-        matplotlib.rcParams.update({'font.size': 16})
-        _, ax = plt.subplots(1, 3, figsize=(18,6))
-                               # gridspec_kw={'width_ratios': [6, 5, 5]})
-
-        # ax[0].set_title('classification report\n')
-        ax[0].text(0.1, 0, classification_report(y_test, y_pred), 
-                   fontsize = 18, horizontalalignment='right')
-        ax[0].axis('off')
-
-        # ax[1].set_title('confusion matrix\n')
-        plot_confusion_matrix(y_test, y_pred, normalize=False, ax=ax[1], cax = None) # cax = ax[2]
- 
-        # ax[2].set_title('confusion matrix \n(normalized)')
-        plot_confusion_matrix(y_test, y_pred, normalize=True, ax=ax[2], cax = None) # cax = ax[4]
-        
-        plt.tight_layout()
-        plt.show()
-
-        matplotlib.rcParams.update({'font.size': 12})
-
-        IPython.display.display(IPython.display.HTML('<br/>'))
