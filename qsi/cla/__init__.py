@@ -11,4 +11,4 @@ except Exception as e:
 '''
 
 import cla
-assert( '__version__' in cla.__dict__ and cla.__version__ >= '1.1.6')
+assert( '__version__' in cla.__dict__ and cla.__version__ >= '1.1.7')

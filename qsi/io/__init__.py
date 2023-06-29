@@ -171,6 +171,10 @@ def open_dataset(path, delimiter=',', has_y=True, labels=None, x_range=None, y_s
             # convert from pandas dataframe to numpy matrices
             X = data.iloc[:, has_tag + 1:].values  # .values[:,::10]
             y = data.iloc[:, 0].values.ravel()  # first col is y label
+            if all(isinstance(s, str) for s in y):
+                labels = np.unique(y)
+                y = np.array([np.where(labels == v)[0][0] for v in y])
+                print('remap string labels to int', labels, '-->', np.unique(y))
             # use map(float, ) to convert the string list to float list
             # list(map(float, data.columns.values[1:])) # X_names = np.array(list(data)[1:])
             X_names = list(map(float, data.columns.values[has_tag + 1:]))
@@ -219,16 +223,17 @@ def open_dataset(path, delimiter=',', has_y=True, labels=None, x_range=None, y_s
     return X, y, X_names, labels
 
 
-def scatter_plot(X, y, labels=None, tags=None, output_html=False):
+def scatter_plot(X, y, labels=None, tags=None, output_html=False, figsize = (8,6)):
     '''
     Parameters
     ----------
     tags - You may pass "list(range(len(X_pca))" to tags to identify outliers.
     '''
 
+    plt.figure(figsize=figsize)    
     pca = PCA(n_components=2)  # keep the first 2 components
     X_pca = pca.fit_transform(X)
-    plot_components_2d(X_pca, y, legends=labels, tags=tags)
+    plot_components_2d(X_pca, y, legends=labels, tags=tags, ax = plt.gca())
     plt.title('PCA')
 
     s = ''
@@ -240,6 +245,8 @@ def scatter_plot(X, y, labels=None, tags=None, output_html=False):
 
     # for very-high dimensional data, lda/pls is very slow.
     if y is not None and X.shape[1] < 6000:
+
+        plt.figure(figsize=figsize)
 
         '''
         lda = LinearDiscriminantAnalysis()
@@ -256,7 +263,7 @@ def scatter_plot(X, y, labels=None, tags=None, output_html=False):
         pls = PLSRegression(n_components=2, scale=False)
         X_pls = pls.fit(X, y).transform(X)
         # , tags = range(len(y)), ax = ax
-        plot_components_2d(X_pls, y, legends=labels)
+        plot_components_2d(X_pls, y, legends=labels, ax = plt.gca())
         # print('score = ', np.round(pls.score(X, y),3))
         plt.title('PLS')
         if output_html:
@@ -267,7 +274,7 @@ def scatter_plot(X, y, labels=None, tags=None, output_html=False):
 
     return s
 
-def draw_average(X, X_names, SD=1, output_html=False):
+def draw_average(X, X_names, SD=1, output_html=False, figsize = (20,5)):
     '''
     X: 2D array, each row is a spectrum
     X_names: 1D array, the x-axis labels
@@ -276,7 +283,7 @@ def draw_average(X, X_names, SD=1, output_html=False):
 
     matplotlib.rcParams.update({'font.size': 16})
 
-    plt.figure(figsize=(20, 5))
+    plt.figure(figsize=figsize)
 
     if SD > 0:
         plt.plot(X_names, X.mean(axis=0), "k", linewidth=1, label='averaged waveform $± ' +
@@ -349,7 +356,7 @@ def draw_samples(X, y, X_names, titles=None, bdr=False):
     matplotlib.rcParams.update({'font.size': 12})
 
 
-def draw_class_average(X, y, X_names, labels=None, SD=1, shift=200, output_html=False):
+def draw_class_average(X, y, X_names, labels=None, SD=1, shift=200, output_html=False, figsize = (24,10)):
     '''
     Parameter
     ---------
@@ -359,7 +366,7 @@ def draw_class_average(X, y, X_names, labels=None, SD=1, shift=200, output_html=
 
     matplotlib.rcParams.update({'font.size': 18})
 
-    plt.figure(figsize=(24, 10))
+    plt.figure(figsize=figsize)
 
     if labels is None:
         labels = list(map(lambda s: 'Class ' + str(s), set(y)))

@@ -46,7 +46,7 @@ def plot_components_1d(X, y, labels = None, use_markers = False, ax = None, lege
 
     ax.legend()
 
-    ax.axes.xaxis.set_visible(False) 
+    ax.axes.xaxis.set_visible(False)
     ax.axes.yaxis.set_visible(False)
 
     return ax
