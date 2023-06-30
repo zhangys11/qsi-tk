@@ -10,7 +10,7 @@ from sklearn.decomposition import PCA
 
 from . import io, pipeline
 
-def classify_dataset_with_kernels(file_path, pca_ratio = 1.0):
+def classify_dataset_with_kernels(file_path, pca_ratio = 1.0, multi_kernel = 1, do_cla = False):
     '''
     Analyze a classification dataset with various kernels.
 
@@ -20,6 +20,10 @@ def classify_dataset_with_kernels(file_path, pca_ratio = 1.0):
         The path to the dataset file.
     pca_ratio : float
         The ratio of PCA components to keep. Can use 0.99, 0.95, 0.9, 0.85, etc. Default is 1.0 (100%).        
+    multi_kernel : int
+        The number of kernels to try. Default is 1.
+    do_cla : bool
+        Whether to do classifiability analysis (using the cla package) for each kernel. Default is False.
     '''
     
     display(HTML('<h1>' + file_path + '</h1><hr/><br/>'))
@@ -53,26 +57,19 @@ def classify_dataset_with_kernels(file_path, pca_ratio = 1.0):
 
     display(HTML('<h2>2. Try Kernels' + '</h2><hr/><br/>'))
 
-    pkl = ackl.__version__ + '.pkl'
-    if True: # not os.path.isfile(pkl): # if pkl already exist, just reload it
+    _, dics, _ = ackl.metrics.preview_kernels(X, y, calc_metrics = True, embed_title = False, 
+                                            do_cla = do_cla, multi_kernel = multi_kernel,
+                                            scale = False, logplot = False, 
+                                            output_html = False, verbose = False)
 
-        dics, _ = ackl.metrics.preview_kernels(X, y, calc_metrics = True, embed_title = False, 
-                                               scale = False, logplot = False, output_html = False, verbose = False)
+    if do_cla:
 
-        # Persist to a local pickle binary file.
-        with open(pkl,'wb') as f:
-            pickle.dump(dics, f)
+        display(HTML('<h2>3. Evaluate Metrics' + '</h2><hr/><br/>'))
+        html_str = ackl.metrics.visualize_metric_dicts(dics, plot = True)
+        display(HTML( html_str ))
 
-    # Load back
-    with open (pkl, 'rb') as f:
-        dics = pickle.load(f)
-
-    display(HTML('<h2>3. Evaluate Metrics' + '</h2><hr/><br/>'))
-    html_str = ackl.metrics.visualize_metric_dicts(dics, plot = True)
-    display(HTML( html_str ))
-
-    display(HTML('<h2>4. Run time' + '</h2><hr/><br/>'))
-    dic = ackl.metrics.time_cost_kernels(X, repeat=10)
-    print('Averaged run time: ', dic)
+        display(HTML('<h2>4. Run time' + '</h2><hr/><br/>'))
+        dic = ackl.metrics.time_cost_kernels(X, repeat=10)
+        print('Averaged run time: ', dic)
         
     display(HTML('<h3>----------- End of Analysis ----------</h3><br/><br/>'))
