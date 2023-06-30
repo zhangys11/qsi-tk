@@ -10,9 +10,16 @@ from sklearn.decomposition import PCA
 
 from . import io, pipeline
 
-def classify_dataset_with_kernels(file_path):
+def classify_dataset_with_kernels(file_path, pca_ratio = 1.0):
     '''
     Analyze a classification dataset with various kernels.
+
+    Parameters
+    ----------
+    file_path : str
+        The path to the dataset file.
+    pca_ratio : float
+        The ratio of PCA components to keep. Can use 0.99, 0.95, 0.9, 0.85, etc. Default is 1.0 (100%).        
     '''
     
     display(HTML('<h1>' + file_path + '</h1><hr/><br/>'))
@@ -26,17 +33,20 @@ def classify_dataset_with_kernels(file_path):
     X, X_names = pipeline.preprocess_dataset(X, X_names, pres = [('baseline_removal', (1e7, 1e-2))]) # ('max', 0.2)
     io.draw_class_average(X, y, X_names, labels=labels, SD=1, shift = (X.max() - X.min()) / n_classes * 2,
                           figsize = (round(n_classes * 1.7) + 3, round(n_classes * .6) + 2 ))
-    _ = io.scatter_plot(X, y, labels=labels, 
+    _ = io.scatter_plot(X, y, labels=labels,
                         figsize = (round(n_classes * .4) + 3, round(n_classes * .25) + 2 ))
     
-    old_dim = X.shape
-    X = PCA(n_components = 0.99).fit_transform(X) # DR to 99% PCA components
-    new_dim = X.shape
+    pca_desc = ''
+    if pca_ratio < 1.0:
+        old_dim = X.shape
+        X = PCA(n_components = pca_ratio).fit_transform(X) # DR to 99% PCA components
+        new_dim = X.shape
+        pca_desc = '<p>PCA (keep ' + str(pca_ratio*100) +  '% info) dim change: ' + str(old_dim) + ' -> ' + str(new_dim) + '</p>'
         
     X = MinMaxScaler().fit_transform(X)
     pre_desc = 'sklearn.preprocessing.MinMaxScaler'
 
-    display(HTML('<h2>1. Preprocessing</h2><hr/><p>' + '1.1 PCA: ' + str(old_dim) + ' ==> ' + str(new_dim) + '</p><p>1.2 Feature scaling: ' + pre_desc + '</p><br/>'))
+    display(HTML('<h2>1. Preprocessing</h2><hr/><p>Feature scaling: ' + pre_desc + '</p>' + pca_desc))
 
     # display(HTML('<h2>2. CLA before kernel' + '</h2><hr/><br/>'))        
     # display(HTML('<p>' + str(ms) + '</p>'))
