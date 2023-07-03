@@ -1,7 +1,6 @@
 import cvxpy as cp
 import numpy as np
 import pandas as pd
-from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import RidgeCV, Lasso, LassoCV
 from sklearn.metrics import r2_score
@@ -106,7 +105,7 @@ def alasso_v2(X_scaled, y, LAMBDAS = np.logspace(-10, 0, 11), gamma = 1, \
     train_errors = []
     test_errors = []
     theta_values = []
-    for v in tqdm(lambd_values):
+    for v in lambd_values:
         lambd.value = v
         try:
             problem.solve(verbose = verbose) # in case of SolverError: Solver 'ECOS' failed.

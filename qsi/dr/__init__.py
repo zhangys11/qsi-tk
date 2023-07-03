@@ -4,7 +4,6 @@
 
 import cv2
 from numpy.linalg import norm
-from tqdm import tqdm
 import matplotlib.pyplot as plt
 import scipy.fftpack
 import numpy as np
@@ -54,7 +53,7 @@ def dct(x, K = None, flavor = 'fftpack', display = True):
 
         R = range(2,len(x),round(len(x) / 20))
         Errs = []
-        for K in tqdm(R):
+        for K in R:
 
             if flavor == 'cv2':
                 x_dst = cv2.dct(x)

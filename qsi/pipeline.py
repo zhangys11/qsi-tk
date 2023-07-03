@@ -75,7 +75,7 @@ def preprocess_dataset(X, X_names, pres = None):
     Default preprocessing parameters for MALDI-TOF data:
     [('baseline_removal', (1e8, 1e-3)), ('threshold', 10), ('max', 0.01), ('peak_normalize', 1000)]
     '''
-    IPython.display.display(IPython.display.HTML('<hr/><h2>每个样本的预处理 Row-wise Preprocessing </h2>'))
+    IPython.display.display(IPython.display.HTML('<hr/><h3>每个样本的预处理 Row-wise Preprocessing </h3>'))
     
     if pres is None:
         pres = []
@@ -89,7 +89,7 @@ def preprocess_dataset(X, X_names, pres = None):
             print('消除基线飘移: baseline removal (regularization = ' + str(pre_param[0]) + ', residual penalty asymetry = ' + str(pre_param[1]) + ')')
         elif pre_type == 'threshold':
             X = io.pre.x_thresholding(X, pre_param)
-            print('阈值预处理（消除背景噪声）: threshold = ' + str(pre_param))
+            print('阈值预处理（消除背景噪声、满足非负输入条件等）: threshold = ' + str(pre_param))
         elif pre_type in ['max', 'sum', 'rect', 'tri', 'mean']:
             X, X_names = io.pre.x_binning(X, X_names,target_dim=pre_param,flavor=pre_type)
             print('窗函数预处理（' + pre_type +'）: binning window width =  1 / ' + str(pre_param) + ' = ' + str(round(1.0 / pre_param)) )
