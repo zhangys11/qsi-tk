@@ -6,7 +6,7 @@ setup(
     name="qsi-tk",
 
     # Version number:
-    version="0.6.0",
+    version="1.0.2",
 
     # Application author details:
     author="Yinsheng Zhang (Ph.D.)",
@@ -46,7 +46,7 @@ setup(
         "cla",
         "pyDRMetrics",
         "wDRMetrics",
-        "pyMFDR",
+        # "pyMFDR", # avoid importing keras and tf stuffs unless needed
         "cs1",
         "ctgan",  # "torch"
         "cvxpy",

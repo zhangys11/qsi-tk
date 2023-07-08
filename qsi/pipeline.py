@@ -221,25 +221,29 @@ More importantly, it makes the estimated coefficients impossible to interpret. I
     
     IPython.display.display(IPython.display.HTML('<hr/><h2>对筛选后的特征进行分类 Classification on Selected Features</h2><h3>超参数优化及模型选择 Hyper-parameter Optimization （SVM）</h3>'))
     
-    IPython.display.display(IPython.display.HTML('<hr/><h3>支持向量机 SVC</h3>'))
+    _ = metrics.run_multiclass_clfs(X_s, y)
 
-    # Set the parameters by cross-validation
-    tuned_parameters = [{'kernel': ['rbf'], 'gamma': [10, 1, 1e-1, 1e-2],'C': [0.001, 0.01, 0.1, 1, 10]},
-                        {'kernel': ['linear'], 'C': [0.001, 0.01, 0.1, 1, 10]}]
+    if len(set(y)) == 2: # show decision boundary for binary classification
 
-    # X_s_pca = PCA(n_components=2).fit_transform(X_s)
-    _, clf, _ = metrics.grid_search_svm_hyperparams(X_s, y, 0.2, tuned_parameters, verbose = False)
-    metrics.plot_svm_boundary(X_s, y, clf)
-    print('ACC = ', clf.score(X_s, y))
+        IPython.display.display(IPython.display.HTML('<hr/><h3>支持向量机 SVC</h3>'))
+
+        # Set the parameters by cross-validation
+        tuned_parameters = [{'kernel': ['rbf'], 'gamma': [10, 1, 1e-1, 1e-2],'C': [0.001, 0.01, 0.1, 1, 10]},
+                            {'kernel': ['linear'], 'C': [0.001, 0.01, 0.1, 1, 10]}]
+
+        # X_s_pca = PCA(n_components=2).fit_transform(X_s)
+        _, clf, _ = metrics.grid_search_svm_hyperparams(X_s, y, 0.2, tuned_parameters, verbose = False)
+        metrics.plot_svm_boundary(X_s, y, clf)
+        print('ACC = ', clf.score(X_s, y))
 
 
-    IPython.display.display(IPython.display.HTML('<hr/><h3>逻辑回归 (Logistic Regression)</h3>'))
-    
-    lr = LogisticRegressionCV(max_iter=1000,
-                        multi_class='multinomial').fit(X_s, y)
-    
-    metrics.plot_lr_boundary(X_s, y, lr)
-    print('ACC = ', clf.score(X_s, y))
+        IPython.display.display(IPython.display.HTML('<hr/><h3>逻辑回归 (Logistic Regression)</h3>'))
+        
+        lr = LogisticRegressionCV(max_iter=1000,
+                            multi_class='multinomial').fit(X_s, y)
+        
+        metrics.plot_lr_boundary(X_s, y, lr)
+        print('ACC = ', clf.score(X_s, y))
 
 def build_simple_pipeline(X, y, save_path = None):
     '''

@@ -3,13 +3,14 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA, SparsePCA, KernelPCA, TruncatedSVD
 from sklearn.manifold import MDS, TSNE
 from .plot_components import plot_components_1d, plot_components_2d
-from ..dr import dataset_dct_row_wise, mf
 
 def unsupervised_dimension_reductions(X, y, legends = None):
     '''
     Unsupervised dimension reductions
     Note: y is not used in DR, but just for plotting.
     '''
+
+    from ..dr import dataset_dct_row_wise, mf
     
     if X is None or X.shape[1] < 1:
         print('ERROR: X HAS NO FEATURE/COLUMN!')

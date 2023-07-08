@@ -10,7 +10,7 @@ from sklearn.decomposition import PCA
 from . import io, pipeline
 
 def classify_dataset_with_kernels(file_path, rowwise_pre = [('baseline_removal', (1e7, 1e-2)), ('threshold', 0)], 
-                                  pca_ratio = 1.0, scale = False,
+                                  pca_ratio = 1.0, scale = False, clfs = ['LinearDiscriminantAnalysis()'],
                                   multi_kernels = [1], multi_kernel_topk = -1,
                                   plots = True, do_cla = False):
     '''
@@ -24,6 +24,8 @@ def classify_dataset_with_kernels(file_path, rowwise_pre = [('baseline_removal',
         The ratio of PCA components to keep. Can use 0.99, 0.95, 0.9, 0.85, etc. Default is 1.0 (100%).        
     scale : bool
         Whether to a min-max scaling. If your dataset is non-negative, use False, otherwise use True as some kernels require non-negative input.
+    clfs : list of str
+        A list of classifiers to try. Default is ['LinearDiscriminantAnalysis()']. Pass 'all' for all available classifiers.
     multi_kernels : lists of int
         Multi-kernel ranks to try. Default is [1].
     multi_kernel_topk : int
@@ -67,7 +69,7 @@ def classify_dataset_with_kernels(file_path, rowwise_pre = [('baseline_removal',
     display(HTML('<h2>2. Try Kernels' + '</h2><hr/><br/>'))
 
     KX, dic_test_accs, all_dic_metrics, _ = ackl.metrics.classify_with_kernels(X, y, 
-                                            run_clfs = True, embed_title = False, 
+                                            clfs = clfs, embed_title = False, 
                                             do_cla = do_cla, 
                                             multi_kernels = multi_kernels, 
                                             multi_kernel_topk = multi_kernel_topk,
@@ -83,7 +85,6 @@ def classify_dataset_with_kernels(file_path, rowwise_pre = [('baseline_removal',
         display(HTML('<h2>4. Run time' + '</h2><hr/><br/>'))
         dic_time = ackl.metrics.time_cost_kernels(X, repeat=10)
         print('Averaged run time: ', dic_time)
-
 
     display(HTML('<h3>Summary</h3>'))
     
