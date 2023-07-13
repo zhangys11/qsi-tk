@@ -243,9 +243,9 @@ def scatter_plot(X, y, labels=None, tags=None, output_html=False, figsize = (8,6
     else:
         plt.show()
 
-    # only plot LDA/PLS if there are more than 1 class
+    # only plot LDA if there are more than 1 class and plot PLS only for binary classification.
     # for very-high dimensional data, lda/pls is very slow.
-    if y is not None and len(set(y)) > 1 and X.shape[1] < 6000:
+    if y is not None and len(set(y))==2 and X.shape[1] < 6000:
 
         plt.figure(figsize=figsize)
 
