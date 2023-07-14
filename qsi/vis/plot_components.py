@@ -104,9 +104,11 @@ def plot_components_2d(X, y, labels = None, use_markers = False, ax=None, legend
         
     ax.legend()
 
-    ax.axes.xaxis.set_visible(False) 
-    ax.axes.yaxis.set_visible(False)
-    
+    # ax.axes.xaxis.set_visible(False)
+    # ax.axes.yaxis.set_visible(False)
+    ax.set_xticks([])
+    ax.set_yticks([])
+
     return ax
 
 def plot_components_3d(X, y, labels=None, legends = None):

@@ -5,7 +5,6 @@ Data Set ID: 754a 川贝母、浙贝母拉曼光谱
 COLLECTION AND PROCESSING INFORMATION
 Title: Position X =-12643 Y = 6208, Signal to noise ratio =24.6
 Collected: Wed Mar 23 14:18:22 2022 (GMT+08:00)
-Filename: C:\my documents\omnic\GFJ\20220323\chuanbeimu9 23-3-2022 14-9-54.CSV
 Comments: 
 Custom info 1: 
 Custom info 2: 

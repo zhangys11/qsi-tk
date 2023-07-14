@@ -1,0 +1,18 @@
+shihu3.csv - CSV (comma separated value) format.
+
+* Summary
+Raman spectra of dried dendrobium officinale stems from three different geographic locations.
+
+* Test Subjects
+The test subject is dried dendrobium officinale stems from three different geographic locations, i.e., Pan'an, Wenzhou and Yunan. Both Pan’an and Wenzhou are in Zhejiang Province, an eastern province in China. Pan’an is an inner land mountain town while Wenzhou is a coastal city. Yunan is a high-altitude (about 2km above the sea level) south-west province. These three regions have quite different climate and cultivation conditions, causing their produced herbs have different medicinal efficacies and market values.   
+Instrument and preparation
+
+* Procedures
+The spectroscopic profiling instrument is a ThermoFisher DXR3xi Raman spectrometer. The laser wavelength is 785 nm. Resolution is 2.0 cm-1. Laser power is 30 mW. Exposure time is 0.5 s and the number of scans is 1000.
+A total of 100 samples were collected from Pan'an, 50 from Wenzhou, and 50 from Yunan. The collected samples were powdered and sieved through a 200-mesh stainless steel screen. The sample powder was spread on a slide to get uniform thickness, and then placed on the loading plate for Raman signal acquisition. 
+
+* Timestamp
+This dataset is collected in June 2023. 
+--------------------
+If you use this data set, please add the reference: 
+[1] Origin identification of dendrobium officinale based on NNRW-stacking ensembles

@@ -27,7 +27,8 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'vintage_526': ('7344_Y5Y26.csv', ',', True, '7344_Y5Y26 desc.txt', ["5Y", "26Y"], 2000),
                'beimu': ('754a_C2S_Beimu.txt', ',', True, '754a_C2S_Beimu desc.txt', ["Sichuan", "Zhejiang"], 300),
                'shihu_c2': ('754b_C2S_Shihu.csv', ',', True, '754b_C2S_Shihu desc.txt', ['Yunnan', 'Zhejiang'], 500),
-               # 'shihu': ('754b.csv',',',True,'754b desc.txt',['Yunnan','Wenzhou','Panan1','Panan2']),
+               #'shihu': ('754b.csv',',',True,'754b desc.txt',['Yunnan','Wenzhou','Panan1','Panan2']),
+               'shihu_c3': ('Shihu3.csv', ',', True, 'Shihu3 desc.txt', ["Pan'an", 'Wenzhou', 'Yunnan'], 800),
                'huangqi_rm': ('7044X_RAMAN.csv', ',', True, '7044X_RAMAN desc.txt', ['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu'], 3000),
                'huangqi_uv': ('7143X_UV.csv', ',', True, '7143X_UV desc.txt', ['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu'], 2),
                'huangqi_ims': ('704b_IMS.csv', ',', True, '704b_IMS desc.txt', ['Inner Mongolia', 'Sichuan', 'Shanxi', 'Gansu'], 5),
@@ -234,6 +235,8 @@ def scatter_plot(X, y, labels=None, tags=None, output_html=False, figsize = (8,6
     pca = PCA(n_components=2)  # keep the first 2 components
     X_pca = pca.fit_transform(X)
     plot_components_2d(X_pca, y, legends=labels, tags=tags, ax = plt.gca())
+    plt.xlabel('PC1 (' + str(round(pca.explained_variance_ratio_[0], 2)) + ')')
+    plt.ylabel('PC2 (' + str(round(pca.explained_variance_ratio_[1], 2)) + ')')
     plt.title('PCA')
 
     s = ''
@@ -266,7 +269,7 @@ def scatter_plot(X, y, labels=None, tags=None, output_html=False, figsize = (8,6
         # , tags = range(len(y)), ax = ax
         plot_components_2d(X_pls, y, legends=labels, ax = plt.gca())
         # print('score = ', np.round(pls.score(X, y),3))
-        plt.title('PLS')
+        plt.title('PLS (R2 = ' + str(round(pls.score(X, y), 3)) + ')')
         if output_html:
             s += plt2html(plt)
             plt.close()
