@@ -73,7 +73,7 @@ def plot_components_2d(X, y, labels = None, use_markers = False, ax=None, legend
     if (labels is None):
         labels = set(y)
 
-    i=0        
+    i=0
 
     for label in labels:
         if y is None or len(y) == 0:
@@ -91,7 +91,7 @@ def plot_components_2d(X, y, labels = None, use_markers = False, ax=None, legend
                        label= (str(legends[i]) if legends is not None else ("Y = " + str(label)  + ' (' + str(len(cluster)) + ')')) )
         else:
             ax.scatter([cluster[:,0]], [cluster[:,1]],
-                       s=70, 
+                       s=70,
                        facecolors=colors[i%len(colors)],
                        label= (str(legends[i]) if legends is not None else ("Y = " + str(label) + ' (' + str(len(cluster)) + ')')), 
                        edgecolors = 'black', 

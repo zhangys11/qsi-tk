@@ -1,0 +1,15 @@
+7344_Y5Y26.csv - Raman spectroscopic profiling dataset of 
+5-year and 26-year Gujing Tribute vintage liquors. 
+
+With a long history, Gujing Tribute Liquor with fragrant taste is one of the eight most famous liquors in China. In 196AD, Cao Cao presented the "Jiuyun Spring Liquor" that was produced in his hometown as the royal liquor, as well as its brewing methods to the Emperor Xian of Han Dynasty. During the Wan Li Reign of Ming Dynasty, it was presented to the royal court as a "tribute" all the way until Qing Dynasty, hence the liquor is named "Gujing Tribute Liquor" . On the basis of traditional processes, it has scientific recipes and technological innovations. It features "crystal clear, sweet and mellow like orchid, velvety and lasting after tasting" and brings a unique taste known for its sweetness, aroma and full flavor. It was awarded the gold medal of the national liquor-tasting conference for four times, and won the title of "National Famous Liquor". In March 2003, it was incorporated into the system for protecting original products. In 2005, it became national geographical iconic products, gained wide acclaim and has been popular both at home and abroad. (source: http://english.bozhou.gov.cn/content/33.html)
+价格与年份基本正比，以500ml瓶装为例， 5-year 200RMB, 8-year 300RMB, 16-year 600RMB, 26-year 1700RMB
+
+y = 0: 5-year
+y = 1: 26-year
+
+Each sample has 2088 Raman wavenumbers, ranging from 251 to 2338 cm-1.  
+Three outlier samples were removed.   
+
+--------------------
+If you use this data set, please add the reference: 
+[1] A unified classifiability analysis framework based on meta-learner and its application in spectroscopic profiling data [J]. Applied Intelligence, 2021, doi: 10.1007/s10489-021-02810-8

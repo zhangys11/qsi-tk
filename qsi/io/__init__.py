@@ -24,7 +24,7 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'yogurt': ('7346.csv', ',', True, '7346 desc.txt', ["YL", "GM", "WQ", "MN"], 200),
                'vintage': ('7344.txt', '\t', False, '7344 desc.txt', ['8-year vintage'], 200),
                'vintage_spi': ('7345.csv', ',', True, '7345 desc.txt', ["5Y", "8Y", "16Y", "26Y"], 200),
-               'vintage_526': ('7344_Y5Y26.csv', ',', True, '7344_Y5Y26 desc.txt', ["5Y", "26Y"], 2000),
+               'vintage_526': ('vintage_7344_Y5Y26.csv', ',', True, 'vintage_7344_Y5Y26 desc.txt', ["5Y", "26Y"], 2000),
                'beimu': ('754a_C2S_Beimu.txt', ',', True, '754a_C2S_Beimu desc.txt', ["Sichuan", "Zhejiang"], 300),
                'shihu_c2': ('754b_C2S_Shihu.csv', ',', True, '754b_C2S_Shihu desc.txt', ['Yunnan', 'Zhejiang'], 500),
                #'shihu': ('754b.csv',',',True,'754b desc.txt',['Yunnan','Wenzhou','Panan1','Panan2']),
@@ -49,7 +49,8 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'yimi_rm': ('yimi_raman.csv', ',', False, 'yimi_raman desc.txt', ['coix seed'], 200),
                'hangbaiju_rm': ('hangbaiju_raman.csv', ',', False, 'hangbaiju_raman desc.txt', ['chrysanthemum morifolium'], 200),
                'salt': ('7545.csv', ',', True, '7545 desc.txt', ["well salt", "sea salt"], 200),
-               'mouse_omics': ('metabolomics.txt', '\t', True, 'metabolomics desc.txt', ["control", "experiment"], 50000000)
+               'mouse_omics': ('metabolomics.txt', '\t', True, 'metabolomics desc.txt', ["control", "experiment"], 50000000),
+               'ovarian_cancer_ms': ('ovarian-cancer-nci-pbsii-data.csv', ',', True, 'ovarian cacner desc.txt', ["normal", "cancer"], 1)
                }
 
 
@@ -117,7 +118,7 @@ def open_dataset(path, delimiter=',', has_y=True, labels=None, x_range=None, y_s
 
     ext = os.path.splitext(path)[1]
 
-    # special treatment for specific datasets
+    # special treatment for specific datasets 
     if 'metabolomics.txt' in path:
         data = pd.read_csv(path, delimiter='\t')  # ,header=None
         _ = data.iloc[:5022, 4].values.tolist()  # molecules
@@ -224,14 +225,15 @@ def open_dataset(path, delimiter=',', has_y=True, labels=None, x_range=None, y_s
     return X, y, X_names, labels
 
 
-def scatter_plot(X, y, labels=None, tags=None, output_html=False, figsize = (8,6)):
+def scatter_plot(X, y, labels=None, tags=None, output_html=False, figsize = (12,5)):
     '''
     Parameters
     ----------
     tags - You may pass "list(range(len(X_pca))" to tags to identify outliers.
     '''
 
-    plt.figure(figsize=figsize)    
+    plt.figure(figsize=figsize)
+    plt.subplot(1, 2, 1)
     pca = PCA(n_components=2)  # keep the first 2 components
     X_pca = pca.fit_transform(X)
     plot_components_2d(X_pca, y, legends=labels, tags=tags, ax = plt.gca())
@@ -239,18 +241,11 @@ def scatter_plot(X, y, labels=None, tags=None, output_html=False, figsize = (8,6
     plt.ylabel('PC2 (' + str(round(pca.explained_variance_ratio_[1], 2)) + ')')
     plt.title('PCA')
 
-    s = ''
-    if output_html:
-        s += plt2html(plt)
-        plt.close()
-    else:
-        plt.show()
-
     # only plot LDA if there are more than 1 class and plot PLS only for binary classification.
     # for very-high dimensional data, lda/pls is very slow.
     if y is not None and len(set(y))==2 and X.shape[1] < 6000:
 
-        plt.figure(figsize=figsize)
+        # plt.figure(figsize=figsize)
 
         '''
         lda = LinearDiscriminantAnalysis()
@@ -264,17 +259,20 @@ def scatter_plot(X, y, labels=None, tags=None, output_html=False, figsize = (8,6
         plt.show()
         '''
 
+        plt.subplot(1, 2, 2)
         pls = PLSRegression(n_components=2, scale=False)
         X_pls = pls.fit(X, y).transform(X)
         # , tags = range(len(y)), ax = ax
         plot_components_2d(X_pls, y, legends=labels, ax = plt.gca())
         # print('score = ', np.round(pls.score(X, y),3))
         plt.title('PLS (R2 = ' + str(round(pls.score(X, y), 3)) + ')')
-        if output_html:
-            s += plt2html(plt)
-            plt.close()
-        else:
-            plt.show()
+
+    s = ''
+    if output_html:
+        s += plt2html(plt)
+        plt.close()
+    else:
+        plt.show()
 
     return s
 

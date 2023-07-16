@@ -104,7 +104,7 @@ def preprocess_dataset(X, X_names, pres = None):
             X = io.pre.x_normalize(X, flavor='peak', target_max=pre_param)
             print('峰值归一化预处理: peak normalization (target_max = ' + str(pre_param) + ')')
 
-    IPython.display.display(IPython.display.HTML('<br/><br/>预处理后的维度：X.shape = ' + str(X.shape) +'<hr/>'))
+    IPython.display.display(IPython.display.HTML('<h3>预处理后的维度：X.shape = ' + str(X.shape) +'</h3><hr/>'))
 
     return X, X_names
 
@@ -200,6 +200,7 @@ More importantly, it makes the estimated coefficients impossible to interpret. I
     if len(FS_COMMON_IDX) > 0:
         IPython.display.display(IPython.display.HTML('<h3>' + 'Common features selected by all FS methods: ' + str(np.array(X_names)[FS_COMMON_IDX]) + '</h3>'))
     
+    X_s = None
     if fs_output == 'common' or fs_output == '':
         if len(FS_COMMON_IDX) > 1: # we require at least 2 common features
             # print(X_mm_scaled.shape, FS_COMMON_IDX)
@@ -208,7 +209,11 @@ More importantly, it makes the estimated coefficients impossible to interpret. I
             IPython.display.display(IPython.display.HTML('<h3>' + 'Too few common features. We will use the default elastic net fs for the following procedures.' + '</h3>'))
             X_s = FS_OUTPUT['elastic net']
     else:
-        IPython.display.display(IPython.display.HTML('<h3>' + 'Use ' + fs_output + ' for the following procedures.</h3>'))
+        if fs_output not in FS_OUTPUT:
+            IPython.display.display(IPython.display.HTML('<h3>' + 'Invalid fs_output. We will use elastic net fs as the default output.' + '</h3>'))
+            fs_output = 'elastic net'
+        else: 
+            IPython.display.display(IPython.display.HTML('<h3>' + 'Use ' + fs_output + ' for the following procedures.</h3>'))
         X_s = FS_OUTPUT[fs_output]
 
     if cla_feature_num > 0 and len(set(y)) == 2:
@@ -244,6 +249,8 @@ More importantly, it makes the estimated coefficients impossible to interpret. I
         
         metrics.plot_lr_boundary(X_s, y, lr)
         print('ACC = ', clf.score(X_s, y))
+
+    return X_s
 
 def build_simple_pipeline(X, y, save_path = None):
     '''
