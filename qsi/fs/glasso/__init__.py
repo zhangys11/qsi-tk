@@ -182,7 +182,7 @@ def raman_window_fs(X , x_names, raman_peak_list, resolution = 2,
     filtered_region_centers : list of region centers that are within the range of x_names (in cm-1)
     '''
 
-    raman_peak_key_list = [[x.chemical +x.vibration]+[(x.peak_start,x.peak_end)] for x in raman_peak_list]
+    raman_peak_key_list = [[x.chemical + ' ' + x.vibration]+[(x.peak_start,x.peak_end)] for x in raman_peak_list]
     
     Fss = []
     filtered_keys = []
@@ -326,12 +326,13 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split = .4, random_state =
     dic_metrics = {}
 
     html_str = '''<table><tr><th>resolution</th><th>window</th><th>sd</th><th>group_reg</th><th>l1_reg</th>
-    <th>testset accuracy</th><th>aic</th><th>bic</th><th>k</th></tr>'''
+    <th>testset accuracy</th><th>aic</th><th>bic</th><th>aicc</th><th>k</th></tr>'''
 
     best_acc = 0
     best_k = np.inf
     best_aic = np.inf
     best_bic = np.inf
+    best_aicc = np.inf
 
     for resolution in [1, 2, 5, 10]:
         for window in ['rectangle', 'triangle', 'rbf']:
@@ -350,7 +351,7 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split = .4, random_state =
                         k = mask.sum()
 
                         row_str = f'''<tr><td>{resolution}</td><td>{window}</td><td>{sd}</td><td>{group_reg}</td><td>{l1_reg}</td>
-                        <td>{round(100*acc,1)}%</td><td>{round(aic,1)}</td><td>{round(bic,1)}</td><td>{k}</td></tr>'''
+                        <td>{round(100*acc,1)}%</td><td>{round(aic,1)}</td><td>{round(bic,1)}</td><td>{round(aicc,1)}</td><td>{k}</td></tr>'''
                         
                         if verbose: # output step-wise result
                             IPython.display.display(IPython.display.HTML(row_str))
@@ -365,27 +366,52 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split = .4, random_state =
                             best_aic = aic
                         if bic < best_bic:
                             best_bic = bic
+                        if aicc < best_aicc:
+                            best_aicc = aicc
 
-                        dic_metrics[(resolution, window, sd, group_reg, l1_reg)] = acc, k, aic, bic
+                        dic_metrics[(resolution, window, sd, group_reg, l1_reg)] = acc, k, aic, bic, aicc
     
     html_str += '</table>'
     IPython.display.display(IPython.display.HTML(html_str))
     # IPython.display.display(IPython.display.HTML('<p>' + str(group_info[mask]) + '</p>'))
 
+    html_str = '''<h3>Best Cases</h3><p>* indicates the best</p>
+    <table><tr><th>resolution</th><th>window</th><th>group_reg</th><th>l1_reg</th>
+    <th>testset accuracy</th><th>aic</th><th>bic</th><th>aicc</th><th>k</th></tr>'''
+    best_acc_least_k_key = None
+    best_acc_least_k = np.inf
+
     for key, value in dic_metrics.items():
         if value[0] == best_acc:
-            print(f'Best accuracy: {value[0]} at {key}. All metrics: {np.round(value, 3)}')
+            if best_acc_least_k < value[1]:
+                best_acc_least_k = value[1]
+                best_acc_least_k_key = key
         if value[1] == best_k:
+            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td><td>{key[4]}</td>
+                        <td>{round(100*value[0],1)}%</td><td>{round(value[2],1)}</td><td>{round(value[3],1)}</td><td>{round(value[4],1)}</td><td>{value[1]}*</td></tr>'''
             print(f'Best k: {value[1]} at {key}. All metrics: {np.round(value, 3)}')
         if value[2] == best_aic:
+            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td><td>{key[4]}</td>
+                        <td>{round(100*value[0],1)}%</td><td>{round(value[2],1)}*</td><td>{round(value[3],1)}</td><td>{round(value[4],1)}</td><td>{value[1]}</td></tr>'''
             print(f'Best AIC: {value[2]} at {key}. All metrics: {np.round(value, 3)}')
         if value[3] == best_bic:
+            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td><td>{key[4]}</td>
+                        <td>{round(100*value[0],1)}%</td><td>{round(value[2],1)}</td><td>{round(value[3],1)}*</td><td>{round(value[4],1)}</td><td>{value[1]}</td></tr>'''
             print(f'Best BIC: {value[3]} at {key}. All metrics: {np.round(value, 3)}')
+        if value[4] == best_aicc:
+            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td><td>{key[4]}</td>
+                        <td>{round(100*value[0],1)}%</td><td>{round(value[2],1)}</td><td>{round(value[3],1)}</td><td>{round(value[4],1)}*</td><td>{value[1]}</td></tr>'''
+            print(f'Best AICC: {value[3]} at {key}. All metrics: {np.round(value, 3)}')
             
+    html_str += f'''<tr><td>{best_acc_least_k_key[0]}</td><td>{best_acc_least_k_key[1]}</td><td>{best_acc_least_k_key[2]}</td><td>{best_acc_least_k_key[3]}</td><td>{best_acc_least_k_key[4]}</td>
+                            <td>{round(100*dic_metrics[best_acc_least_k_key][0],1)}%*</td><td>{round(dic_metrics[best_acc_least_k_key][2],1)}</td><td>{round(dic_metrics[best_acc_least_k_key][3],1)}</td><td>{round(dic_metrics[best_acc_least_k_key][4],1)}</td><td>{dic_metrics[best_acc_least_k_key][1]}</td></tr>'''
+    print(f'Best accuracy: {best_acc} at {best_acc_least_k_key}. All metrics: {np.round(dic_metrics[best_acc_least_k_key], 3)}')
+    IPython.display.display(IPython.display.HTML('</table>' + html_str))
+    
     return dic_metrics
 
 
-def interpret_group_result(feature_importances, fss, mask, group_info,
+def interpret_group_result(feature_importances, fss, mask, group_info, y,
                            labels = None,
                            draw_boxplots = True):
     '''
@@ -408,7 +434,7 @@ def interpret_group_result(feature_importances, fss, mask, group_info,
     result = []
     for i, gi in enumerate(group_info):
         result.append(np.concatenate((gi, [feature_importances[i]])))  
-    new_groups_list = [arr.tolist() for arr in result]       
+    new_groups_list = [arr.tolist() for arr in result]
 
     top_k = mask.sum()
     most_feature_importances = sorted(feature_importances, reverse=True)[:top_k]
@@ -436,22 +462,32 @@ def interpret_group_result(feature_importances, fss, mask, group_info,
     df = df.groupby('Chemical and Vibration', sort=False).apply(lambda x: x.reset_index(drop=True))
     # 重置索引
     df = df.reset_index(drop=True)
-    title = df.apply(lambda row: str(row['Chemical and Vibration']) + ': ' + str(round(row['region'][0]))+r' $cm^{-1}$' 
-                     if row['region'][0] == row['region'][1] 
+    title = df.apply(lambda row: str(row['Chemical and Vibration']) + ': ' + str(round(row['region'][0]))+r' $cm^{-1}$'
+                     if row['region'][0] == row['region'][1]
                      else str(row['Chemical and Vibration']) + ': ' + str(round(row['region'][0])) + '~' + str(round(row['region'][1])) + r' $cm^{-1}$' , axis=1)
     
     # 将fss与mask对比，进行筛选
     result_filter = fss[:, mask]
     # 获取数组的形状
     _, cols = result_filter.shape
+
+    unique_y = np.unique(y)
+    
     # 遍历每一列
     for j in range(cols):
         # 提取当前列
         col = result_filter[:, j]
-        result_class = np.split(col, len(labels))
-        result = [np.squeeze(arr).tolist() for arr in result_class]
+
+        # result_class = np.split(col, len(labels))
+
+        # 遍历唯一元素，并将col中对应元素归为同一组
+        result = []
+        for elem in unique_y:
+            result_split = col[y == elem]
+            result.append(result_split)
+
         # 绘制箱型图
-        if draw_boxplots:  
+        if draw_boxplots:
             # 创建 Figure 对象和 Axes 对象
             _, ax = plt.subplots()
             # 绘制箱型图，并设置标签
@@ -461,6 +497,7 @@ def interpret_group_result(feature_importances, fss, mask, group_info,
             # ax.set_ylabel('Value')
             # 显示图表
             plt.show()
+
     return df
 
 

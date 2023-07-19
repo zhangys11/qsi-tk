@@ -184,34 +184,26 @@
         "comment": ""
     },
     {
-        "chemical": "Nitrile",
-        "vibration": "C\u2261N stretch",
-        "peak_start": 2230.0,
-        "peak_end": 2250.0,
-        "reference": "ISBN 0124511600",
-        "comment": ""
-    },
-    {
-        "chemical": "PhospHolipid Headgroup",
-        "vibration": "Inositol residue(846)",
-        "peak_start": 845.0,
-        "peak_end": 895.0,
+        "chemical": "Inositol",
+        "vibration": "",
+        "peak_start": 846,
+        "peak_end": 846,
         "reference": "10.1016/j.idairyj.2011.01.008",
         "comment": ""
     },
     {
-        "chemical": "PhospHolipid Headgroup",
-        "vibration": "PhospHatidic acid(860)",
-        "peak_start": 845.0,
-        "peak_end": 895.0,
+        "chemical": "PhospHatidic acid",
+        "vibration": "",
+        "peak_start": 860,
+        "peak_end": 860,
         "reference": "10.1016/j.idairyj.2011.01.008",
         "comment": ""
     },
     {
-        "chemical": "PHospHolipid Headgroup",
-        "vibration": "Choline(875)",
-        "peak_start": 845.0,
-        "peak_end": 895.0,
+        "chemical": "Choline",
+        "vibration": "",
+        "peak_start": 875,
+        "peak_end": 875,
         "reference": "10.1016/j.idairyj.2011.01.008",
         "comment": ""
     },
@@ -272,11 +264,11 @@
         "comment": "\u03b4(CH2)twisting-1301"
     },
     {
-        "chemical": "Saturated fatty acid,phosphatidyl serine, phosphatidyl choline and phosphatidyl inositol",
+        "chemical": "Saturated fatty acid,phosphatidyl serine, phosphatidyl choline and phosphatidyl inositol; Cholesterol",
         "vibration": "\u03b4(CH2)sCissoring",
-        "peak_start": 1443.0,
+        "peak_start": 1442.0,
         "peak_end": 1443.0,
-        "reference": "10.1016/j.idairyj.2011.01.008",
+        "reference": "10.1016/j.idairyj.2011.01.008 and 10.1002/jrs.5054",
         "comment": ""
     },
     {
@@ -435,14 +427,6 @@
         "chemical": "D-mannos",
         "vibration": "s(C-N)",
         "peak_start": 1130.0,
-        "peak_end": 1130.0,
-        "reference": "10.1038/srep04751 and 10.2147/IJN.S186226",
-        "comment": ""
-    },
-    {
-        "chemical": "D-mannos",
-        "vibration": "s(C-N)",
-        "peak_start": 1131.0,
         "peak_end": 1131.0,
         "reference": "10.1038/srep04751 and 10.2147/IJN.S186226",
         "comment": ""
@@ -472,7 +456,7 @@
         "comment": ""
     },
     {
-        "chemical": "Amide \u2162",
+        "chemical": "Amide III",
         "vibration": "\u03bd (C-N), \u03b4 (N-H)",
         "peak_start": 1265.0,
         "peak_end": 1265.0,
@@ -480,19 +464,11 @@
         "comment": ""
     },
     {
-        "chemical": "Amide \u2162",
+        "chemical": "Amide III",
         "vibration": "\u03bd (C-N), \u03b4 (N-H)",
         "peak_start": 1270.0,
         "peak_end": 1270.0,
         "reference": "10.1002/jrs.5054",
-        "comment": ""
-    },
-    {
-        "chemical": "Cholesterol",
-        "vibration": "\u03b4(CH2)sCissoring",
-        "peak_start": 1442.0,
-        "peak_end": 1443.0,
-        "reference": "10.1016/j.idairyj.2011.01.008 and 10.1002/jrs.5054",
         "comment": ""
     },
     {
@@ -626,8 +602,8 @@
     {
         "chemical": "Tryptophan",
         "vibration": "ring breathing mode",
-        "peak_start": 760.0,
-        "peak_end": 760.0,
+        "peak_start": 760,
+        "peak_end": 761,
         "reference": "10.2147/IJN.S71811",
         "comment": ""
     },
@@ -752,18 +728,10 @@
         "comment": ""
     },
     {
-        "chemical": "Collagen, lipids",
-        "vibration": "\u03b4 (C-H)",
-        "peak_start": 1447.0,
-        "peak_end": 1447.0,
-        "reference": "10.2147/IJN.S71811",
-        "comment": ""
-    },
-    {
         "chemical": "Tryptophan",
         "vibration": "\u03bd (C=C)",
         "peak_start": 1552.0,
-        "peak_end": 1552.0,
+        "peak_end": 1553.0,
         "reference": "10.2147/IJN.S71811",
         "comment": ""
     },
@@ -840,7 +808,7 @@
         "comment": ""
     },
     {
-        "chemical": "Collagen, phospholipids",
+        "chemical": "Collagen",
         "vibration": "b\u03c5(C-H2)",
         "peak_start": 1447.0,
         "peak_end": 1447.0,
@@ -848,18 +816,18 @@
         "comment": ""
     },
     {
+        "chemical": "phospholipids",
+        "vibration": "b\u03c5(C-H2)",
+        "peak_start": 1447.0,
+        "peak_end": 1447.0,
+        "reference": "10.2147/IJN.S71811",
+        "comment": ""
+    },
+    {
         "chemical": "Acetoacetate",
         "vibration": "b\u03c5(C=C)",
         "peak_start": 1584.0,
         "peak_end": 1584.0,
-        "reference": "10.2147/IJN.S186226",
-        "comment": ""
-    },
-    {
-        "chemical": "Amide I",
-        "vibration": "s(C=C):(\u03b2-pleated sheet)",
-        "peak_start": 1660.0,
-        "peak_end": 1660.0,
         "reference": "10.2147/IJN.S186226",
         "comment": ""
     },
@@ -1129,14 +1097,14 @@
     },
     {
         "chemical": "",
-        "vibration": "\u03b4(CH2)",
+        "vibration": "\u03b4(C-H2)",
         "peak_start": 1458.0,
-        "peak_end": 1458.0,
+        "peak_end": 1460.0,
         "reference": "10.3233/BSI-200201",
         "comment": ""
     },
     {
-        "chemical": "",
+        "chemical": "Tryptophan",
         "vibration": "\u03bd(C-C)ring",
         "peak_start": 1620.0,
         "peak_end": 1620.0,
@@ -1144,7 +1112,7 @@
         "comment": ""
     },
     {
-        "chemical": "amide \u2160",
+        "chemical": "amide I",
         "vibration": "v(C=O); v(C=C)",
         "peak_start": 1670.0,
         "peak_end": 1670.0,
@@ -1200,26 +1168,18 @@
         "comment": ""
     },
     {
-        "chemical": "CO2",
-        "vibration": "",
+        "chemical": "",
+        "vibration": "CO2",
         "peak_start": 2432.0,
         "peak_end": 2432.0,
         "reference": "10.3233/BSI-200201",
         "comment": ""
     },
     {
-        "chemical": "CO2",
-        "vibration": "",
+        "chemical": "",
+        "vibration": "CO2",
         "peak_start": 2300.0,
         "peak_end": 2300.0,
-        "reference": "10.3233/BSI-200201",
-        "comment": ""
-    },
-    {
-        "chemical": "lipids amide I proteins",
-        "vibration": "",
-        "peak_start": 1660.0,
-        "peak_end": 1660.0,
         "reference": "10.3233/BSI-200201",
         "comment": ""
     },
@@ -1256,11 +1216,11 @@
         "comment": ""
     },
     {
-        "chemical": "Lipids and protein",
-        "vibration": "",
+        "chemical": "Lipids and Amide I protein",
+        "vibration": "\u03bd(C-O),\u03b4(N-H),\u03b4(H-O-H), s(C=C):(\u03b2-pleated sheet)",
         "peak_start": 1660.0,
         "peak_end": 1660.0,
-        "reference": "10.3233/BSI-200201",
+        "reference": "10.2147/IJN.S186226 10.3233/BSI-200201",
         "comment": ""
     },
     {
@@ -1320,7 +1280,7 @@
         "comment": ""
     },
     {
-        "chemical": "Trp",
+        "chemical": "Tryptophan",
         "vibration": "",
         "peak_start": 538.0,
         "peak_end": 538.0,
@@ -1328,7 +1288,7 @@
         "comment": ""
     },
     {
-        "chemical": "Trp",
+        "chemical": "Tryptophan",
         "vibration": "",
         "peak_start": 543.0,
         "peak_end": 543.0,
@@ -1336,7 +1296,7 @@
         "comment": ""
     },
     {
-        "chemical": "Trp",
+        "chemical": "Tryptophan",
         "vibration": "",
         "peak_start": 754.0,
         "peak_end": 754.0,
@@ -1352,15 +1312,7 @@
         "comment": ""
     },
     {
-        "chemical": "Trp",
-        "vibration": "",
-        "peak_start": 761.0,
-        "peak_end": 761.0,
-        "reference": "",
-        "comment": ""
-    },
-    {
-        "chemical": "Trp",
+        "chemical": "Tryptophan",
         "vibration": "",
         "peak_start": 879.0,
         "peak_end": 879.0,
@@ -1392,18 +1344,10 @@
         "comment": ""
     },
     {
-        "chemical": "Trp",
+        "chemical": "Tryptophan",
         "vibration": "",
         "peak_start": 1014.0,
         "peak_end": 1014.0,
-        "reference": "",
-        "comment": ""
-    },
-    {
-        "chemical": "",
-        "vibration": "\u03bd(C-N)",
-        "peak_start": 1080.0,
-        "peak_end": 1080.0,
         "reference": "",
         "comment": ""
     },
@@ -1424,7 +1368,7 @@
         "comment": ""
     },
     {
-        "chemical": "Amide\u2162",
+        "chemical": "Amide III",
         "vibration": "(\u03bd(C-N),\u03b4(N-H),\u03bd(CH3-C))",
         "peak_start": 1238.0,
         "peak_end": 1238.0,
@@ -1432,7 +1376,7 @@
         "comment": ""
     },
     {
-        "chemical": "Amide\u2162",
+        "chemical": "Amide III",
         "vibration": "(\u03bd(C-N),\u03b4(N-H),\u03bd(CH3-C))",
         "peak_start": 1258.0,
         "peak_end": 1258.0,
@@ -1440,7 +1384,7 @@
         "comment": ""
     },
     {
-        "chemical": "Amide\u2162",
+        "chemical": "Amide III",
         "vibration": "(\u03bd(C-N),\u03b4(N-H),\u03bd(CH3-C))",
         "peak_start": 1278.0,
         "peak_end": 1278.0,
@@ -1448,7 +1392,7 @@
         "comment": ""
     },
     {
-        "chemical": "Trp",
+        "chemical": "Tryptophan",
         "vibration": "\u03b4(C-H)",
         "peak_start": 1343.0,
         "peak_end": 1343.0,
@@ -1456,7 +1400,7 @@
         "comment": ""
     },
     {
-        "chemical": "Trp",
+        "chemical": "Tryptophan",
         "vibration": "\u03b4(C-H)",
         "peak_start": 1365.0,
         "peak_end": 1365.0,
@@ -1464,50 +1408,10 @@
         "comment": ""
     },
     {
-        "chemical": "",
-        "vibration": "\u03b4(C-H2)",
-        "peak_start": 1447.0,
-        "peak_end": 1447.0,
-        "reference": "",
-        "comment": ""
-    },
-    {
-        "chemical": "",
-        "vibration": "\u03b4(C-H2)",
-        "peak_start": 1460.0,
-        "peak_end": 1460.0,
-        "reference": "",
-        "comment": ""
-    },
-    {
-        "chemical": "Trp",
-        "vibration": "",
-        "peak_start": 1553.0,
-        "peak_end": 1553.0,
-        "reference": "",
-        "comment": ""
-    },
-    {
-        "chemical": "Trp",
+        "chemical": "Tryptophan",
         "vibration": "",
         "peak_start": 1582.0,
         "peak_end": 1582.0,
-        "reference": "",
-        "comment": ""
-    },
-    {
-        "chemical": "Trp",
-        "vibration": "",
-        "peak_start": 1620.0,
-        "peak_end": 1620.0,
-        "reference": "",
-        "comment": ""
-    },
-    {
-        "chemical": "Amide \u2160",
-        "vibration": "\u03bd(C-O),\u03b4(N-H),\u03b4(H-O-H)",
-        "peak_start": 1660.0,
-        "peak_end": 1660.0,
         "reference": "",
         "comment": ""
     },
@@ -1736,15 +1640,7 @@
         "comment": "Very weak"
     },
     {
-        "chemical": "Sulfonamide",
-        "vibration": "",
-        "peak_start": 1050.0,
-        "peak_end": 1210.0,
-        "reference": "dept. of chemistry, uci",
-        "comment": "Moderate"
-    },
-    {
-        "chemical": "Sulfone",
+        "chemical": "Sulfonamide, Sulfone",
         "vibration": "",
         "peak_start": 1050.0,
         "peak_end": 1210.0,
@@ -1784,38 +1680,6 @@
         "comment": "Very strong"
     },
     {
-        "chemical": "",
-        "vibration": "CH2",
-        "peak_start": 1405.0,
-        "peak_end": 1455.0,
-        "reference": "dept. of chemistry, uci",
-        "comment": "Weak"
-    },
-    {
-        "chemical": "",
-        "vibration": "CH2",
-        "peak_start": 2770.0,
-        "peak_end": 2830.0,
-        "reference": "dept. of chemistry, uci",
-        "comment": "Strong"
-    },
-    {
-        "chemical": "",
-        "vibration": "CH2",
-        "peak_start": 2900.0,
-        "peak_end": 2940.0,
-        "reference": "dept. of chemistry, uci",
-        "comment": "Strong"
-    },
-    {
-        "chemical": "",
-        "vibration": "CH3",
-        "peak_start": 1405.0,
-        "peak_end": 1455.0,
-        "reference": "dept. of chemistry, uci",
-        "comment": "Weak"
-    },
-    {
         "chemical": "Aliphatic azo",
         "vibration": "",
         "peak_start": 1540.0,
@@ -1848,7 +1712,7 @@
         "comment": "Moderate"
     },
     {
-        "chemical": "Ketone ",
+        "chemical": "Ketone",
         "vibration": "",
         "peak_start": 1600.0,
         "peak_end": 1710.0,
@@ -2025,10 +1889,10 @@
     },
     {
         "chemical": "Nitrile",
-        "vibration": "",
-        "peak_start": 2220.0,
-        "peak_end": 2260.0,
-        "reference": "dept. of chemistry, uci",
+        "vibration": "C\u2261N stretch",
+        "peak_start": 2230.0,
+        "peak_end": 2250.0,
+        "reference": "dept. of chemistry, uci; ISBN 0124511600",
         "comment": "Moderate"
     },
     {
@@ -2064,22 +1928,6 @@
         "comment": "Weak"
     },
     {
-        "chemical": "",
-        "vibration": "O-CH3",
-        "peak_start": 2790.0,
-        "peak_end": 2850.0,
-        "reference": "dept. of chemistry, uci",
-        "comment": "Weak"
-    },
-    {
-        "chemical": "",
-        "vibration": "C-CH3",
-        "peak_start": 2810.0,
-        "peak_end": 2960.0,
-        "reference": "dept. of chemistry, uci",
-        "comment": "Strong"
-    },
-    {
         "chemical": "Aromatic",
         "vibration": "C-H",
         "peak_start": 2870.0,
@@ -2089,25 +1937,9 @@
     },
     {
         "chemical": "",
-        "vibration": "OH",
-        "peak_start": 2880.0,
-        "peak_end": 3530.0,
-        "reference": "dept. of chemistry, uci",
-        "comment": "Weak"
-    },
-    {
-        "chemical": "",
         "vibration": "CH=CH",
         "peak_start": 2980.0,
         "peak_end": 3020.0,
-        "reference": "dept. of chemistry, uci",
-        "comment": "Strong"
-    },
-    {
-        "chemical": "",
-        "vibration": "CH2",
-        "peak_start": 3010.0,
-        "peak_end": 3080.0,
         "reference": "dept. of chemistry, uci",
         "comment": "Strong"
     },
