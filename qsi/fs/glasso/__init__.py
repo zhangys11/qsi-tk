@@ -4,6 +4,7 @@ from scipy.stats import norm
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 import IPython.display
+from tqdm import tqdm
 from ._group_lasso import LogisticGroupLasso
 from ..metrics import ic
 
@@ -230,9 +231,9 @@ def raman_window_fs(X , x_names, raman_peak_list, resolution = 2,
                 Fs.append(F)
         if display:
             plt.figure(figsize=(10, 3))
-            plt.title('Feature Selection on Sample ' + str(i))
-            plt.xlabel('Region Centers')
-            plt.ylabel('Feature')
+            plt.title('Features extracted by ' + window + ' window on Sample ' + str(i))
+            plt.xlabel('Raman shifts (cm-1)')
+            # plt.ylabel('Feature')
             plt.scatter(filtered_region_centers, Fs, s=50, facecolors='0.8', edgecolors='0.2', alpha = .5)
             plt.show()
 
@@ -278,6 +279,7 @@ def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100,
         group_reg = group_reg, # If ``group_reg`` is an iterable (pre-initilized weights), then its length should be equal to the number of groups.
         l1_reg = l1_reg, # default 0.05
         scale_reg="inverse_group_size", # for dummy vars, should be None. In statistics and econometrics, particularly in regression analysis, a dummy variable is one that takes only the value 0 or 1 to indicate the absence or presence of some categorical effect that may be expected to shift the outcome.
+        n_iter=500,
         # subsampling_scheme=1,
         # supress_warning=True,
     )
@@ -334,6 +336,8 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split = .4, random_state =
     best_bic = np.inf
     best_aicc = np.inf
 
+    pbar = tqdm(total=4 * 4 * 4 * 4)
+
     for resolution in [1, 2, 5, 10]:
         for window in ['rectangle', 'triangle', 'rbf']:
             for sd in ['n/a'] if window != 'rbf' else [1, 2]: # sd is only used in rbf
@@ -370,7 +374,10 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split = .4, random_state =
                             best_aicc = aicc
 
                         dic_metrics[(resolution, window, sd, group_reg, l1_reg)] = acc, k, aic, bic, aicc
-    
+                        pbar.update(1)
+                    
+    pbar.close()
+
     html_str += '</table>'
     IPython.display.display(IPython.display.HTML(html_str))
     # IPython.display.display(IPython.display.HTML('<p>' + str(group_info[mask]) + '</p>'))
@@ -378,14 +385,20 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split = .4, random_state =
     html_str = '''<h3>Best Cases</h3><p>* indicates the best</p>
     <table><tr><th>resolution</th><th>window</th><th>group_reg</th><th>l1_reg</th>
     <th>testset accuracy</th><th>aic</th><th>bic</th><th>aicc</th><th>k</th></tr>'''
-    best_acc_least_k_key = None
-    best_acc_least_k = np.inf
+    # best_acc_least_k_key = None
+    # best_acc_least_k = X.shape[1]
 
     for key, value in dic_metrics.items():
         if value[0] == best_acc:
-            if best_acc_least_k < value[1]:
-                best_acc_least_k = value[1]
-                best_acc_least_k_key = key
+            
+            # if best_acc_least_k_key is None:
+            #     best_acc_least_k_key = key
+            # if best_acc_least_k < value[1]:
+            #    best_acc_least_k = value[1]
+            #    best_acc_least_k_key = key
+            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td><td>{key[4]}</td>
+                        <td>{round(100*value[0],1)}%*</td><td>{round(value[2],1)}</td><td>{round(value[3],1)}</td><td>{round(value[4],1)}</td><td>{value[1]}</td></tr>'''
+            print(f'Best acc: {value[0]} at {key}. All metrics: {np.round(value, 3)}')
         if value[1] == best_k:
             html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td><td>{key[4]}</td>
                         <td>{round(100*value[0],1)}%</td><td>{round(value[2],1)}</td><td>{round(value[3],1)}</td><td>{round(value[4],1)}</td><td>{value[1]}*</td></tr>'''
@@ -403,9 +416,12 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split = .4, random_state =
                         <td>{round(100*value[0],1)}%</td><td>{round(value[2],1)}</td><td>{round(value[3],1)}</td><td>{round(value[4],1)}*</td><td>{value[1]}</td></tr>'''
             print(f'Best AICC: {value[3]} at {key}. All metrics: {np.round(value, 3)}')
             
-    html_str += f'''<tr><td>{best_acc_least_k_key[0]}</td><td>{best_acc_least_k_key[1]}</td><td>{best_acc_least_k_key[2]}</td><td>{best_acc_least_k_key[3]}</td><td>{best_acc_least_k_key[4]}</td>
-                            <td>{round(100*dic_metrics[best_acc_least_k_key][0],1)}%*</td><td>{round(dic_metrics[best_acc_least_k_key][2],1)}</td><td>{round(dic_metrics[best_acc_least_k_key][3],1)}</td><td>{round(dic_metrics[best_acc_least_k_key][4],1)}</td><td>{dic_metrics[best_acc_least_k_key][1]}</td></tr>'''
-    print(f'Best accuracy: {best_acc} at {best_acc_least_k_key}. All metrics: {np.round(dic_metrics[best_acc_least_k_key], 3)}')
+    
+    # if best_acc_least_k_key is not None:
+    #     html_str += f'''<tr><td>{best_acc_least_k_key[0]}</td><td>{best_acc_least_k_key[1]}</td><td>{best_acc_least_k_key[2]}</td><td>{best_acc_least_k_key[3]}</td><td>{best_acc_least_k_key[4]}</td>
+    #                             <td>{round(100*dic_metrics[best_acc_least_k_key][0],1)}%*</td><td>{round(dic_metrics[best_acc_least_k_key][2],1)}</td><td>{round(dic_metrics[best_acc_least_k_key][3],1)}</td><td>{round(dic_metrics[best_acc_least_k_key][4],1)}</td><td>{dic_metrics[best_acc_least_k_key][1]}</td></tr>'''
+    #     print(f'Best accuracy: {best_acc} at {best_acc_least_k_key}. All metrics: {np.round(dic_metrics[best_acc_least_k_key], 3)}')
+    
     IPython.display.display(IPython.display.HTML('</table>' + html_str))
     
     return dic_metrics
