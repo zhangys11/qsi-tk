@@ -396,7 +396,7 @@ def draw_class_average(X, y, X_names, labels=None, SD=1, shift=200, output_html=
             #            )
 
     plt.legend()
-    plt.title('Averaged Spectrums for Each Category\n')
+    plt.title('Averaged Spectra for Each Category\n')
     # plt.xlabel(r'$ cm^{-1} $') # depending on it is Raman or MS
     plt.ylabel('Intensity')
     plt.yticks([])
@@ -440,7 +440,7 @@ def draw_class_average_3d(X, y, X_names, labels=None, view_point = (30,-50)):
     ax.view_init(view_point[0], view_point[1])
     ax.set_zlabel('Intensity')
     plt.legend()
-    plt.title('Averaged Spectrums for Each Category\n')
+    plt.title('Averaged Spectra for Each Category\n')
     plt.xlabel('Features') # depending on it is Raman or MS
     plt.ylabel('Category')
     plt.yticks( range(len(set(y))) )
