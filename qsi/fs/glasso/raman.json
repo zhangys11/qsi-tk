@@ -265,7 +265,7 @@
     },
     {
         "chemical": "Saturated fatty acid,phosphatidyl serine, phosphatidyl choline and phosphatidyl inositol; Cholesterol",
-        "vibration": "\u03b4(CH2)sCissoring",
+        "vibration": "\u03b4(CH2) scissoring",
         "peak_start": 1442.0,
         "peak_end": 1443.0,
         "reference": "10.1016/j.idairyj.2011.01.008 and 10.1002/jrs.5054",
