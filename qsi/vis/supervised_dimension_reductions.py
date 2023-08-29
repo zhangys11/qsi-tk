@@ -28,13 +28,16 @@ def supervised_dimension_reductions(X, y, legends = None):
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
-
-    ax = fig.add_subplot(132)
-    pls = PLSRegression(n_components=2)
-    X_pls = pls.fit(X, y).transform(X)
-    plot_components_2d(X_pls, y, labels, legends=legends, ax = ax)
-    ax.set_title('PLS(R2 = ' + str(np.round(pls.score(X, y),3)) + ')')
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
+    if len(labels) <= 2:
+        ax = fig.add_subplot(132)
+        pls = PLSRegression(n_components=2)
+        X_pls = pls.fit(X, y).transform(X)
+        plot_components_2d(X_pls, y, labels, legends=legends, ax = ax)
+        ax.set_title('PLS(R2 = ' + str(np.round(pls.score(X, y),3)) + ')')
+        ax.get_xaxis().set_visible(False)
+        ax.get_yaxis().set_visible(False)
+    else:
+        # PLS is not suitable for multi-class classification
+        pass
        
     plt.show()

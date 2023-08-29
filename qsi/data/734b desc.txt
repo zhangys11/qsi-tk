@@ -11,3 +11,7 @@ Total 15 sampless
 -------------------------
 Internal Source ID 734b
 Edit date: Jan 13, 2020
+
+--------------------
+If you use this data set, please add the reference: 
+[1] Secured telemetry based on time-variant sensing matrix – An empirical study of spectroscopic profiling, Smart Agricultural Technology, Volume 5, 2023, doi: 10.1016/j.atech.2023.100268

@@ -350,6 +350,12 @@ FS_DICT = {
     "multi-task elastic net": multitask_elastic_net_fs,
 }
 
+FS_DICT_MULTICLASS = {
+    "info-gain / mutual information": mi_fs,
+    "chi-squared statistic": chisq_stats_fs,
+    "anova statistic": anova_stats_fs,
+}
+
 FS_DESC_DICT = {
     "pearson-r": '''
     Two reasons why to prefer Pearson correlation when the relationship is close to linear.
@@ -441,7 +447,9 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
     FS_OUTPUT = {}
     FS_IDX = {}
 
-    for key, f in FS_DICT.items():
+    is_multi_class = len(set(y))>2
+
+    for key, f in (FS_DICT_MULTICLASS if is_multi_class else FS_DICT).items():
 
         if multitask and 'multi-task' in key:
             pass
@@ -464,8 +472,8 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
         try:
             X_s, idx, fi = f(X, y, X_names, N=N, display=True)
             if np.isnan(fi).any():
-                print('\nWarning: NaN in feature importance. Skip this FS method.')
-                continue
+                print('\nWarning: NaN in feature importance. Replace with 0.')
+                fi[np.isnan(fi)] = 0
 
             if X_s is not None and X_s.shape[0] > 0 and X_s.shape[1] > 0:
 
@@ -475,7 +483,7 @@ def RUN_ALL_FS(X, y, X_names, labels=None, N=30, output=None, multitask=False):
 
                 _ = unsupervised_dimension_reductions(X_s, y, legends=labels)
 
-                clf = LogisticRegressionCV().fit(X_s, y)
+                clf = LogisticRegressionCV(max_iter=1000).fit(X_s, y)
                 print('Classification accurary with the selected features (LogisticRegressionCV) = ',
                     round(clf.score(X_s, y), 3))
 

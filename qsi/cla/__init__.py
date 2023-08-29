@@ -9,3 +9,6 @@ except Exception as e:
     print('Please try: pip install cla==1.0.2 or above')
 
 '''
+
+import cla
+assert( '__version__' in cla.__dict__ and cla.__version__ >= '1.1.7')

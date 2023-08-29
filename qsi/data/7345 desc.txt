@@ -1,3 +1,7 @@
 古井贡酒不同年份白酒 SPI-MS of Gujing Tribute wine of different vintages
 
 ["5年","8年","16年","26年"]
+
+--------------------
+If you use this data set, please add the reference: 
+[1] Analytical chemistry kernel library for spectroscopic profiling data, Food Chemistry Advances, Volume 3, 2023, 100342, ISSN 2772-753X, https://doi.org/10.1016/j.focha.2023.100342

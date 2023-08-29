@@ -4,20 +4,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 import IPython.display
 
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegressionCV
 from sklearn.preprocessing import StandardScaler,MinMaxScaler
 from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
 from sklearn.feature_selection import SelectFromModel
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.svm import SVC
 from scipy.signal import savgol_filter
 
 from cla import metrics
 from . import io
 from .vis import supervised_dimension_reductions, unsupervised_dimension_reductions
 from .fs import RUN_ALL_FS
-
 
 def analyze(id, x_range = None, y_subset=None, shift = None, pres = None, fs_output = '', fs_feature_num = 30, cla_feature_num = 3):
     '''
@@ -77,7 +75,7 @@ def preprocess_dataset(X, X_names, pres = None):
     Default preprocessing parameters for MALDI-TOF data:
     [('baseline_removal', (1e8, 1e-3)), ('threshold', 10), ('max', 0.01), ('peak_normalize', 1000)]
     '''
-    IPython.display.display(IPython.display.HTML('<hr/><h2>每个样本的预处理 Row-wise Preprocessing </h2>'))
+    IPython.display.display(IPython.display.HTML('<hr/><h3>每个样本的预处理 Row-wise Preprocessing </h3>'))
     
     if pres is None:
         pres = []
@@ -91,7 +89,7 @@ def preprocess_dataset(X, X_names, pres = None):
             print('消除基线飘移: baseline removal (regularization = ' + str(pre_param[0]) + ', residual penalty asymetry = ' + str(pre_param[1]) + ')')
         elif pre_type == 'threshold':
             X = io.pre.x_thresholding(X, pre_param)
-            print('阈值预处理（消除背景噪声）: threshold = ' + str(pre_param))
+            print('阈值预处理（消除背景噪声、满足非负输入条件等）: threshold = ' + str(pre_param))
         elif pre_type in ['max', 'sum', 'rect', 'tri', 'mean']:
             X, X_names = io.pre.x_binning(X, X_names,target_dim=pre_param,flavor=pre_type)
             print('窗函数预处理（' + pre_type +'）: binning window width =  1 / ' + str(pre_param) + ' = ' + str(round(1.0 / pre_param)) )
@@ -106,15 +104,16 @@ def preprocess_dataset(X, X_names, pres = None):
             X = io.pre.x_normalize(X, flavor='peak', target_max=pre_param)
             print('峰值归一化预处理: peak normalization (target_max = ' + str(pre_param) + ')')
 
-    IPython.display.display(IPython.display.HTML('<br/><br/>预处理后的维度：X.shape = ' + str(X.shape) +'<hr/>'))
+    IPython.display.display(IPython.display.HTML('<h3>预处理后的维度：X.shape = ' + str(X.shape) +'</h3><hr/>'))
 
     return X, X_names
 
 def analyze_dataset(X, y, X_names, fs_output = '', fs_feature_num = 30, cla_feature_num = 10):
     '''
-    This is a general pipeline for data analysis. 
+    This is a general pipeline for data analysis.  
     ordinary feature scaling + feature selection + classifiability analysis + classification 
-    
+    NOTE: y must be a vector of 0/1 labels, i.e., only binary classification is supported.
+
     Parameters
     ----------
     X : an already-preprocessed data matrix
@@ -158,6 +157,7 @@ def analyze_dataset(X, y, X_names, fs_output = '', fs_feature_num = 30, cla_feat
     plt.title('Averaged Spectrum After Butterworth Filter\nIf the filtered result is not good, you will need to finetune the Butterworth highpass filter cutoff freq.', fontsize=30)
     plt.show()
 
+
     IPython.display.display(IPython.display.HTML('<hr/><h3>特征缩放 Feature Scaling</h3>'))
     # normalization
 
@@ -170,6 +170,9 @@ def analyze_dataset(X, y, X_names, fs_output = '', fs_feature_num = 30, cla_feat
     mm_scaler = MinMaxScaler()
     X_mm_scaled = mm_scaler.fit_transform(X)
     print('X_mm_scaled is rescaled to [0,1]. We use X_mm_scaled in DR and FS.')
+
+    IPython.display.display(IPython.display.HTML('<hr/><h2>尝试各类常用分类器(支持多分类)</h2>'))
+    _ = metrics.run_multiclass_clfs(X, y)
 
     IPython.display.display(IPython.display.HTML('<hr/><h2>降维 Dimensionality Reduction</h2>'))
 
@@ -197,6 +200,7 @@ More importantly, it makes the estimated coefficients impossible to interpret. I
     if len(FS_COMMON_IDX) > 0:
         IPython.display.display(IPython.display.HTML('<h3>' + 'Common features selected by all FS methods: ' + str(np.array(X_names)[FS_COMMON_IDX]) + '</h3>'))
     
+    X_s = None
     if fs_output == 'common' or fs_output == '':
         if len(FS_COMMON_IDX) > 1: # we require at least 2 common features
             # print(X_mm_scaled.shape, FS_COMMON_IDX)
@@ -205,7 +209,11 @@ More importantly, it makes the estimated coefficients impossible to interpret. I
             IPython.display.display(IPython.display.HTML('<h3>' + 'Too few common features. We will use the default elastic net fs for the following procedures.' + '</h3>'))
             X_s = FS_OUTPUT['elastic net']
     else:
-        IPython.display.display(IPython.display.HTML('<h3>' + 'Use ' + fs_output + ' for the following procedures.</h3>'))
+        if fs_output not in FS_OUTPUT:
+            IPython.display.display(IPython.display.HTML('<h3>' + 'Invalid fs_output. We will use elastic net fs as the default output.' + '</h3>'))
+            fs_output = 'elastic net'
+        else: 
+            IPython.display.display(IPython.display.HTML('<h3>' + 'Use ' + fs_output + ' for the following procedures.</h3>'))
         X_s = FS_OUTPUT[fs_output]
 
     if cla_feature_num > 0 and len(set(y)) == 2:
@@ -216,31 +224,33 @@ More importantly, it makes the estimated coefficients impossible to interpret. I
         IPython.display.display(IPython.display.HTML('若运行报错，请尝试安装R运行环境，并执行 install.packages("ECoL") '))
         IPython.display.display(IPython.display.HTML(metrics.get_html(X_s[:,:cla_feature_num],y)))
     
-    IPython.display.display(IPython.display.HTML('<hr/><h2>分类 Classification</h2><h3>超参数优化及模型选择 Hyper-parameter Optimization （SVM）</h3>'))
+    IPython.display.display(IPython.display.HTML('<hr/><h2>对筛选后的特征进行分类 Classification on Selected Features</h2><h3>超参数优化及模型选择 Hyper-parameter Optimization （SVM）</h3>'))
     
-    # Set the parameters by cross-validation
-    tuned_parameters = [{'kernel': ['rbf'], 'gamma': [10, 1, 1e-1, 1e-2],'C': [0.01, 0.1, 1, 10, 100, 1000]},
-                        {'kernel': ['linear'], 'C': [0.01, 0.1, 1, 10, 100, 1000,10000,100000]}]
+    _ = metrics.run_multiclass_clfs(X_s, y)
 
-    print('Use elastic net selected features after PCA as input: ')
-    X_s_pca = PCA(n_components=2).fit_transform(X_s)
-    _, clf, _ = metrics.grid_search_svm_hyperparams(X_s_pca, y, 0.2, tuned_parameters)
-    metrics.plot_svm_boundary(X_s_pca, y, clf)
+    if len(set(y)) == 2: # show decision boundary for binary classification
+
+        IPython.display.display(IPython.display.HTML('<hr/><h3>支持向量机 SVC</h3>'))
+
+        # Set the parameters by cross-validation
+        tuned_parameters = [{'kernel': ['rbf'], 'gamma': [10, 1, 1e-1, 1e-2],'C': [0.001, 0.01, 0.1, 1, 10]},
+                            {'kernel': ['linear'], 'C': [0.001, 0.01, 0.1, 1, 10]}]
+
+        # X_s_pca = PCA(n_components=2).fit_transform(X_s)
+        _, clf, _ = metrics.grid_search_svm_hyperparams(X_s, y, 0.2, tuned_parameters, verbose = False)
+        metrics.plot_svm_boundary(X_s, y, clf)
+        print('ACC = ', clf.score(X_s, y))
 
 
-    IPython.display.display(IPython.display.HTML('<hr/><h3>线性分类（逻辑回归模型）Linear Classifier (Logistic Regression)</h3>'))
-    
-    lr = LogisticRegression(penalty='l2',
-                        tol=0.0001,
-                        C=1.0,
-                        class_weight=None,
-                        solver='liblinear', # good for small dataset, but requires ovr for multi-class senarios
-                        max_iter=100,
-                        multi_class='ovr', # one-vs-rest: a binary problem is fit for each label
-                        verbose=0,
-                        l1_ratio=None).fit(X_s_pca, y)
-    
-    metrics.plot_lr_boundary(X_s_pca, y, lr)
+        IPython.display.display(IPython.display.HTML('<hr/><h3>逻辑回归 (Logistic Regression)</h3>'))
+        
+        lr = LogisticRegressionCV(max_iter=1000,
+                            multi_class='multinomial').fit(X_s, y)
+        
+        metrics.plot_lr_boundary(X_s, y, lr)
+        print('ACC = ', clf.score(X_s, y))
+
+    return X_s
 
 def build_simple_pipeline(X, y, save_path = None):
     '''

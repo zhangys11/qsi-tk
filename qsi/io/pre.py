@@ -365,7 +365,7 @@ def phase_align(reference, target, roi, res=100):
     return shifts[np.argmax(cc.real)]
 
 
-def highres(y,kind='cubic',res=100):
+def highres(y, kind='cubic', res=100):
     '''
     Interpolate data onto a higher resolution grid by a factor of *res*
     Args:
