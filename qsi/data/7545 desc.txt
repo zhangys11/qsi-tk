@@ -1,4 +1,4 @@
-食盐拉曼光谱
+Raman spectra of table salt 食盐拉曼光谱
 
 C1 - "shenjinkuangyan(zhongyan)：深井矿盐（中盐集团）加碘盐", 
 “deep well mineral salt” from CNSIC (China National Salt Industry Co.,Ltd).
@@ -6,6 +6,7 @@ C1 - "shenjinkuangyan(zhongyan)：深井矿盐（中盐集团）加碘盐",
 C2 - "aozhoutianranhaiyan(huaiyan)：澳洲天然海盐（淮盐）未加碘",
 “Australian natural sea salt” from Suyan Group.
 
+Instrument: Thermo Fisher DXR2xi
 DXR2xi显微拉曼成像光谱仪（美国Thermo Fisher公司），
 配备有532 nm激光器。
 仪器参数设置：
