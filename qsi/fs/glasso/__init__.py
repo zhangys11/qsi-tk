@@ -427,16 +427,16 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split = .4, random_state =
     return dic_metrics
 
 
-def interpret_group_result(feature_importances, fss, mask, group_info, y,
-                           labels = None,
-                           draw_boxplots = True):
+def interpret_group_result(feature_importances, fss, mask, group_info,
+                           labels=None,
+                           draw_boxplots=True):
     '''
     Interpret the result of group lasso feature selection.
     Parameters
     ----------
     feature_importances : array-like of shape (n_features,)
     fss : the extracted features returned from raman_window_fs
-    mask : the mask returned from group_lasso. a boolean array of shape (n_features,)    
+    mask : the mask returned from group_lasso. a boolean array of shape (n_features,)
     group_info : the group_info returned from raman_window_fs
     labels : the labels of the two classes. Default is ["Class 1", "Class 2"]
     draw_boxplots : whether to draw feature-wise boxplots.
@@ -449,59 +449,52 @@ def interpret_group_result(feature_importances, fss, mask, group_info, y,
     # 将feature_importances列加入groups数据中
     result = []
     for i, gi in enumerate(group_info):
-        result.append(np.concatenate((gi, [feature_importances[i]])))  
+        result.append(np.concatenate((gi, [feature_importances[i]])))
     new_groups_list = [arr.tolist() for arr in result]
 
     top_k = mask.sum()
     most_feature_importances = sorted(feature_importances, reverse=True)[:top_k]
-    
+
     # 遍历feature_importances每个元素，判断该值是否在most_feature_importances列表里，如果在，代表重要，添加到新列表new_groups
-    new_groups=[]
-    for feature_importance in feature_importances: 
+    new_groups = []
+    for feature_importance in feature_importances:
         if feature_importance in most_feature_importances:
-            indexes= np.where(feature_importances == feature_importance)
+            indexes = np.where(feature_importances == feature_importance)
             indexes_list = indexes[0].tolist()
             if len(indexes_list) == 1:
                 new_groups.append(new_groups_list[indexes_list[0]])
             else:
                 for i in indexes_list:
-                    new_groups.append(new_groups_list[i]) # 这里可能会重复添加一些元素
-    
+                    new_groups.append(new_groups_list[i])  # 这里可能会重复添加一些元素
+
     # 删除重复元素
     unique_new_groups = [list(x) for x in set(tuple(x) for x in new_groups)]
     # 根据feature_importances从大到小进行排序
     sorted_unique_new_groups = sorted(unique_new_groups, key=lambda x: x[-1], reverse=True)
     # 插入表头
-    sorted_unique_new_groups.insert(0, ['Chemical and Vibration', 'region', 'group_id','feature_importance']) 
+    sorted_unique_new_groups.insert(0, ['Chemical and Vibration', 'region', 'group_id', 'feature_importance'])
     df = pd.DataFrame(sorted_unique_new_groups[1:], columns=sorted_unique_new_groups[0])
     # 在根据是否为一组进行排序
     df = df.groupby('Chemical and Vibration', sort=False).apply(lambda x: x.reset_index(drop=True))
     # 重置索引
     df = df.reset_index(drop=True)
-    title = df.apply(lambda row: str(row['Chemical and Vibration']) + ': ' + str(round(row['region'][0]))+r' $cm^{-1}$'
-                     if row['region'][0] == row['region'][1]
-                     else str(row['Chemical and Vibration']) + ': ' + str(round(row['region'][0])) + '~' + str(round(row['region'][1])) + r' $cm^{-1}$' , axis=1)
-    
+
     # 将fss与mask对比，进行筛选
-    result_filter = fss[:, mask]
+    result_filter = np.array([[row[i] for i, select in enumerate(mask) if select] for row in fss])
+    # 将group_info与mask对比，进行筛选
+    result_group_info = [group_info[i] for i in range(len(mask)) if mask[i]]
     # 获取数组的形状
     _, cols = result_filter.shape
 
-    unique_y = np.unique(y)
-    
+    title = [
+        f"{item[0]}: {item[1][0]}~{item[1][1]} cm-1" if item[1][0] != item[1][1] else f"{item[0]}: {item[1][0]} cm-1"
+        for item in result_group_info]
     # 遍历每一列
     for j in range(cols):
         # 提取当前列
         col = result_filter[:, j]
-
-        # result_class = np.split(col, len(labels))
-
-        # 遍历唯一元素，并将col中对应元素归为同一组
-        result = []
-        for elem in unique_y:
-            result_split = col[y == elem]
-            result.append(result_split)
-
+        result_class = np.split(col, len(labels))
+        result = [np.squeeze(arr).tolist() for arr in result_class]
         # 绘制箱型图
         if draw_boxplots:
             # 创建 Figure 对象和 Axes 对象
@@ -513,7 +506,6 @@ def interpret_group_result(feature_importances, fss, mask, group_info, y,
             # ax.set_ylabel('Value')
             # 显示图表
             plt.show()
-
     return df
 
 
