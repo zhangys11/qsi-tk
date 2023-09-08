@@ -1,7 +1,13 @@
-Data Set ID: 754a 川贝母、浙贝母拉曼光谱
+Data Set ID: 754a fritillariae bulbus
 
-["川贝母","浙贝母"] 90 samples per class
+This dataset is the Raman spectra of two fritillariae bulbus (FB) species from China. FB is a famous traditional Chinese herbal medicine. Its therapeutic effect in treating respiratory diseases, such as ARDS (adult respiratory distress syndrome), COPD (chronic obstructive pulmonary disease), asthma, pulmonary tuberculosis, and lung cancer, has been well recognized. This study’s test samples are from two different historical geographic regions. One is fritillariae cirrhosae bulbus (FCB) from Sichuan province, and the other is fritillariae thunbergii bulbus (FTB) from Zhejiang province. 
+Although both belong to the FB family, their therapeutic efficacy and market value differ. The FCB samples used in this study are produced in high-altitude areas in the Sichuan province. The annual yield is limited, and the price is high. The FTB samples are from Zhejiang province, which has a large yield and lower price. The market price of Zhejiang FTB is about 10% of that of Sichuan FCB, so illegal vendors often counterfeit the latter with the former. Therefore, this study tries to discriminate the two FB variants using spectroscopic profiling technology.   
 
+["FCB 川贝母","FTB 浙贝母"] 90 samples per class
+1，川贝母，一般产于西部海拔较高的地区，采挖困难，数量少，甚至有野生的，所以价格较贵。 
+2，浙贝母，由于人工栽培，产量较大，药材来源丰富，所以价格低廉。浙贝母价格相当于川贝母的十分之一左右。
+
+The instrument is a Thermo Fisher DXR2 Raman spectrometer. 
 COLLECTION AND PROCESSING INFORMATION
 Title: Position X =-12643 Y = 6208, Signal to noise ratio =24.6
 Collected: Wed Mar 23 14:18:22 2022 (GMT+08:00)
@@ -32,7 +38,3 @@ SPECTROMETER DESCRIPTION
  Grating serial number: BAC1910373
  Spectrograph aperture: 50 µm pinhole
  Camera at temperature
-
-
-1，川贝母，一般产于西部海拔较高的地区，采挖困难，数量少，甚至有野生的，所以价格较贵。 
-2，浙贝母，由于人工栽培，产量较大，药材来源丰富，所以价格低廉。浙贝母价格相当于川贝母的十分之一左右。
