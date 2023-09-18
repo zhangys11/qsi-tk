@@ -1,0 +1,7 @@
+IMS (Ion Mobility Spectroscopy) dataset of Radix Codonopsis pilosulae
+党参离子迁移谱数据
+
+Dangshen, Radix Codonopsis pilosulae, is the dry root of Codonopsis pilosula (Franch.) Nannf. (Campanulaceae), which is collected in the fall. It is officially listed in the Chinese Pharmacopoeia and is used mainly as a tonic.
+党参之名始见于《本草从新》，谓：“按古本草云：参须上党者佳。今真党参久已难得，肆中所卖党参，种类甚多，皆不堪用。惟防风党参，性味和平足贵。根有狮子盘头者真，硬纹者伪也。”此处所说的“真党参”系指产于山西上党（今山西长治）的五加科人参。
+
+Reference: 《离子迁移谱技术用于党参及其易混伪品的鉴别研究》 10.13192/i.issn.1000-1719.2017.11.042

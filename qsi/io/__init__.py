@@ -47,8 +47,9 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'milkpowder_etongue': ('7744.pkl', ',', True, '7744 desc.txt', ['cn', 'au'], 200),
                # 该电子鼻数据未有效对齐
                'forsythia_etongue': ('7745.pkl', ',', True, '7745 desc.txt', ["SX山西", "HN河南", "HB湖北", "SHX陕西"], 200),
-               'yimi_rm': ('yimi_raman.csv', ',', False, 'yimi_raman desc.txt', ['coix seed'], 200),
-               'hangbaiju_rm': ('hangbaiju_raman.csv', ',', False, 'hangbaiju_raman desc.txt', ['chrysanthemum morifolium'], 200),
+               'yimi_rm': ('yimi_raman.csv', ',', False, 'yimi_raman desc.txt', ['coix seed'], 0),
+               'hangbaiju_rm': ('hangbaiju_raman.csv', ',', False, 'hangbaiju_raman desc.txt', ['chrysanthemum morifolium'], 0),
+               'dangshen_ims': ('dangshen.csv', ',', False, 'dangshen desc.txt', ['Radix Codonopsis pilosulae'], 0),
                'salt': ('7545.csv', ',', True, '7545 desc.txt', ["well salt", "sea salt"], 200),
                'mouse_omics': ('metabolomics.txt', '\t', True, 'metabolomics desc.txt', ["control", "experiment"], 50000000),
                'ovarian_cancer_ms': ('ovarian-cancer-nci-pbsii-data.csv', ',', True, 'ovarian cacner desc.txt', ["normal", "cancer"], 1)
