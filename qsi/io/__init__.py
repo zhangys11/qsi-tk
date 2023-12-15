@@ -15,13 +15,16 @@ from ..vis.plt2base64 import plt2html
 DATA_FOLDER = os.path.dirname(os.path.dirname(
     os.path.realpath(__file__))) + "/data/"
 
+matplotlib.rcParams['font.family']="STKaiti" # support Unicode chars
+matplotlib.rcParams['axes.unicode_minus']=False # in case minus sign is shown as box
+
 # path, delimiter, has_y, path_desc, labels, default_shift
 DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['Stage 4 (4-7 years) formula'], 200),
                's3_formula': ('B3.csv', ',', False, 'B3 desc.txt', ['Stage 3 (12~36 months) infant formula'], 200),
                's4_formula_c2': ('7341_C2.csv', ',', True, '7341_C2 desc.txt', ['Brand 1', 'Brand 2'], 1000),
                's4_formula_c3': ('7341.csv', ',', True, '7341 desc.txt', ['Brand 1', 'Brand 2', 'Brand 3'], 1000),
                'milk_tablet_candy': ('734b.csv', ',', False, '734b desc.txt', ['Compressed Milk Tablet Candy'], 200),
-               'yogurt': ('7346.csv', ',', True, '7346 desc.txt', ["YL", "GM", "WQ", "MN"], 200),
+               'yogurt_brand': ('7346.csv', ',', True, '7346 desc.txt', ["YL", "GM", "WQ", "MN"], 200),
                'goat_milk_formula': ('7635.csv', ',', False, '7635 desc.txt', ['Goat Milk Formula '], 200),
                'vintage': ('7344.txt', '\t', False, '7344 desc.txt', ['8-year vintage'], 200),
                'vintage_spi': ('7345.csv', ',', True, '7345 desc.txt', ["5Y", "8Y", "16Y", "26Y"], 200),
@@ -52,7 +55,9 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'dangshen_ims': ('dangshen.csv', ',', False, 'dangshen desc.txt', ['Radix Codonopsis pilosulae'], 0),
                'salt': ('7545.csv', ',', True, '7545 desc.txt', ["well salt", "sea salt"], 200),
                'mouse_omics': ('metabolomics.txt', '\t', True, 'metabolomics desc.txt', ["control", "experiment"], 50000000),
-               'ovarian_cancer_ms': ('ovarian-cancer-nci-pbsii-data.csv', ',', True, 'ovarian cacner desc.txt', ["normal", "cancer"], 1)
+               'ovarian_cancer_ms': ('ovarian-cancer-nci-pbsii-data.csv', ',', True, 'ovarian cacner desc.txt', ["normal", "cancer"], 1),
+               'yogurt_source': ('yogurt_raman_C4.csv', ',', True, 'yogurt_raman_C4 desc.txt', ["Cow", "Goat", "Yak", "Buffalo"], 2000),               
+               'raspberry': ('raspberry.csv', ',', True, 'raspberry desc.txt', ["安徽", "安吉", "淳安", "磐安", "武义"], 2000),
                }
 
 
