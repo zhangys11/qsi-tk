@@ -64,13 +64,13 @@ This package is a master library containing various previous packages published 
             <td colspan = 1>qsi.fs.nch_time_series_fs</td>
             <td>multi-channel enose data fs with 1d-laplacian conv kernel</td>
             <td></td>
-            <td>TODO</td>
+            <td>基于电子鼻和一维拉普拉斯卷积核的奶粉基粉产地鉴别</td>
         </tr>
         <tr>
             <td>qsi.fs.glasso</td>
             <td>Structured-fs of Raman data with group lasso</td>
             <td></td>
-            <td>TODO</td>
+            <td>in progress</td>
         </tr>
         <tr>
             <td colspan = 2>qsi.kernel</td>

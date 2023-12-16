@@ -199,15 +199,20 @@ More importantly, it makes the estimated coefficients impossible to interpret. I
     FS_OUTPUT, _, FS_COMMON_IDX = RUN_ALL_FS(X_mm_scaled, y, X_names, N = fs_feature_num, output='all')
     if len(FS_COMMON_IDX) > 0:
         IPython.display.display(IPython.display.HTML('<h3>' + 'Common features selected by all FS methods: ' + str(np.array(X_names)[FS_COMMON_IDX]) + '</h3>'))
-    
+
     X_s = None
     if fs_output == 'common' or fs_output == '':
         if len(FS_COMMON_IDX) > 1: # we require at least 2 common features
             # print(X_mm_scaled.shape, FS_COMMON_IDX)
             X_s = X_mm_scaled[:,FS_COMMON_IDX]
         else:
-            IPython.display.display(IPython.display.HTML('<h3>' + 'Too few common features. We will use the default elastic net fs for the following procedures.' + '</h3>'))
-            X_s = FS_OUTPUT['elastic net']
+            if 'elastic net' in FS_OUTPUT.keys():
+                IPython.display.display(IPython.display.HTML('<h3>' + 'Too few common features. We will use the default elastic net fs for the following procedures.' + '</h3>'))            
+                X_s = FS_OUTPUT['elastic net']
+            else: 
+                kv = list(FS_OUTPUT.items())[0]
+                IPython.display.display(IPython.display.HTML('<h3>' + 'Too few common features. We will use the first fs ' + kv[0] + ' for the following procedures.' + '</h3>'))  
+                X_s = kv[1]
     else:
         if fs_output not in FS_OUTPUT:
             IPython.display.display(IPython.display.HTML('<h3>' + 'Invalid fs_output. We will use elastic net fs as the default output.' + '</h3>'))

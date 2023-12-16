@@ -1,0 +1,5 @@
+畅轻label=0 牛奶
+盖元label=1 山羊
+简爱label=2 牛奶
+青海湖label=3 牦牛
+水牛同学label=4 水牛
