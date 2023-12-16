@@ -15,7 +15,7 @@ from ..vis.plt2base64 import plt2html
 DATA_FOLDER = os.path.dirname(os.path.dirname(
     os.path.realpath(__file__))) + "/data/"
 
-matplotlib.rcParams['font.family']="STKaiti" # support Unicode chars
+matplotlib.rcParams['font.family']="DengXian" # FangSong, Kaiti. STKaiti(may not work). support Unicode chars
 matplotlib.rcParams['axes.unicode_minus']=False # in case minus sign is shown as box
 
 # path, delimiter, has_y, path_desc, labels, default_shift
