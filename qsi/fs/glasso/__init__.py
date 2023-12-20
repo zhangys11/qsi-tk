@@ -447,10 +447,9 @@ def interpret_group_result(feature_importances, fss, mask, group_info,
         labels = ["Class 1", "Class 2"]
 
     # 将feature_importances列加入groups数据中
-    result = []
+    new_groups_list = []
     for i, gi in enumerate(group_info):
-        result.append(np.concatenate((gi, [feature_importances[i]])))
-    new_groups_list = [arr.tolist() for arr in result]
+        new_groups_list.append(gi + [feature_importances[i]])
 
     top_k = mask.sum()
     most_feature_importances = sorted(feature_importances, reverse=True)[:top_k]
