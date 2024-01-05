@@ -1,0 +1,18 @@
+羊奶掺杂不同比例牛奶的拉曼光谱
+
+yangniu0% label=0
+yangniu1% label=1
+yangniu2% label=2
+yangniu5% label=3
+yangniu10% label=4
+yangniu20% label=5
+yangniu40% label=6
+yangniu60% label=7
+yangniu80% label=8
+yangniu100% label=9
+
+"Goat milk is higher in fat and calories when compared to cow milk, and it also contains more protein, vitamins and minerals. 
+When compared, goat milk also has about 1% less lactose than cow milk."
+goats' milk is almost five times as expensive as cows' milk.  
+
+The goat milk is from M company (Mengyang) and the cow milk is from T company (Telunsu).
