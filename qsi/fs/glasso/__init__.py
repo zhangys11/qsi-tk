@@ -324,8 +324,8 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split=.4, random_state = N
     resolution range = [1, 2, 5, 10]
     window = ['rectangle', 'triangle', 'rbf']
     sd = [1,2], rbf only
-    group regularization strength = [0, 0.01, 0.1, 1, 10]
-    l1 regularization strength = [0, 0.01, 0.1, 1, 10] or [0]
+    group regularization strength = [0.001, 0.01, 0.1, 1]
+    l1 regularization strength = [0.001, 0.01, 0.1, 1] or [0]
 
     Parameters
     ----------
