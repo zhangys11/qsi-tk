@@ -343,15 +343,17 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split=.4, random_state = N
     best_bic = np.inf
     best_aicc = np.inf
 
-    pbar = tqdm(total=4 * 4 * 4 * 4)
+    if group_features_only == False:
+        pbar = tqdm(total=4 * 4 * 4 * 4)
+    else:
+        pbar = tqdm(total=4 * 4 * 4)
 
     for resolution in [1, 2, 5, 10]:
         for window in ['rectangle', 'triangle', 'rbf']:
             for sd in ['n/a'] if window != 'rbf' else [1, 2]:  # sd is only used in rbf
                 for group_reg in [0.001, 0.01, 0.1, 1]:
                     if group_features_only == False:
-                        for l1_reg in [0.001, 0.01, 0.1,
-                                       1]:  # 10 is too strong, only 1 or 2 features are kept and acc is poor
+                        for l1_reg in [0.001, 0.01, 0.1, 1]:  # 10 is too strong, only 1 or 2 features are kept and acc is poor
                             fss, group_info, group_ids, filtered_regions, filtered_region_centers = raman_window_fs(
                                 X, X_names, raman_peak_list, resolution, window=window, sd=sd,
                                 group_features_only=False, display=False
