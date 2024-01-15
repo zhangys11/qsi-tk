@@ -456,7 +456,7 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split=.4, random_state = N
         if value[4] == best_aicc:
             html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td><td>{key[4]}</td>
                         <td>{round(100 * value[0], 1)}%</td><td>{round(value[2], 1)}</td><td>{round(value[3], 1)}</td><td>{round(value[4], 1)}*</td><td>{value[1]}</td></tr>'''
-            print(f'Best AICC: {value[3]} at {key}. All metrics: {np.round(value, 3)}')
+            print(f'Best AICC: {value[4]} at {key}. All metrics: {np.round(value, 3)}')
 
     # if best_acc_least_k_key is not None:
     #     html_str += f'''<tr><td>{best_acc_least_k_key[0]}</td><td>{best_acc_least_k_key[1]}</td><td>{best_acc_least_k_key[2]}</td><td>{best_acc_least_k_key[3]}</td><td>{best_acc_least_k_key[4]}</td>
