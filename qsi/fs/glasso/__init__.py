@@ -343,15 +343,17 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split=.4, random_state = N
     best_bic = np.inf
     best_aicc = np.inf
 
-    pbar = tqdm(total=4 * 4 * 4 * 4)
+    if group_features_only == False:
+        pbar = tqdm(total=4 * 4 * 4 * 4)
+    else:
+        pbar = tqdm(total=4 * 4 * 4)
 
     for resolution in [1, 2, 5, 10]:
         for window in ['rectangle', 'triangle', 'rbf']:
             for sd in ['n/a'] if window != 'rbf' else [1, 2]:  # sd is only used in rbf
                 for group_reg in [0.001, 0.01, 0.1, 1]:
                     if group_features_only == False:
-                        for l1_reg in [0.001, 0.01, 0.1,
-                                       1]:  # 10 is too strong, only 1 or 2 features are kept and acc is poor
+                        for l1_reg in [0.001, 0.01, 0.1, 1]:  # 10 is too strong, only 1 or 2 features are kept and acc is poor
                             fss, group_info, group_ids, filtered_regions, filtered_region_centers = raman_window_fs(
                                 X, X_names, raman_peak_list, resolution, window=window, sd=sd,
                                 group_features_only=False, display=False
@@ -454,7 +456,7 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split=.4, random_state = N
         if value[4] == best_aicc:
             html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td><td>{key[4]}</td>
                         <td>{round(100 * value[0], 1)}%</td><td>{round(value[2], 1)}</td><td>{round(value[3], 1)}</td><td>{round(value[4], 1)}*</td><td>{value[1]}</td></tr>'''
-            print(f'Best AICC: {value[3]} at {key}. All metrics: {np.round(value, 3)}')
+            print(f'Best AICC: {value[4]} at {key}. All metrics: {np.round(value, 3)}')
 
     # if best_acc_least_k_key is not None:
     #     html_str += f'''<tr><td>{best_acc_least_k_key[0]}</td><td>{best_acc_least_k_key[1]}</td><td>{best_acc_least_k_key[2]}</td><td>{best_acc_least_k_key[3]}</td><td>{best_acc_least_k_key[4]}</td>
