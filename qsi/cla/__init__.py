@@ -49,7 +49,7 @@ from statsmodels.multivariate import manova
 from statsmodels.stats.contingency_tables import mcnemar, cochrans_q
 from pyNNRW.elm import ELMClassifier
 from pyNNRW.rvfl import RVFLClassifier
-from ..io.pre import balanced_kennardstone_split
+from ..io.pre import stratified_kennardstone_split
 from ..vis.plt2base64 import plt2html
 from ..vis.plot_components import plot_components_2d
 from ..vis.feature_importance import plot_feature_importance
@@ -216,7 +216,7 @@ def run_multiclass_clfs(X, y, clfs = 'all', split = .3, split_type = 'ks', cv_se
     
     '''
     if split_type == 'ks':
-        X_train, X_test, y_train, y_test = balanced_kennardstone_split(X, y, test_size=split)
+        X_train, X_test, y_train, y_test = stratified_kennardstone_split(X, y, test_size=split)
     else:
         if type(split_type) is not int:
             print("Warning: split_type is not an integer. Use 0 as the default value.")

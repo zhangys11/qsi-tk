@@ -566,9 +566,9 @@ def kennardstone_split(spectra, test_size=0.3, metric='euclidean', *args, **kwar
     return select_pts, remaining_pts
 
 
-def balanced_kennardstone_split(X, y, test_size=0.3, metric='euclidean'):
+def stratified_kennardstone_split(X, y, test_size=0.3, metric='euclidean'):
     '''
-    Perform a KS split per class to get a balanced training set and test set.
+    Perform a KS split per class to get a stratified training set and test set according to y.
     '''
     X_train = np.empty((0,X.shape[1]))
     X_test = np.empty((0,X.shape[1]))
