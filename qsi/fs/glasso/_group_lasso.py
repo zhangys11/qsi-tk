@@ -10,6 +10,7 @@ from numbers import Number
 
 import numpy as np
 import numpy.linalg as la
+import matplotlib.pyplot as plt
 from scipy import sparse
 from scipy.special import logsumexp
 from sklearn.base import (BaseEstimator, ClassifierMixin, RegressorMixin,
@@ -23,8 +24,6 @@ from sklearn.exceptions import NotFittedError
 from ._fista import FISTAProblem
 from ._singular_values import find_largest_singular_value
 from ._subsampling import Subsampler
-
-_DEBUG = False
 
 _OLD_REG_WARNING = """
 The behaviour has changed since v1.1.1, before then, a bug in the optimisation
@@ -175,8 +174,6 @@ class BaseGroupLasso(ABC, BaseEstimator, TransformerMixin):
     Jun 1;15(3):715-32.
     """
 
-    LOG_LOSSES = False
-
     def __init__(
         self,
         groups=None,
@@ -191,6 +188,7 @@ class BaseGroupLasso(ABC, BaseEstimator, TransformerMixin):
         warm_start=False,
         old_regularisation=False,
         supress_warning=False,
+        verbose=False
     ):
         self.groups = groups
         self.group_reg = group_reg
@@ -204,6 +202,7 @@ class BaseGroupLasso(ABC, BaseEstimator, TransformerMixin):
         self.old_regularisation = old_regularisation
         self.warm_start = warm_start
         self.supress_warning = supress_warning
+        self.verbose = verbose
 
     def _more_tags(self):
         return {'multioutput': True}
@@ -332,18 +331,18 @@ class BaseGroupLasso(ABC, BaseEstimator, TransformerMixin):
             w = x
             previous_w = previous_x
 
-            if self.LOG_LOSSES:
-                self.losses_.append(self._loss(X_, y_, w))
+            loss = self._loss(X_, y_, w)
+            self.losses_.append(loss)
 
-            if previous_w is None and _DEBUG:  # pragma: nocover
+            if previous_w is None and self.verbose:  # pragma: nocover
                 print("Starting FISTA: ")
                 print(
-                    "\tInitial loss: {loss}".format(loss=self._loss(X_, y_, w))
+                    "\tInitial loss: {0}".format(loss)
                 )
 
-            elif _DEBUG:  # pragma: nocover
+            elif self.verbose:  # pragma: nocover
                 print("Completed iteration {it_num}:".format(it_num=it_num))
-                print("\tLoss: {loss}".format(loss=self._loss(X_, y_, w)))
+                print("\tLoss: {0}".format(loss))
                 print(
                     "\tWeight difference: {wdiff}".format(
                         wdiff=la.norm(w - previous_w)
@@ -378,11 +377,20 @@ class BaseGroupLasso(ABC, BaseEstimator, TransformerMixin):
             self._scaled_prox,
             self.lipschitz_,
         )
+
+        self.losses_ = []
         weights = optimiser.minimise(
-            weights, n_iter=self.n_iter, tol=self.tol, callback=callback
+            weights, n_iter=self.n_iter, tol=self.tol, callback=callback # use callback to output debug info and collect loss values
         )
         self.lipschitz_ = optimiser.lipschitz
         self.intercept_, self.coef_ = _split_intercept(weights)
+
+        if self.verbose:
+            plt.figure()
+            plt.title('loss ~ iteration')
+            plt.plot(self.losses_)
+            plt.show()
+
 
     def _check_valid_parameters(self):
         """Check that the input parameters are valid.
@@ -838,6 +846,7 @@ class LogisticGroupLasso(BaseGroupLasso, ClassifierMixin):
         warm_start=False,
         old_regularisation=False,
         supress_warning=False,
+        verbose = False,
     ):
         if subsampling_scheme is not None:
             warnings.warn(
@@ -856,6 +865,7 @@ class LogisticGroupLasso(BaseGroupLasso, ClassifierMixin):
             warm_start=warm_start,
             old_regularisation=old_regularisation,
             supress_warning=supress_warning,
+            verbose = verbose
         )
     
     def _more_tags(self):

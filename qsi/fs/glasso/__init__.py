@@ -7,6 +7,7 @@ import IPython.display
 from tqdm import tqdm
 from ._group_lasso import LogisticGroupLasso
 from ..metrics import ic
+from ...io.pre import stratified_kennardstone_split
 
 def window_op(x_names, region, resolution = 2, window = 'rbf', sd = 1, display = False):
     '''
@@ -250,7 +251,7 @@ def raman_window_fs(X, x_names, raman_peak_list, resolution = 2,
 
 
 def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100, 
-                split = 0.2, random_state = None, verbose = False):
+                split = 0.2, iter = 100, verbose = False):
     '''
     Group Lasso Feature Selection. 
     The most important param is groups. It can be generated from raman_window_fs(), i.e., the 3rd returned result.
@@ -263,8 +264,8 @@ def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100,
         Use raman.get_groups() to get the groups.
     group_reg : group regularization strength
     l1_reg : l1 regularization strength
-    split : test set split ratio. Default is 0.3.
-    random_state : random seed for splitting the data into training and test sets. Set to a fixed value to reproduce the experiment result.
+    split : test set split ratio. Default is 0.2. We use stratified ks split strategy.
+    iter : glasso optimizer iterations
 
     Returns
     -------
@@ -278,22 +279,23 @@ def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100,
 
     if groups is None or len(groups) == 0: # degraded to routine lasso
         groups = - np.ones(X.shape[1]) # -1 for ungrouped features
-    
-    LogisticGroupLasso.LOG_LOSSES = True
-
+   
     gl = LogisticGroupLasso(
         groups = groups, # Iterable that specifies which group each column corresponds to. For columns that should not be regularised, the corresponding group index should either be None or negative. For example, the list [1, 1, 1, 2, 2, -1] specifies that the first three columns of the data matrix belong to the first group, the next two columns belong to the second group and the last column should not be regularised.
         group_reg = group_reg, # If ``group_reg`` is an iterable (pre-initilized weights), then its length should be equal to the number of groups.
         l1_reg = l1_reg, # default 0.05
         scale_reg="inverse_group_size", # for dummy vars, should be None. In statistics and econometrics, particularly in regression analysis, a dummy variable is one that takes only the value 0 or 1 to indicate the absence or presence of some categorical effect that may be expected to shift the outcome.
-        n_iter=500,
+        n_iter=iter,
         # subsampling_scheme=1,
         # supress_warning=True,
+        verbose = verbose
     )
 
     X = np.nan_to_num(X)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=split, stratify=y, random_state=random_state)
-
+    
+    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=split, stratify=y, random_state=random_state)
+    X_train, X_test, y_train, y_test = stratified_kennardstone_split(X, y, test_size=split)
+    
     gl.fit(X_train, y_train)
 
     # Extract info from estimator
@@ -315,7 +317,7 @@ def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100,
     return gl.coef_, gl.sparsity_mask_, acc, aic, bic, aicc
 
 
-def raman_group_lasso(X, y, X_names, raman_peak_list, split=.4, random_state = None, group_features_only=False, verbose=False):
+def raman_group_lasso(X, y, X_names, raman_peak_list, split=.3, group_features_only=False, group_lasso_optimizer_iterations = 100, verbose=False):
     '''
     An all-in-one function that runs group-lasso feature selection and classification on a specified Raman dataset.
     Hyperparameters are tuned by grid search.
@@ -360,8 +362,9 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split=.4, random_state = N
                                 group_features_only=False, display=False
                             )
                             _, mask, acc, aic, bic, aicc = group_lasso(fss, y, groups=group_ids,
-                                                                       group_reg=group_reg, l1_reg=l1_reg,
-                                                                       split=split, random_state=random_state, verbose=False)
+                                                                       group_reg=group_reg, l1_reg=l1_reg, split=split, 
+                                                                       iter=group_lasso_optimizer_iterations, 
+                                                                       verbose=verbose)
 
                             k = mask.sum()
 
@@ -394,7 +397,7 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split=.4, random_state = N
                             )
                             _, mask, acc, aic, bic, aicc = group_lasso(fss, y, groups=group_ids,
                                                                        group_reg=group_reg, l1_reg=l1_reg,
-                                                                       split=split, random_state=random_state, verbose=False)
+                                                                       split=split, verbose=verbose)
 
                             k = mask.sum()
 
