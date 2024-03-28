@@ -1,4 +1,11 @@
 # .github/workflows/ci-cd.yml
+
+on:
+  push:
+    branches:
+      - main
+      - 'dist/*.whl'
+
 jobs:
   pypi-publish:
     name: Upload release to PyPI
