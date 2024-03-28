@@ -59,7 +59,7 @@ setup(
 )
 
 # To Build and Publish (for developer only),
-# Run: python -m build
+# Run: python -m build --wheel
 # Run: python -m pyc_wheel qsi_tk.whl  [optional]
 # or
 # Run: python setup.py sdist bdist_wheel; twine upload dist/*
