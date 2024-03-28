@@ -157,8 +157,8 @@ def window_fs(X, x_names, regions, resolution = 2, window = 'rbf', sd = 1, displ
     return np.array(fss), filtered_regions, filtered_region_centers
 
 
-def raman_window_fs(X, x_names, raman_peak_list, resolution = 2,
-                    window='rbf', sd = 1, group_features_only = False, display = False):
+def raman_window_fs(X, x_names, raman_peak_list, resolution = 1,
+                    window='rectangle', sd = 1, group_features_only = False, display = False):
     '''
     Extract features from Raman spectra with specified window operator.
 
@@ -172,6 +172,7 @@ def raman_window_fs(X, x_names, raman_peak_list, resolution = 2,
     window : Apply a window operator to a continuous region. Can be 'rbf / gaussian', 'uniform', 'spike', 'triangle'. Uniform is just averaging filter.
     sd : standard deviation of the 'rbf / gaussian' window.
     display : whether display the per-sample feature selection result.
+        If an integer n, will visualize the top-n samples. 
 
     Returns
     -------
@@ -227,6 +228,13 @@ def raman_window_fs(X, x_names, raman_peak_list, resolution = 2,
         filtered_regions = [sublist[1] for sublist in group_info]
         filtered_region_centers = [(sublist[0] + sublist[1]) / 2 for sublist in filtered_regions]
 
+    display_n = len(X)
+
+    if display is False:
+        display_n = 0
+    elif isinstance(display, int):
+        display_n = display
+    
     for i, x in enumerate(X):
         # the discrete features for one data sample
         Fs = []
@@ -235,7 +243,7 @@ def raman_window_fs(X, x_names, raman_peak_list, resolution = 2,
                 op = window_op(x_names, sublist[-2], resolution, window, sd, display=False)
                 F = np.dot(op, x)
                 Fs.append(F)
-        if display:
+        if i<display_n:
             plt.figure(figsize=(10, 3))
             plt.title('Features extracted by ' + window + ' window on Sample ' + str(i))
             plt.xlabel('Raman shifts (cm-1)')
@@ -251,7 +259,7 @@ def raman_window_fs(X, x_names, raman_peak_list, resolution = 2,
 
 
 def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100, 
-                split = 0.2, iter = 100, verbose = False):
+                split_method=0, split_test_size = 0.2, iter = 200, verbose = False):
     '''
     Group Lasso Feature Selection. 
     The most important param is groups. It can be generated from raman_window_fs(), i.e., the 3rd returned result.
@@ -264,7 +272,9 @@ def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100,
         Use raman.get_groups() to get the groups.
     group_reg : group regularization strength
     l1_reg : l1 regularization strength
-    split : test set split ratio. Default is 0.2. We use stratified ks split strategy.
+    split_method : 'random' or 'ks'. 
+        If an integer, means the random state of 'ramdom' split.
+    split_test_size : test set split ratio. Default is 0.2.
     iter : glasso optimizer iterations
 
     Returns
@@ -292,9 +302,14 @@ def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100,
     )
 
     X = np.nan_to_num(X)
-    
-    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=split, stratify=y, random_state=random_state)
-    X_train, X_test, y_train, y_test = stratified_kennardstone_split(X, y, test_size=split)
+
+    if split_method == 'ks':
+        X_train, X_test, y_train, y_test = stratified_kennardstone_split(X, y, test_size=split_test_size)
+    else:
+        random_state = None
+        if isinstance(split_method, int):
+             random_state = split_method
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=split_test_size, stratify=y, random_state=random_state)
     
     gl.fit(X_train, y_train)
 
@@ -317,18 +332,24 @@ def group_lasso(X, y, groups = None, group_reg = 100, l1_reg = 100,
     return gl.coef_, gl.sparsity_mask_, acc, aic, bic, aicc
 
 
-def raman_group_lasso(X, y, X_names, raman_peak_list, split=.3, group_features_only=False, group_lasso_optimizer_iterations = 100, verbose=False):
+def raman_group_lasso_cv(X, y, X_names, labels, raman_peak_list, group_features_only=False,
+                         resolutions = [1],
+                         windows = ['rectangle'],
+                         group_regs = [0.001, 0.01, 0.1, 1],
+                         l1_regs = [0.001, 0.01, 0.1, 1],
+                         split_method=0, split_test_size=.3, 
+                         group_lasso_optimizer_iterations = 200, verbose=False):
     '''
     An all-in-one function that runs group-lasso feature selection and classification on a specified Raman dataset.
     Hyperparameters are tuned by grid search.
 
-    Search range
-    ------------
-    resolution range = [1, 2, 5, 10]
-    window = ['rectangle', 'triangle', 'rbf']
+    Parameters
+    ----------
+    resolutions :  range = [1, 2, 5, 10]
+    window = ['rectangle']
     sd = [1,2], rbf only
-    group regularization strength = [0.001, 0.01, 0.1, 1]
-    l1 regularization strength = [0.001, 0.01, 0.1, 1] or [0]
+    group_regs : group regularization strength, default [0.001, 0.01, 0.1, 1]
+    l1_regs : l1 regularization strength, default [0.001, 0.01, 0.1, 1]. [0] means "group only", i.e., L1 reg not considered.
 
     Parameters
     ----------
@@ -346,90 +367,66 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split=.3, group_features_o
     best_bic = np.inf
     best_aicc = np.inf
 
-    if group_features_only == False:
-        pbar = tqdm(total=4 * 4 * 4 * 4)
-    else:
-        pbar = tqdm(total=4 * 4 * 4)
+    N = len(resolutions) * len(windows) * len(group_regs) * len(l1_regs)
+    pbar = tqdm(total=N)
 
-    for resolution in [1, 2, 5, 10]:
-        for window in ['rectangle', 'triangle', 'rbf']:
-            for sd in ['n/a'] if window != 'rbf' else [1, 2]:  # sd is only used in rbf
-                for group_reg in [0.001, 0.01, 0.1, 1]:
-                    if group_features_only == False:
-                        for l1_reg in [0.001, 0.01, 0.1, 1]:  # 10 is too strong, only 1 or 2 features are kept and acc is poor
-                            fss, group_info, group_ids, filtered_regions, filtered_region_centers = raman_window_fs(
-                                X, X_names, raman_peak_list, resolution, window=window, sd=sd,
-                                group_features_only=False, display=False
-                            )
-                            _, mask, acc, aic, bic, aicc = group_lasso(fss, y, groups=group_ids,
-                                                                       group_reg=group_reg, l1_reg=l1_reg, split=split, 
-                                                                       iter=group_lasso_optimizer_iterations, 
-                                                                       verbose=verbose)
+    for resolution in resolutions:
+        for window in windows: # when window = rbf, also specify sd (1 or 2).     
+            
+            fss, group_info, group_ids, filtered_regions, filtered_region_centers = raman_window_fs(
+                X, X_names, raman_peak_list, resolution, window=window, 
+                group_features_only=group_features_only, display=verbose
+            )
 
-                            k = mask.sum()
+            for group_reg in group_regs:
+                for l1_reg in l1_regs:  # 10 is too strong, only 1 or 2 features are kept and acc is poor
 
-                            row_str = f'''<tr><td>{resolution}</td><td>{window}</td><td>{sd}</td><td>{group_reg}</td><td>{l1_reg}</td>
-                            <td>{round(100 * acc, 1)}%</td><td>{round(aic, 1)}</td><td>{round(bic, 1)}</td><td>{round(aicc, 1)}</td><td>{k}</td></tr>'''
+                    coef, mask, acc, aic, bic, aicc = group_lasso(fss, y, groups=group_ids,
+                                                                group_reg=group_reg, l1_reg=l1_reg, 
+                                                                split_method=split_method,
+                                                                split_test_size=split_test_size, 
+                                                                iter=group_lasso_optimizer_iterations, 
+                                                                verbose=verbose)
 
-                            if verbose:  # output step-wise result
-                                IPython.display.display(IPython.display.HTML(row_str))
+                    k = mask.sum()
 
-                            html_str += row_str
+                    row_str = f'''<tr><td>{resolution}</td><td>{window}</td><td>{group_reg}</td><td>{l1_reg}</td>
+                    <td>{round(100 * acc, 1)}%</td><td>{round(aic, 1)}</td><td>{round(bic, 1)}</td><td>{round(aicc, 1)}</td><td>{k}</td></tr>'''
 
-                            if acc > best_acc:
-                                best_acc = acc
-                            if k < best_k and k > 0:
-                                best_k = k
-                            if aic < best_aic:
-                                best_aic = aic
-                            if bic < best_bic:
-                                best_bic = bic
-                            if aicc < best_aicc:
-                                best_aicc = aicc
+                    if verbose:  # output step-wise result
+                        IPython.display.display(IPython.display.HTML(row_str))
 
-                            dic_metrics[(resolution, window, sd, group_reg, l1_reg)] = acc, k, aic, bic, aicc
-                            pbar.update(1)
-                    if group_features_only == True:
-                        for l1_reg in [0]:
-                            fss, group_info, group_ids, filtered_regions, filtered_region_centers = raman_window_fs(
-                                X, X_names, raman_peak_list, resolution, window=window, sd=sd, group_features_only=True,
-                                display=False
-                            )
-                            _, mask, acc, aic, bic, aicc = group_lasso(fss, y, groups=group_ids,
-                                                                       group_reg=group_reg, l1_reg=l1_reg,
-                                                                       split=split, verbose=verbose)
+                    html_str += row_str
 
-                            k = mask.sum()
+                    if acc > best_acc:
+                        best_acc = acc
+                    if k < best_k and k > 0:
+                        best_k = k
+                    if aic < best_aic:
+                        best_aic = aic
+                    if bic < best_bic:
+                        best_bic = bic
+                    if aicc < best_aicc:
+                        best_aicc = aicc
 
-                            row_str = f'''<tr><td>{resolution}</td><td>{window}</td><td>{sd}</td><td>{group_reg}</td><td>{l1_reg}</td>
-                            <td>{round(100 * acc, 1)}%</td><td>{round(aic, 1)}</td><td>{round(bic, 1)}</td><td>{round(aicc, 1)}</td><td>{k}</td></tr>'''
-
-                            if verbose:  # output step-wise result
-                                IPython.display.display(IPython.display.HTML(row_str))
-
-                            html_str += row_str
-
-                            if acc > best_acc:
-                                best_acc = acc
-                            if k < best_k and k > 0:
-                                best_k = k
-                            if aic < best_aic:
-                                best_aic = aic
-                            if bic < best_bic:
-                                best_bic = bic
-                            if aicc < best_aicc:
-                                best_aicc = aicc
-
-                            dic_metrics[(resolution, window, sd, group_reg, l1_reg)] = acc, k, aic, bic, aicc
-                            pbar.update(1)
+                    dic_metrics[(resolution, window, group_reg, l1_reg)] = acc, k, aic, bic, aicc
+                    pbar.update(1)
 
     pbar.close()
+
+    # if only one hparam case, show detailed chemical interpretation result
+    if N == 1:
+        df = interpret_group_result(np.abs(coef[:,0].flatten()),fss,mask,group_info, labels, draw_boxplots = True) 
+        IPython.display.display(IPython.display.HTML(df.to_html(classes='table table-stripped')))
+        print('k, acc, aic, bic, aicc', np.round([mask.sum(), acc, aic, bic, aicc], 3))
+        return
+    # otherwise, list all hparam cases.
 
     html_str += '</table>'
     IPython.display.display(IPython.display.HTML(html_str))
     # IPython.display.display(IPython.display.HTML('<p>' + str(group_info[mask]) + '</p>'))
 
-    html_str = '''<h3>Best Cases</h3><p>* indicates the best</p>
+    html_str = '''<h3>Typical Cases</h3><p>* indicates the best on this metric.</p>
     <table><tr><th>resolution</th><th>window</th><th>group_reg</th><th>l1_reg</th>
     <th>testset accuracy</th><th>aic</th><th>bic</th><th>aicc</th><th>k</th></tr>'''
     # best_acc_least_k_key = None
@@ -442,23 +439,23 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split=.3, group_features_o
             # if best_acc_least_k < value[1]:
             #    best_acc_least_k = value[1]
             #    best_acc_least_k_key = key
-            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td><td>{key[4]}</td>
+            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td>
                         <td>{round(100 * value[0], 1)}%*</td><td>{round(value[2], 1)}</td><td>{round(value[3], 1)}</td><td>{round(value[4], 1)}</td><td>{value[1]}</td></tr>'''
             print(f'Best acc: {value[0]} at {key}. All metrics: {np.round(value, 3)}')
         if value[1] == best_k:
-            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td><td>{key[4]}</td>
+            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td>
                         <td>{round(100 * value[0], 1)}%</td><td>{round(value[2], 1)}</td><td>{round(value[3], 1)}</td><td>{round(value[4], 1)}</td><td>{value[1]}*</td></tr>'''
             print(f'Best k: {value[1]} at {key}. All metrics: {np.round(value, 3)}')
         if value[2] == best_aic:
-            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td><td>{key[4]}</td>
+            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td>
                         <td>{round(100 * value[0], 1)}%</td><td>{round(value[2], 1)}*</td><td>{round(value[3], 1)}</td><td>{round(value[4], 1)}</td><td>{value[1]}</td></tr>'''
             print(f'Best AIC: {value[2]} at {key}. All metrics: {np.round(value, 3)}')
         if value[3] == best_bic:
-            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td><td>{key[4]}</td>
+            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td>
                         <td>{round(100 * value[0], 1)}%</td><td>{round(value[2], 1)}</td><td>{round(value[3], 1)}*</td><td>{round(value[4], 1)}</td><td>{value[1]}</td></tr>'''
             print(f'Best BIC: {value[3]} at {key}. All metrics: {np.round(value, 3)}')
         if value[4] == best_aicc:
-            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td><td>{key[4]}</td>
+            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td>
                         <td>{round(100 * value[0], 1)}%</td><td>{round(value[2], 1)}</td><td>{round(value[3], 1)}</td><td>{round(value[4], 1)}*</td><td>{value[1]}</td></tr>'''
             print(f'Best AICC: {value[4]} at {key}. All metrics: {np.round(value, 3)}')
 
@@ -468,9 +465,48 @@ def raman_group_lasso(X, y, X_names, raman_peak_list, split=.3, group_features_o
     #     print(f'Best accuracy: {best_acc} at {best_acc_least_k_key}. All metrics: {np.round(dic_metrics[best_acc_least_k_key], 3)}')
 
     IPython.display.display(IPython.display.HTML('</table>' + html_str))
+    visualize_k_acc_curve(dic_metrics)
 
     return dic_metrics
 
+def visualize_k_acc_curve(dic_metrics):
+    '''
+    Draw a scatter plot to show the relationship between k (feature num) and ACC (test set accuracy).
+    An ideal case should have a high ACC and small k. We use this plot to find the best hparam.
+    '''
+
+    ks =[]
+    accs=[]
+    tips=[]
+
+    for k,v in dic_metrics.items():
+        ks.append(v[1])
+        accs.append(v[0])
+        tips.append(k)
+
+    plt.figure(figsize=(10,10))
+
+    plt.xlabel('features selected')
+    plt.ylabel('test set accuracy')
+    plt.scatter(ks, accs)
+
+    acc_levels = set(accs)
+
+    for level in acc_levels:    
+        k_min = max(ks)
+        k_min_tuple = None
+        for x_,y_,t_ in zip(ks, accs, tips):
+            if y_ != level:
+                continue
+
+            if x_ < k_min:
+                k_min = x_
+                k_min_tuple = (x_,y_,t_)
+                
+        x_,y_,t_=k_min_tuple        
+        plt.text(x_,y_+0.008, 'L1 reg=' + str(t_[-1])+', group reg='+str(t_[-2]))
+        plt.scatter(x_,y_, color='r', edgecolors='k')
+    plt.show()
 
 def interpret_group_result(feature_importances, fss, mask, group_info,
                            labels=None,

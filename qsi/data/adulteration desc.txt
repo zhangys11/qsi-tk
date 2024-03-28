@@ -1,4 +1,4 @@
-羊奶掺杂不同比例牛奶的拉曼光谱
+Raman spectra of goat milk adultered with different percentages of cow milk.
 
 yangniu0% label=0
 yangniu1% label=1

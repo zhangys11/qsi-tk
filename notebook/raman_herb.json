@@ -400,14 +400,6 @@
         "comment": ""
     },
     {
-        "chemical": "D-galactosamine",
-        "vibration": "C-O-H bending",
-        "peak_start": 890.0,
-        "peak_end": 890.0,
-        "reference": "10.1038/srep04751",
-        "comment": ""
-    },
-    {
         "chemical": "Phenylalanine",
         "vibration": "C-C symmetric stretch ring breathing",
         "peak_start": 1003.0,
@@ -852,158 +844,6 @@
         "vibration": "",
         "peak_start": 219.2,
         "peak_end": 219.2,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Naphthalene",
-        "vibration": "",
-        "peak_start": 513.7,
-        "peak_end": 513.7,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Naphthalene",
-        "vibration": "",
-        "peak_start": 1146.3,
-        "peak_end": 1146.3,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Naphthalene",
-        "vibration": "",
-        "peak_start": 1463.5,
-        "peak_end": 1463.5,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Naphthalene",
-        "vibration": "",
-        "peak_start": 1576.3,
-        "peak_end": 1576.3,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Naphthalene",
-        "vibration": "",
-        "peak_start": 3055.1,
-        "peak_end": 3055.1,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Naphthalene",
-        "vibration": "",
-        "peak_start": 763.0,
-        "peak_end": 763.0,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Naphthalene",
-        "vibration": "",
-        "peak_start": 1019.8,
-        "peak_end": 1019.8,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Naphthalene",
-        "vibration": "",
-        "peak_start": 1381.3,
-        "peak_end": 1381.3,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Cyclohexane",
-        "vibration": "",
-        "peak_start": 801.9,
-        "peak_end": 801.9,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Cyclohexane",
-        "vibration": "",
-        "peak_start": 384.1,
-        "peak_end": 384.1,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Cyclohexane",
-        "vibration": "",
-        "peak_start": 426.5,
-        "peak_end": 426.5,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Cyclohexane",
-        "vibration": "",
-        "peak_start": 1157.6,
-        "peak_end": 1157.6,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Cyclohexane",
-        "vibration": "",
-        "peak_start": 1028.1,
-        "peak_end": 1028.1,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Cyclohexane",
-        "vibration": "",
-        "peak_start": 1266.4,
-        "peak_end": 1266.4,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Cyclohexane",
-        "vibration": "",
-        "peak_start": 1444.2,
-        "peak_end": 1444.2,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Cyclohexane",
-        "vibration": "",
-        "peak_start": 2664.2,
-        "peak_end": 2664.2,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Cyclohexane",
-        "vibration": "",
-        "peak_start": 2852.4,
-        "peak_end": 2852.4,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Cyclohexane",
-        "vibration": "",
-        "peak_start": 2923.4,
-        "peak_end": 2923.4,
-        "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
-        "comment": ""
-    },
-    {
-        "chemical": "Cyclohexane",
-        "vibration": "",
-        "peak_start": 2937.5,
-        "peak_end": 2937.5,
         "reference": "https://srd.nmdc.ac.cn/raman/web/index.php?r=&pg=8",
         "comment": ""
     },
@@ -1872,22 +1712,6 @@
         "comment": ""
     },
     {
-        "chemical": "dengue virus",
-        "vibration": "",
-        "peak_start": 1614.0,
-        "peak_end": 1614.0,
-        "reference": "10.1007/s12551-023-01059-4",
-        "comment": ""
-    },
-    {
-        "chemical": "dengue virus",
-        "vibration": "",
-        "peak_start": 1750.0,
-        "peak_end": 1750.0,
-        "reference": "10.1007/s12551-023-01059-4",
-        "comment": ""
-    },
-    {
         "chemical": "adenosine diphosphate (ADP)",
         "vibration": "",
         "peak_start": 750.0,
@@ -2056,130 +1880,10 @@
         "comment": ""
     },
     {
-        "chemical": "rotavirus",
-        "vibration": "",
-        "peak_start": 1003.0,
-        "peak_end": 1003.0,
-        "reference": "10.1007/s12551-023-01059-4",
-        "comment": ""
-    },
-    {
-        "chemical": "rotavirus",
-        "vibration": "",
-        "peak_start": 1030.0,
-        "peak_end": 1030.0,
-        "reference": "10.1007/s12551-023-01059-4",
-        "comment": ""
-    },
-    {
-        "chemical": "rotavirus",
-        "vibration": "",
-        "peak_start": 1045.0,
-        "peak_end": 1045.0,
-        "reference": "10.1007/s12551-023-01059-4",
-        "comment": ""
-    },
-    {
-        "chemical": "rotavirus",
-        "vibration": "",
-        "peak_start": 1592.0,
-        "peak_end": 1592.0,
-        "reference": "10.1007/s12551-023-01059-4",
-        "comment": ""
-    },
-    {
-        "chemical": "enterovirus 71",
-        "vibration": "",
-        "peak_start": 510.0,
-        "peak_end": 510.0,
-        "reference": "10.1007/s12551-023-01059-4",
-        "comment": ""
-    },
-    {
-        "chemical": "enterovirus 71",
-        "vibration": "",
-        "peak_start": 670.0,
-        "peak_end": 670.0,
-        "reference": "10.1007/s12551-023-01059-4",
-        "comment": ""
-    },
-    {
-        "chemical": "enterovirus 71",
-        "vibration": "",
-        "peak_start": 910.0,
-        "peak_end": 910.0,
-        "reference": "10.1007/s12551-023-01059-4",
-        "comment": ""
-    },
-    {
         "chemical": "Tyrosine",
         "vibration": "",
         "peak_start": 844.0,
         "peak_end": 844.0,
-        "reference": "10.1111/j.1750-3841.2010.01619.x",
-        "comment": ""
-    },
-    {
-        "chemical": "Norovirus MNV4",
-        "vibration": "C–COO− stretch",
-        "peak_start": 921.0,
-        "peak_end": 921.0,
-        "reference": "10.1111/j.1750-3841.2010.01619.x",
-        "comment": ""
-    },
-    {
-        "chemical": "Norovirus MNV4",
-        "vibration": "C–COO− stretch",
-        "peak_start": 937.0,
-        "peak_end": 937.0,
-        "reference": "10.1111/j.1750-3841.2010.01619.x",
-        "comment": ""
-    },
-    {
-        "chemical": "Norovirus MNV4",
-        "vibration": "C–COO− stretch",
-        "peak_start": 943.0,
-        "peak_end": 943.0,
-        "reference": "10.1111/j.1750-3841.2010.01619.x",
-        "comment": ""
-    },
-    {
-        "chemical": "Norovirus MNV4",
-        "vibration": "Phenylalanine (symmetrical ring breathing)",
-        "peak_start": 1001.0,
-        "peak_end": 1001.0,
-        "reference": "10.1111/j.1750-3841.2010.01619.x",
-        "comment": ""
-    },
-    {
-        "chemical": "Adenovirus MAD",
-        "vibration": "Phenylalanine (in-plane C–H bending)",
-        "peak_start": 1008.0,
-        "peak_end": 1008.0,
-        "reference": "10.1111/j.1750-3841.2010.01619.x",
-        "comment": ""
-    },
-    {
-        "chemical": "Adenovirus MAD",
-        "vibration": "Phenylalanine (in-plane C–H bending)",
-        "peak_start": 1022.0,
-        "peak_end": 1022.0,
-        "reference": "10.1111/j.1750-3841.2010.01619.x",
-        "comment": ""
-    },
-    {
-        "chemical": "Adenovirus MAD",
-        "vibration": "C–N stretch",
-        "peak_start": 1047.0,
-        "peak_end": 1047.0,
-        "reference": "10.1111/j.1750-3841.2010.01619.x",
-        "comment": ""
-    },
-    {
-        "chemical": "Adenovirus MAD",
-        "vibration": "C–N and C–C stretch",
-        "peak_start": 1129.0,
-        "peak_end": 1129.0,
         "reference": "10.1111/j.1750-3841.2010.01619.x",
         "comment": ""
     },
@@ -2224,14 +1928,6 @@
         "comment": ""
     },
     {
-        "chemical": "Coxsackievirus type 3",
-        "vibration": "C–N stretching",
-        "peak_start": 1041.0,
-        "peak_end": 1062.0,
-        "reference": "10.1002/smll.201805516",
-        "comment": ""
-    },
-    {
         "chemical": "Guanine",
         "vibration": "",
         "peak_start": 643.0,
@@ -2244,22 +1940,6 @@
         "vibration": "",
         "peak_start": 719.0,
         "peak_end": 730.0,
-        "reference": "10.1021/nl061666f",
-        "comment": ""
-    },
-    {
-        "chemical": "HIV",
-        "vibration": "CH2 deformation",
-        "peak_start": 1448.0,
-        "peak_end": 1454.0,
-        "reference": "10.1021/nl061666f",
-        "comment": ""
-    },
-    {
-        "chemical": "HIV",
-        "vibration": "νaCOO− Trp",
-        "peak_start": 1523.0,
-        "peak_end": 1597.0,
         "reference": "10.1021/nl061666f",
         "comment": ""
     },
@@ -2452,22 +2132,6 @@
         "vibration": "",
         "peak_start":704.0,
         "peak_end": 704.0,
-        "reference": "10.1016/j.pdpdt.2020.102152",
-        "comment": ""
-    },
-    {
-        "chemical": "Hepatitis C",
-        "vibration": "C–O–P–O–C bands in RN",
-        "peak_start":811.0,
-        "peak_end": 811.0,
-        "reference": "10.1016/j.pdpdt.2020.102152",
-        "comment": ""
-    },
-    {
-        "chemical": "Hepatitis C",
-        "vibration": "stretching of C–O and C–C",
-        "peak_start":1036.0,
-        "peak_end": 1036.0,
         "reference": "10.1016/j.pdpdt.2020.102152",
         "comment": ""
     },
@@ -2700,22 +2364,6 @@
         "vibration": "C=C and C-O-C stretching",
         "peak_start": 1357.0,
         "peak_end": 1357.0,
-        "reference": "10.1016/j.vibspec.2024.103662",
-        "comment": ""
-    },
-    {
-        "chemical": "Benzocaine",
-        "vibration": "C-O stretching",
-        "peak_start": 863.0,
-        "peak_end": 863.0,
-        "reference": "10.1016/j.vibspec.2024.103662",
-        "comment": ""
-    },
-    {
-        "chemical": "Benzocaine",
-        "vibration": "in-plane H-C-H bending",
-        "peak_start": 1170.0,
-        "peak_end": 1170.0,
         "reference": "10.1016/j.vibspec.2024.103662",
         "comment": ""
     },
@@ -4104,14 +3752,6 @@
         "comment": ""
     },
     {
-        "chemical": "metal oxides",
-        "vibration": "MO stretching",
-        "peak_start": -402.0,
-        "peak_end": -402.0,
-        "reference": "10.1016/j.saa.2023.123392",
-        "comment": ""
-    },
-    {
         "chemical": "aliphatic esters or acetates",
         "vibration": "O–C–O group bending or out-of-plane deformation",
         "peak_start": -642.0,
@@ -5021,7 +4661,7 @@
         "peak_start":1000.0,
         "peak_end":1250.0,
         "reference": "https://static.horiba.com/fileadmin/Horiba/Technology/Measurement_Techniques/Molecular_Spectroscopy/Raman_Spectroscopy/Raman_Academy/Raman_Tutorial/Raman_bands.pdf",
-        "comment": "strong "
+        "comment": "strong"
     },
     {
         "chemical": "",
@@ -5029,7 +4669,7 @@
         "peak_start":1580.0,
         "peak_end":1600.0,
         "reference": "https://static.horiba.com/fileadmin/Horiba/Technology/Measurement_Techniques/Molecular_Spectroscopy/Raman_Spectroscopy/Raman_Academy/Raman_Tutorial/Raman_bands.pdf",
-        "comment": "strong "
+        "comment": "strong"
     },
     {
         "chemical": "",
