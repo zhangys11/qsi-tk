@@ -1,5 +1,5 @@
 build/
-dist/*.tar.gz
+dist/
 *.egg-info/
 *.pyc
 notebook/.ipynb_checkpoints/
