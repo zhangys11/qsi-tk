@@ -1,4 +1,5 @@
 # .github/workflows/ci-cd.yml
+# https://packaging.python.org/en/latest/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/
 
 name: Publish Python 🐍 distribution 📦 to PyPI and TestPyPI
 on: push
@@ -42,6 +43,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: python-package-distributions
-          path: dist/
+          path: qsi-tk/dist/
       - name: Publish distribution 📦 to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
