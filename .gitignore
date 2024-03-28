@@ -1,5 +1,3 @@
-build/
-dist/
 *.egg-info/
 *.pyc
 notebook/.ipynb_checkpoints/
