@@ -6,7 +6,7 @@ setup(
     name="qsi-tk",
 
     # Version number:
-    version="1.3.0",
+    version="1.4.0",
 
     # Application author details:
     author="Yinsheng Zhang (Ph.D.)",
@@ -50,7 +50,7 @@ setup(
         "cs1",
         "ctgan",  # "torch"
         "cvxpy",
-        "asgl",
+        "asgl"
     ],
 
     package_data={

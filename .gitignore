@@ -10,3 +10,4 @@ notebook/smote.csv
 notebook/vae.csv
 qsi/gui/*.csv
 qsi-tk-*
+/qsi/io/aug/.ipynb_checkpoints

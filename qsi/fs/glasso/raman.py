@@ -6,7 +6,6 @@ import json
 import os.path
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
-import xlrd
 
 
 def plot_raman_prior(raman_peak_list, group_only=False):
@@ -170,6 +169,8 @@ def get_raman_peak_list_from_excel(filepath="raman.xls"):
     '''
     Load the excel file and return a list of Raman peak objects.
     '''
+    import xlrd
+
     raman_peak_excel = xlrd.open_workbook(filepath)#括号里为路径
     raman_peak_sheet = raman_peak_excel.sheet_by_index(0)#索引至页
    

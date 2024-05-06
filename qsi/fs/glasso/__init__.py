@@ -433,38 +433,35 @@ def raman_group_lasso_cv(X, y, X_names, labels, raman_peak_list, group_features_
     # best_acc_least_k = X.shape[1]
 
     for key, value in dic_metrics.items():
+        b0=''
+        b1=''
+        b2=''
+        b3=''
+        b4=''
+        n_best = 0
+        
         if value[0] == best_acc:
-            # if best_acc_least_k_key is None:
-            #     best_acc_least_k_key = key
-            # if best_acc_least_k < value[1]:
-            #    best_acc_least_k = value[1]
-            #    best_acc_least_k_key = key
-            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td>
-                        <td>{round(100 * value[0], 1)}%*</td><td>{round(value[2], 1)}</td><td>{round(value[3], 1)}</td><td>{round(value[4], 1)}</td><td>{value[1]}</td></tr>'''
-            print(f'Best acc: {value[0]} at {key}. All metrics: {np.round(value, 3)}')
+            b0='*'
+            n_best+=1
         if value[1] == best_k:
-            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td>
-                        <td>{round(100 * value[0], 1)}%</td><td>{round(value[2], 1)}</td><td>{round(value[3], 1)}</td><td>{round(value[4], 1)}</td><td>{value[1]}*</td></tr>'''
-            print(f'Best k: {value[1]} at {key}. All metrics: {np.round(value, 3)}')
+            b1='*'
+            n_best+=1
         if value[2] == best_aic:
-            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td>
-                        <td>{round(100 * value[0], 1)}%</td><td>{round(value[2], 1)}*</td><td>{round(value[3], 1)}</td><td>{round(value[4], 1)}</td><td>{value[1]}</td></tr>'''
-            print(f'Best AIC: {value[2]} at {key}. All metrics: {np.round(value, 3)}')
+            b2='*'
+            n_best+=1
         if value[3] == best_bic:
-            html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td>
-                        <td>{round(100 * value[0], 1)}%</td><td>{round(value[2], 1)}</td><td>{round(value[3], 1)}*</td><td>{round(value[4], 1)}</td><td>{value[1]}</td></tr>'''
-            print(f'Best BIC: {value[3]} at {key}. All metrics: {np.round(value, 3)}')
+            b3='*'
+            n_best+=1
         if value[4] == best_aicc:
+            b4='*'
+            n_best+=1
+    
+        if n_best > 0: # and value[1]>1: # if require at least 2 features
             html_str += f'''<tr><td>{key[0]}</td><td>{key[1]}</td><td>{key[2]}</td><td>{key[3]}</td>
-                        <td>{round(100 * value[0], 1)}%</td><td>{round(value[2], 1)}</td><td>{round(value[3], 1)}</td><td>{round(value[4], 1)}*</td><td>{value[1]}</td></tr>'''
-            print(f'Best AICC: {value[4]} at {key}. All metrics: {np.round(value, 3)}')
-
-    # if best_acc_least_k_key is not None:
-    #     html_str += f'''<tr><td>{best_acc_least_k_key[0]}</td><td>{best_acc_least_k_key[1]}</td><td>{best_acc_least_k_key[2]}</td><td>{best_acc_least_k_key[3]}</td><td>{best_acc_least_k_key[4]}</td>
-    #                             <td>{round(100*dic_metrics[best_acc_least_k_key][0],1)}%*</td><td>{round(dic_metrics[best_acc_least_k_key][2],1)}</td><td>{round(dic_metrics[best_acc_least_k_key][3],1)}</td><td>{round(dic_metrics[best_acc_least_k_key][4],1)}</td><td>{dic_metrics[best_acc_least_k_key][1]}</td></tr>'''
-    #     print(f'Best accuracy: {best_acc} at {best_acc_least_k_key}. All metrics: {np.round(dic_metrics[best_acc_least_k_key], 3)}')
-
+                    <td>{round(100 * value[0], 1)}%{b0}</td><td>{round(value[2], 1)}{b2}</td><td>{round(value[3], 1)}{b3}</td><td>{round(value[4], 1)}{b4}</td><td>{value[1]}{b1}</td></tr>'''
+    
     IPython.display.display(IPython.display.HTML('</table>' + html_str))
+
     visualize_k_acc_curve(dic_metrics)
 
     return dic_metrics
