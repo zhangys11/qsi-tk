@@ -17,3 +17,7 @@ outliers_df = data.index.isin([74, 87, 61, 64, 60, 86, 33, 24, 37, 21, 39])
 data = data[~outliers_df]
 data.to_csv('7741_P.csv') 
 ``
+
+If you use this dataset, please cite:
+[1] Identification of Infant Rice Cereal Based by Raman Spectroscopy Combined with an Extreme Learning Machine Algorithm, 
+J Anal Chem 79 (2024) 447–455. https://doi.org/10.1134/S1061934824040154.

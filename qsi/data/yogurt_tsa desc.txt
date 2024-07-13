@@ -1,0 +1,18 @@
+This dataset contains Raman spectra of yogurt fermentation process.
+
+yogurt_tsa_A.CSV: use GM brand fresh cow milk
+yogurt_tsa_B.CSV: use MN brand fresh goat milk
+
+Tested each 3 hours. 每3h测一次  
+Record 0-12h fermentation process. 记录发酵过程
+15h~24h is refrigeration after fermentation. 15h~24h 是发酵后冷藏过程
+
+Class labels：0-8 for 0h, 3h, 6h, ... 24h 
+
+Each class has 60 samples. 
+Instrument: Thermo Fisher DXR2 Raman spectrometer
+
+Usage: 
+[1] Either of yogurt_tsa_A or yogurt_tsa_B can be used alone for tsa (time series analysis).
+[2] You can also combine yogurt_tsa_A and yogurt_tsa_B to form a multi-label/multi-task dataset. 
+T1 for time and T2 for brand. 
