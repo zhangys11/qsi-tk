@@ -5,7 +5,8 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.cross_decomposition import PLSRegression
 from sklearn.linear_model import LogisticRegressionCV, LassoCV, ElasticNetCV, MultiTaskLassoCV, MultiTaskElasticNetCV
-from sklearn.feature_selection import chi2, f_classif, mutual_info_classif
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.feature_selection import chi2, f_classif, mutual_info_classif, RFE
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from scipy.fftpack import fft, dct
 import IPython.display
@@ -316,6 +317,23 @@ def multitask_elastic_net_fs(X, y, X_names=None, N=30, display=True, verbose=Tru
 
     return __fs__(X, np.abs(clf.coef_), X_names, N, display)
 
+def rfe_fs(X, y, X_names=None, N=30, clf=None, display=True):
+    '''
+    Feature ranking with recursive feature elimination.
+    Need to specify a model. Default is None, will use DTC.
+
+    TODO: Code needs test in future.   
+    '''
+
+    if clf is None:
+        clf = DecisionTreeClassifier()
+
+    rfe = RFE(estimator=clf, n_features_to_select=N)
+    # fit the model
+    rfe.fit(X, y)
+    # transform the data
+    X = rfe.transform(X)
+    return X, np.where(rfe.support_), -rfe.ranking_[np.where(rfe.support_)]
 
 def fsse_fs(X, y, X_names=None, N=30, base_learner=ensemble.create_elmcv_instance,
             WIDTHS=[1, 2, 10, 30], ALPHAS=[0.5, 0.75, 1.0], display=True, verbose=True):

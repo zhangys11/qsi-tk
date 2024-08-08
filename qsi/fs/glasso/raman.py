@@ -157,7 +157,7 @@ def load_raman_peak_list(json_file = None):
     '''
 
     if json_file is None:
-        json_file = os.path.realpath(__file__).replace('.py', '.json')
+        json_file = os.path.dirname(__file__) + '/raman.json' # os.path.realpath(__file__).replace('.pyc', '.json').replace('.py', '.json')
 
     with open(json_file, encoding="utf-8") as f:
         raman_peak_list = json.load(f)

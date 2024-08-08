@@ -56,6 +56,7 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'salt': ('7545.csv', ',', True, '7545 desc.txt', ["well salt", "sea salt"], 200),
                'mouse_omics': ('metabolomics.txt', '\t', True, 'metabolomics desc.txt', ["control", "experiment"], 50000000),
                'ovarian_cancer_ms': ('ovarian-cancer-nci-pbsii-data.csv', ',', True, 'ovarian cacner desc.txt', ["normal", "cancer"], 1),
+               'milk_source': ('milk_source_raman_C6.csv', ',', True, 'milk_source_raman_C6 desc.txt', ["Baffalo", "Cow", "Goat", "Yak", "Cow2", "Camel"], 2000),               
                'yogurt_source': ('yogurt_raman_C4.csv', ',', True, 'yogurt_raman_C4 desc.txt', ["Cow", "Goat", "Yak", "Buffalo"], 2000),               
                'raspberry': ('raspberry.csv', ',', True, 'raspberry desc.txt', ["安徽", "安吉", "淳安", "磐安", "武义"], 2000),
                'milk_adulteration': ('adulteration.CSV', ',', True, 'adulteration desc.txt', ["0", "0.01", "0.02", "0.05", "0.1", "0.2", "0.4", "0.6", "0.8", "1"], 800),       
