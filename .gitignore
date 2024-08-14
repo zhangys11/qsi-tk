@@ -2,7 +2,6 @@ build/
 dist/
 *.egg-info/
 *.pyc
-notebook/.ipynb_checkpoints/
 notebook/小鼠肾脏代谢组学.xlsx
 notebook/ctgan.csv
 notebook/kde.csv
@@ -10,5 +9,5 @@ notebook/smote.csv
 notebook/vae.csv
 qsi/gui/*.csv
 qsi-tk-*
-/qsi/io/aug/.ipynb_checkpoints
 /dist
+**/.ipynb_checkpoints

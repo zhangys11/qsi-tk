@@ -1,6 +1,6 @@
-This dataset contains Raman spectra of plain yogurt products (contains no artificial flavouring or colouring) from 4 milk sources.
+This dataset contains Raman spectra of plain yogurt products (contains no artificial flavouring or colouring) of 4 bovine species.
 
-畅轻 label=0 牛奶 Cow
+畅轻 label=0 牛奶 Cattle
 盖元 label=1 山羊 Goat
 青海湖 label=2 牦牛 Yak
 水牛同学 label=3 水牛 Buffalo

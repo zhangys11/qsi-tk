@@ -1,10 +1,10 @@
-Fresh milk Raman spectra of 6 species 
+Fresh milk Raman spectra of 6 bovine species 
 
 Labels: 
 
-baifeilao 水牛 label=0
-guangming 牛 label=1
-mengyang 羊 label=2
-qinhaihu 牦牛 label=3
-telunsu 牛 label=4
-wangyuan 骆驼 label=5
+baifeilao 水牛 label=0 Buffalo
+guangming 牛 label=1 Cattle
+mengyang 羊 label=2 Goat
+qinhaihu 牦牛 label=3 Yak
+telunsu 牛 label=4 Cattle2
+wangyuan 骆驼 label=5 Camel
