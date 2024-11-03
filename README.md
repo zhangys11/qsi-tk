@@ -21,10 +21,10 @@ This package is a master library containing various previous packages published 
         </tr>
         <tr>
             <td colspan = 1 rowspan = 3>qsi.io</td>
-            <td>
+            <td>qsi.io.load</td>
             <td>File I/O, Dataset loading</td>
             <td></td>
-            <td>TODO qsi-tk open datasets with algorithms</td>
+            <td>Provides 40+ open datasets. 15+ with publications</td>
         </tr>
         <tr>
             <td colspan = 1>qsi.io.aug</td>
@@ -34,9 +34,9 @@ This package is a master library containing various previous packages published 
         </tr>
         <tr>
             <td>qsi.io.pre</td>
-            <td>Data processing, e.g., channel alignment and 1D-laplacian kernel fs for e-nose data; x-binning, baseline removal for TOF MS.</td>
+            <td>Data preprocessing, e.g., window filter, x-binning, baseline removal.</td>
             <td></td>
-            <td>TODO</td>
+            <td>Enhanced data preprocessing with novel window function in Raman spectroscopy: Leveraging feature selection and machine learning for raspberry origin identification [J]. Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy. 2024. doi: 10.1016/j.saa.2024.124913</td>
         </tr>
         <tr>
             <td colspan = 2>qsi.vis</td>
@@ -62,15 +62,16 @@ This package is a master library containing various previous packages published 
         </tr>
         <tr>
             <td colspan = 1>qsi.fs.nch_time_series_fs</td>
-            <td>multi-channel enose data fs with 1d-laplacian conv kernel</td>
+            <td>channel alignment for e-nose; multi-channel e-nose/e-tongue data fs with 1d-laplacian conv kernel</td>
             <td></td>
-            <td>基于电子鼻和一维拉普拉斯卷积核的奶粉基粉产地鉴别</td>
+            <td rowspan=2>基于电子鼻和一维拉普拉斯卷积核的奶粉基粉产地鉴别
+            <br/>
+            Machine learning-assisted MALDI-TOF MS toward rapid classification of milk products[J]. Journal of Dairy Science, 2024, doi:10.3168/jds.2024-24886</td>
         </tr>
         <tr>
             <td>qsi.fs.glasso</td>
             <td>Structured-fs of Raman data with group lasso</td>
             <td></td>
-            <td>in progress</td>
         </tr>
         <tr>
             <td colspan = 2>qsi.kernel</td>
@@ -104,7 +105,10 @@ This package is a master library containing various previous packages published 
             <td>qsi.cla.ensemble</td>
             <td>homo-stacking, hetero-stacking, FSSE</td>
             <td rowspan = 3>pyNNRW</td>
-            <td rowspan = 3>Spectroscopic Profiling-based Geographic Herb Identification by Neural Network with Random Weights [J]. Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy, 2022, doi: 10.1016/j.saa.2022.121348</td>
+            <td rowspan = 3>Spectroscopic Profiling-based Geographic Herb Identification by Neural Network with Random Weights [J]. Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy, 2022, doi: 10.1016/j.saa.2022.121348
+            <br/>
+            Geographical origin identification of dendrobium officinale based on NNRW-stacking ensembles. Machine Learning with Applications [J]. 2024. doi: 10.1016/j.mlwa.2024.100594
+            </td>
         </tr>
         <tr>
             <td>qsi.cla.kernel</td>
@@ -113,6 +117,13 @@ This package is a master library containing various previous packages published 
         <tr>
             <td>qsi.cla.nnrw</td>
             <td>neural networks with random weights</td>
+        </tr>
+        <tr>
+            <td rowspan = 1>qsi.regress</td>
+            <td></td>
+            <td>Regression algorithms, e.g., GW-KNNR (Gaussian-weighted K-nearest neighbor regressor).</td>
+            <td></td>
+            <td>in progress</td>
         </tr>
         <tr>
             <td rowspan = 1>qsi.pipeline</td>
@@ -124,7 +135,9 @@ This package is a master library containing various previous packages published 
         <tr>
             <td rowspan = 1>qsi.gui</td>
             <td></td>
-            <td colspan = 3>Web-based apps. e.g., `python -m qsi.gui.chaihu` will launch the app for bupleurum origin discrimination.</td>
+            <td>Web-based apps. e.g., `python -m qsi.gui.chaihu` will launch the app for bupleurum origin discrimination.</td>
+            <td></td>
+            <td>Rapid Raman Spectroscopy Analysis Assisted with Machine Learning: A Case Study on Radix Bupleuri[J], Journal of the Science of Food and Agriculture, 2024. doi:10.1002/jsfa.14012</td>
         </tr>
     </tbody>
 </table>

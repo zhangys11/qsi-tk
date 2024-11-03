@@ -8,4 +8,8 @@
 
 覆盆子（raspberry, Rubus idaeus L.），蔷薇科属灌木植物，高1—2米；幼枝被柔毛，疏生皮刺，叶长卵形或椭圆形；花瓣匙形，被短柔毛或无毛，白色；果近球形，成熟时红或橙黄色，密被短绒毛；核具洼孔；花期5—6月，果期8—9月。 [1]《本草衍义》中记载覆盆子“益肾脏，缩小便，服之当覆其溺器，如此取名也”。
 覆盆子有很多别名，例如：悬钩子、掌叶覆盆子、覆盆、覆盆莓、树梅、树莓、野莓、木莓等。
-覆盆子在《本经》《名医别录》等典籍记载中具有益肾固精缩尿、养肝明目、抗癌、抗氧化、抗衰老、抗菌抗炎等作用，常用于遗精滑精、遗尿尿频、阳痿早泄、目暗昏花等症状。覆盆子还可作盆栽，具有很高的观赏价值。 [12-13]2020版《中国药典》规定覆盆子为华东覆盆子的干燥果实。覆盆子作为传统中药材被应用于中医领域已有几个世纪的历史，曾被世界粮农组织（FAO）推荐为第三代黄金水果，是一种优良的果树资源，有较大的开发利用价值。 
+覆盆子在《本经》《名医别录》等典籍记载中具有益肾固精缩尿、养肝明目、抗癌、抗氧化、抗衰老、抗菌抗炎等作用，常用于遗精滑精、遗尿尿频、阳痿早泄、目暗昏花等症状。覆盆子还可作盆栽，具有很高的观赏价值。 [12-13]2020版《中国药典》规定覆盆子为华东覆盆子的干燥果实。覆盆子作为传统中药材被应用于中医领域已有几个世纪的历史，曾被世界粮农组织（FAO）推荐为第三代黄金水果，是一种优良的果树资源，有较大的开发利用价值。
+
+-----------------------------------
+If you use this dataset, cite this article:  
+[1] Y. Zhao, W. Lv, Y. Zhang, M. Tang, H. Wang, Enhanced data preprocessing with novel window function in Raman spectroscopy: Leveraging feature selection and machine learning for raspberry origin identification, Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy 323 (2024) 124913. https://doi.org/10.1016/j.saa.2024.124913.

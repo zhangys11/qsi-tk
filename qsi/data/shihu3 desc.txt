@@ -15,4 +15,4 @@ A total of 100 samples were collected from Pan'an, 50 from Wenzhou, and 50 from 
 This dataset is collected in June 2023. 
 --------------------
 If you use this data set, please add the reference: 
-[1] Origin identification of dendrobium officinale based on NNRW-stacking ensembles
+[1] Geographical origin identification of dendrobium officinale based on NNRW-stacking ensembles. Machine Learning with Applications [J]. 2024. 10.1016/j.mlwa.2024.100594
