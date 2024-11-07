@@ -62,6 +62,9 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'milk_adulteration': ('adulteration.CSV', ',', True, 'adulteration desc.txt', ["0", "0.01", "0.02", "0.05", "0.1", "0.2", "0.4", "0.6", "0.8", "1"], 800),       
                'yogurt_fermentation_a': ('yogurt_tsa_A.CSV', ',', True, 'yogurt_tsa desc.txt', ["0h", "3h", "6h", "9h", "12h", "15h", "18h", "21h", "24h"], 400),
                'yogurt_fermentation_b': ('yogurt_tsa_B.CSV', ',', True, 'yogurt_tsa desc.txt', ["0h", "3h", "6h", "9h", "12h", "15h", "18h", "21h", "24h"], 400),
+               'rice_starch': ('rice_starch.CSV', ',', True, 'rice_starch desc.txt', [], 800),  
+               'milk_coconut_nir': ('milk_coconut_powder.csv', ',', True, 'milk_coconut_powder desc.txt', ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1"], .2),  
+               #'wheat_gluten'
                }
 
 

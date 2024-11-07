@@ -1,0 +1,5 @@
+拉曼无损快速检测大米直链淀粉
+
+淀粉含量采用《GBT 15683-2008 大米 直链淀粉含量的测定》测定
+
+This dataset is provided by NUFE.

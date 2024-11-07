@@ -6,10 +6,10 @@ Provide functions to synthesize multiple scan files into one csv file suitable f
 import os
 import csv
 import pandas as pd
-
-def merge_files(folder_path, output_path):
+def merge_files(folder_path, output_path, header = None):
     '''
-    Merge multiple scan files into one dataset (save as csv)
+    Merge multiple scan files into one dataset (save as csv). 
+    If there are leading metadata lines. Skip them by passing header = N.
 
     Example
     -------
@@ -18,25 +18,24 @@ def merge_files(folder_path, output_path):
     '''
 
     # 获取目标文件夹下的所有csv文件路径
-    csv_files = [file for file in os.listdir(folder_path) if file.endswith('.CSV')]
-    print(csv_files)
+    csv_files = [file for file in os.listdir(folder_path) if file.upper().endswith('.CSV') or file.upper().endswith('.TXT')]
+    # print(csv_files)
     # 创建一个空的DataFrame用于存储整合后的数据
     merged_data = pd.DataFrame()
 
     # 逐个读取csv文件并整合到merged_data中
     for file in csv_files:
         file_path = os.path.join(folder_path, file)
-        data = pd.read_csv(file_path, header=None)
+        print(file_path)
+        data = pd.read_csv(file_path, header=header)
         merged_data = pd.concat([data,merged_data,], axis=1, ignore_index=True)
     #print(merged_data)
 
     # 转置处理
     merged_data = merged_data.transpose()
-    
 
     # 填充缺失值为0
     merged_data = merged_data.fillna(0)
-    
 
     # 在第一行之前插入一行，值由原来的第一行的值赋
     merged_data.loc[-1] = merged_data.iloc[0]
@@ -53,7 +52,6 @@ def merge_files(folder_path, output_path):
 
     # 保存整合好的数据到输出文件
     merged_data.to_csv(output_path, index=False,header=None)
-    print(merged_data)
 
 
 def merge_multiple_datasets(file_list, output_file):

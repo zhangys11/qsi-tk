@@ -1,0 +1,15 @@
+Near-infrared (NIR) spectra of milk powder adulterated with different percentages of coconut powder.
+
+coconut milk0% label=0
+coconut milk10% label=1
+coconut milk20% label=2
+coconut milk30% label=3
+coconut milk40% label=4
+coconut milk50% label=5
+coconut milk60% label=6
+coconut milk70% label=7
+coconut milk80% label=8
+coconut milk90% label=9
+coconut milk100% label=10
+
+Source: internet.
