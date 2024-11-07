@@ -30,24 +30,23 @@ def draw_regression_plots(yt, yp, title, order=False):
         yt = np.array(yt)
         
     # scatter plot
-    plt.figure()
+    plt.figure(figsize = (20,6))
+    plt.subplot(1,3,1)
     plt.title(title + '\n' + 'R2 =' + str(round(r2_score(yt, yp),3)) + ', MSE =' + str(round(mean_squared_error(yt, yp),3)))
     plt.scatter(range(len(yt)), yt, label = 'ground truth')
     plt.scatter(range(len(yp)), yp, label='prediction')
     plt.legend()
-    plt.show()
 
     # diagonal scatter plot 
-    plt.figure(figsize = (6,6))
+    plt.subplot(1,3,2)
     plt.scatter(yt, yp)
     plt.xlabel('True Values')
     plt.ylabel('Predictions')
-    plt.show()
+    plt.title('Diagonal scatter plot')
     
     # residual plot
     residuals = yp-yt
-    plt.figure()
-    # print(yp.shape, yt.shape, residuals.shape)
+    plt.subplot(1,3,3)
     plt.scatter(yt, residuals)
     plt.xlabel('True values')
     plt.ylabel('Residuals')
@@ -141,12 +140,13 @@ def run_regressors(X_train, X_val, X_test, y_train, y_val, y_test,
 
             lr = LinearRegression()
             yp = lr.fit(X_train, y_train).predict(X_test)
-            y_pred_train = lr.predict(X_train)            
+            y_pred_train = lr.predict(X_train)  
+            best_hparam = 'N/A'
 
         elif clf_name == 'ridge':
             from sklearn.linear_model import Ridge
 
-            hparams = [.1, 10, 1000, 100000, 10000000]
+            hparams = [.000000001, .000001, .0001, .001, .1, 10, 1000, 100000, 10000000]
             val_scores = []
             for alpha in hparams:
                 ridge = Ridge(alpha = alpha).fit(X_train, y_train)
@@ -167,7 +167,7 @@ def run_regressors(X_train, X_val, X_test, y_train, y_val, y_test,
         elif clf_name == 'LASSO':
             from sklearn.linear_model import Lasso, LassoCV
 
-            hparams = [.001, .01, .1, 10, 100, 1000]
+            hparams = [.000000001, .000001, .0001, .001, .01, .1, 10, 100, 1000]
             val_scores = []
             for alpha in hparams:
                 lasso = Lasso(alpha = alpha).fit(X_train, y_train)
@@ -225,7 +225,7 @@ def run_regressors(X_train, X_val, X_test, y_train, y_val, y_test,
             from sklearn.ensemble import RandomForestRegressor
 
             # Each run is random. The result is very unstable
-            Ns = [1, 2, 3, 5, 10, 20, 50, 100]
+            Ns = [1, 2, 3, 5, 10, 20, 50, 100, 200]
             val_scores = []
             for N in Ns:
                 rf_regressor = RandomForestRegressor(n_estimators = N, max_depth = 2).fit(X_train, y_train)
@@ -308,14 +308,14 @@ def run_regressors(X_train, X_val, X_test, y_train, y_val, y_test,
         else:
             print('Undefined regression model: ' + clf_name)
 
-        dic_metrics[clf_name] = round(r2_score(y_test, yp), 3), round(mean_squared_error(y_test, yp),3) # save R2 and MSE to dict
+        dic_metrics[clf_name] = best_hparam, round(r2_score(y_test, yp), 3), round(mean_squared_error(y_test, yp),3) # save R2 and MSE to dict
         draw_regression_plots(y_test, yp, title = clf_name, order=order)
         if verbose:
             print('Training set R2: ', r2_score(y_train, y_pred_train))
             print('Test set R2:', r2_score(y_test, yp))
 
     display(HTML('<h2>Summary</h2>'))
-    tbl_html = '<table><tr><th>Regressor</th><th>R2</th><th>MSE</th></tr>'
+    tbl_html = '<table><tr><th>Regressor</th><th>best hparam</th><th>R2</th><th>MSE</th></tr>'
     for k,v in dic_metrics.items():
-        tbl_html += '<tr><td>'+str(k)+'</td><td>'+str(v[0])+'</td><td>'+str(v[1])+'</td></tr>'
+        tbl_html += '<tr><td>'+str(k)+'</td><td>'+str(v[0])+'</td><td>'+str(v[1])+'</td><td>'+str(v[2])+'</td></tr>'
     display(HTML( tbl_html + '</table>'))
