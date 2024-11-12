@@ -14,7 +14,7 @@ def expand_dataset(X, y, nobs,
     batch_size : default to 500. MUST be N * pac. pac (int) is the number of samples to group together when applying the discriminator. (Defaults to 10)
     '''
     
-    train_data = pd.concat([X, y], axis=1)
+    train_data = pd.concat([pd.DataFrame(X), pd.DataFrame(y)], axis=1)
     conditions = [train_data.columns[-1]]
     
     ctgan = CTGAN(batch_size=batch_size,

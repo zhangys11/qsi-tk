@@ -1,0 +1,78 @@
+
+Raman spectra of four fritillariae bulbus (FB) species
+
+fritillariae bulbus (FB): 川贝为百合科植物川贝母、暗紫贝母、甘肃贝母、梭砂贝母的干燥鳞茎。 主治虚劳咳嗽，吐痰咯血，心胸郁结，肺痿，肺痈，瘿瘤，廉疬，喉痹，乳痈。
+归肺经；心经
+主治：清热润肺，散结，化痰止咳。治虚劳咳嗽，吐痰咯血，心胸郁结，肺痿，肺痈，瘿瘤，廉疬，喉痹，乳痈。
+
+This dataset contains 4 classes: 
+
+炉贝 lubei-yesheng       label=0 （样本50）
+青贝 qingbei-yesheng     label=1 （样本51）
+松贝 songbei-yesheng     label=2 （样本50）
+太白贝母 taibaibeimu-yesheng label=3 （样本50）
+
+Description of the four species: 
+
+1、炉贝
+
+干燥鳞茎，呈长圆锥形如马齿，顶端尖，高1～2厘米，直径约1～1．5厘米。
+外表白色或黄白色而有深黄色斑点，形成虎纹，习称"虎皮贝"。
+外层2鳞叶大小相等，顶端开裂，基部较尖或圆。断面均显粉白色，粉质而较坚。气微弱，味淡。
+以质坚实、色白者为佳。
+主产四川（昌都）、云南（德钦、大理），品质次于松贝、青贝。
+
+2、青贝
+
+干燥鳞茎，呈扁球形或略呈圆锥形，颗粒多歪曲，高5～10毫米，直径1～1．6厘米。
+外表色白微黄，顶端开裂，平或略尖，外层2鳞叶大小几乎相等，墓部常残留须根。
+断面粉白色，颗粒性，富粉性而坚实。
+气无，味淡。以粒小均匀、色洁白、粉性足者为佳。
+主产青海、四川和云南交界处，品质亦优。
+
+3、松贝
+
+干燥鳞茎，全体呈圆锥形，顶端尖或微尖，直径4～12毫米。
+表面白色诚淡黄色，外围为2瓣鳞叶，1瓣大，略呈马蹄形，1瓣小，略呈披针形，相对抱合，其内包有小鳞叶数枚。
+底部中央，有一细小而坚硬的鳞茎盘，其下残留少数须根痕。不论颗粒大小，均能端正起立，顶端均不开裂。
+质硬而脆，富粉性，断面白色，呈颗粒状。气微弱，味微苦。以质坚实，颗粒均匀整齐、顶端不开裂、
+色洁白、粉性足者为佳。
+主产四川（阿坝藏族自治州），为川贝中之最优品。
+
+4. 太白贝母 国家地理标志保护产品。产地： 陕西省宝鸡市太白县。
+太白贝母太白贝母多年生草本，高30～50cm。花黄绿色，无方格斑，花被片先端边缘有紫色斑带，叶关苞片不卷曲。
+鳞茎扁卵圆形或圆锥形，直径0.6～1.2cm，高4～8mm。表面白色，较光滑。外层两枚鳞叶近等大，顶端开裂，底部平整。
+味苦。喜阴凉湿润气候，耐寒、怕炎热、怕干旱、怕污水。以土质结构疏松、透水性良好、含腐殖质高的黑沙土上生长最好。
+适宜的生长温度为5～24℃。一般生长在土层深厚，土壤肥沃，富含腐殖质的山坡草地和山脊。 
+
+The instrument is a Thermo Fisher DXR2 Raman spectrometer. 
+COLLECTION AND PROCESSING INFORMATION
+Title: Position X =-12643 Y = 6208, Signal to noise ratio =24.6
+Collected: Wed Mar 23 14:18:22 2022 (GMT+08:00)
+Comments: 
+Custom info 1: 
+Custom info 2: 
+DATA DESCRIPTION
+ Number of points: 1682
+ X-axis: Raman shift (cm-1)
+ Y-axis: Raman intensity
+ First X value: 49.6820
+ Last X value: 3291.4346
+ Raman laser frequency: 12738.9932
+ Data spacing: 1.928467
+DATA COLLECTION INFORMATION
+ Exposure time: 0.1429 sec
+ Number of exposures: 600
+ Number of background exposures: 600
+SPECTROMETER DESCRIPTION
+ Spectrometer: DXR Raman Microscope
+ Bench serial number: AXX1916142
+ Laser: 785 nm
+ Laser serial number: BAB1910322
+ Laser power level: 19.0 mW
+ Filter: 785 nm
+ Filter serial number: BAL1910361
+ Grating: 400 lines/mm
+ Grating serial number: BAC1910373
+ Spectrograph aperture: 50 µm pinhole
+ Camera at temperature

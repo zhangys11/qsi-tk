@@ -163,8 +163,8 @@ def unsupervised_dimension_reductions(X, y, legends = None):
             W,_,_,_ = mf.mf(X, k = 2, alg = alg, display = False) # some MFDR algs (e.g., NMF) require non-negative X
             plot_components_2d(W, y, labels, legends=legends, ax=ax)
         except Exception as e:
-            # if kernel PCA throws exception, print the error message
-            ax.text(0.01,0.5, alg + ' exception: ' + str( getattr(e, 'message', repr(e) ) ) )    
+            # if throws exception, print the error message
+            ax.text(0.01,0.5, str( getattr(e, 'message', repr(e) ) ) )    
         ax.set_title(alg)
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
