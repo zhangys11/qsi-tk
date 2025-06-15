@@ -30,7 +30,7 @@ This package is a master library containing various previous packages published 
             <td colspan = 1>qsi.io.aug</td>
             <td>Data augmentation, e.g., generative models</td>
             <td></td>
-            <td>TODO Data aug with deep generative models. e.g., " variational autoencoders, generative adversarial networks, autoregressive models, KDE, normalizing flow models, energy-based models, and score-based models. "</td>
+            <td>Data aug with deep generative models. e.g., " variational autoencoders, generative adversarial networks, autoregressive models, KDE, normalizing flow models, energy-based models, and score-based models. "</td>
         </tr>
         <tr>
             <td>qsi.io.pre</td>
@@ -58,20 +58,26 @@ This package is a master library containing various previous packages published 
             </td>
         </tr>
         <tr>
-            <td colspan = 1 rowspan = 3>qsi.fs</td>
+            <td colspan = 1 rowspan = 4>qsi.fs</td>
         </tr>
         <tr>
-            <td colspan = 1>qsi.fs.nch_time_series_fs</td>
+            <td>qsi.fs.nch_time_series_fs</td>
             <td>channel alignment for e-nose; multi-channel e-nose/e-tongue data fs with 1d-laplacian conv kernel</td>
             <td></td>
-            <td rowspan=2>基于电子鼻和一维拉普拉斯卷积核的奶粉基粉产地鉴别
-            <br/>
-            Machine learning-assisted MALDI-TOF MS toward rapid classification of milk products[J]. Journal of Dairy Science, 2024, doi:10.3168/jds.2024-24886</td>
+            <td>基于电子鼻和一维拉普拉斯卷积核的奶粉基粉产地鉴别,2024,doi: 10.13982/j.mfst.1673-9078.2024.5.0299
+            </td>
         </tr>
         <tr>
             <td>qsi.fs.glasso</td>
             <td>Structured-fs of Raman data with group lasso</td>
-            <td></td>
+            <td />
+            <td>Cheese brand identification with Raman spectroscopy and sparse group LASSO [J], Journal of Food Composition and Analysis, 2025, doi: 10.1016/j.jfca.2025.107371</td>
+        </tr>
+        <tr>
+            <td>qsi.fs.mtlasso</td>
+            <td>Multi-task feature selection for yogurt fermentation analysis</td>
+            <td />
+            <td>Studying yogurt fermentation dynamics using multi-task feature selection, 2025, 2nd-round review</td>
         </tr>
         <tr>
             <td colspan = 2>qsi.kernel</td>
@@ -123,14 +129,17 @@ This package is a master library containing various previous packages published 
             <td></td>
             <td>Regression algorithms, e.g., GW-KNNR (Gaussian-weighted K-nearest neighbor regressor).</td>
             <td></td>
-            <td>in progress</td>
+            <td>Quantification of Cow Milk in Adulterated Goat Milk Using Raman Spectroscopy and Machine Learning, 2025, 3rd-round review</td>
         </tr>
         <tr>
             <td rowspan = 1>qsi.pipeline</td>
             <td></td>
             <td>General data analysis pipelines.</td>
             <td></td>
-            <td></td>
+            <td>
+            Building an Information Infrastructure of Spectroscopic Profiling Data for Food-Drug Quality and Safety Management [J]. Enterprise Information Systems, 2019, doi: 10.1080/17517575.2019
+            <br/>
+            Machine learning-assisted MALDI-TOF MS toward rapid classification of milk products[J]. Journal of Dairy Science, 2024, doi:10.3168/jds.2024-24886</td>
         </tr>
         <tr>
             <td rowspan = 1>qsi.gui</td>
