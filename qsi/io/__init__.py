@@ -158,7 +158,7 @@ def open_dataset(path, delimiter=',', has_y=True, labels=None, x_range=None, y_s
         y = np.array(range(len(labels)))
         X = df.iloc[:,1:].values.T        
 
-    if 'wheat_glutten.xls' in path:
+    elif 'wheat_glutten.xls' in path:
 
         file_path, sheetX, sheetY = path.split(",")
         X = pd.read_excel(file_path, sheet_name=int(sheetX))
