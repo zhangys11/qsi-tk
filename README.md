@@ -1,6 +1,8 @@
-# spa-tk (originally qsi-tk)
+# qsi-tk (obselete) 
 
- Data science toolkit (TK) for spectroscopic profiling signals/data from Quality-Safety research Institute (QSI)
+* This project has been moved to [spa](https://github.com/zhangys11/spa) for future maintenance.
+
+Data science toolkit (TK) for spectroscopic profiling signals/data from Quality-Safety research Institute (QSI)
 
 # Installation
 
