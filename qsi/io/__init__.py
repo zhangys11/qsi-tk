@@ -24,6 +24,7 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                's4_formula_c2': ('7341_C2.csv', ',', True, '7341_C2 desc.txt', ['Brand 1', 'Brand 2'], 1000),
                's4_formula_c3': ('7341.csv', ',', True, '7341 desc.txt', ['Brand 1', 'Brand 2', 'Brand 3'], 1000),
                'milk_tablet_candy': ('734b.csv', ',', False, '734b desc.txt', ['Compressed Milk Tablet Candy'], 200),
+               'milk_tablet_candy_c4': ('734b_c4.csv', ',', False, '734b_c4 desc.txt', ["AD钙奶片","乳酸奶片","牛初乳奶片","营养奶片"], 200),
                'yogurt_brand': ('7346.csv', ',', True, '7346 desc.txt', ["YL", "GM", "WQ", "MN"], 200),
                'goat_milk_formula': ('7635.csv', ',', False, '7635 desc.txt', ['Goat Milk Formula '], 200),
                'vintage': ('7344.txt', '\t', False, '7344 desc.txt', ['8-year vintage'], 200),
@@ -65,8 +66,12 @@ DATASET_MAP = {'s4_formula': ('7341_C1.csv', ',', False, '7341_C1 desc.txt', ['S
                'yogurt_fermentation_a': ('yogurt_tsa_A.CSV', ',', True, 'yogurt_tsa desc.txt', ["0h", "3h", "6h", "9h", "12h", "15h", "18h", "21h", "24h"], 400),
                'yogurt_fermentation_b': ('yogurt_tsa_B.CSV', ',', True, 'yogurt_tsa desc.txt', ["0h", "3h", "6h", "9h", "12h", "15h", "18h", "21h", "24h"], 400),
                'rice_starch': ('rice_starch.CSV', ',', True, 'rice_starch desc.txt', [], 800),  
+               'grapevine_nir': ('vergalijo_20_varieties.csv', ',', True, 'vergalijo_20_varieties desc.txt', ["Albariño", "Cabernet Franc", "Cabernet Sauvignon", "Caladoc", "Carmenere", "Godello", "Grenache", "Malvasia", "Marselan", "Pedro Ximénez", "Pinot Noir", "Syrah", "Tempranillo", "Touriga Nacional", "Treixadura", "Verdejo", "Viognier", "Viura", "White Grenache", "White Tempranillo"], .2),  
                'milk_coconut_nir': ('milk_coconut_powder.csv', ',', True, 'milk_coconut_powder desc.txt', ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1"], .2),  
-               #'wheat_gluten'
+               'wheat_glutten_seed_vis': ('wheat_glutten.xls,0,4', ',', True, 'wheat_glutten desc.txt', [], 800),
+               'wheat_glutten_powder_vis': ('wheat_glutten.xls,1,4', ',', True, 'wheat_glutten desc.txt', [], 800),
+               'wheat_glutten_seed_nir': ('wheat_glutten.xls,2,4', ',', True, 'wheat_glutten desc.txt', [], 800),
+               'wheat_glutten_powder_nir': ('wheat_glutten.xls,3,4', ',', True, 'wheat_glutten desc.txt', [], 800),
                }
 
 
@@ -151,8 +156,16 @@ def open_dataset(path, delimiter=',', has_y=True, labels=None, x_range=None, y_s
         X_names = df.iloc[:,0].values.tolist()
         labels = df.columns.values[1:].tolist()
         y = np.array(range(len(labels)))
-        X = df.iloc[:,1:].values.T
-        
+        X = df.iloc[:,1:].values.T        
+
+    if 'wheat_glutten.xls' in path:
+
+        file_path, sheetX, sheetY = path.split(",")
+        X = pd.read_excel(file_path, sheet_name=int(sheetX))
+        X_names = list(X.columns)
+        X = X.values
+        y = pd.read_excel(file_path, sheet_name=int(sheetY)).iloc[:,-1].values
+    
     elif ext == '.pkl':
 
         with open(path, 'rb') as f:
@@ -395,7 +408,7 @@ def draw_class_average(X, y, X_names, labels=None, SD=1, shift=200, output_html=
 
         if SD == 0:
             plt.plot(X_names, np.mean(Xc, axis=0) + c*shift,
-                     label='Class ' + str(c) + ' (' + str(len(yc)) + ' samples)')
+                     label=label + ' (' + str(len(yc)) + ' samples)')
 
         else:  # show +/- std errorbar
             plt.errorbar(X_names, Xc.mean(axis=0) + shift*c, Xc.std(axis=0)*SD,
@@ -436,7 +449,7 @@ def draw_class_average_3d(X, y, X_names, labels=None, view_point = (30,-50)):
     view_point : tuple, the view point of the 3D plot.
     '''
 
-    matplotlib.rcParams.update({'font.size': 15, 'font.family': 'Times New Roman', 'figure.dpi': 400})
+    matplotlib.rcParams.update({'font.size': 15, 'figure.dpi': 400})
     
     fig = plt.figure(figsize=(24, 10))
 
