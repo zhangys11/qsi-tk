@@ -12,8 +12,8 @@ from sklearn.feature_selection import SelectFromModel
 from sklearn.model_selection import train_test_split, GridSearchCV
 from scipy.signal import savgol_filter
 
-from cla import metrics
 from . import io
+from .cla import run_multiclass_clfs
 from .vis import supervised_dimension_reductions, unsupervised_dimension_reductions
 from .fs import RUN_ALL_FS
 
@@ -172,7 +172,7 @@ def analyze_dataset(X, y, X_names, fs_output = '', fs_feature_num = 30, cla_feat
     print('X_mm_scaled is rescaled to [0,1]. We use X_mm_scaled in DR and FS.')
 
     IPython.display.display(IPython.display.HTML('<hr/><h2>尝试各类常用分类器(支持多分类)</h2>'))
-    _ = metrics.run_multiclass_clfs(X, y)
+    _ = run_multiclass_clfs(X, y)
 
     IPython.display.display(IPython.display.HTML('<hr/><h2>降维 Dimensionality Reduction</h2>'))
 
@@ -231,7 +231,7 @@ More importantly, it makes the estimated coefficients impossible to interpret. I
     
     IPython.display.display(IPython.display.HTML('<hr/><h2>对筛选后的特征进行分类 Classification on Selected Features</h2><h3>超参数优化及模型选择 Hyper-parameter Optimization （SVM）</h3>'))
     
-    _ = metrics.run_multiclass_clfs(X_s, y)
+    _ = run_multiclass_clfs(X_s, y)
 
     if len(set(y)) == 2: # show decision boundary for binary classification
 

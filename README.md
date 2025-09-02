@@ -1,6 +1,6 @@
-# qsi-tk
+# spa-tk (originally qsi-tk)
 
- Data science toolkit (TK) from Quality-Safety research Institute (QSI)
+ Data science toolkit (TK) for spectroscopic profiling signals/data from Quality-Safety research Institute (QSI)
 
 # Installation
 
@@ -55,6 +55,8 @@ This package is a master library containing various previous packages published 
             Compressed Sensing library for spectroscopic profiling data [J]. Software Impacts, 2023, doi: 10.1016/j.simpa.2023.100492
             <br/>
             Secured telemetry based on time-variant sensing matrix – An empirical study of spectroscopic profiling, Smart Agricultural Technology, Volume 5, 2023, doi: 10.1016/j.atech.2023.100268
+            <br/>
+            Variational Auto-Encoder based Deep Compressed Sensing on Raman Spectroscopy [J]. Smart Agricultural Technology. 2025
             </td>
         </tr>
         <tr>
@@ -74,16 +76,23 @@ This package is a master library containing various previous packages published 
             <td>Cheese brand identification with Raman spectroscopy and sparse group LASSO [J], Journal of Food Composition and Analysis, 2025, doi: 10.1016/j.jfca.2025.107371</td>
         </tr>
         <tr>
-            <td>qsi.fs.mtlasso</td>
+            <td>qsi.fs.mt</td>
             <td>Multi-task feature selection for yogurt fermentation analysis</td>
             <td />
             <td>Studying yogurt fermentation dynamics using multi-task feature selection, 2025, 2nd-round review</td>
         </tr>
         <tr>
-            <td colspan = 2>qsi.kernel</td>
-            <td>kernels</td>
+            <td rowspan = 2>qsi.kernel</td>
+            <td>qsi.kernel.*</td>
+            <td>Implementation of 31 atom kernel types</td>
             <td>ackl</td>
             <td>Analytical chemistry kernel library for spectroscopic profiling data, Food Chemistry Advances, Volume 3, 2023, 100342, ISSN 2772-753X, https://doi.org/10.1016/j.focha.2023.100342.</td>
+        </tr>
+        <tr>
+            <td>qsi.kernel.mkl</td>
+            <td>Multi-kernel learning; PSO-MKL, GA-MKL</td>
+            <td></td>
+            <td>In progress</td>
         </tr>
         <tr>
             <td rowspan = 2>qsi.dr</td>
@@ -129,7 +138,7 @@ This package is a master library containing various previous packages published 
             <td></td>
             <td>Regression algorithms, e.g., GW-KNNR (Gaussian-weighted K-nearest neighbor regressor).</td>
             <td></td>
-            <td>Quantification of Cow Milk in Adulterated Goat Milk Using Raman Spectroscopy and Machine Learning, 2025, 3rd-round review</td>
+            <td>Quantification of Cow Milk in Adulterated Goat Milk Using Raman Spectroscopy and Machine Learning[J]. Microchemical Journal, 2025, doi: 10.1016/j.microc.2025.114319</td>
         </tr>
         <tr>
             <td rowspan = 1>qsi.pipeline</td>

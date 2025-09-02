@@ -14,7 +14,7 @@ setup(
 
     # Packages
     packages=["qsi", "qsi.fs", "qsi.fs.glasso", "qsi.gui", "qsi.gui.templates", "qsi.dr", "qsi.cla",
-              "qsi.vis", "qsi.io", "qsi.data", "qsi.io.aug"],
+              "qsi.vis", "qsi.io", "qsi.data", "qsi.io.aug", "qsi.mh"],
 
     # package_dir={'': 'qsi'},
     # package_dir={'qsi.dr': 'src/qsi/dr', 'qsi.cla': 'src/qsi/cla', 'qsi.vis': 'src/qsi/vis'},

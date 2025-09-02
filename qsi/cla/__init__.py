@@ -15,45 +15,25 @@ import cla
 assert( '__version__' in cla.__dict__ and cla.__version__ >= '1.1.7')
 '''
 
-import sys
-import os
-import math
-import re
-import json
-import scipy
 import matplotlib
 import matplotlib.pyplot as plt
-import matplotlib.ticker as mticker
 import numpy as np
-import pandas as pd
-import seaborn as sns
-from tqdm import tqdm
 import IPython.display
-
 from sklearn.metrics import *  # we use global() to access the imported functions
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
+from sklearn.linear_model import LogisticRegressionCV
 from sklearn.naive_bayes import BernoulliNB, GaussianNB, MultinomialNB
 from sklearn.tree import DecisionTreeClassifier # ExtraTreeClassifier only works in ensembles
 from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier, NearestCentroid
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
+from xgboost import XGBClassifier
 from sklearn.svm import LinearSVC, SVC
-# from scipy.integrate import quad
-from sklearn.decomposition import PCA
 from sklearn.model_selection import train_test_split, GridSearchCV, KFold
-from sklearn.feature_selection import mutual_info_classif, chi2
-from sklearn.preprocessing import OneHotEncoder
-from statsmodels.multivariate import manova
-from statsmodels.stats.contingency_tables import mcnemar, cochrans_q
-from pyNNRW.elm import ELMClassifier
-from pyNNRW.rvfl import RVFLClassifier
+# from pyNNRW.elm import ELMClassifier
+# from pyNNRW.rvfl import RVFLClassifier
 from ..io.pre import stratified_kennardstone_split
 from ..vis.plt2base64 import plt2html
-from ..vis.plot_components import plot_components_2d
-from ..vis.feature_importance import plot_feature_importance
-from ..vis.unsupervised_dimension_reductions import unsupervised_dimension_reductions
 from ..vis.confusion_matrix import plot_confusion_matrix
 
 # The following functions are copied from cla
@@ -81,18 +61,31 @@ def run_multiclass_clfs_presplit(X_train, y_train, X_test = None, y_test = None,
     # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=split, random_state = 2, stratify=y)
     dic_train_accs = {}
     dic_test_accs = {}
+    dic_train_precisions = {}
+    dic_test_precisions = {}
+    dic_train_recalls = {}
+    dic_test_recalls = {}    
+    dic_train_f1s = {}
+    dic_test_f1s = {}
 
     html_str = ''
     kfold = KFold(n_splits=min(3,len(y_train)), shuffle=True, random_state=cv_seed)
-    for base_learner, param_grid in zip( [GaussianNB(), DecisionTreeClassifier(), RandomForestClassifier(), 
-                LinearSVC(multi_class="crammer_singer"), LogisticRegressionCV (multi_class="multinomial", max_iter=1000), 
+    for base_learner, param_grid in zip( [GaussianNB(), DecisionTreeClassifier(), 
+                RandomForestClassifier(), AdaBoostClassifier(), GradientBoostingClassifier(), XGBClassifier(),
+                LinearSVC(multi_class="crammer_singer"), SVC(kernel='rbf'),
+                LogisticRegressionCV (multi_class="multinomial", max_iter=1000), 
                 MLPClassifier(), 
                 KNeighborsClassifier(), # NearestCentroid(),
                 LinearDiscriminantAnalysis(), 
                 # ELMClassifier(), RVFLClassifier()
                 ], 
-                [{}, {'max_depth': [1,2,3,4,5,10,20]}, {'n_estimators': list(range(2, max(10, n_classes)))},
-                 {'C': [0.01, 0.1, 1, 10]}, {},
+                [{}, {'max_depth': [1,2,3,4,5,10,20]}, 
+                 {'n_estimators': list(range(2, max(10, n_classes)))},
+                 {'n_estimators': list(range(2, max(10, n_classes)))},
+                 {'n_estimators': list(range(2, max(10, n_classes)))},
+                 {'n_estimators': list(range(2, max(10, n_classes)))},
+                 {'C': [0.01, 0.1, 1, 10]},{'C': [0.01, 0.1, 1, 10]},
+                 {},
                  {'hidden_layer_sizes': [(x,) for x in range(1, 102, 10)], 'alpha': [0.0001, 0.01, 1] },
                   {'n_neighbors': list(range(1, max(5, n_classes)))}, 
                   {},
@@ -116,7 +109,7 @@ def run_multiclass_clfs_presplit(X_train, y_train, X_test = None, y_test = None,
         y_pred = clf.predict(X_train) 
         dic_train_accs[str(clf)] = [clf.score(X_train, y_train)]
         report = '<p>top-1 acc on the training set = ' + str(round( clf.score(X_train, y_train), 3 )) + '</p>'        
-        
+
         if len(np.unique(y_train)) >= 8:
             y_score = np.eye(n_classes)[y_pred] # one-hot encoding, make sure y is 0-indexed.
             if hasattr(clf, 'predict_proba') and callable(clf.predict_proba):
@@ -128,6 +121,15 @@ def run_multiclass_clfs_presplit(X_train, y_train, X_test = None, y_test = None,
             report += '<p>top-3 acc = ' + str(round( top_k_accuracy_score(y_train, y_score, k=3),3)) + '</p>'
             report += '<p>top-5 acc = ' + str(round( top_k_accuracy_score(y_train, y_score, k=5),3)) + '</p>'
 
+        dic_train_precisions[str(clf)] = precision_score(y_train, y_pred, average='micro')
+        dic_train_recalls[str(clf)] = recall_score(y_train, y_pred, average='micro')
+        dic_train_f1s[str(clf)] = f1_score(y_train, y_pred, average='micro')
+        report += '<p>precision / recall / F1 score on the training set = ' \
+        + str(round( precision_score(y_train, y_pred, average='micro'), 3 )) + ' / ' \
+        + str(round( recall_score(y_train, y_pred, average='micro'), 3 )) + ' / '\
+        + str(round( f1_score(y_train, y_pred, average='micro'), 3 )) + '</p>'
+        
+        
         if show:
             IPython.display.display(IPython.display.HTML(report)) 
             html_str += report
@@ -172,6 +174,15 @@ def run_multiclass_clfs_presplit(X_train, y_train, X_test = None, y_test = None,
                 report += '<p>top-3 acc = ' + str(round( top_k_accuracy_score(y_test, y_score, k=3),3)) + '</p>'
                 report += '<p>top-5 acc = ' + str(round( top_k_accuracy_score(y_test, y_score, k=5),3)) + '</p>'
 
+            dic_test_precisions[str(clf)] = precision_score(y_test, y_pred, average='micro')
+            dic_test_recalls[str(clf)] = recall_score(y_test, y_pred, average='micro')
+            dic_test_f1s[str(clf)] = f1_score(y_test, y_pred, average='micro')
+
+            report += '<p>precision / recall / F1 score on the test set = ' \
+            + str(round( precision_score(y_test, y_pred, average='micro'), 3 )) + ' / ' \
+            + str(round( recall_score(y_test, y_pred, average='micro'), 3 )) + ' / '\
+            + str(round( f1_score(y_test, y_pred, average='micro'), 3 )) + '</p>'
+
             if show:
                 IPython.display.display(IPython.display.HTML(report)) 
                 html_str += report
@@ -200,7 +211,9 @@ def run_multiclass_clfs_presplit(X_train, y_train, X_test = None, y_test = None,
                 IPython.display.display(IPython.display.HTML('<br/>'))
 
     matplotlib.rcParams.update({'font.size': 12})    
-    return dic_train_accs, dic_test_accs, html_str
+    return (dic_train_accs, dic_test_accs, dic_train_precisions, dic_test_precisions, \
+            dic_train_recalls, dic_test_recalls, dic_train_f1s, dic_test_f1s), \
+            html_str
 
 
 def run_multiclass_clfs(X, y, clfs = 'all', split = .3, split_type = 'ks', cv_seed = 0, show = True):
@@ -225,12 +238,27 @@ def run_multiclass_clfs(X, y, clfs = 'all', split = .3, split_type = 'ks', cv_se
     return run_multiclass_clfs_presplit(X_train, y_train, X_test, y_test, clfs = clfs, cv_seed = cv_seed, show = show)
 
 
-def visualize_multiclass_result(dic_train_accs, dic_test_accs):
+def visualize_multiclass_result(dic_metrics):
 
-    html_str = '<table><tr><th>classifier with optimal hparams</th><th>train accuracy*</th><th>test accuracy*</th></tr>'
+    dic_train_accs, dic_test_accs, dic_train_precisions, dic_test_precisions, \
+    dic_train_recalls, dic_test_recalls, dic_train_f1s, dic_test_f1s \
+    = dic_metrics
+
+    html_str = '<table><tr><th>classifier with optimal hparams</th><th>train accuracy*</th><th>test accuracy*</th>' + \
+                '<th>train precision</th><th>test precision</th>' + \
+                '<th>train recall</th><th>test recall</th>' + \
+                '<th>train F1 score</th><th>test F1 score</th></tr>' 
+
     for k, v in dic_train_accs.items():
         # , dic_test_accs
-        html_str += '<tr><td>' + k + '</td><td>' + str(np.round(v,3))+ '</td><td>' + str(np.round(dic_test_accs[k],3)) + '</td></tr>'
+        html_str += '<tr><td>' + k + '</td><td>' + str(np.round(v,3))+ '</td>' + \
+            '<td>' + str(np.round(dic_test_accs[k],3)) + '</td>' + \
+            '<td>' + str(np.round(dic_train_precisions[k],3)) + '</td>' + \
+            '<td>' + str(np.round(dic_test_precisions[k],3)) + '</td>' + \
+            '<td>' + str(np.round(dic_train_recalls[k],3)) + '</td>' + \
+            '<td>' + str(np.round(dic_test_recalls[k],3)) + '</td>' + \
+            '<td>' + str(np.round(dic_train_f1s[k],3)) + '</td>' + \
+            '<td>' + str(np.round(dic_test_f1s[k],3)) + '</td>' + '</tr>'
     html_str +='</table>'
     html_str += '<i>*if a list, it means top-1/3/5 accuracies.</i>'
     

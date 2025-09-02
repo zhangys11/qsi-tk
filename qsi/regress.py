@@ -1,13 +1,13 @@
 import numpy as np
-from sklearn.metrics import r2_score, mean_squared_error
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
+from sklearn.metrics import r2_score, mean_squared_error
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.model_selection import cross_val_score, train_test_split
 from sklearn.base import BaseEstimator, RegressorMixin
 import itertools
 from tqdm import tqdm
 from IPython.core.display import display, HTML
-
 import matplotlib
 matplotlib.rcParams['font.family'] = 'DejaVu Sans'
 
@@ -45,9 +45,9 @@ def draw_regression_plots(yt, yp, title, order=False):
     plt.title('Diagonal scatter plot')
     
     # residual plot
-    residuals = yp-yt
+    residuals = yp.flatten()-yt.flatten()
     plt.subplot(1,3,3)
-    plt.scatter(yt, residuals)
+    plt.scatter(yt.flatten(), residuals)
     plt.xlabel('True values')
     plt.ylabel('Residuals')
     plt.axhline(y=0, color='r', linestyle='-')
@@ -124,16 +124,31 @@ class GaussianWeightedKNNRegressor(BaseEstimator, RegressorMixin):
 def run_regressors(X_train, X_val, X_test, y_train, y_val, y_test, 
                    clfs = ['linear regression', 'ridge', 'LASSO', 
                            'SVR(linear)', 'SVR(rbf)', 'SVR(poly)', 
+                           'PLSR',
                            'Random Forest Regressor', # 'ANN', 
-                           'K-Neighbors Regressor', 'Gaussian Weighted K-Neighbors Regressor'], 
+                           'K-Neighbors Regressor',
+                           'Gaussian Weighted K-Neighbors Regressor'],
                            X_names = None,
                            order = False,
-                           verbose=False):
+                           verbose=2):
+    '''
+    Run a series of regression models
     
+    Parameters:
+    -----------    
+    verbose: 
+        verbose = 0 or False, no intermediate output
+        verbose = 1, output the last summary table
+        verbose = 2, also output plots
+        verbose = 3, output everything
+    '''
+
     dic_metrics = {}
     
     for idx, clf_name in enumerate(clfs):
-        display(HTML('<h2>' + str(idx+1) + '. ' + str(clf_name) + '</h2>'))
+
+        if verbose > 1:
+            display(HTML('<h2>' + str(idx+1) + '. ' + str(clf_name) + '</h2>'))
         if clf_name == 'linear regression':
 
             from sklearn.linear_model import LinearRegression
@@ -152,10 +167,12 @@ def run_regressors(X_train, X_val, X_test, y_train, y_val, y_test,
                 ridge = Ridge(alpha = alpha).fit(X_train, y_train)
                 val_scores.append(ridge.score(X_val, y_val))
 
-            plt.title('val score ~ alpha')
-            plt.xscale('log')
-            plt.plot(hparams, val_scores)
-            plt.show()
+            if verbose > 1:
+                plt.title('val score ~ alpha')
+                plt.xscale('log')
+                plt.plot(hparams, val_scores)
+                plt.scatter(hparams, val_scores, label='$\alpha$')
+                plt.show()
 
             best_hparam = hparams[np.argmax(val_scores)]
             ridge = Ridge(alpha = best_hparam).fit(X_train, y_train)
@@ -173,10 +190,12 @@ def run_regressors(X_train, X_val, X_test, y_train, y_val, y_test,
                 lasso = Lasso(alpha = alpha).fit(X_train, y_train)
                 val_scores.append(lasso.score(X_val, y_val))
 
-            plt.title('val score ~ alpha')
-            plt.xscale('log')
-            plt.plot(hparams, val_scores)
-            plt.show()
+            if verbose > 1:
+                plt.title('val score ~ alpha')
+                plt.xscale('log')
+                plt.plot(hparams, val_scores)
+                plt.scatter(hparams, val_scores, label='$\alpha$')
+                plt.show()
 
             best_hparam = hparams[np.argmax(val_scores)]
             lasso = Lasso(alpha = best_hparam).fit(X_train, y_train)
@@ -185,7 +204,7 @@ def run_regressors(X_train, X_val, X_test, y_train, y_val, y_test,
             yp = lasso.predict(X_test)
             y_pred_train = lasso.predict(X_train)
 
-            if verbose:
+            if verbose > 2:
                 from .vis import plot_feature_importance
 
                 fi = np.abs(lasso.coef_)
@@ -193,7 +212,6 @@ def run_regressors(X_train, X_val, X_test, y_train, y_val, y_test,
 
                 N = (fi!=0).sum()
                 idx = (np.argsort(fi)[-N:])[::-1]
-                X_s = X[:, idx]
                 print('Important feature Number: ', len(idx))
                 print('Important features indices: ', idx)
                 if X_names is not None:
@@ -205,36 +223,66 @@ def run_regressors(X_train, X_val, X_test, y_train, y_val, y_test,
             from sklearn.svm import SVR
 
             kernel = clf_name[clf_name.find("(")+1:clf_name.find(")")] # clf_name.split('"')[1::2];
-            Cs = [ .1, 10, 100, 1000, 10000]
+            Cs = [0.0001, 0.001, .01, .1, 10, 100, 1000, 10000]
             val_scores = []
             for C in Cs:
                 svr = SVR(kernel = kernel, C=C).fit(X_train, y_train)
                 val_scores.append(svr.score(X_val, y_val))
 
-            plt.title('val score ~ C')
-            plt.xscale('log')
-            plt.plot(Cs, val_scores)
-            plt.show()
+            if verbose > 1:
+                plt.title('val score ~ C')
+                plt.xscale('log')
+                plt.plot(Cs, val_scores)
+                plt.scatter(Cs, val_scores, label='C')
+                plt.show()
 
             best_hparam = Cs[np.argmax(val_scores)]
             svr = SVR(kernel = kernel, C=best_hparam)
             yp = svr.fit(X_train, y_train).predict(X_test)
             y_pred_train = svr.predict(X_train)
 
+        elif clf_name == 'PLSR':
+            # Partial Least Squares Regression
+            from sklearn.cross_decomposition import PLSRegression
+
+            hparams = list(range(1, X_train.shape[1])) # Number of components to keep. Should be in [1, n_features]
+            val_scores = []
+            for nc in hparams:
+                plsr = PLSRegression(n_components=nc).fit(X_train, y_train)
+                val_scores.append(plsr.score(X_val, y_val))
+
+            if verbose > 1:
+                ax = plt.figure().gca()
+                ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+                plt.title('val score ~ components')
+                # plt.xscale('log')
+                plt.plot(hparams, val_scores)
+                plt.scatter(hparams, val_scores, label='components')
+                plt.show()
+
+            best_hparam = hparams[np.argmax(val_scores)]
+            plsr = PLSRegression(n_components = best_hparam).fit(X_train, y_train)
+
+            # print('test score:', ridge.score(X_test, y_test))
+            yp = plsr.predict(X_test)
+            y_pred_train = plsr.predict(X_train)
+        
         elif clf_name == 'Random Forest Regressor':
             from sklearn.ensemble import RandomForestRegressor
 
             # Each run is random. The result is very unstable
-            Ns = [1, 2, 3, 5, 10, 20, 50, 100, 200]
+            Ns = [1, 2, 3, 5, 10, 20, 50, 100, 200, 500]
             val_scores = []
             for N in Ns:
                 rf_regressor = RandomForestRegressor(n_estimators = N, max_depth = 2).fit(X_train, y_train)
                 val_scores.append(rf_regressor.score(X_val, y_val))
 
-            plt.title('val score ~ trees')
-            plt.xscale('log')
-            plt.plot(Ns, val_scores)
-            plt.show()
+            if verbose > 1:
+                plt.title('val score ~ trees')
+                plt.xscale('log')
+                plt.plot(Ns, val_scores)                
+                plt.scatter(Ns, val_scores, label='trees')
+                plt.show()
 
             best_hparam = Ns[np.argmax(val_scores)]
             rf_regressor = RandomForestRegressor(n_estimators = best_hparam, max_depth = 2)
@@ -263,11 +311,11 @@ def run_regressors(X_train, X_val, X_test, y_train, y_val, y_test,
             
             # Compiling the model
             model.compile(loss='mean_squared_error', optimizer='rmsprop')
-            if verbose:
+            if verbose > 2:
                 model.summary()
 
             # Fitting the ANN to the Training set
-            model.fit(X_train, np.array(y_train), batch_size = 2, epochs = 500, verbose=verbose)
+            model.fit(X_train, np.array(y_train), batch_size = 2, epochs = 500, verbose=False)
             y_pred_train = model.predict(X_train).flatten()
             yp = model.predict(X_test).flatten()
 
@@ -285,11 +333,14 @@ def run_regressors(X_train, X_val, X_test, y_train, y_val, y_test,
                 knr = KNeighborsRegressor(n_neighbors = N).fit(X_train, y_train)
                 val_scores.append(knr.score(X_val, y_val))
 
-            plt.title('val score ~ neighbors')
-            # plt.xscale('log')
-            # .set_major_locator(MaxNLocator(integer=True))
-            plt.plot(Ns, val_scores)
-            plt.show()
+            if verbose > 1:
+                ax = plt.figure().gca()
+                plt.title('val score ~ neighbors')
+                # plt.xscale('log')
+                ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+                plt.plot(Ns, val_scores)
+                plt.scatter(Ns, val_scores, label='neighbors')
+                plt.show()
 
             best_hparam = Ns[np.argmax(val_scores)]
             knr = KNeighborsRegressor(n_neighbors = best_hparam).fit(X_train, y_train) 
@@ -309,13 +360,15 @@ def run_regressors(X_train, X_val, X_test, y_train, y_val, y_test,
             print('Undefined regression model: ' + clf_name)
 
         dic_metrics[clf_name] = best_hparam, round(r2_score(y_test, yp), 3), round(mean_squared_error(y_test, yp),3) # save R2 and MSE to dict
-        draw_regression_plots(y_test, yp, title = clf_name, order=order)
-        if verbose:
-            print('Training set R2: ', r2_score(y_train, y_pred_train))
-            print('Test set R2:', r2_score(y_test, yp))
+        
+        if verbose > 1:
+            draw_regression_plots(y_test, yp, title = clf_name, order=order)
 
-    display(HTML('<h2>Summary</h2>'))
-    tbl_html = '<table><tr><th>Regressor</th><th>best hparam</th><th>R2</th><th>MSE</th></tr>'
-    for k,v in dic_metrics.items():
-        tbl_html += '<tr><td>'+str(k)+'</td><td>'+str(v[0])+'</td><td>'+str(v[1])+'</td><td>'+str(v[2])+'</td></tr>'
-    display(HTML( tbl_html + '</table>'))
+    if verbose > 0:
+        display(HTML('<h2>Summary</h2>'))
+        tbl_html = '<table><tr><th>Regressor</th><th>best hparam</th><th>R2</th><th>MSE</th></tr>'
+        for k,v in dic_metrics.items():
+            tbl_html += '<tr><td>'+str(k)+'</td><td>'+str(v[0])+'</td><td>'+str(v[1])+'</td><td>'+str(v[2])+'</td></tr>'
+        display(HTML( tbl_html + '</table>'))
+
+    return dic_metrics
